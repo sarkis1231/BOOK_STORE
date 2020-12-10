@@ -3,25 +3,16 @@ import styled from 'styled-components'
 import Header from "./Header/Header";
 import {ThemeContext, ThemeDispatch} from "../context/ThemeContext/Context";
 
-const Layout = ({ children, header }) => {
+const Layout = ({ children }) => {
     const toggleTheme = useContext(ThemeDispatch)
     const theme = useContext(ThemeContext);
 
     return (
         <>
-            {header ?
-            <>
                 <Header toggleTheme={toggleTheme} theme={theme}/>
                 <StyledLayout>
                     {children}
                 </StyledLayout>
-            </>
-                :
-                <StyledLayout>
-                    {children}
-                </StyledLayout>
-            }
-
         </>
     );
 };

@@ -1,0 +1,3 @@
+export const AUTH_TYPES = {
+    SET_CURRENT_USER: "CURRENT_USER"
+};
