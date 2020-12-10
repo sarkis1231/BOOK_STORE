@@ -2,16 +2,16 @@ const {body, param} = require("express-validator");
 
 const {Users} = require("../models/Users");
 const {ALL_USER_ROLES} = require("../roles");
-const bcrypt =  require("bcryptjs");
+const bcrypt = require("bcryptjs");
 
 
-export const registerValidation = [
+const registerValidation = [
     body("email")
         .isEmail()
         .bail()
         .withMessage("Enter a valid Email")
-        .custom(function(value, {req})  {
-            return Users.findOne({email: value}).then(function(userDoc) {
+        .custom(function (value, {req}) {
+            return Users.findOne({email: value}).then(function (userDoc) {
                 if (userDoc) {
                     return Promise.reject("Email already registered");
                 }
@@ -21,7 +21,7 @@ export const registerValidation = [
         .trim()
         .isLength({min: 5}),
     body("confirm_password")
-        .custom(function(value, {req})  {
+        .custom(function (value, {req}) {
             return value === req.body.password
         }),
     body('name')
@@ -29,13 +29,13 @@ export const registerValidation = [
         .notEmpty(),
 ];
 
-export const registerUserValidation = [
+const registerUserValidation = [
     body("email")
         .isEmail()
         .bail()
         .withMessage("Enter a valid Email")
-        .custom(function(value, {req})  {
-            return Users.findOne({email: value}).then(function(userDoc) {
+        .custom(function (value, {req}) {
+            return Users.findOne({email: value}).then(function (userDoc) {
                 if (userDoc) {
                     return Promise.reject("Email already registered");
                 }
@@ -45,11 +45,11 @@ export const registerUserValidation = [
         .trim()
         .isLength({min: 5}),
     body("role")
-        .custom(function(value)  {
+        .custom(function (value) {
             return ALL_USER_ROLES.includes(value);
         }),
     body("confirm_password")
-        .custom(function(value, {req})  {
+        .custom(function (value, {req}) {
             return value === req.body.password
         }),
     body('name')
@@ -57,7 +57,7 @@ export const registerUserValidation = [
         .notEmpty()
 ];
 
-export const editUserValidation = [
+const editUserValidation = [
     body('name')
         .trim()
         .notEmpty(),
@@ -65,11 +65,11 @@ export const editUserValidation = [
         .isEmail()
         .bail()
         .withMessage("Enter a valid Email")
-        .custom(function(value, {req})  {
-            if(value === req.user.email) { //leaving the same email
-                return  true;
+        .custom(function (value, {req}) {
+            if (value === req.user.email) { //leaving the same email
+                return true;
             }
-            return Users.findOne({email: value}).then(function(userDoc) {
+            return Users.findOne({email: value}).then(function (userDoc) {
                 if (userDoc) {
                     return Promise.reject("Email already registered");
                 }
@@ -77,10 +77,10 @@ export const editUserValidation = [
         }).normalizeEmail()
 ];
 
-export const changePasswordValidation = [
-    body("current_password").notEmpty().custom( function (value, {req}){
-        return bcrypt.compare(value, req.user.password).then(function (match){
-            if(!match) {
+const changePasswordValidation = [
+    body("current_password").notEmpty().custom(function (value, {req}) {
+        return bcrypt.compare(value, req.user.password).then(function (match) {
+            if (!match) {
                 return Promise.reject("Wrong Password");
             }
         })
@@ -93,9 +93,17 @@ export const changePasswordValidation = [
     })
 ];
 
-export const usersRoleValidation = [
+const usersRoleValidation = [
     param('role')
         .custom(function (value) {
             return ALL_USER_ROLES.some(i => i === value);
         })
 ];
+
+module.exports = {
+    registerValidation,
+    registerUserValidation,
+    editUserValidation,
+    changePasswordValidation,
+    usersRoleValidation
+};

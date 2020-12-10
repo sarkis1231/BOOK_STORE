@@ -30,4 +30,4 @@ function NotAuthorized(blackList) {
     }
 }
 
-exports = {NotAuthorized,isAuth,isAuthorized}
+module.exports = {NotAuthorized,isAuth,isAuthorized}

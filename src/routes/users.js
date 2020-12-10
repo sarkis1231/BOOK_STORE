@@ -12,4 +12,4 @@ const router = Router();
 router.post("/login", function (){});
 
 console.log("users beforeIport",router);
-exports = router;
+module.exports = router;

@@ -13,4 +13,4 @@ function somethingWentWrong(res) {
     });
 }
 
-exports = {alert,somethingWentWrong};
+module.exports = {alert,somethingWentWrong};

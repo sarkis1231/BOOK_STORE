@@ -26,4 +26,4 @@ const errorValidation = function (req) {
     }
 };
 
-exports = {errorThrower, errorCatcher, errorFormatter, errorValidation};
+module.exports = {errorThrower, errorCatcher, errorFormatter, errorValidation};
