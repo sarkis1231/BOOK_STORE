@@ -1,14 +1,18 @@
 require('dotenv').config();
 const express = require('express');
-const bodyParser = require("body-parser");
+const router = require('./routes')
 const mongoose = require('mongoose');
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const helmet = require("helmet");
 const {MONGODB_URI} = require("./config/keys");
 const {MONGOOSE_OPTIONS} = require("./config/keys");
 
 const app = express();
 
+//security
+app.use(helmet({}));
 
-const port = process.env.PORT || 3000
 //request parser
 app.use(bodyParser.urlencoded({
     extended: false
@@ -17,10 +21,29 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 
-app.get('/', (req, res) => {
-    res.send('Hello World')
-})
+//CORS
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, AuthorizationComponent,Authorization');
+    next();
+});
 
+
+// Routes
+app.use(router);
+
+
+//errors
+app.use(function (err, req, res, next) {
+    const status = err.statusCode || 500;
+    const message = err.message;
+    const data = err.data;
+    res.status(status).json({message, data});
+});
+
+
+const port = process.env.PORT || 8080;
 
 
 mongoose.connection.on('connected', function () {

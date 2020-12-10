@@ -6,4 +6,6 @@ const {isAuth} = require("./middlewares/authentication");
 const router = express.Router();
 
 router.use('/users', users);
-router.use(isAuth()); //all the routes should require an Authorization
+// router.use(isAuth()); //all the routes should require an Authorization
+
+exports = router;

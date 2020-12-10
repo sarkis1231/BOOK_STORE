@@ -1,8 +1,8 @@
-//key value make it similar
-export const USER_ROLES = {
+const USER_ROLES = {
     "Admin":"Admin",
     "User":"User"
 };
 
-export const ALL_USER_ROLES = Object.keys(USER_ROLES);
+const ALL_USER_ROLES = Object.keys(USER_ROLES);
 
+exports = {USER_ROLES,ALL_USER_ROLES};

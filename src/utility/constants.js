@@ -1,0 +1,5 @@
+const MESSAGES = {
+    SOMETHING_WENT_WRONG: "SOMETHING_WENT_WRONG"
+};
+
+exports = {MESSAGES};

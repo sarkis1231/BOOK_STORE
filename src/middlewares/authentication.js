@@ -1,12 +1,12 @@
 const passport =  require("passport");
 
-export function isAuth() {
+function isAuth() {
     return passport.authenticate("jwt", {
         session: false
     },function (){});
 }
 
-export function isAuthorized(whiteList) {
+function isAuthorized(whiteList) {
     return function (req, res,next)  {
         if(whiteList.includes(req.user["role"])) {
             return next();
@@ -18,7 +18,7 @@ export function isAuthorized(whiteList) {
     }
 }
 
-export function NotAuthorized(blackList) {
+function NotAuthorized(blackList) {
     return function (req, res, next)  {
         if(blackList.includes(req.user["role"])) {
             return res.status(401).json({
@@ -29,3 +29,5 @@ export function NotAuthorized(blackList) {
         next();
     }
 }
+
+exports = {NotAuthorized,isAuth,isAuthorized}
