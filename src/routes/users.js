@@ -1,14 +1,15 @@
-const express = require('express');
+const {Router} = require('express');
 
 const {isAuth,isAuthorized} = require("../middlewares/authentication");
 
 const {registerValidation} = require("../validations/users");
 
 
-const router = express.Router();
+const router = Router();
 
 // router.put("/register", registerValidation, register);
 
-// router.post("/login", login);
+router.post("/login", function (){});
 
+console.log(router);
 exports = router;
