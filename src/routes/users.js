@@ -11,5 +11,5 @@ const router = Router();
 
 router.post("/login", function (){});
 
-console.log(router);
+console.log("users beforeIport",router);
 exports = router;

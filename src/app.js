@@ -7,9 +7,9 @@ const helmet = require("helmet");
 const {MONGODB_URI} = require("./config/keys");
 const {MONGOOSE_OPTIONS} = require("./config/keys");
 
-const router = require('./routes')
-
 const app = express();
+
+
 
 //security
 app.use(helmet({}));
@@ -31,6 +31,7 @@ app.use(function (req, res, next) {
 });
 
 
+const router = require('./routes');
 
 // Routes
 app.use(router);

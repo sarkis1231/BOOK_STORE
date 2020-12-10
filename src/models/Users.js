@@ -4,7 +4,6 @@ const {USER_ROLES, ALL_USER_ROLES} =  require("../roles.js");
 
 //TODO Reigon creation + telephone number
 //TODO citezenship
-console.log(USER_ROLES);
 
 const userSchema = new Schema({
     name: {

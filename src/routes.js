@@ -6,7 +6,9 @@ const {isAuth} = require("./middlewares/authentication");
 
 const router = Router();
 
+console.log("users",users);
 router.use('/users', users);
 // router.use(isAuth()); //all the routes should require an Authorization
 
+console.log("s",router);
 exports = router;
