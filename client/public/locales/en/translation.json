@@ -1,0 +1,11 @@
+{
+  "headerItem": {
+    "item1": "Home",
+    "item2": "About",
+    "item3": "Login"
+  },
+  "searchPlaceHolder": "Search",
+  "login": "Login",
+  "email": "Email",
+  "password":"Password"
+}
