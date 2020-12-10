@@ -1,6 +1,6 @@
 const USER_ROLES = {
-    "Admin":"Admin",
-    "User":"User"
+   Admin:"Admin",
+   User:"User"
 };
 
 const ALL_USER_ROLES = Object.keys(USER_ROLES);

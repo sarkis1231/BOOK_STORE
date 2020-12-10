@@ -1,12 +1,13 @@
 require('dotenv').config();
 const express = require('express');
-const router = require('./routes')
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const helmet = require("helmet");
 const {MONGODB_URI} = require("./config/keys");
 const {MONGOOSE_OPTIONS} = require("./config/keys");
+
+const router = require('./routes')
 
 const app = express();
 

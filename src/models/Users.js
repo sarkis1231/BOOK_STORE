@@ -1,9 +1,10 @@
-import * as mongoose from 'mongoose';
-import {Schema} from "mongoose";
-const {Roles, ROLES_ALL} =  require("../roles");
+const mongoose = require("mongoose");
+const {Schema} = require("mongoose");
+const {USER_ROLES, ALL_USER_ROLES} =  require("../roles.js");
 
 //TODO Reigon creation + telephone number
 //TODO citezenship
+console.log(USER_ROLES);
 
 const userSchema = new Schema({
     name: {
@@ -20,8 +21,8 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        default: Roles.Admin,
-        enum: ROLES_ALL
+        default: "Admin",
+        // enum: ALL_USER_ROLES
     },
     disabled: {
         type:Boolean
