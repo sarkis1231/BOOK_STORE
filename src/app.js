@@ -6,6 +6,7 @@ const passport = require("passport");
 const helmet = require("helmet");
 const {MONGODB_URI} = require("./config/keys");
 const {MONGOOSE_OPTIONS} = require("./config/keys");
+const passportConfig = require("./config/passport");
 
 const app = express();
 
@@ -31,8 +32,13 @@ app.use(function (req, res, next) {
 });
 
 
-const router = require('./routes');
+// Passport middleware
+app.use(passport.initialize({}));
 
+// Passport Config
+passportConfig(passport);
+
+const router = require('./routes');
 // Routes
 app.use(router);
 

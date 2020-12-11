@@ -1,3 +1,5 @@
+const {SECRET_KEY} = require("../config/keys");
+const {sign} = require("jsonwebtoken");
 const {Users} = require("../models/Users");
 const {MESSAGES} = require("../utility/constants");
 const {messageAlert} = require("../utility/constants");
@@ -32,7 +34,7 @@ async function login(req, res, next) {
     try {
         const user = await Users.findOne({email});
         if (!user) {
-            return res.status(422).json({email: 'no users found'})
+            return res.status(422).json({email: 'no users found'});
         }
 
         let isMatch = await bcrypt.compare(password, user.password);
@@ -43,10 +45,9 @@ async function login(req, res, next) {
         const payload = {
             id: user.id,
             name: user.name,
-            avatar: user.avatar,
             role: user.role
         };
-        const token = await jwt.sign(payload, SECRET_KEY, {expiresIn: 3600});
+        const token = await sign(payload, SECRET_KEY, {expiresIn: 3600});
         res.status(200).json({success: true, token: `Bearer ${token}`});
 
     } catch (err) {
