@@ -3,17 +3,41 @@ const {body, param} = require("express-validator");
 const {Users} = require("../models/Users");
 const {ALL_USER_ROLES} = require("../roles");
 const bcrypt = require("bcryptjs");
+const {MESSAGES} = require("../utility/constants");
 
+//TODO find out a default way to pass the errors
+
+const loginValidation = [
+    body("email")
+        .notEmpty()
+        .withMessage(MESSAGES.REQUIRED_FIELDS)
+        .isEmail()
+        .bail()
+        .withMessage(MESSAGES.VALID_EMAIL)
+        .custom(function (value, {req}) {
+            return Users.findOne({email: value}).then(function (userDoc) {
+                if (!userDoc) {
+                    return Promise.reject(MESSAGES.NO_USER_FOUND);
+                }
+            });
+        })
+    ,
+    body("password")
+        .trim()
+        .isLength({min: 5})
+];
 
 const registerValidation = [
     body("email")
+        .notEmpty()
+        .withMessage("This Field is Required")
         .isEmail()
         .bail()
         .withMessage("Enter a valid Email")
         .custom(function (value, {req}) {
             return Users.findOne({email: value}).then(function (userDoc) {
                 if (userDoc) {
-                    return Promise.reject("Email already registered");
+                    return Promise.reject(MESSAGES.EMAIL_IS_REGISTERED);
                 }
             });
         }).normalizeEmail(),
@@ -31,13 +55,14 @@ const registerValidation = [
 
 const registerUserValidation = [
     body("email")
+        .notEmpty()
         .isEmail()
         .bail()
-        .withMessage("Enter a valid Email")
+        .withMessage(MESSAGES.VALID_EMAIL)
         .custom(function (value, {req}) {
             return Users.findOne({email: value}).then(function (userDoc) {
                 if (userDoc) {
-                    return Promise.reject("Email already registered");
+                    return Promise.reject(MESSAGES.EMAIL_IS_REGISTERED);
                 }
             });
         }).normalizeEmail(),
@@ -64,14 +89,14 @@ const editUserValidation = [
     body("email")
         .isEmail()
         .bail()
-        .withMessage("Enter a valid Email")
+        .withMessage(MESSAGES.VALID_EMAIL)
         .custom(function (value, {req}) {
             if (value === req.user.email) { //leaving the same email
                 return true;
             }
             return Users.findOne({email: value}).then(function (userDoc) {
                 if (userDoc) {
-                    return Promise.reject("Email already registered");
+                    return Promise.reject(MESSAGES.EMAIL_IS_REGISTERED);
                 }
             });
         }).normalizeEmail()
@@ -101,6 +126,7 @@ const usersRoleValidation = [
 ];
 
 module.exports = {
+    loginValidation,
     registerValidation,
     registerUserValidation,
     editUserValidation,

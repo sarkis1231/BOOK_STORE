@@ -32,10 +32,12 @@ async function register(req, res, next) {
 async function login(req, res, next) {
     const {email, password} = req.body;
     try {
-        const user = await Users.findOne({email});
-        if (!user) {
-            return res.status(422).json({email: 'no users found'});
+        const errors = validationResult(req).formatWith(errorFormatter);
+        if (!errors.isEmpty()) {
+            errorThrower("Validation Failed", 422, errors.mapped());
         }
+
+        const user = await Users.findOne({email});
 
         let isMatch = await bcrypt.compare(password, user.password);
 
