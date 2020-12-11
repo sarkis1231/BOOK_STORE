@@ -1,14 +1,18 @@
-import React from 'react';
-import {Link} from "react-router-dom";
+import React, {useEffect} from 'react';
+import {Link, useHistory} from "react-router-dom";
 import styled from 'styled-components';
 import {FlexContainer} from "../../styled/layout.styled";
 import Input from "../Reusable/Input";
 import ThemeToggle from "../ThemeToggle";
 import {useTranslation} from "react-i18next";
 import DropDown from "../Reusable/DropDown";
+import {useDispatch} from "react-redux";
+import {logOutUser} from "../../actions/authActions";
 
 const Nav = ({theme, toggleTheme, isOpen, items, value, onCLickHandler}) => {
     const { t } = useTranslation();
+    const dispatch = useDispatch();
+    const history = useHistory();
     return (
         <>
             <StyledFlexContainer
@@ -25,6 +29,7 @@ const Nav = ({theme, toggleTheme, isOpen, items, value, onCLickHandler}) => {
                 <NavLink to='/'>{t('headerItem.item1')}</NavLink>
                 <NavLink to='/about'>{t('headerItem.item2')}</NavLink>
                 <NavLink to='/login'>{t('headerItem.item3')}</NavLink>
+                <button onClick={() => dispatch(logOutUser())}>log out</button>
                 <ThemeToggle toggleTheme={toggleTheme} theme={theme}/>
                 <DropDown
                     items={items}
@@ -56,6 +61,7 @@ const StyledFlexContainer = styled(FlexContainer)`
     padding: 60px 60px 0 60px;
     justify-content: flex-start;
     align-items: center;
+    z-index: 1;
   }
 `
 

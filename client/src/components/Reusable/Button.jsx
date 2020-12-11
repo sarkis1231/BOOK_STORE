@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({type, children, onClick}) => {
+const Button = ({type, children, onClick, margin}) => {
     return (
         <>
-            <StyledButton type={type} onClick={onClick ? () => onClick() : null}>
+            <StyledButton margin={margin} type={type} onClick={onClick ? () => onClick() : null}>
                 {children}
             </StyledButton>
         </>
@@ -17,6 +17,7 @@ const StyledButton = styled.button`
   padding: 10px;
   outline: none;
   border: none;
+  margin: ${({margin}) => margin};
   color: ${({theme}) => theme.button.color};
   background: ${({theme}) => theme.button.bgColor};
   &:focus {

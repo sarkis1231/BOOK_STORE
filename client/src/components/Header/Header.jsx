@@ -13,6 +13,7 @@ const Header = ({theme, toggleTheme}) => {
     const [trigger, setTrigger] = useState(false);
     const {t, i18n} = useTranslation();
     const {  onCLickHandler, value}  =  useDropDown(false, {name:'EN', value:'en'})
+    console.log(value)
     useEffect(() => {
         i18n.changeLanguage(value.value);
     }, [value, i18n])

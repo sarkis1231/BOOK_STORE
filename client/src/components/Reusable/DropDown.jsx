@@ -78,6 +78,7 @@ const StyledListItemContainer = styled(FlexContainer)`
   right: 0;
   width: 100%;
   background: ${({theme}) => theme.dropDown.bgColor};
+  z-index: 2;
   
   overflow: hidden;
    ${({toggleMenu}) => toggleMenu ?

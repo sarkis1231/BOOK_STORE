@@ -32,7 +32,6 @@ export const loginUser = (userData) => (dispatch) => {
 
     dispatch(setCurrentUser(decoded));
 
-    history.push('/');
 };
 
 
@@ -43,4 +42,5 @@ export const logOutUser = () => (dispatch) => {
     }
     setAuthToken();
     dispatch(setCurrentUser({}));
+    history.push('/login');
 };

@@ -7,5 +7,7 @@
   "searchPlaceHolder": "Որոնում",
   "login": "Մուտք",
   "email": "Էլեկտրոնային հասցե",
-  "password":"Գաղտնաբառ"
+  "password":"Գաղտնաբառ",
+  "register":"Գրանցվել",
+  "confirmPassword" : "Հաստատել գաղտնաբառը"
 }

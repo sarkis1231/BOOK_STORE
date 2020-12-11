@@ -1,18 +1,18 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, forwardRef} from 'react';
 import styled, {css} from 'styled-components';
 import {FlexContainer} from "../../styled/layout.styled";
 import {ReactComponent as SearchIcon } from "../../assets/svg/search.svg";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
-const Input = ({label, error, name, placeHolder, type, searchDisplay, mobileDisplay, margin, inputType}) => {
+const Input = forwardRef(({label, error, name, placeHolder, type, searchDisplay, mobileDisplay, margin, inputType}, ref) => {
     const [expandInput, setExpandInput] = useState(false);
-    const ref = useRef(null)
-    useOnClickOutside(ref, () =>  setExpandInput(false))
+    const dropDownRf = useRef(null)
+    useOnClickOutside(dropDownRf, () =>  setExpandInput(false))
     switch (type) {
         case 'searchBar':
             return (
                 <StyledFlexContainer
-                    ref={ref}
+                    ref={dropDownRf}
                     expandInput={expandInput}
                     searchDisplay={searchDisplay}
                     mobileDisplay={mobileDisplay}
@@ -32,13 +32,16 @@ const Input = ({label, error, name, placeHolder, type, searchDisplay, mobileDisp
             return (
                 <FlexContainer flexDirection='column' width='100%' margin={margin}>
                     {label && <StyledLabel>{label}</StyledLabel>}
-                    <StyledInput type={inputType} name={name} placeholder={placeHolder}/>
-                    {error && <StyledSpan>{error}</StyledSpan>}
+                    <StyledInput ref={ref} type={inputType} name={name} placeholder={placeHolder}/>
+                    {error && <StyledSpan>{error[name] && error[name].message}</StyledSpan>}
                 </FlexContainer>
             );
     }
 
-};
+});
+
+
+export default Input;
 
 
 const StyledFlexContainer = styled(FlexContainer)`
@@ -157,4 +160,3 @@ const StyledLine = styled.div`
   transition: all .3s ease;
 `
 
-export default Input;

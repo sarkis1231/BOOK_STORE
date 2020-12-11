@@ -9,11 +9,12 @@ const PrivateRoute = ({component:Component, allowedRoles, ...rest}) => {
     const routePermission = (allowedRoles) ? (isAuth && allowedRoles.includes(role)) : !!isAuth;
 
     return (
-        <Route {...rest} render={(props) => (routePermission) ?
+        <Route {...rest} render={(props) => routePermission ?
             (<Component {...props}/>) :
             (
                 <Redirect to="/login"/>
-            )}
+            )
+        }
         />
     );
 };

@@ -2,7 +2,8 @@ import {AUTH_TYPES} from "../actions/types";
 
 const initialState = {
     isAuthenticated: false,
-    user: {}
+    user: {},
+    loaded:false,
 };
 
 // eslint-disable-next-line

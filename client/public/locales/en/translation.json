@@ -7,5 +7,7 @@
   "searchPlaceHolder": "Search",
   "login": "Login",
   "email": "Email",
-  "password":"Password"
+  "password":"Password",
+  "register":"Register",
+  "confirmPassword": "Confirm password"
 }
