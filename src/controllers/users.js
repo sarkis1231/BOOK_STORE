@@ -1,5 +1,6 @@
 const {SECRET_KEY} = require("../config/keys");
 const {sign} = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const {Users} = require("../models/Users");
 const {MESSAGES} = require("../utility/constants");
 const {messageAlert} = require("../utility/constants");

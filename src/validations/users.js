@@ -30,10 +30,10 @@ const loginValidation = [
 const registerValidation = [
     body("email")
         .notEmpty()
-        .withMessage("This Field is Required")
+        .withMessage(MESSAGES.REQUIRED_FIELDS)
         .isEmail()
         .bail()
-        .withMessage("Enter a valid Email")
+        .withMessage(MESSAGES.VALID_EMAIL)
         .custom(function (value, {req}) {
             return Users.findOne({email: value}).then(function (userDoc) {
                 if (userDoc) {
@@ -47,10 +47,14 @@ const registerValidation = [
     body("confirm_password")
         .custom(function (value, {req}) {
             return value === req.body.password
-        }),
+        })
+        .withMessage(MESSAGES.PASSWORD_MUST_MATCH)
+    ,
     body('name')
         .trim()
-        .notEmpty(),
+        .notEmpty()
+        .withMessage(MESSAGES.REQUIRED_FIELDS)
+    ,
 ];
 
 const registerUserValidation = [
