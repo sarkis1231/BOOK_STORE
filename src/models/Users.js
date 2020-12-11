@@ -17,7 +17,7 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        default: USER_ROLES.Admin,
+        default: USER_ROLES.User,
         enum: ALL_USER_ROLES
     },
     disabled: {
