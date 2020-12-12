@@ -1,11 +1,9 @@
 const {body, param} = require("express-validator");
-
 const {Users} = require("../models/Users");
 const {ALL_USER_ROLES} = require("../roles");
 const bcrypt = require("bcryptjs");
 const {MESSAGES} = require("../utility/constants");
 
-//TODO find out a default way to pass the errors
 
 const loginValidation = [
     body("email")
@@ -110,14 +108,15 @@ const changePasswordValidation = [
     body("current_password").notEmpty().custom(function (value, {req}) {
         return bcrypt.compare(value, req.user.password).then(function (match) {
             if (!match) {
-                return Promise.reject("Wrong Password");
+                return Promise.reject(MESSAGES.WRONG_PASSWORD);
             }
         })
     }),
     body("new_password")
         .trim()
         .isLength({min: 5}),
-    body("confirm_new_password").custom(function (value, {req}) {
+    body("confirm_new_password")
+        .custom(function (value, {req}) {
         return value === req.body.new_password;
     })
 ];

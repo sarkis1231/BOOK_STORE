@@ -1,5 +1,4 @@
 const {Router} = require('express');
-
 const users = require("./routes/users");
 const {isAuth} = require("./middlewares/authentication");
 

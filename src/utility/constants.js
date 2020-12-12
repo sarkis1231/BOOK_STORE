@@ -5,7 +5,8 @@ const MESSAGES = {
     VALID_EMAIL: "Enter a valid Email",
     NO_USER_FOUND: "No user is Found",
     EMAIL_IS_REGISTERED: "Email already registered",
-    PASSWORD_MUST_MATCH: "Password and confirm password must match"
+    PASSWORD_MUST_MATCH: "Password and confirm password must match",
+    WRONG_PASSWORD:"Wrong Password"
 };
 
 const messageAlert = {

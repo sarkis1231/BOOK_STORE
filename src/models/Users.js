@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const {Schema} = require("mongoose");
+const {Schema,model} = require("mongoose");
 const {USER_ROLES, ALL_USER_ROLES} =  require("../roles.js");
 
 const userSchema = new Schema({
@@ -25,6 +24,6 @@ const userSchema = new Schema({
     }
 },{timestamps:true});
 
-const Users = mongoose.model('Users', userSchema);
+const Users = model('Users', userSchema);
 
 module.exports = {Users};
