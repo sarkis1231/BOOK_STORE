@@ -38,7 +38,7 @@ app.use(passport.initialize({}));
 // Passport Config
 passportConfig(passport);
 
-const router = require('./routes');
+const router = require('./routes/users');
 // Routes
 app.use(router);
 
