@@ -9,5 +9,6 @@
   "email": "Էլեկտրոնային հասցե",
   "password":"Գաղտնաբառ",
   "register":"Գրանցվել",
-  "confirmPassword" : "Հաստատել գաղտնաբառը"
+  "confirmPassword" : "Հաստատել գաղտնաբառը",
+  "logOut" : "Դուրս գալ"
 }

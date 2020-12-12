@@ -12,8 +12,11 @@ const items = [{id:0, name:'EN', value:'en'},{id:1, name:'AM', value:'am'}]
 const Header = ({theme, toggleTheme}) => {
     const [trigger, setTrigger] = useState(false);
     const {t, i18n} = useTranslation();
-    const {  onCLickHandler, value}  =  useDropDown(false, {name:'EN', value:'en'})
-    console.log(value)
+    const {  onCLickHandler, value}  =  useDropDown(false,
+        JSON.parse(localStorage.getItem('lang')) || {name:'EN', value:'en'},
+        true
+    );
+
     useEffect(() => {
         i18n.changeLanguage(value.value);
     }, [value, i18n])

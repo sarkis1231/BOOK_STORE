@@ -12,7 +12,7 @@ const PrivateRoute = ({component:Component, allowedRoles, ...rest}) => {
         <Route {...rest} render={(props) => routePermission ?
             (<Component {...props}/>) :
             (
-                <Redirect to="/login"/>
+                <Redirect to="/"/>
             )
         }
         />

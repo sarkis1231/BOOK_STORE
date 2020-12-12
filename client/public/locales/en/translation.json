@@ -9,5 +9,6 @@
   "email": "Email",
   "password":"Password",
   "register":"Register",
-  "confirmPassword": "Confirm password"
+  "confirmPassword": "Confirm password",
+  "logOut" : "Log out"
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 import {useHistory} from "react-router-dom";
 import {H1, StyledForm} from "../../styled/shared.styled";
@@ -10,13 +10,14 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {LoginValSchema} from "./config";
 import axios from "axios";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginUser} from "../../actions/authActions";
 
 
 const Login = () => {
     const { t } = useTranslation();
     const history = useHistory();
+    const isAuth  = useSelector(state => state.auth.isAuthenticated);
     const { register, handleSubmit, errors } = useForm({
         resolver: yupResolver(LoginValSchema)
     });
@@ -24,16 +25,23 @@ const Login = () => {
     const dispatch = useDispatch();
 
     const onSubmit = (values) => {
-        console.log(values)
         axios.post('/login', values, {
             baseURL:'http://localhost:8080'
         }).then(res => {
             if(res) {
                 dispatch(loginUser(res));
-                history.push('/');
+                history.push('/home');
             }
         }).catch(e => console.log(e))
     }
+
+    useEffect(() => {
+        if(Object.keys(isAuth).length) {
+           history.push('/home')
+        }
+    }, [isAuth, history])
+
+
 
     return (
         <StyledFlexContainer>

@@ -1,4 +1,3 @@
-// import {setAuthToken} from "../util/redux";
 import jwt_decode from "jwt-decode";
 import history from "../utils/history";
 import {AUTH_TYPES} from "./types";
@@ -42,5 +41,4 @@ export const logOutUser = () => (dispatch) => {
     }
     setAuthToken();
     dispatch(setCurrentUser({}));
-    history.push('/login');
 };

@@ -10,6 +10,9 @@ import {useForm} from "react-hook-form";
 import {RegisterValSchema} from "./config";
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from "axios";
+import {useSelector} from "react-redux";
+
+const {useEffect} = require("react");
 
 const Register = () => {
 
@@ -18,6 +21,7 @@ const Register = () => {
     const { register, handleSubmit, errors } = useForm({
         resolver: yupResolver(RegisterValSchema)
     });
+    const isAuth  = useSelector(state => state.auth.isAuthenticated);
 
     const onSubmit = (values) => {
         console.log(values)
@@ -29,6 +33,12 @@ const Register = () => {
             }
         }).catch(e => console.log(e))
     }
+
+    useEffect(() => {
+        if(Object.keys(isAuth).length) {
+            history.push('/')
+        }
+    }, [isAuth, history])
 
     return (
         <StyledFlexContainer>

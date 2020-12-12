@@ -1,18 +1,24 @@
-import React, {useEffect} from 'react';
-import {Link, useHistory} from "react-router-dom";
+import React from 'react';
+import {Link} from "react-router-dom";
 import styled from 'styled-components';
-import {FlexContainer} from "../../styled/layout.styled";
+import {FlexContainer, FlexItem} from "../../styled/layout.styled";
 import Input from "../Reusable/Input";
 import ThemeToggle from "../ThemeToggle";
 import {useTranslation} from "react-i18next";
 import DropDown from "../Reusable/DropDown";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {logOutUser} from "../../actions/authActions";
+import Button from "../Reusable/Button";
+import history from "../../utils/history";
 
 const Nav = ({theme, toggleTheme, isOpen, items, value, onCLickHandler}) => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const history = useHistory();
+    const isAuth  = useSelector(state => state.auth.isAuthenticated);
+    const handleLogOut = () => {
+        dispatch(logOutUser());
+        history.push('/');
+    }
     return (
         <>
             <StyledFlexContainer
@@ -21,15 +27,21 @@ const Nav = ({theme, toggleTheme, isOpen, items, value, onCLickHandler}) => {
                 justifyContent='space-between'
                 isOpen={isOpen}
             >
-            <Input type='searchBar'
-                   searchDisplay={'flex'}
-                   mobileDisplay='none'
-                   placeHolder={t('searchPlaceHolder')}
-            />
-                <NavLink to='/'>{t('headerItem.item1')}</NavLink>
-                <NavLink to='/about'>{t('headerItem.item2')}</NavLink>
-                <NavLink to='/login'>{t('headerItem.item3')}</NavLink>
-                <button onClick={() => dispatch(logOutUser())}>log out</button>
+                <Input type='searchBar'
+                       searchDisplay={'flex'}
+                       mobileDisplay='none'
+                       placeHolder={t('searchPlaceHolder')}
+                />
+                <NavLink to='/home'>{t('headerItem.item1')}</NavLink>
+                <NavLink to='/'>{t('headerItem.item2')}</NavLink>
+                {!Object.keys(isAuth).length && <NavLink to='/login'>{t('headerItem.item3')}</NavLink>}
+                {Object.keys(isAuth).length ?
+                    <FlexItem width='115px' onClick={() => handleLogOut()}>
+                        <Button>
+                            {t(`logOut`)}
+                        </Button>
+                    </FlexItem>
+                    : null}
                 <ThemeToggle toggleTheme={toggleTheme} theme={theme}/>
                 <DropDown
                     items={items}
