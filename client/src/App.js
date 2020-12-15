@@ -12,7 +12,7 @@ import Routes from "./Routes";
 import {setAuthToken} from "./utils/redux";
 import {logOutUser, setCurrentUser} from "./actions/authActions";
 
-axios.defaults.baseURL = 'http://localhost:8080'; //tODO do it with process.env and should match BE port
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 function App() {
 
@@ -29,14 +29,14 @@ function App() {
         store.dispatch(setCurrentUser(decoded));
 
         // Check for expired token
-        // const currentTime = Date.now() / 1000;
-        // if (decoded.exp < currentTime) {
-        //     // Logout user
-        //     store.dispatch(logOutUser());
-        //     // store.dispatch(clearCurrentProfile()); //TODO check the profile later
-        //     // Redirect to login
-        //     window.location.href = '/login';
-        // }
+        const currentTime = Date.now() / 1000;
+        if (decoded.exp < currentTime) {
+            // Logout user
+            store.dispatch(logOutUser());
+            // store.dispatch(clearCurrentProfile());
+            // Redirect to login
+            window.location.href = '/login';
+        }
     }
 
 
