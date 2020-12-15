@@ -25,9 +25,7 @@ const Login = () => {
     const dispatch = useDispatch();
 
     const onSubmit = (values) => {
-        axios.post('/login', values, {
-            baseURL:'http://localhost:8080'
-        }).then(res => {
+        axios.post('/users/login', values).then(res => {
             if(res) {
                 dispatch(loginUser(res));
                 history.push('/home');

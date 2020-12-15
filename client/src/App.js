@@ -1,6 +1,7 @@
 import React from 'react'
 import {GlobalStyles} from "./styled/global";
 import jwt_decode from 'jwt-decode';
+import axios from 'axios';
 import {
     BrowserRouter as Router,
 } from "react-router-dom";
@@ -10,6 +11,8 @@ import {store} from "./store";
 import Routes from "./Routes";
 import {setAuthToken} from "./utils/redux";
 import {logOutUser, setCurrentUser} from "./actions/authActions";
+
+axios.defaults.baseURL = 'http://localhost:8080'; //tODO do it with process.env and should match BE port
 
 function App() {
 
