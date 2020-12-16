@@ -1,8 +1,7 @@
-const {param} = require("express");
-
+const {param} = require("express-validator");
 const mongoose = require("mongoose");
 
-export const paramIdValidation = [
+const paramIdValidation = [
     param('id')
         .custom(function (value) {
             return mongoose.Types.ObjectId.isValid(value);
