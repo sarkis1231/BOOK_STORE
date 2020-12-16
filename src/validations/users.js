@@ -55,39 +55,11 @@ const registerValidation = [
     ,
 ];
 
-const registerUserValidation = [
-    body("email")
-        .notEmpty()
-        .isEmail()
-        .bail()
-        .withMessage(MESSAGES.VALID_EMAIL)
-        .custom(function (value, {req}) {
-            return Users.findOne({email: value}).then(function (userDoc) {
-                if (userDoc) {
-                    return Promise.reject(MESSAGES.EMAIL_IS_REGISTERED);
-                }
-            });
-        }).normalizeEmail(),
-    body("password")
-        .trim()
-        .isLength({min: 5}),
-    body("role")
-        .custom(function (value) {
-            return ALL_USER_ROLES.includes(value);
-        }),
-    body("confirm_password")
-        .custom(function (value, {req}) {
-            return value === req.body.password
-        }),
-    body('name')
-        .trim()
-        .notEmpty()
-];
-
 const editUserValidation = [
     body('name')
         .trim()
-        .notEmpty(),
+        .notEmpty()
+        .withMessage(MESSAGES.REQUIRED_FIELDS),
     body("email")
         .isEmail()
         .bail()
@@ -96,7 +68,7 @@ const editUserValidation = [
             if (value === req.user.email) { //leaving the same email
                 return true;
             }
-            return Users.findOne({email: value}).then(function (userDoc) {
+            return Users.findOne({email: value}).then(function (userDoc) { //TODO find a way to send to controller
                 if (userDoc) {
                     return Promise.reject(MESSAGES.EMAIL_IS_REGISTERED);
                 }
@@ -131,7 +103,6 @@ const usersRoleValidation = [
 module.exports = {
     loginValidation,
     registerValidation,
-    registerUserValidation,
     editUserValidation,
     changePasswordValidation,
     usersRoleValidation

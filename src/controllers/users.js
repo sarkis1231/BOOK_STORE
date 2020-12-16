@@ -1,6 +1,7 @@
 const {SECRET_KEY} = require("../config/keys");
 const {sign} = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const {errorValidation} = require("../utility/controllers/errors");
 const {Users} = require("../models/Users");
 const {MESSAGES} = require("../utility/constants");
 const {messageAlert} = require("../utility/constants");
@@ -11,11 +12,8 @@ const {validationResult} = require("express-validator");
 
 async function register(req, res, next) {
     try {
-        const errors = validationResult(req).formatWith(errorFormatter);
+        errorValidation(req);
 
-        if (!errors.isEmpty()) {
-            errorThrower("Validation Failed", 422, errors.mapped());
-        }
         const {email, name, password} = req.body;
         const newUser = new Users({email, name, password});
 
@@ -59,4 +57,36 @@ async function login(req, res, next) {
 
 }
 
-module.exports = {login, register};
+async function editUser(req, res, next) {
+    const {name, email} = req.body;
+    try {
+        errorValidation(req);
+
+        const user = await Users.findOne({email});
+        user.name = name;
+        user.email = email;
+
+        if(await user.save()){
+            return  alert(res,200,messageAlert.success,MESSAGES.VALUE_IS_CHANGED);
+        }
+    } catch (err) {
+        errorCatcher(next, err);
+    }
+}
+
+async function deleteUser(req,res,next) {
+    try {
+        errorValidation(req);
+
+        const p = await Users.deleteOne({id:req.params.id});
+        if (isEmpty(p)) {
+            errorThrower(MESSAGES.NO_SUCH_DATA_EXISTS, 422);
+        }
+        return alert(res, 200, messageAlert.success, ITEM_DELETED);
+
+    } catch (err) {
+        errorCatcher(next, err);
+    }
+}
+
+module.exports = {login, register, editUser,deleteUser};

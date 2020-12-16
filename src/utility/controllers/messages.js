@@ -1,9 +1,9 @@
 const {MESSAGES} = require("../constants");
 
-function alert(res,status,type,message){
+function alert(res, status, type, message) {
     res.status(status).json({
-        alert:type,
-        message:message
+        alert: type,
+        message: message
     });
 }
 
