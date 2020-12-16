@@ -1,9 +1,9 @@
-const {paramIdValidation} =  require("../validations/general");
-
-const {login,register,editUser,deleteUser} = require("../controllers/users");
 const {Router} = require('express');
 
-const {isAuth,isAuthorized} = require("../middlewares/authentication");
+const {login,register,editUser,deleteUser} = require("../controllers/users");
+const {paramIdValidation} =  require("../validations/general");
+
+const {isAuth,isAdmin} = require("../middlewares/authentication");
 
 const {registerValidation,loginValidation,editUserValidation} = require("../validations/users");
 
@@ -14,8 +14,8 @@ router.put("/register", registerValidation, register);
 
 router.post("/login", loginValidation,login);
 
-router.put('/:id',paramIdValidation,editUserValidation,editUser);
+router.put('/:id',isAuth(),isAdmin(),paramIdValidation,editUserValidation,editUser);
 
-router.delete('/:id',paramIdValidation,deleteUser);
+router.delete('/:id',isAuth(),isAdmin(),paramIdValidation,deleteUser);
 
 module.exports = router;

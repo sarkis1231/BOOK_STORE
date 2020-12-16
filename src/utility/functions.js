@@ -6,6 +6,6 @@ function isEmpty(value) {
             (typeof value === 'string' && value.trim().length === 0)
         )
     );
-}
+} //prototype Lib Util let's say
 
 module.exports = {isEmpty};
