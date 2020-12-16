@@ -68,7 +68,7 @@ const editUserValidation = [
             if (value === req.user.email) { //leaving the same email
                 return true;
             }
-            return Users.findOne({email: value}).then(function (userDoc) { //TODO find a way to send to controller
+            return Users.findOne({email: value}).then(function (userDoc) {
                 if (userDoc) {
                     return Promise.reject(MESSAGES.EMAIL_IS_REGISTERED);
                 }

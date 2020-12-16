@@ -1,6 +1,7 @@
 const {SECRET_KEY} = require("../config/keys");
 const {sign} = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const {isEmpty} = require("../utility/functions");
 const {errorValidation} = require("../utility/controllers/errors");
 const {Users} = require("../models/Users");
 const {MESSAGES} = require("../utility/constants");
@@ -62,7 +63,7 @@ async function editUser(req, res, next) {
     try {
         errorValidation(req);
 
-        const user = await Users.findOne({email});
+        const user = await Users.findOne({id:req.params.id});
         user.name = name;
         user.email = email;
 

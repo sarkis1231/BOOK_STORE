@@ -1,4 +1,4 @@
-import {paramIdValidation} from "../validations/general";
+const {paramIdValidation} =  require("../validations/general");
 
 const {login,register,editUser,deleteUser} = require("../controllers/users");
 const {Router} = require('express');
