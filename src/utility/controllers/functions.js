@@ -6,7 +6,9 @@ const {isEmpty} = require("../functions");
 const  {alert} = require("../controllers/messages");
 const {errorValidation} = require("./errors");
 
-function deleteController (Model) {
+//TODO maybe obj or function with props getControllerFn
+
+function getDeleteControllerFn (Model) {
     if(!Model) { //TODO to be a Mongoose instance or class Mongoose
         console.error("Model not defined");
         return ;
@@ -28,4 +30,4 @@ function deleteController (Model) {
 }
 
 
-module.exports = {deleteController};
+module.exports = {getDeleteControllerFn};

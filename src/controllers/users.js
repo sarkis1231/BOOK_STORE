@@ -1,7 +1,7 @@
 const {SECRET_KEY} = require("../config/keys");
 const {sign} = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const {isEmpty} = require("../utility/functions");
+const {getDeleteControllerFn} = require("../utility/controllers/functions");
 const {errorValidation} = require("../utility/controllers/errors");
 const {Users} = require("../models/Users");
 const {MESSAGES} = require("../utility/constants");
@@ -75,19 +75,6 @@ async function editUser(req, res, next) {
     }
 }
 
-async function deleteUser(req,res,next) {
-    try {
-        errorValidation(req);
-
-        const p = await Users.deleteOne({id:req.params.id});
-        if (isEmpty(p)) {
-            errorThrower(MESSAGES.NO_SUCH_DATA_EXISTS, 422);
-        }
-        return alert(res, 200, messageAlert.success, MESSAGES.ITEM_DELETED);
-
-    } catch (err) {
-        errorCatcher(next, err);
-    }
-}
+let deleteUser = getDeleteControllerFn(Users);
 
 module.exports = {login, register, editUser,deleteUser};
