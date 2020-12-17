@@ -1,9 +1,21 @@
+const {editBookValidation} = require("../validations/books");
+const {deleteBook} = require("../controllers/book");
+const {editBook} = require("../controllers/book");
 const {Router} = require('express');
 
-const {isAuth,isAuthorized} = require("../middlewares/authentication");
+const {paramIdValidation} =  require("../validations/general");
+
+const {isAuth,isAdmin} = require("../middlewares/authentication");
 
 
 
 const router = Router();
 
-module.exports = router;
+
+router.post('/',isAuth(),isAdmin(),addBookValidation,editBook);
+
+router.put('/:id',isAuth(),isAdmin(),paramIdValidation,editBookValidation,editBook);
+
+router.delete('/:id',isAuth(),isAdmin(),paramIdValidation,deleteBook);
+
+module.exports = router

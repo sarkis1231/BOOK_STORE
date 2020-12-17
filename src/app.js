@@ -13,7 +13,7 @@ const app = express();
 
 
 //security xss
-app.use(helmet({}));
+app.use(helmet());
 
 //request parser
 app.use(bodyParser.urlencoded({
