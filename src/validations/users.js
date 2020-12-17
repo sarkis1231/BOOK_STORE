@@ -4,6 +4,7 @@ const {ALL_USER_ROLES} = require("../roles");
 const bcrypt = require("bcryptjs");
 const {MESSAGES} = require("../utility/constants");
 
+//TODO with object factory approach
 
 const loginValidation = [
     body("email")

@@ -1,4 +1,4 @@
-const {getDeleteControllerFn} = require("../utility/controllers/functions");
+const {getCtrlFn} = require("../utility/controllers/functions");
 const {errorCatcher} = require("../utility/controllers/errors");
 const {errorValidation} = require("../utility/controllers/errors");
 const {Books} = require("../models/Books");
@@ -24,6 +24,6 @@ async function editBook(req, res, next) {
     }
 }
 
-let deleteBook = getDeleteControllerFn(Books);
+let deleteBook = getCtrlFn.Delete(Books);
 
 module.exports = {editBook,deleteBook};

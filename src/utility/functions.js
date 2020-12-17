@@ -1,4 +1,5 @@
-function isEmpty(value) {
+let Fn = {};
+Fn.isEmpty= function (value) {
     return (
         !!(value === undefined || value === null ||
             (typeof value === 'object' && !(Array.isArray(value)) && value["empty"]) ||
@@ -8,4 +9,6 @@ function isEmpty(value) {
     );
 } //prototype Lib Util let's say
 
-module.exports = {isEmpty};
+Fn.noop= function (){}
+
+module.exports = {Fn};

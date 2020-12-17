@@ -1,7 +1,7 @@
 const {SECRET_KEY} = require("../config/keys");
 const {sign} = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const {getDeleteControllerFn} = require("../utility/controllers/functions");
+const {getCtrlFn} = require("../utility/controllers/functions");
 const {errorValidation} = require("../utility/controllers/errors");
 const {Users} = require("../models/Users");
 const {MESSAGES} = require("../utility/constants");
@@ -75,6 +75,6 @@ async function editUser(req, res, next) {
     }
 }
 
-let deleteUser = getDeleteControllerFn(Users);
+let deleteUser = getCtrlFn.Delete(Users);
 
 module.exports = {login, register, editUser,deleteUser};
