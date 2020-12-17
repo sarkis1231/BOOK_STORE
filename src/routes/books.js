@@ -1,4 +1,4 @@
-const {editBookValidation} = require("../validations/books");
+const {editBookValidation,addBookValidation} = require("../validations/books");
 const {deleteBook} = require("../controllers/book");
 const {editBook} = require("../controllers/book");
 const {Router} = require('express');

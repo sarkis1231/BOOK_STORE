@@ -8,20 +8,23 @@ const {errorValidation} = require("../utility/controllers/errors");
 const  {alert} = require("../utility/controllers/messages");
 
 
+async function addBook(req, res, next) {
 
-async function editBook(req, res, next) {
-    const {name, email} = req.body;
     try {
         errorValidation(req);
 
-      /*  const user = await Users.findOne({id:req.params.id});
-        user.name = name;
-        user.email = email;
+    } catch (err) {
+        errorCatcher(next, err);
+    }
+}
 
-        if(await user.save()){
-            return  alert(res,200,messageAlert.success,MESSAGES.VALUE_IS_CHANGED);
-        }
-   */ } catch (err) {
+
+async function editBook(req, res, next) {
+
+    try {
+        errorValidation(req);
+
+    } catch (err) {
         errorCatcher(next, err);
     }
 }
