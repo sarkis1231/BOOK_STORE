@@ -83,7 +83,7 @@ async function deleteUser(req,res,next) {
         if (isEmpty(p)) {
             errorThrower(MESSAGES.NO_SUCH_DATA_EXISTS, 422);
         }
-        return alert(res, 200, messageAlert.success, ITEM_DELETED);
+        return alert(res, 200, messageAlert.success, MESSAGES.ITEM_DELETED);
 
     } catch (err) {
         errorCatcher(next, err);

@@ -9,7 +9,8 @@ const MESSAGES = {
     WRONG_PASSWORD: "Wrong Password",
     VALUE_IS_CHANGED: "Value is Changed",
     NO_SUCH_DATA_EXISTS: "No such Data Exist",
-    UNAUTHORISED: "UnAuthorized"
+    UNAUTHORISED: "UnAuthorized",
+    ITEM_DELETED:"Item is deleted successfully"
 };
 
 const messageAlert = {
