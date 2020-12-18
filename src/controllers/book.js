@@ -26,4 +26,4 @@ async function editBook(req, res, next) {
 
 let deleteBook = getCtrlFn.Delete(Books);
 
-module.exports = {editBook,deleteBook};
+module.exports = {addBook,editBook,deleteBook};
