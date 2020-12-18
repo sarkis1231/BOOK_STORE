@@ -4,9 +4,9 @@ const {ALL_USER_ROLES} = require("../roles");
 const bcrypt = require("bcryptjs");
 const {MESSAGES} = require("../utility/constants");
 
-//TODO with object factory approach
+const UserValidation = {};
 
-const loginValidation = [
+UserValidation.login = [
     body("email")
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
@@ -26,7 +26,7 @@ const loginValidation = [
         .isLength({min: 5})
 ];
 
-const registerValidation = [
+UserValidation.register = [
     body("email")
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
@@ -56,7 +56,7 @@ const registerValidation = [
     ,
 ];
 
-const editUserValidation = [
+UserValidation.edit = [
     body('name')
         .trim()
         .notEmpty()
@@ -77,7 +77,7 @@ const editUserValidation = [
         }).normalizeEmail()
 ];
 
-const changePasswordValidation = [
+UserValidation.changePassword = [
     body("current_password").notEmpty().custom(function (value, {req}) {
         return bcrypt.compare(value, req.user.password).then(function (match) {
             if (!match) {
@@ -94,17 +94,11 @@ const changePasswordValidation = [
     })
 ];
 
-const usersRoleValidation = [
+UserValidation.Role = [
     param('role')
         .custom(function (value) {
             return ALL_USER_ROLES.some(i => i === value);
         })
 ];
 
-module.exports = {
-    loginValidation,
-    registerValidation,
-    editUserValidation,
-    changePasswordValidation,
-    usersRoleValidation
-};
+module.exports = UserValidation;

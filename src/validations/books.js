@@ -1,17 +1,17 @@
 const {MESSAGES} = require("../utility/constants");
 const {body, param} = require("express-validator");
-//TODO with object factory approach
 
-const addBookValidation = [
+const BookValidation = {};
+
+BookValidation.add = [
 
 ];
 
-
-const editBookValidation = [
+BookValidation.edit = [
     body('name')
         .trim()
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS),
 ];
 
-module.exports = {addBookValidation,editBookValidation};
+module.exports = BookValidation;
