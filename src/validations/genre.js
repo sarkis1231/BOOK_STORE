@@ -1,17 +1,17 @@
 const {MESSAGES} = require("../utility/constants");
 const {body, param} = require("express-validator");
 
-const BookValidation = {};
+const GenreValidation = {};
 
-BookValidation.add = [ //TODO Genre Validation
-    body('name')
+GenreValidation.add = [
+    body('name') //tODO check whether or not
         .trim()
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS),
 ];
 
-BookValidation.edit = [ //TODO Genre Validation
-    body('name')
+GenreValidation.edit = [
+    body('name') //tODO check whether or not
         .trim()
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS),

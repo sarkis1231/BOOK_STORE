@@ -12,7 +12,8 @@ const MESSAGES = {
     NO_SUCH_DATA_EXISTS: "No such Data Exist",
     UNAUTHORISED: "UnAuthorized",
     ITEM_DELETED:"Item is deleted successfully",
-    BOOK_ADDED:"Book is added Successfully"
+    BOOK_ADDED:"Book is added Successfully",
+    Genre_ADDED:"Book is added Successfully",
 };
 
 const messageAlert = {

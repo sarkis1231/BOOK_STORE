@@ -19,4 +19,6 @@ const bookSchema = new Schema({
 
 const Books = model('Books', bookSchema);
 
+//TODO get and delete with disabled functionality in mind
+
 module.exports = {Books};
