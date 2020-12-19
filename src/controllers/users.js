@@ -7,8 +7,8 @@ const {Users} = require("../models/Users");
 const {MESSAGES} = require("../utility/constants");
 const {messageAlert} = require("../utility/constants");
 const  {alert} = require("../utility/controllers/messages");
-const  {errorThrower,errorCatcher,errorFormatter} = require("../utility/controllers/errors");
-const {validationResult} = require("express-validator");
+const  {errorCatcher} = require("../utility/controllers/errors");
+
 
 
 async function register(req, res, next) {
@@ -32,10 +32,7 @@ async function register(req, res, next) {
 async function login(req, res, next) {
     const {email, password} = req.body;
     try {
-        const errors = validationResult(req).formatWith(errorFormatter);
-        if (!errors.isEmpty()) {
-            errorThrower("Validation Failed", 422, errors.mapped());
-        }
+        errorValidation(req);
 
         const user = await Users.findOne({email});
 
