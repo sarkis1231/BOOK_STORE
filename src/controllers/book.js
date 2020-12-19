@@ -13,9 +13,9 @@ async function addBook(req, res, next) {
         errorValidation(req);
         const newBook = new Books({name,genre});
         if(await newBook.save()){
-            return alert(res, 200, messageAlert.success, 'Books is added Successfully');
+            return alert(res, 200, messageAlert.success, MESSAGES.BOOK_ADDED);
         }
-        
+
     } catch (err) {
         errorCatcher(next, err);
     }

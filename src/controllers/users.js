@@ -21,7 +21,7 @@ async function register(req, res, next) {
         const salt = await bcrypt.genSalt(10);
         newUser.password = await bcrypt.hash(newUser.password, salt);
         if(await newUser.save()){
-            return alert(res, 200, messageAlert.success, 'Registered Successfully');
+            return alert(res, 200, messageAlert.success, MESSAGES.USER_REGISTERED_SUCCESSFULLY);
         }
         alert(res, 304, messageAlert.success, MESSAGES.NOT_MODIFIED);
     } catch (err) {
