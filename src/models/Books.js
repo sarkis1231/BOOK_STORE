@@ -10,8 +10,7 @@ const bookSchema = new Schema({
         required: true
     },
     sub_genre: {
-        type: String,
-        required: true
+        type: String
     },
     disabled: {
         type:Boolean
