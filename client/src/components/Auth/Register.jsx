@@ -25,9 +25,7 @@ const Register = () => {
 
     const onSubmit = (values) => {
         console.log(values)
-        axios.put('/users/register', values, {
-            baseURL:'http://localhost:3000'
-        }).then(res => {
+        axios.put('/users/register', values).then(res => {
             if(res) {
                 history.push('/login');
             }
