@@ -1,5 +1,4 @@
 import jwt_decode from "jwt-decode";
-import history from "../utils/history";
 import {AUTH_TYPES} from "./types";
 import {setAuthToken} from "../utils/redux";
 
