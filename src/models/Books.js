@@ -17,23 +17,23 @@ const bookSchema = new Schema({
 
 
 
-bookSchema.statics.get = async function () {
-
+bookSchema.statics.get = async function (query) {
+    return this.findById(query);
 };
 
-bookSchema.statics.getOne = async function () {
-
+bookSchema.statics.getOne = async function (query) {
+    return this.findOne(query);
 };
 
-bookSchema.statics.getById = async function () {
-
+bookSchema.statics.getById = function (id) {
+    return this.findById(id);
 };
 
-bookSchema.statics.disable = async function () {
-
+bookSchema.statics.disable = async function (query) {
+    //setting disable to true;
 };
 
-bookSchema.statics.disableById = async function () {
+bookSchema.statics.disableById = async function (id) {
 
 };
 

@@ -11,4 +11,13 @@ Fn.isEmpty= function (value) {
 
 Fn.noop= function (){}
 
+Fn.isString = function (str) {
+    return typeof str === 'string' || str instanceof String;
+};
+
+Fn.isObject = function (obj) {
+    let type = typeof obj;
+    return type === 'function' || type === 'object' && !!obj;
+};
+
 module.exports = {Fn};

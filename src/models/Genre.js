@@ -17,23 +17,23 @@ const genreSchema = new Schema({
 
 
 
-genreSchema.statics.get = async function () {
+genreSchema.statics.get = async function (query) {
 
 };
 
-genreSchema.statics.getOne = async function () {
+genreSchema.statics.getOne = async function (query) {
 
 };
 
-genreSchema.statics.getById = async function () {
+genreSchema.statics.getById = async function (query) {
 
 };
 
-genreSchema.statics.disable = async function () {
+genreSchema.statics.disable = async function (query) {
 
 };
 
-genreSchema.statics.disableById = async function () {
+genreSchema.statics.disableById = async function (query) {
 
 };
 

@@ -24,23 +24,23 @@ const userSchema = new Schema({
     }
 }, {timestamps: true});
 
-userSchema.statics.get = async function () {
+userSchema.statics.get = async function (query) {
 
 };
 
-userSchema.statics.getOne = async function () {
+userSchema.statics.getOne = async function (query) {
 
 };
 
-userSchema.statics.getById = async function () {
+userSchema.statics.getById = async function (query) {
 
 };
 
-userSchema.statics.disable = async function () {
+userSchema.statics.disable = async function (query) {
 
 };
 
-userSchema.statics.disableById = async function () {
+userSchema.statics.disableById = async function (query) {
 
 };
 
