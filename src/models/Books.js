@@ -6,11 +6,9 @@ const bookSchema = new Schema({
         required: true
     },
     genre: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Genres',
         required: true
-    },
-    sub_genre: {
-        type: String
     },
     disabled: {
         type:Boolean

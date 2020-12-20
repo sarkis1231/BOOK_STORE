@@ -2,10 +2,11 @@ const {MESSAGES} = require("../utility/constants");
 const {body, param} = require("express-validator");
 const mongoose = require("mongoose");
 const {Books} = require("../models/Books");
+const {Genres} = require("../models/Genre");
 
 const BookValidation = {};
 
-BookValidation.add = [ //TODO Genre Validation
+BookValidation.add = [
     body('name')
         .trim()
         .notEmpty()
@@ -16,10 +17,20 @@ BookValidation.add = [ //TODO Genre Validation
                     return Promise.reject(MESSAGES.BOOK_ALREADY_EXIST);
                 }
             });
+        }),
+    body('genre')
+        .notEmpty()
+        .withMessage(MESSAGES.REQUIRED_FIELDS)
+        .custom(function (value, {req}) {
+            Genres.findById(value).then(function (genre) {
+                if (!genre) {
+                    return Promise.reject(MESSAGES.GENRE_NOT_FOUND);
+                }
+            });
         })
 ];
 
-BookValidation.edit = [ //TODO Genre Validation
+BookValidation.edit = [
     body('name')
         .trim()
         .notEmpty()
@@ -40,6 +51,16 @@ BookValidation.edit = [ //TODO Genre Validation
             Books.findOne({name: value}).then(function (book) {
                 if (!book) {
                     return Promise.reject(MESSAGES.BOOK_NOT_FOUND);
+                }
+            });
+        }),
+    body('genre')
+        .notEmpty()
+        .withMessage(MESSAGES.REQUIRED_FIELDS)
+        .custom(function (value, {req}) {
+            Genres.findById(value).then(function (genre) {
+                if (!genre) {
+                    return Promise.reject(MESSAGES.GENRE_NOT_FOUND);
                 }
             });
         })
