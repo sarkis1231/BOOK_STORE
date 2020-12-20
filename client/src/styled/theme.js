@@ -21,6 +21,11 @@ export const lightTheme = {
     button: {
         color: '#000',
         bgColor: '#F1F1F1',
+    },
+    modal: {
+        overlayBackground: 'rgba(54, 53, 55, 0.8)',
+        color: '#363537',
+        bgColor: '#E2E2E2',
     }
 }
 
@@ -47,5 +52,10 @@ export const darkTheme = {
     button: {
         color: '#FFF',
         bgColor: '#444',
+    },
+    modal: {
+        overlayBackground: 'rgba(250, 250, 250, 0.8)',
+        color: '#FAFAFA',
+        bgColor: '#363537',
     }
 }
