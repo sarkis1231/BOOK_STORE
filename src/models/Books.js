@@ -15,8 +15,28 @@ const bookSchema = new Schema({
     }
 },{timestamps:true});
 
-const Books = model('Books', bookSchema);
 
-//TODO get and delete with disabled functionality in mind
+
+bookSchema.statics.get = async function () {
+
+};
+
+bookSchema.statics.getOne = async function () {
+
+};
+
+bookSchema.statics.getById = async function () {
+
+};
+
+bookSchema.statics.disable = async function () {
+
+};
+
+bookSchema.statics.disableById = async function () {
+
+};
+
+const Books = model('Books', bookSchema);
 
 module.exports = {Books};

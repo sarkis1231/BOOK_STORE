@@ -1,5 +1,5 @@
-const {Schema,model} = require("mongoose");
-const {USER_ROLES, ALL_USER_ROLES} =  require("../roles.js");
+const {Schema, model} = require("mongoose");
+const {USER_ROLES, ALL_USER_ROLES} = require("../roles.js");
 
 const userSchema = new Schema({
     name: {
@@ -20,12 +20,33 @@ const userSchema = new Schema({
         enum: ALL_USER_ROLES
     },
     disabled: {
-        type:Boolean
+        type: Boolean
     }
-},{timestamps:true});
+}, {timestamps: true});
+
+userSchema.statics.get = async function () {
+
+};
+
+userSchema.statics.getOne = async function () {
+
+};
+
+userSchema.statics.getById = async function () {
+
+};
+
+userSchema.statics.disable = async function () {
+
+};
+
+userSchema.statics.disableById = async function () {
+
+};
+
 
 const Users = model('Users', userSchema);
 
-//TODO get and delete with disabled functionality in mind
+//TODO get and delete with disabled functionality in mind with statics
 
 module.exports = {Users};

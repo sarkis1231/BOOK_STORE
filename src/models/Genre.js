@@ -15,8 +15,28 @@ const genreSchema = new Schema({
     }
 }, {timestamps: true});
 
-const Genres = model('Genres', genreSchema);
 
-//TODO get and delete with disabled functionality in mind
+
+genreSchema.statics.get = async function () {
+
+};
+
+genreSchema.statics.getOne = async function () {
+
+};
+
+genreSchema.statics.getById = async function () {
+
+};
+
+genreSchema.statics.disable = async function () {
+
+};
+
+genreSchema.statics.disableById = async function () {
+
+};
+
+const Genres = model('Genres', genreSchema);
 
 module.exports = {Genres};
