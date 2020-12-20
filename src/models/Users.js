@@ -26,4 +26,6 @@ const userSchema = new Schema({
 
 const Users = model('Users', userSchema);
 
+//TODO get and delete with disabled functionality in mind
+
 module.exports = {Users};

@@ -1,15 +1,21 @@
-const {login,register} = require("../controllers/users");
 const {Router} = require('express');
 
-const {isAuth,isAuthorized} = require("../middlewares/authentication");
+const UserValidation = require("../validations/users");
+const {paramIdValidation} =  require("../validations/general");
 
-const {registerValidation,loginValidation} = require("../validations/users");
+const {login,register,editUser,deleteUser} = require("../controllers/users");
+
+const {isAuth,isAdmin} = require("../middlewares/authentication");
 
 
 const router = Router();
 
-router.put("/register", registerValidation, register);
+router.put("/register", UserValidation.register, register);
 
-router.post("/login", loginValidation,login);
+router.post("/login", UserValidation.login,login);
+
+router.put('/:id',isAuth(),isAdmin(),paramIdValidation,UserValidation.edit,editUser);
+
+router.delete('/:id',isAuth(),isAdmin(),paramIdValidation,deleteUser);
 
 module.exports = router;

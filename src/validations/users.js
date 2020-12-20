@@ -4,8 +4,9 @@ const {ALL_USER_ROLES} = require("../roles");
 const bcrypt = require("bcryptjs");
 const {MESSAGES} = require("../utility/constants");
 
+const UserValidation = {};
 
-const loginValidation = [
+UserValidation.login = [
     body("email")
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
@@ -25,7 +26,7 @@ const loginValidation = [
         .isLength({min: 5})
 ];
 
-const registerValidation = [
+UserValidation.register = [
     body("email")
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
@@ -55,39 +56,11 @@ const registerValidation = [
     ,
 ];
 
-const registerUserValidation = [
-    body("email")
-        .notEmpty()
-        .isEmail()
-        .bail()
-        .withMessage(MESSAGES.VALID_EMAIL)
-        .custom(function (value, {req}) {
-            return Users.findOne({email: value}).then(function (userDoc) {
-                if (userDoc) {
-                    return Promise.reject(MESSAGES.EMAIL_IS_REGISTERED);
-                }
-            });
-        }).normalizeEmail(),
-    body("password")
-        .trim()
-        .isLength({min: 5}),
-    body("role")
-        .custom(function (value) {
-            return ALL_USER_ROLES.includes(value);
-        }),
-    body("confirm_password")
-        .custom(function (value, {req}) {
-            return value === req.body.password
-        }),
+UserValidation.edit = [
     body('name')
         .trim()
         .notEmpty()
-];
-
-const editUserValidation = [
-    body('name')
-        .trim()
-        .notEmpty(),
+        .withMessage(MESSAGES.REQUIRED_FIELDS),
     body("email")
         .isEmail()
         .bail()
@@ -104,7 +77,7 @@ const editUserValidation = [
         }).normalizeEmail()
 ];
 
-const changePasswordValidation = [
+UserValidation.changePassword = [
     body("current_password").notEmpty().custom(function (value, {req}) {
         return bcrypt.compare(value, req.user.password).then(function (match) {
             if (!match) {
@@ -121,18 +94,11 @@ const changePasswordValidation = [
     })
 ];
 
-const usersRoleValidation = [
+UserValidation.Role = [
     param('role')
         .custom(function (value) {
             return ALL_USER_ROLES.some(i => i === value);
         })
 ];
 
-module.exports = {
-    loginValidation,
-    registerValidation,
-    registerUserValidation,
-    editUserValidation,
-    changePasswordValidation,
-    usersRoleValidation
-};
+module.exports = UserValidation;

@@ -1,0 +1,1 @@
+//TODO maybe write a middleware that stores some DB call that will be use on two different things

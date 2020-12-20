@@ -1,4 +1,6 @@
 const passport =  require("passport");
+const {USER_ROLES} = require("../roles");
+const {MESSAGES} = require("../utility/constants");
 
 function isAuth() {
     return passport.authenticate("jwt", {
@@ -8,26 +10,46 @@ function isAuth() {
 
 function isAuthorized(whiteList) {
     return function (req, res,next)  {
-        if(whiteList.includes(req.user["role"])) {
+        let authorized;
+        if(Array.isArray(whiteList)) {
+            authorized = whiteList.includes(req.user["role"]);
+        } else {
+            authorized = whiteList === req.user["role"];
+        }
+
+        if(authorized) {
             return next();
         }
+
         res.status(401).json({
             status:401,
-            message:"UnAuthorised"
+            message:MESSAGES.UNAUTHORISED
         });
     }
 }
 
 function NotAuthorized(blackList) {
     return function (req, res, next)  {
-        if(blackList.includes(req.user["role"])) {
+        let notAuthorized;
+        if(Array.isArray(blackList)) {
+            notAuthorized = blackList.includes(req.user["role"]);
+        } else {
+            notAuthorized = blackList === req.user["role"];
+        }
+
+        if(notAuthorized) {
             return res.status(401).json({
                 status:401,
-                message:"UnAuthorised"
+                message:MESSAGES.UNAUTHORISED
             });
         }
+
         next();
     }
 }
 
-module.exports = {NotAuthorized,isAuth,isAuthorized}
+function isAdmin(){
+    return isAuthorized(USER_ROLES.Admin);
+}
+
+module.exports = {NotAuthorized,isAuth,isAuthorized,isAdmin}
