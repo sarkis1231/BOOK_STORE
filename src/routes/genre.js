@@ -13,7 +13,7 @@ const router = Router();
 
 router.post('/',isAuth(),isAdmin(),GenreValidation.add,addGenre);
 
-router.put('/:id',isAuth(),isAdmin(),paramIdValidation,GenreValidation.edit,editGenre);
+router.put('/:id',isAuth(),isAdmin(),GenreValidation.edit,editGenre);
 
 router.delete('/:id',isAuth(),isAdmin(),paramIdValidation,deleteGenre);
 

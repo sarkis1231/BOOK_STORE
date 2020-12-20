@@ -13,7 +13,7 @@ async function addGenre(req, res, next) {
         errorValidation(req);
         const newGenre = new Genres({name});
         if(await newGenre.save()){
-            return alert(res, 200, messageAlert.success, MESSAGES.Genre_ADDED);
+            return alert(res, 200, messageAlert.success, MESSAGES.GENRE_ADDED);
         }
 
     } catch (err) {

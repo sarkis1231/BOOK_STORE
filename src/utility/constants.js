@@ -13,7 +13,14 @@ const MESSAGES = {
     UNAUTHORISED: "UnAuthorized",
     ITEM_DELETED:"Item is deleted successfully",
     BOOK_ADDED:"Book is added Successfully",
-    Genre_ADDED:"Book is added Successfully",
+    BOOK_ALREADY_EXIST:"Book Already Exist",
+    BOOK_NOT_FOUND:"Book not found",
+    BOOK_NAME_ALREADY_EXIST:"Book name already exists",
+    GENRE_ADDED:"Genre is added Successfully",
+    GENRE_ALREADY_EXIST:"Genre Already Exist",
+    GENRE_NAME_ALREADY_EXIST:"Genre name Already Exist",
+    GENRE_NOT_FOUND:"Genre not found",
+    INVALID_QUERY_PARAM:"Invalid Query Param"
 };
 
 const messageAlert = {
