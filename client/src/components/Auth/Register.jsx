@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 import {useHistory} from "react-router-dom";
 import {H1, StyledForm} from "../../styled/shared.styled";
@@ -12,7 +12,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import axios from "axios";
 import {useSelector} from "react-redux";
 
-const {useEffect} = require("react");
 
 const Register = () => {
 
