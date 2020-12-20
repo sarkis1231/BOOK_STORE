@@ -39,9 +39,11 @@ const StyledDropDownContainer = styled(FlexContainer)`
   display: ${({dropDownDisplay}) => dropDownDisplay ? dropDownDisplay : 'flex'};
   cursor: pointer;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  margin: 0 20px;
   width: 80px;
    svg {
+   margin-left: 5px;
       ${({ toggleIcon }) => toggleIcon
     ? css`
             transform: rotateZ(-180deg);
@@ -65,7 +67,7 @@ const StyledTitle = styled.p`
    color: ${({theme}) => theme.dropDown.color};
    font-size: 14px;
    text-align: center;
-   margin: 0 auto;
+   margin: 0;
 `
 
 const StyledListItemContainer = styled(FlexContainer)`

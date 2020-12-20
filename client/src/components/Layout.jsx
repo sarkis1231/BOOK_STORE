@@ -1,15 +1,14 @@
 import React, {useContext} from 'react';
 import styled from 'styled-components'
 import Header from "./Header/Header";
-import {ThemeContext, ThemeDispatch} from "../context/ThemeContext/Context";
+import {ThemeDispatch} from "../context/ThemeContext/Context";
 
 const Layout = ({ children }) => {
     const toggleTheme = useContext(ThemeDispatch)
-    const theme = useContext(ThemeContext);
 
     return (
         <>
-                <Header toggleTheme={toggleTheme} theme={theme}/>
+                <Header toggleTheme={toggleTheme}/>
                 <StyledLayout>
                     {children}
                 </StyledLayout>

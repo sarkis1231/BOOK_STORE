@@ -3,6 +3,7 @@ import styled, {css} from 'styled-components';
 import {FlexContainer} from "../../styled/layout.styled";
 import {ReactComponent as CloseIcon} from '../../assets/svg/close.svg';
 import useOnClickOutside from "../../hooks/useOnClickOutside";
+import {Overlay} from "../../styled/shared.styled";
 
 const Modal = ({toggleModal, handleCloseModal, modalTitle, children}) => {
     const ref = useRef(null);
@@ -25,7 +26,7 @@ const Modal = ({toggleModal, handleCloseModal, modalTitle, children}) => {
 export default Modal;
 
 
-const StyledOverlay = styled.div`
+const StyledOverlay = styled(Overlay)`
     position: fixed;
     width: 100%;
     top: 0;

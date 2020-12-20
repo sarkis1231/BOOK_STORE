@@ -2,7 +2,7 @@ import {useMemo, useState} from 'react';
 
 export default function useDropDown(multiSelect = false, defaultValue = {}, isLocalStorage) {
     const [selection, setSelection] = useState([]);
-    const [value, setValue] = useState(defaultValue);
+    const [value, setValue] = useState(() => defaultValue);
 
     const onCLickHandler = item => {
         setValue(item);
