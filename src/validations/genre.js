@@ -13,7 +13,7 @@ GenreValidation.add = [
         .custom(function (value, {req}) {
             Genres.findOne({name:value}).then(function (genre){
                 if(genre) {
-                    return Promise.reject(MESSAGES.GENRE_ALREADY_EXIST);
+                    return Promise.reject(MESSAGES.GENRE_NAME_ALREADY_EXIST);
                 }
             });
         })
