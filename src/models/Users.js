@@ -33,17 +33,17 @@ userSchema.statics.getOne = async function (query) {
 };
 
 userSchema.statics.getById = async function (query) {
-//setting disable to true with a promise array and promise all
+    return this.findById(id);
 };
 
 userSchema.statics.disable = async function (query) {
-    let element = this.findById(query);
-    element.disabled = true;
-    return element.save();
+    //setting disable to true with a promise array and promise all
 };
 
 userSchema.statics.disableById = async function (query) {
-
+    let element = this.findById(query);
+    element.disabled = true;
+    return element.save();
 };
 
 
