@@ -46,9 +46,6 @@ userSchema.statics.disableById = async function (query) {
     return element.save();
 };
 
-
 const Users = model('Users', userSchema);
-
-//TODO get and delete with disabled functionality in mind with statics
 
 module.exports = {Users};
