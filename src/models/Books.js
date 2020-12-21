@@ -18,7 +18,7 @@ const bookSchema = new Schema({
 
 
 bookSchema.statics.get = async function (query) {
-    return this.findById(query);
+    return this.find(query);
 };
 
 bookSchema.statics.getOne = async function (query) {
@@ -30,11 +30,13 @@ bookSchema.statics.getById = function (id) {
 };
 
 bookSchema.statics.disable = async function (query) {
-    //setting disable to true;
+    //setting disable to true with a promise array and promise all
 };
 
 bookSchema.statics.disableById = async function (id) {
-
+    let element = this.findById(query);
+    element.disabled = true;
+    return element.save();
 };
 
 const Books = model('Books', bookSchema);

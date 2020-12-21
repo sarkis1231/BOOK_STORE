@@ -25,19 +25,21 @@ const userSchema = new Schema({
 }, {timestamps: true});
 
 userSchema.statics.get = async function (query) {
-
+    return this.find(query);
 };
 
 userSchema.statics.getOne = async function (query) {
-
+    return this.findOne(query);
 };
 
 userSchema.statics.getById = async function (query) {
-
+//setting disable to true with a promise array and promise all
 };
 
 userSchema.statics.disable = async function (query) {
-
+    let element = this.findById(query);
+    element.disabled = true;
+    return element.save();
 };
 
 userSchema.statics.disableById = async function (query) {
