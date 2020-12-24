@@ -45,9 +45,7 @@ genreSchema.statics.disable = async function (query) {
 };
 
 genreSchema.statics.disableById = async function (query) {
-    let element = this.findById(query);
-    element.disabled = true;
-    return element.save();
+    return this.findByIdAndUpdate(id,{disabled:true});
 };
 
 const Genres = model('Genres', genreSchema);

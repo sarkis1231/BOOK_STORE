@@ -51,9 +51,7 @@ userSchema.statics.disable = async function (query) {
 };
 
 userSchema.statics.disableById = async function (query) {
-    let element = this.findById(query);
-    element.disabled = true;
-    return element.save();
+    return this.findByIdAndUpdate(id,{disabled:true});
 };
 
 const Users = model('Users', userSchema);

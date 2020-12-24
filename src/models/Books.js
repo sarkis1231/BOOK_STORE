@@ -45,9 +45,7 @@ bookSchema.statics.disable = async function (query) {
 };
 
 bookSchema.statics.disableById = async function (id) {
-    let element = this.findById(id);
-    element.disabled = true;
-    return element.save();
+    return  this.findByIdAndUpdate(id,{disabled:true});
 };
 
 const Books = model('Books', bookSchema);

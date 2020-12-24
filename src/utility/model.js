@@ -26,15 +26,13 @@ modelUtil.disable = async function (query) {
     query = modelUtil.getQueryWithDisable(query);
     return this.update(query, {
         $set: {
-            disable: true
+            disabled:true
         }
     });
 };
 
-modelUtil.disableById = async function (query) {
-    let element = this.findById(query);
-    element.disabled = true;
-    return element.save();
+modelUtil.disableById = async function (id) {
+    return  this.findByIdAndUpdate(id,{disabled:true});
 };
 
 module.exports = modelUtil;
