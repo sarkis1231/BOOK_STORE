@@ -13,7 +13,7 @@ function somethingWentWrong(res) {
     });
 }
 
- export function noResult(res) {
+function noResult(res) {
      res.status(200).json({empty: true});
  }
 

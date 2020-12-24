@@ -38,30 +38,9 @@ async function editBook(req, res, next) {
     }
 }
 
-async function getBooks(req, res, next) {
-    try {
-        let books = await Books.get();
-        if (books.length) {
-            return res.status(200).json(books);
-        }
-        noResult(res);
-    } catch (err) {
-        errorCatcher(next, err);
-    }
-}
+let getBooks = getCtrlFn.getAll(Books);
 
-async function getBook(req, res, next) {
-    try {
-        errorValidation(req);
-        const book = await Books.getById(req.params.id);
-        if (book) {
-            return res.status(200).json(book);
-        }
-        noResult(res);
-    } catch (err) {
-        errorCatcher(next, err);
-    }
-}
+let getBook = getCtrlFn.getId(Books);
 
 let deleteBook = getCtrlFn.Delete(Books);
 

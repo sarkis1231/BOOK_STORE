@@ -3,7 +3,7 @@ const {MESSAGES} = require("../utility/constants");
 const {getCtrlFn} = require("../utility/controllers/functions");
 const {errorCatcher} = require("../utility/controllers/errors");
 const {errorValidation} = require("../utility/controllers/errors");
-const {alert,noResult} = require("../utility/controllers/messages");
+const {alert} = require("../utility/controllers/messages");
 const {Genres} = require("../models/Genre");
 
 
@@ -38,30 +38,9 @@ async function editGenre(req, res, next) {
     }
 }
 
-async function getGenres(req, res, next) {
-    try {
-        let books = await Genres.get();
-        if (books.length) {
-            return res.status(200).json(books);
-        }
-        noResult(res);
-    } catch (err) {
-        errorCatcher(next, err);
-    }
-}
+let getGenres = getCtrlFn.getAll(Genres);
 
-async function getGenre(req, res, next) {
-    try {
-        errorValidation(req);
-        const book = await Genres.getById(req.params.id);
-        if (book) {
-            return res.status(200).json(book);
-        }
-        noResult(res);
-    } catch (err) {
-        errorCatcher(next, err);
-    }
-}
+let getGenre = getCtrlFn.getId(Genres);
 
 let deleteGenre = getCtrlFn.Delete(Genres);
 
