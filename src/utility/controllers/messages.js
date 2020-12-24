@@ -13,4 +13,8 @@ function somethingWentWrong(res) {
     });
 }
 
-module.exports = {alert,somethingWentWrong};
+ export function noResult(res) {
+     res.status(200).json({empty: true});
+ }
+
+module.exports = {alert,somethingWentWrong,noResult};
