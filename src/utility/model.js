@@ -1,10 +1,9 @@
 let modelUtil = {};
-
+//TODO console errors like a lib
 modelUtil.getQueryWithDisable = function (qry) {
     qry = qry || {};
     return {...qry, disabled: {$ne: true}}
 }
-
 
 modelUtil.get = async function (query) {
     query = modelUtil.getQueryWithDisable(query);

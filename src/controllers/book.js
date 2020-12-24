@@ -25,7 +25,7 @@ async function editBook(req, res, next) {
     const {name,genre} = req.body;
     try {
         errorValidation(req);
-        const book = await Books.findOne({id:req.params.id}); //TODO check pass option
+        const book = await Books.getById(req.params.id); //TODO check pass option
         book.name = name;
         book.genre = genre;
 
@@ -38,6 +38,14 @@ async function editBook(req, res, next) {
     }
 }
 
+async function getBooks(req, res, next) {
+
+}
+
+async function getBook(req, res, next) {
+
+}
+
 let deleteBook = getCtrlFn.Delete(Books);
 
-module.exports = {addBook,editBook,deleteBook};
+module.exports = {getBook,getBooks,addBook,editBook,deleteBook};

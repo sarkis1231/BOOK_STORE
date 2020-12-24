@@ -17,7 +17,7 @@ getCtrlFn.Delete = function (Model) {
         try {
             errorValidation(req);
 
-            const p = await Model.deleteOne({id:req.params.id});
+            const p = await Model.disableById(req.params.id);
             if (Fn.isEmpty(p)) {
                 errorThrower(MESSAGES.NO_SUCH_DATA_EXISTS, 422);
             }
@@ -28,6 +28,8 @@ getCtrlFn.Delete = function (Model) {
         }
     }
 }
+
+//TODO get a singular + get All
 
 
 module.exports = {getCtrlFn};
