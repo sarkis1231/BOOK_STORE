@@ -1,8 +1,8 @@
 let modelUtil = {};
 
-modelUtil.getQueryWithDisable = function (qry){
+modelUtil.getQueryWithDisable = function (qry) {
     qry = qry || {};
-    return {...qry,disabled: {$ne: true}}
+    return {...qry, disabled: {$ne: true}}
 }
 
 
@@ -23,7 +23,12 @@ modelUtil.getById = async function (query) {
 };
 
 modelUtil.disable = async function (query) {
-//setting disable to true with a promise array and promise all
+    query = modelUtil.getQueryWithDisable(query);
+    return this.update(query, {
+        $set: {
+            disable: true
+        }
+    });
 };
 
 modelUtil.disableById = async function (query) {

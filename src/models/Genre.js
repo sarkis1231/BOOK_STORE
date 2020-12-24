@@ -35,7 +35,13 @@ genreSchema.statics.getById = async function (id) {
 };
 
 genreSchema.statics.disable = async function (query) {
-//setting disable to true with a promise array and promise all
+    query = modelUtil.getQueryWithDisable(query);
+    return this.update(query,{
+        $set:{
+            disable:true
+        }
+    });
+
 };
 
 genreSchema.statics.disableById = async function (query) {
