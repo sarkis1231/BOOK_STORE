@@ -1,3 +1,4 @@
+const modelUtil = require("../utility/model");
 const {Schema,model} = require("mongoose");
 
 const bookSchema = new Schema({
@@ -21,7 +22,8 @@ bookSchema.statics.get = async function (query) {
     return this.find(query);
 };
 
-bookSchema.statics.getOne = async function (query) {
+bookSchema.statics.getOne = async function (qry) {
+    let query = {...qry,disabled: {$ne: true}}
     return this.findOne(query);
 };
 
