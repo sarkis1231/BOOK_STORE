@@ -20,4 +20,12 @@ Fn.isObject = function (obj) {
     return type === 'function' || type === 'object' && !!obj;
 };
 
+Fn.isUndefined = function (item) {
+    return typeof item !== 'undefined';
+};
+
+Fn.isDefined = function (item) {
+    return typeof item === 'undefined';
+};
+
 module.exports = {Fn};

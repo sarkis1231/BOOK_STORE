@@ -16,37 +16,15 @@ const genreSchema = new Schema({
     }
 }, {timestamps: true});
 
+genreSchema.statics.get = modelUtil.get;
 
+genreSchema.statics.getOne = modelUtil.getOne;
 
-genreSchema.statics.get = async function (query) {
-    query = modelUtil.getQueryWithDisable(query);
-    return this.find(query);
-};
+genreSchema.statics.getById = modelUtil.getById;
 
-genreSchema.statics.getOne = async function (query) {
-    query = modelUtil.getQueryWithDisable(query);
-    return this.findOne(query);
-};
+genreSchema.statics.disable = modelUtil.disable;
 
-genreSchema.statics.getById = async function (id) {
-    let query = modelUtil.getQueryWithDisable();
-    query.id = id;
-    return this.findById(query);
-};
-
-genreSchema.statics.disable = async function (query) {
-    query = modelUtil.getQueryWithDisable(query);
-    return this.update(query,{
-        $set:{
-            disable:true
-        }
-    });
-
-};
-
-genreSchema.statics.disableById = async function (query) {
-    return this.findByIdAndUpdate(id,{disabled:true});
-};
+genreSchema.statics.disableById = modelUtil.disableById;
 
 const Genres = model('Genres', genreSchema);
 

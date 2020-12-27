@@ -25,34 +25,15 @@ const userSchema = new Schema({
     }
 }, {timestamps: true});
 
-userSchema.statics.get = async function (query) {
-    query = modelUtil.getQueryWithDisable(query);
-    return this.find(query);
-};
+userSchema.statics.get = modelUtil.get;
 
-userSchema.statics.getOne = async function (query) {
-    query = modelUtil.getQueryWithDisable(query);
-    return this.findOne(query);
-};
+userSchema.statics.getOne = modelUtil.getOne;
 
-userSchema.statics.getById = async function (id) {
-    let query = modelUtil.getQueryWithDisable();
-    query.id = id;
-    return this.findById(query);
-};
+userSchema.statics.getById = modelUtil.getById;
 
-userSchema.statics.disable = async function (query) {
-    query = modelUtil.getQueryWithDisable(query);
-    return this.update(query,{
-        $set:{
-            disable:true
-        }
-    });
-};
+userSchema.statics.disable = modelUtil.disable;
 
-userSchema.statics.disableById = async function (query) {
-    return this.findByIdAndUpdate(id,{disabled:true});
-};
+userSchema.statics.disableById = modelUtil.disableById;
 
 const Users = model('Users', userSchema);
 

@@ -16,37 +16,15 @@ const bookSchema = new Schema({
     }
 },{timestamps:true});
 
+bookSchema.statics.get = modelUtil.get;
 
+bookSchema.statics.getOne =  modelUtil.getOne;
 
-bookSchema.statics.get = async function (query) {
-    query = modelUtil.getQueryWithDisable(query);
-    return this.find(query);
-};
+bookSchema.statics.getById = modelUtil.getById;
 
-bookSchema.statics.getOne = async function (query) {
-    query = modelUtil.getQueryWithDisable(query);
-    return this.findOne(query);
-};
+bookSchema.statics.disable =  modelUtil.disable;
 
-bookSchema.statics.getById = function (id) {
-    let query = modelUtil.getQueryWithDisable();
-    query.id = id;
-    return this.findById(query);
-};
-
-bookSchema.statics.disable = async function (query) {
-    query = modelUtil.getQueryWithDisable(query);
-    return this.update(query,{
-        $set:{
-            disable:true
-        }
-    });
-
-};
-
-bookSchema.statics.disableById = async function (id) {
-    return  this.findByIdAndUpdate(id,{disabled:true});
-};
+bookSchema.statics.disableById = modelUtil.disableById;
 
 const Books = model('Books', bookSchema);
 
