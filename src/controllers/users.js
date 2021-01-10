@@ -2,12 +2,10 @@ const {SECRET_KEY} = require("../config/keys");
 const {sign} = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const {getCtrlFn} = require("../utility/controllers/functions");
-const {errorValidation} = require("../utility/controllers/errors");
 const {Users} = require("../models/Users");
-const {MESSAGES} = require("../utility/constants");
-const {messageAlert} = require("../utility/constants");
+const {MESSAGES,messageAlert} = require("../utility/constants");
+const  {errorCatcher,errorValidation} = require("../utility/controllers/errors");
 const  {alert} = require("../utility/controllers/messages");
-const  {errorCatcher} = require("../utility/controllers/errors");
 
 
 
@@ -34,7 +32,7 @@ async function login(req, res, next) {
     try {
         errorValidation(req);
 
-        const user = await Users.findOne({email});
+        const user = await Users.getOne({email});
 
         let isMatch = await bcrypt.compare(password, user.password);
 
@@ -55,12 +53,12 @@ async function login(req, res, next) {
 
 }
 
-async function editUser(req, res, next) {
+async function editUser(req, res, next) { //TODO check the edit
     const {name, email} = req.body;
     try {
         errorValidation(req);
 
-        const user = await Users.findOne({id:req.params.id});
+        const user = await Users.getOne({id:req.params.id});
         user.name = name;
         user.email = email;
 
