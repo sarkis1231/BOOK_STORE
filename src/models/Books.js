@@ -16,7 +16,7 @@ const bookSchema = new Schema({
     }
 },{timestamps:true});
 
-bookSchema.statics.get = modelUtil.get;
+bookSchema.statics.getAll = modelUtil.getAll;
 
 bookSchema.statics.getOne =  modelUtil.getOne;
 

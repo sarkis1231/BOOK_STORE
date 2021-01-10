@@ -1,3 +1,4 @@
+const modelUtil = require("../model");
 const {MESSAGES,messageAlert} = require("../constants");
 const {errorValidation,errorThrower,errorCatcher} = require("./errors");
 const {Fn} = require("../functions");
@@ -5,8 +6,8 @@ const  {alert,noResult} = require("./messages");
 
 let getCtrlFn = {};
 
-getCtrlFn.Delete = function (Model) {
-    if(!Model) { //TODO to be a Mongoose instance or class Mongoose
+getCtrlFn.Delete = function (myModel) {
+    if(modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;
     }
@@ -26,13 +27,13 @@ getCtrlFn.Delete = function (Model) {
     }
 }
 
-getCtrlFn.getAll = function (Model) {
-    if(!Model) { //TODO to be a Mongoose instance or class Mongoose
+getCtrlFn.getAll = function (myModel) {
+    if(modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;
     }
     return async function (req,res,next) {
-        let books = await Model.get();
+        let books = await Model.getAll();
         if (books.length) {
             return res.status(200).json(books);
         }
@@ -40,8 +41,8 @@ getCtrlFn.getAll = function (Model) {
     }
 }
 
-getCtrlFn.getId = function (Model) {
-    if(!Model) { //TODO to be a Mongoose instance or class Mongoose
+getCtrlFn.getId = function (myModel) {
+    if(modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;
     }

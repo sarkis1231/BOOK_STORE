@@ -1,4 +1,5 @@
 const {Fn} = require("./functions");
+const {Model} = require("mongoose");
 let modelUtil = {};
 
 modelUtil.getQueryWithDisable = function (qry) {
@@ -6,7 +7,7 @@ modelUtil.getQueryWithDisable = function (qry) {
     return {...qry, disabled: {$ne: true}}
 }
 
-modelUtil.get = async function (query) {
+modelUtil.getAll = async function (query) {
     query = modelUtil.getQueryWithDisable(query);
     return this.find(query);
 };
@@ -22,8 +23,8 @@ modelUtil.getById = async function (id) {
         return;
     }
     let query = modelUtil.getQueryWithDisable({});
-    query.id = id;
-    return this.findById(query);
+    query._id = id;
+    return this.findOne(query);
 };
 
 modelUtil.disable = async function (query) {
@@ -42,5 +43,10 @@ modelUtil.disableById = async function (id) {
     }
     return this.findByIdAndUpdate(id,{disabled:true});
 };
+
+modelUtil.isModel = function (obj) {
+    obj = obj || {}
+    return obj.prototype instanceof Model
+}
 
 module.exports = modelUtil;

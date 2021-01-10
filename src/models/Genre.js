@@ -16,7 +16,7 @@ const genreSchema = new Schema({
     }
 }, {timestamps: true});
 
-genreSchema.statics.get = modelUtil.get;
+genreSchema.statics.getAll = modelUtil.getAll;
 
 genreSchema.statics.getOne = modelUtil.getOne;
 
