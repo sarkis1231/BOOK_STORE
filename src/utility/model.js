@@ -40,7 +40,7 @@ modelUtil.disableById = async function (id) {
         console.error('id should be defined');
         return;
     }
-    return  this.findByIdAndUpdate(id,{disabled:true});
+    return this.findByIdAndUpdate(id,{disabled:true});
 };
 
 module.exports = modelUtil;

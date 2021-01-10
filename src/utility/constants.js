@@ -11,6 +11,7 @@ const MESSAGES = {
     VALUE_IS_CHANGED: "Value is Changed",
     NO_SUCH_DATA_EXISTS: "No such Data Exist",
     UNAUTHORISED: "UnAuthorized",
+    UNAUTHENTICATED: "Unauthenticated",
     ITEM_DELETED:"Item is deleted successfully",
     BOOK_ADDED:"Book is added Successfully",
     BOOK_ALREADY_EXIST:"Book Already Exist",

@@ -5,7 +5,7 @@ const {MESSAGES} = require("../utility/constants");
 function isAuth() {
     return passport.authenticate("jwt", {
         session: false
-    },function (){});
+    });
 }
 
 function isAuthorized(whiteList) {

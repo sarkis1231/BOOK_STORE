@@ -13,8 +13,8 @@ getCtrlFn.Delete = function (Model) {
     return async function (req,res,next) {
         try {
             errorValidation(req);
-
             const p = await Model.disableById(req.params.id);
+
             if (Fn.isEmpty(p)) {
                 errorThrower(MESSAGES.NO_SUCH_DATA_EXISTS, 422);
             }
