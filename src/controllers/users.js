@@ -70,6 +70,10 @@ async function editUser(req, res, next) { //TODO check the edit
     }
 }
 
+let getUser = getCtrlFn.getId(Users);
+
+let getUsers = getCtrlFn.getAll(Users);
+
 let deleteUser = getCtrlFn.Delete(Users);
 
-module.exports = {login, register, editUser,deleteUser};
+module.exports = {login, register, editUser,deleteUser,getUser,getUsers};

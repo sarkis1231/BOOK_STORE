@@ -1,6 +1,6 @@
 const {Fn} = require("./functions");
 let modelUtil = {};
-//TODO bind to all the statics
+
 modelUtil.getQueryWithDisable = function (qry) {
     qry = qry || {};
     return {...qry, disabled: {$ne: true}}

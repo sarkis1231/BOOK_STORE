@@ -21,11 +21,11 @@ Fn.isObject = function (obj) {
 };
 
 Fn.isUndefined = function (item) {
-    return typeof item !== 'undefined';
+    return typeof item === 'undefined';
 };
 
 Fn.isDefined = function (item) {
-    return typeof item === 'undefined';
+    return typeof item !== 'undefined';
 };
 
 module.exports = {Fn};
