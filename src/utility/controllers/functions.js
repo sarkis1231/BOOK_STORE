@@ -7,16 +7,16 @@ const  {alert,noResult} = require("./messages");
 let getCtrlFn = {};
 
 getCtrlFn.Delete = function (myModel) {
-    if(modelUtil.isModel(myModel)) {
+    if(!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;
     }
     return async function (req,res,next) {
         try {
             errorValidation(req);
-            const p = await Model.disableById(req.params.id);
+            const p = await myModel.disableById(req.params.id);
 
-            if (Fn.isEmpty(p)) {
+            if (!Fn.isEmpty(p)) {
                 errorThrower(MESSAGES.NO_SUCH_DATA_EXISTS, 422);
             }
             return alert(res, 200, messageAlert.success, MESSAGES.ITEM_DELETED);
@@ -28,30 +28,30 @@ getCtrlFn.Delete = function (myModel) {
 }
 
 getCtrlFn.getAll = function (myModel) {
-    if(modelUtil.isModel(myModel)) {
+    if(!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;
     }
     return async function (req,res,next) {
-        let books = await Model.getAll();
-        if (books.length) {
-            return res.status(200).json(books);
+        let items = await myModel.getAll();
+        if (!Fn.isEmpty(items)) {
+            return res.status(200).json(items);
         }
         noResult(res);
     }
 }
 
 getCtrlFn.getId = function (myModel) {
-    if(modelUtil.isModel(myModel)) {
+    if(!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;
     }
     return async function (req,res,next) {
         try {
             errorValidation(req);
-            const book = await Model.getById(req.params.id);
-            if (book) {
-                return res.status(200).json(book);
+            const item = await myModel.getById(req.params.id);
+            if (!Fn.isEmpty(item)) {
+                return res.status(200).json(item);
             }
             noResult(res);
         } catch (err) {
