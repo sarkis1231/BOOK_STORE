@@ -6,11 +6,11 @@ const {Authors} = require("../models/Author");
 
 
 async function addAuthor(req, res, next) {
-    const {name, genre} = req.body;
+    const {name, genre} = req.body; //TODO change me
     try {
         errorValidation(req);
-        const newBook = new Authors({name, genre});
-        if (await newBook.save()) {
+        const newAuthor = new Authors({name, genre});
+        if (await newAuthor.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.BOOK_ADDED);
         }
 
@@ -20,14 +20,14 @@ async function addAuthor(req, res, next) {
 }
 
 async function editAuthor(req, res, next) {
-    const {name, genre} = req.body;
+    const {name, genre} = req.body; //TODO change me
     try {
         errorValidation(req);
-        const book = await Authors.getById(req.params.id); //TODO check pass option
-        book.name = name;
-        book.genre = genre;
+        const author = await Authors.getById(req.params.id); //TODO check pass option
+        author.name = name;//TODO change me
+        author.genre = genre;//TODO change me
 
-        if (await book.save()) {
+        if (await author.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
         }
 
