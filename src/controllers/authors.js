@@ -9,7 +9,7 @@ async function addAuthor(req, res, next) {
     const {name, genre} = req.body;
     try {
         errorValidation(req);
-        const newBook = new Books({name, genre});
+        const newBook = new Authors({name, genre});
         if (await newBook.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.BOOK_ADDED);
         }
@@ -23,7 +23,7 @@ async function editAuthor(req, res, next) {
     const {name, genre} = req.body;
     try {
         errorValidation(req);
-        const book = await Books.getById(req.params.id); //TODO check pass option
+        const book = await Authors.getById(req.params.id); //TODO check pass option
         book.name = name;
         book.genre = genre;
 
