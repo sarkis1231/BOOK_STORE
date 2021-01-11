@@ -11,6 +11,11 @@ const bookSchema = new Schema({
         ref: 'Genres',
         required: true
     },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'Authors',
+        required: true
+    },
     disabled: {
         type:Boolean
     }

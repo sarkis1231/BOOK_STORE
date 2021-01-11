@@ -33,4 +33,8 @@ const messageAlert = {
 
 const FILE_TYPES = ['image/jpeg','image/png'];
 
-module.exports = {MESSAGES, messageAlert};
+const SCHEMES_NAMES = {
+
+};
+
+module.exports = {MESSAGES, messageAlert,SCHEMES_NAMES,FILE_TYPES};
