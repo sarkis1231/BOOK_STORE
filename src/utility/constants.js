@@ -31,4 +31,6 @@ const messageAlert = {
     info: 'info',
 };
 
+const FILE_TYPES = ['image/jpeg','image/png'];
+
 module.exports = {MESSAGES, messageAlert};

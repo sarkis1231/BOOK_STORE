@@ -5,7 +5,7 @@ let modelUtil = {};
 modelUtil.getQueryWithDisable = function (qry) {
     qry = qry || {};
     return {...qry, disabled: {$ne: true}}
-}
+};
 
 modelUtil.getAll = async function (query) {
     query = modelUtil.getQueryWithDisable(query);
@@ -47,6 +47,6 @@ modelUtil.disableById = async function (id) {
 modelUtil.isModel = function (obj) {
     obj = obj || {}
     return obj.prototype instanceof Model
-}
+};
 
 module.exports = modelUtil;

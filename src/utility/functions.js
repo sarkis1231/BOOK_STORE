@@ -1,6 +1,6 @@
 let Fn = {};
 
-Fn.isEmpty= function (value) {
+Fn.isEmpty = function (value) {
     return (
         !!(value === undefined || value === null ||
             (typeof value === 'object' && !(Array.isArray(value)) && value["empty"]) ||
@@ -8,9 +8,9 @@ Fn.isEmpty= function (value) {
             (typeof value === 'string' && value.trim().length === 0)
         )
     );
-} //prototype Lib Util let's say
+}; //prototype Lib Util let's say
 
-Fn.noop= function (){}
+Fn.noop = function (){};
 
 Fn.isString = function (str) {
     return typeof str === 'string' || str instanceof String;
