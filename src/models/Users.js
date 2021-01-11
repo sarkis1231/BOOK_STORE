@@ -1,6 +1,7 @@
 const modelUtil = require("../utility/model");
 const {Schema, model} = require("mongoose");
 const {USER_ROLES, ALL_USER_ROLES} = require("../roles.js");
+const {SCHEMES_NAMES} = require('../utility/constants');
 
 const userSchema = new Schema({
     name: {
@@ -35,6 +36,6 @@ userSchema.statics.disable = modelUtil.disable;
 
 userSchema.statics.disableById = modelUtil.disableById;
 
-const Users = model('Users', userSchema);
+const Users = model(SCHEMES_NAMES.Users, userSchema);
 
 module.exports = {Users};

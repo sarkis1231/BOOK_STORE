@@ -7,6 +7,11 @@ modelUtil.getQueryWithDisable = function (qry) {
     return {...qry, disabled: {$ne: true}}
 };
 
+modelUtil.getQueryWithFast = function (qry) {
+    qry = qry || {};
+    return {...qry, fast:true}
+};
+
 modelUtil.getAll = async function (query) {
     query = modelUtil.getQueryWithDisable(query);
     return this.find(query);

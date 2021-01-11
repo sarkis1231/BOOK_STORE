@@ -1,5 +1,6 @@
 const modelUtil = require("../utility/model");
 const {Schema,model} = require("mongoose");
+const {SCHEMES_NAMES} = require('../utility/constants');
 
 const bookSchema = new Schema({
     name: {
@@ -8,13 +9,12 @@ const bookSchema = new Schema({
     },
     genre: {
         type: Schema.Types.ObjectId,
-        ref: 'Genres',
+        ref: SCHEMES_NAMES.Genres,
         required: true
     },
     author: {
         type: Schema.Types.ObjectId,
-        ref: 'Authors',
-        required: true
+        ref: SCHEMES_NAMES.Authors,
     },
     disabled: {
         type:Boolean
@@ -31,6 +31,6 @@ bookSchema.statics.disable =  modelUtil.disable;
 
 bookSchema.statics.disableById = modelUtil.disableById;
 
-const Books = model('Books', bookSchema);
+const Books = model(SCHEMES_NAMES.Books, bookSchema);
 
 module.exports = {Books};

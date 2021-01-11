@@ -34,7 +34,10 @@ const messageAlert = {
 const FILE_TYPES = ['image/jpeg','image/png'];
 
 const SCHEMES_NAMES = {
-
+    'Books':'Books',
+    'Authors':'Authors',
+    'Genres':'Genres',
+    'Users':'Users'
 };
 
 module.exports = {MESSAGES, messageAlert,SCHEMES_NAMES,FILE_TYPES};

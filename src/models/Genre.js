@@ -1,5 +1,6 @@
 const modelUtil = require("../utility/model");
 const {Schema, model} = require("mongoose");
+const {SCHEMES_NAMES} = require('../utility/constants');
 
 const genreSchema = new Schema({
     name: {
@@ -8,7 +9,7 @@ const genreSchema = new Schema({
     },
     userId: {
         type: Schema.Types.ObjectId,
-        ref: 'Users',
+        ref: SCHEMES_NAMES.Users,
         required: true
     },
     disabled: {
@@ -26,6 +27,6 @@ genreSchema.statics.disable = modelUtil.disable;
 
 genreSchema.statics.disableById = modelUtil.disableById;
 
-const Genres = model('Genres', genreSchema);
+const Genres = model(SCHEMES_NAMES.Genres, genreSchema);
 
 module.exports = {Genres};
