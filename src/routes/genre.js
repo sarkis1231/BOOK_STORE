@@ -10,9 +10,9 @@ const {isAuth, isAdmin} = require("../middlewares/authentication");
 const router = Router();
 
 
-router.post('/', getGenres);
+router.get('/', getGenres);
 
-router.post('/:id', paramIdValidation ,getGenre);
+router.get('/:id', paramIdValidation ,getGenre);
 
 router.post('/', isAuth(), isAdmin(), GenreValidation.add, addGenre);
 

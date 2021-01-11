@@ -10,9 +10,9 @@ const {isAuth, isAdmin} = require("../middlewares/authentication");
 const router = Router();
 
 
-router.post('/', getBooks);
+router.get('/', getBooks);
 
-router.post('/:id', paramIdValidation ,getBook);
+router.get('/:id', paramIdValidation ,getBook);
 
 router.post('/', isAuth(), isAdmin(), BookValidation.add, addBook);
 
