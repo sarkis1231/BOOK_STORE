@@ -12,7 +12,7 @@ AuthorsValidation.add = [
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            Books.findOne({name: value}).then(function (genre) {
+            return Books.findOne({name: value}).then(function (genre) {
                 if (genre) {
                     return Promise.reject(MESSAGES.BOOK_ALREADY_EXIST);
                 }
