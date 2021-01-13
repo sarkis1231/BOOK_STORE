@@ -6,12 +6,12 @@ const {Authors} = require("../models/Author");
 
 
 async function addAuthor(req, res, next) {
-    const {name,books} = req.body; //TODO change me
+    const {name} = req.body; //TODO change me
     try {
         errorValidation(req);
-        const newAuthor = new Authors({name, books});
+        const newAuthor = new Authors({name});
         if (await newAuthor.save()) {
-            return alert(res, 200, messageAlert.success, MESSAGES.BOOK_ADDED);
+            return alert(res, 200, messageAlert.success, MESSAGES.AUTHOR_ADDED);
         }
 
     } catch (err) {
