@@ -22,7 +22,8 @@ const MESSAGES = {
     GENRE_NAME_ALREADY_EXIST: "Genre name Already Exist",
     GENRE_NOT_FOUND: "Genre not found",
     INVALID_QUERY_PARAM: "Invalid Query Param",
-    INVALID_ID: "Invalid id"
+    INVALID_ID: "Invalid id",
+    NAME_ALREADY_EXIST: "name Already Exists"
 };
 
 const messageAlert = {

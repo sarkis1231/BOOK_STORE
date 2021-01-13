@@ -12,9 +12,9 @@ AuthorsValidation.add = [
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            return Books.findOne({name: value}).then(function (genre) {
-                if (genre) {
-                    return Promise.reject(MESSAGES.BOOK_ALREADY_EXIST);
+            return Authors.findOne({name: value}).then(function (author) {
+                if (author) {
+                    return Promise.reject(MESSAGES.NAME_ALREADY_EXIST);
                 }
             });
         })
@@ -26,9 +26,9 @@ AuthorsValidation.edit = [
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            return Authors.findOne({name: value}).then(function (book) {
-                if (book) {
-                    return Promise.reject(MESSAGES.BOOK_NAME_ALREADY_EXIST);
+            return Authors.findOne({name: value}).then(function (author) {
+                if (author) {
+                    return Promise.reject(MESSAGES.NAME_ALREADY_EXIST);
                 }
             });
         }),
