@@ -48,7 +48,7 @@ const storage = multer.diskStorage({
         cb(null, 'uploads');
     },
     filename: (req, file, cb) => {
-        console.log(file);
+        console.log(file); //TODO check the path error
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });

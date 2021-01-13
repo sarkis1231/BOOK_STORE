@@ -1,6 +1,7 @@
 const {MESSAGES} = require("../utility/constants");
 const {body, param} = require("express-validator");
 const mongoose = require("mongoose");
+const {Books} = require("../models/Books");
 const {Authors} = require("../models/Author");
 
 const AuthorsValidation = {};
@@ -14,16 +15,6 @@ AuthorsValidation.add = [
             Books.findOne({name: value}).then(function (genre) {
                 if (genre) {
                     return Promise.reject(MESSAGES.BOOK_ALREADY_EXIST);
-                }
-            });
-        }),
-    body('genre')
-        .notEmpty()
-        .withMessage(MESSAGES.REQUIRED_FIELDS)
-        .custom(function (value, {req}) {
-            Genres.findById(value).then(function (genre) {
-                if (!genre) {
-                    return Promise.reject(MESSAGES.GENRE_NOT_FOUND);
                 }
             });
         })
@@ -47,12 +38,13 @@ AuthorsValidation.edit = [
             if (!validId) {
                 throw new Error(MESSAGES.INVALID_QUERY_PARAM);
             }
-            Authors.findOne({name: value}).then(function (book) {
-                if (!book) {
+            Authors.findOne({name: value}).then(function (author) {
+                if (!author) {
                     return Promise.reject(MESSAGES.BOOK_NOT_FOUND);
                 }
             });
         }),
+
 ];
 
 module.exports = AuthorsValidation;
