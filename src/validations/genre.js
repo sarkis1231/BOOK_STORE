@@ -46,4 +46,4 @@ GenreValidation.edit = [
 
 ];
 
-module.exports = BookValidation;
+module.exports = GenreValidation;

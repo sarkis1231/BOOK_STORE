@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const GenreValidation = require("../validations/books");
+const GenreValidation = require("../validations/genre");
 const {paramIdValidation} = require("../validations/general");
 
 const {addGenre, editGenre, deleteGenre, getGenre, getGenres} = require("../controllers/genre");

@@ -9,7 +9,7 @@ async function addGenre(req, res, next) {
     const {name} = req.body;
     try {
         errorValidation(req);
-        const newGenre = new Genres({name});
+        const newGenre = new Genres({name,userId:req.user._id});
         if (await newGenre.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.GENRE_ADDED);
         }
