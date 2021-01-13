@@ -26,7 +26,7 @@ AuthorsValidation.edit = [
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            Authors.findOne({name: value}).then(function (book) {
+            return Authors.findOne({name: value}).then(function (book) {
                 if (book) {
                     return Promise.reject(MESSAGES.BOOK_NAME_ALREADY_EXIST);
                 }
@@ -38,7 +38,7 @@ AuthorsValidation.edit = [
             if (!validId) {
                 throw new Error(MESSAGES.INVALID_QUERY_PARAM);
             }
-            Authors.findOne({name: value}).then(function (author) {
+            return Authors.findOne({name: value}).then(function (author) {
                 if (!author) {
                     return Promise.reject(MESSAGES.BOOK_NOT_FOUND);
                 }

@@ -11,7 +11,7 @@ GenreValidation.add = [
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            Genres.findOne({name:value}).then(function (genre){
+            return Genres.findOne({name:value}).then(function (genre){
                 if(genre) {
                     return Promise.reject(MESSAGES.GENRE_NAME_ALREADY_EXIST);
                 }
@@ -25,7 +25,7 @@ GenreValidation.edit = [
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            Genres.findOne({name: value}).then(function (genre) {
+            return Genres.findOne({name: value}).then(function (genre) {
                 if (genre) {
                     return Promise.reject(MESSAGES.GENRE_NAME_ALREADY_EXIST);
                 }
@@ -37,7 +37,7 @@ GenreValidation.edit = [
             if (!validId) {
                 throw new Error(MESSAGES.INVALID_QUERY_PARAM);
             }
-            Genres.findOne({name: value}).then(function (genre) {
+            return Genres.findOne({name: value}).then(function (genre) {
                 if (!genre) {
                     return Promise.reject(MESSAGES.GENRE_NOT_FOUND);
                 }

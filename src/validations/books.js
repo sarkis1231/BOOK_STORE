@@ -8,12 +8,11 @@ const BookValidation = {};
 
 BookValidation.add = [
     body('name')
-        .trim()
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            Books.findOne({name: value}).then(function (genre) {
-                if (genre) {
+            return Books.findOne({name: value}).then(function (book) {
+                if (book) {
                     return Promise.reject(MESSAGES.BOOK_ALREADY_EXIST);
                 }
             });
@@ -22,7 +21,11 @@ BookValidation.add = [
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            Genres.findById(value).then(function (genre) {
+            let validId = mongoose.Types.ObjectId.isValid(value);
+            if (!validId) {
+                throw new Error(MESSAGES.INVALID_ID);
+            }
+            return Genres.findById(value).then(function (genre) {
                 if (!genre) {
                     return Promise.reject(MESSAGES.GENRE_NOT_FOUND);
                 }
