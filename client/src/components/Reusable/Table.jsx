@@ -3,15 +3,56 @@ import styled, { css } from 'styled-components';
 
 const data = {
     headerItem: [
-        "sako", "koza", "hovik", "aro",
+        "name", "category", "author", "price",
     ],
 
     bodyTable: [
         [
-            1, 2, 3, 4,
+            "ssss", "history", "sako", 500,
         ],
         [
-            6, 7, 8, 9,
+            "pppp", "sports", "philip", 400,
+        ],
+        [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
+        ], [
+            "pppp", "sports", "philip", 400,
         ],
 
     ]
@@ -55,9 +96,8 @@ display: flex;
 border: none;
 justify-content: center;
 width:80%;
-
-
-
+height: 50vh;
+overflow: auto;
 `
 const StyledTable = styled.table`
 width: 100%;
@@ -72,10 +112,15 @@ const StyledThead = styled.thead`
 `
 
 const StyledTd = styled.td`
-border:none;
+border-right: ${({ theme }) => theme.table.border};
 color: ${({ theme }) => theme.table.color};
 text-align: center;
 font-size: 16px;
+width: calc(100%/4);
+padding: 10px 0;
 
+ :last-child{
+    border-right: none;
+}
 
 `
