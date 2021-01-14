@@ -14,7 +14,7 @@ export const lightTheme = {
         bgColor: '#F1F1F1',
         color: '#000',
     },
-    dropDown :{
+    dropDown: {
         color: '#000',
         bgColor: '#F1F1F1',
     },
@@ -26,6 +26,11 @@ export const lightTheme = {
         overlayBackground: 'rgba(54, 53, 55, 0.8)',
         color: '#363537',
         bgColor: '#E2E2E2',
+    },
+
+    table: {
+        color: '#363537',
+        border: '1px solid #363537',
     }
 }
 
@@ -45,7 +50,7 @@ export const darkTheme = {
         bgColor: '#444',
         color: '#FFF',
     },
-    dropDown :{
+    dropDown: {
         color: '#FFF',
         bgColor: '#444',
     },
@@ -57,5 +62,9 @@ export const darkTheme = {
         overlayBackground: 'rgba(250, 250, 250, 0.8)',
         color: '#FAFAFA',
         bgColor: '#363537',
+    },
+    table: {
+        color: '#FAFAFA',
+        border: '1px solid #FAFAFA',
     }
 }
