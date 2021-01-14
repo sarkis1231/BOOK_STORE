@@ -24,15 +24,15 @@ const Table = () => {
 
     return (
         <StyledTableContainer>
-            <table>
-                <thead>
+            <StyledTable>
+                <StyledThead>
                     <tr>
                         {data.headerItem.map((item, index) => (
                             <StyledTd key={index}>{item}</StyledTd>
                         ))}
                     </tr>
 
-                </thead>
+                </StyledThead>
                 <tbody>
                     {data.bodyTable.map((row, index) => (
                         <tr key={index}>{row.map((column, index) => (
@@ -42,7 +42,7 @@ const Table = () => {
 
                 </tbody>
 
-            </table>
+            </StyledTable>
 
         </StyledTableContainer>
     )
@@ -51,16 +51,31 @@ const Table = () => {
 export default Table;
 
 const StyledTableContainer = styled.div`
+display: flex;
+border: none;
+justify-content: center;
+width:80%;
 
-border: ${({ theme }) => theme.table.border};
 
+
+`
+const StyledTable = styled.table`
+width: 100%;
+background: ${({ theme }) => theme.table.background};
+border-radius: 10px;
+`
+
+const StyledThead = styled.thead`
+    font-weight: bold;
+    font-size: 20px;
+    border-bottom: ${({ theme }) => theme.table.border};
 `
 
 const StyledTd = styled.td`
-border: ${({ theme }) => theme.table.border};
+border:none;
 color: ${({ theme }) => theme.table.color};
 text-align: center;
-width: 200px;
+font-size: 16px;
 
 
 `

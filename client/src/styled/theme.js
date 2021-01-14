@@ -29,8 +29,9 @@ export const lightTheme = {
     },
 
     table: {
-        color: '#363537',
-        border: '1px solid #363537',
+        background: '#363537',
+        color: '#FAFAFA',
+        border: '1px solid #FAFAFA',
     }
 }
 
@@ -64,7 +65,8 @@ export const darkTheme = {
         bgColor: '#363537',
     },
     table: {
-        color: '#FAFAFA',
-        border: '1px solid #FAFAFA',
+        background: '#FAFAFA',
+        color: '#363537',
+        border: '1px solid #363537',
     }
 }
