@@ -98,6 +98,22 @@ justify-content: center;
 width:80%;
 height: 50vh;
 overflow: auto;
+
+::-webkit-scrollbar {
+  width: 30px;
+  
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px ${({ theme }) => theme.table.background} ; 
+  border-radius: 10px;
+  background: ${({ theme }) => theme.table.scrollBarColor};
+}
+::-webkit-scrollbar-thumb {
+  background: ${({ theme }) => theme.table.background};
+  border-radius: 10px;
+  border: 5px solid transparent ;
+  background-clip: content-box; 
+}
 `
 const StyledTable = styled.table`
 width: 100%;

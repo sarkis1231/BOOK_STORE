@@ -32,6 +32,8 @@ export const lightTheme = {
         background: '#363537',
         color: '#FAFAFA',
         border: '1px solid #FAFAFA',
+        scrollColor: '#6B8096',
+        scrollBarColor: '#E2E2E2',
     }
 }
 
@@ -67,6 +69,8 @@ export const darkTheme = {
     table: {
         background: '#FAFAFA',
         color: '#363537',
-        border: '1px solid #363537',
+        border: '1px solid #6B8096',
+        scrollColor: '#FAFAFA',
+        scrollBarColor: '#363537',
     }
 }
