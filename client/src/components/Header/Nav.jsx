@@ -1,17 +1,17 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import {FlexContainer, FlexItem} from "../../styled/layout.styled";
-import {useTranslation} from "react-i18next";
-import {useDispatch, useSelector} from "react-redux";
-import {logOutUser} from "../../actions/authActions";
+import { FlexContainer, FlexItem } from "../../styled/layout.styled";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { logOutUser } from "../../actions/authActions";
 import Button from "../Reusable/Button";
 import history from "../../utils/history";
 
 const Nav = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const isAuth  = useSelector(state => state.auth.isAuthenticated);
+    const isAuth = useSelector(state => state.auth.isAuthenticated);
     const handleLogOut = () => {
         dispatch(logOutUser());
         history.push('/');
@@ -23,8 +23,7 @@ const Nav = () => {
                 alignItems='center'
                 justifyContent='space-between'
             >
-                <NavLink to='/home'>{t('headerItem.item1')}</NavLink>
-                <NavLink to='/'>{t('headerItem.item2')}</NavLink>
+                <NavLink to='/'>{t('headerItem.item1')}</NavLink>
                 {!Object.keys(isAuth).length && <NavLink to='/login'>{t('headerItem.item3')}</NavLink>}
                 {Object.keys(isAuth).length ?
                     <FlexItem width='115px' onClick={() => handleLogOut()}>
@@ -51,7 +50,7 @@ const StyledFlexContainer = styled(FlexContainer)`
 `
 
 const NavLink = styled(Link)`
-  color: ${({theme}) => theme.text};
+  color: ${({ theme }) => theme.text};
   text-decoration: none;
   margin: 0 0 20px 0;
   font-size: 20px;
