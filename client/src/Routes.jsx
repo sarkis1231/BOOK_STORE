@@ -21,7 +21,6 @@ const Routes = () => {
             <PrivateRoute exact path='/books' component={HL_BOOKS} allowedRoles={['Admin', 'User']} />
             <PublicRoute exact path='/login' component={Login} />
             <PublicRoute exact path='/register' component={Register} />
-            <PublicRoute exact path='/register' component={Register} />
         </Switch>
     );
 };
