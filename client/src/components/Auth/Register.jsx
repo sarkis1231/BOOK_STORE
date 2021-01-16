@@ -84,8 +84,9 @@ const Register = () => {
 export default Register;
 
 const StyledFlexContainer = styled(FlexContainer)`
-  padding: 50px 0 0 0;
   width: 100%;
+  height: 100vh;
+  overflow: auto;
   justify-content: center;
   flex-direction: column;
 `

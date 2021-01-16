@@ -16,7 +16,7 @@ export const StyledForm = styled.form`
   max-width: 360px;
   flex-direction: column;
   align-items: center;
-  padding: 60px 15px 0 15px;
+  padding: 20px 15px 0 15px;
 `
 
 export const Overlay = styled.div`
