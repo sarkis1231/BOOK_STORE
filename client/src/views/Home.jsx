@@ -1,11 +1,14 @@
 import React from 'react';
+import Button from '../components/Reusable/Button';
+import { FlexContainer } from '../styled/layout.styled';
+import styled from 'styled-components';
 
 const Home = () => {
     return (
         <>
-            <h1>Welcome to our Book-store</h1>
-            <div>
-                <h2>About us </h2>
+            <FlexContainer flexDirection='column' padding='40px 0'>
+                <StyledHeader>Welcome to our Book-store</StyledHeader>
+                <StyledHeaderTwo>About us </StyledHeaderTwo>
                 <p>
                     We are an online book store that was established in 2020.<br />
              we give our registered users access to download a large variety of books
@@ -14,12 +17,29 @@ const Home = () => {
              from anywhere in the world easily and conveniently.
 
             </p>
-            </div>
-            <div>
-                <h4> In order to access our books please register</h4>
-            </div>
+
+
+                <StyledHeaderFour> In order to access our books please register</StyledHeaderFour>
+                <Button type='button' width='200px' > Register</Button>
+            </FlexContainer>
         </>
     );
 };
 
 export default Home;
+
+
+const StyledHeader = styled.h1`
+text-align: center;
+
+`
+
+const StyledHeaderTwo = styled.h2`
+padding: 40px 0 20px 0;
+
+`
+
+const StyledHeaderFour = styled.h4`
+padding: 40px 0 20px 0;
+
+`
