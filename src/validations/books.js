@@ -49,7 +49,7 @@ BookValidation.add = [
         }),
     check('files')
         .custom(function (value, {req}) {
-            const names = {
+            const names = { //TODO check the types here and do something
                 'file': 'file',
                 'image': 'image'
             };
