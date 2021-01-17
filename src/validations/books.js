@@ -3,6 +3,7 @@ const {body, param} = require("express-validator");
 const mongoose = require("mongoose");
 const {Books} = require("../models/Books");
 const {Genres} = require("../models/Genre");
+const {Authors} = require("../models/Author");
 
 const BookValidation = {};
 
@@ -30,7 +31,22 @@ BookValidation.add = [
                     return Promise.reject(MESSAGES.GENRE_NOT_FOUND);
                 }
             });
-        })
+        }),
+    body('author')
+        .notEmpty()
+        .withMessage(MESSAGES.REQUIRED_FIELDS)
+        .custom(function (value, {req}) {
+            let validId = mongoose.Types.ObjectId.isValid(value);
+            if (!validId) {
+                throw new Error(MESSAGES.INVALID_ID);
+            }
+            return Authors.findById(value).then(function (author) {
+                if (!author) {
+                    return Promise.reject(MESSAGES.AUTHOR_IS_NOT_FOUND);
+                }
+            });
+        }),
+
 ];
 
 BookValidation.edit = [
@@ -64,6 +80,20 @@ BookValidation.edit = [
             Genres.findById(value).then(function (genre) {
                 if (!genre) {
                     return Promise.reject(MESSAGES.GENRE_NOT_FOUND);
+                }
+            });
+        }),
+    body('author') //TODO remove duplicates
+        .notEmpty()
+        .withMessage(MESSAGES.REQUIRED_FIELDS)
+        .custom(function (value, {req}) {
+            let validId = mongoose.Types.ObjectId.isValid(value);
+            if (!validId) {
+                throw new Error(MESSAGES.INVALID_ID);
+            }
+            return Authors.findById(value).then(function (author) {
+                if (!author) {
+                    return Promise.reject(MESSAGES.AUTHOR_IS_NOT_FOUND);
                 }
             });
         })

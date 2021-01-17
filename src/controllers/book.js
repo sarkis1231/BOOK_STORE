@@ -6,10 +6,12 @@ const {Books} = require("../models/Books");
 
 
 async function addBook(req, res, next) {
-    const {name, genre} = req.body;
+    const {name, genre,author} = req.body;
+    // const {image,file} = req.file;
+    // console.log(image,file);
     try {
         errorValidation(req);
-        const newBook = new Books({name, genre});
+        const newBook = new Books({name, genre,author});
         if (await newBook.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.BOOK_ADDED);
         }
@@ -20,12 +22,15 @@ async function addBook(req, res, next) {
 }
 
 async function editBook(req, res, next) {
-    const {name, genre} = req.body;
+    const {name, genre,author} = req.body;
+    // const {image,file} = req.file;
+    // console.log(image,file);
     try {
         errorValidation(req);
         const book = await Books.getById(req.params.id); //TODO check pass option
         book.name = name;
         book.genre = genre;
+        book.author = author;
 
         if (await book.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);

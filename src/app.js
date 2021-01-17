@@ -7,8 +7,6 @@ const helmet = require("helmet");
 const {MONGODB_URI} = require("./config/keys");
 const {MONGOOSE_OPTIONS} = require("./config/keys");
 const passportConfig = require("./config/passport");
-const multer  = require('multer');
-const path = require("path");
 
 const app = express();
 
@@ -42,28 +40,6 @@ passportConfig(passport);
 const router = require('./routes');
 app.use(router);
 
-
-//files
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads');
-    },
-    filename: (req, file, cb) => {
-        console.log(file); //TODO check the path error
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
-
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
-};
-
-//re use in middlewares
-export const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 //errors
 app.use(function (err, req, res, next) {
@@ -108,4 +84,3 @@ process.on('SIGINT', function () {
         process.exit(0);
     });
 });
-
