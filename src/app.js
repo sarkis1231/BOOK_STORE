@@ -8,6 +8,7 @@ const {MONGODB_URI} = require("./config/keys");
 const {MONGOOSE_OPTIONS} = require("./config/keys");
 const passportConfig = require("./config/passport");
 const multer  = require('multer');
+const path = require("path");
 
 const app = express();
 
@@ -61,7 +62,8 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+//re use in middlewares
+export const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 //errors
 app.use(function (err, req, res, next) {
