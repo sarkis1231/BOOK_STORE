@@ -50,9 +50,9 @@ BookValidation.add = [
     check('files')
         .custom(function (value, {req}) {
             const names = {
-                'file':'file',
-                'image':'image'
-            }
+                'file': 'file',
+                'image': 'image'
+            };
 
             if (!Fn.isEmpty(req.files)) {
                 throw new Error(MESSAGES.REQUIRED_FIELDS);

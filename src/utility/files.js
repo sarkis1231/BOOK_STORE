@@ -1,6 +1,12 @@
 const multer  = require('multer');
 const path = require("path");
 
+const FILE_TYPES = {
+    'image/jpeg': 'image/jpeg',
+    'image/png': 'image/png',
+    'application/pdf': 'application/pdf'
+};
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'src/uploads');
@@ -11,8 +17,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-    //TODO util object json format
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'application/pdf') {
+    if (!!FILE_TYPES[file.mimetype]) {
         return cb(null, true);
     }
 

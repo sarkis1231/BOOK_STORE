@@ -38,7 +38,7 @@ const messageAlert = {
     info: 'info',
 };
 
-const FILE_TYPES = ['image/jpeg', 'image/png'];
+
 
 const SCHEMES_NAMES = {
     'Books': 'Books',
@@ -47,4 +47,4 @@ const SCHEMES_NAMES = {
     'Users': 'Users'
 };
 
-module.exports = {MESSAGES, messageAlert, SCHEMES_NAMES, FILE_TYPES};
+module.exports = {MESSAGES, messageAlert, SCHEMES_NAMES};
