@@ -34,6 +34,10 @@ export const lightTheme = {
         border: '1px solid #FAFAFA',
         scrollColor: '#6B8096',
         scrollBarColor: '#E2E2E2',
+    },
+    footer: {
+        background: '#F1F1F1',
+        borderTop: '1px solid #FFF'
     }
 }
 
@@ -72,5 +76,9 @@ export const darkTheme = {
         border: '1px solid #6B8096',
         scrollColor: '#FAFAFA',
         scrollBarColor: '#363537',
+    },
+    footer: {
+        background: '#444',
+        borderTop: '1px solid #6B8096'
     }
 }

@@ -2,8 +2,12 @@ import React from 'react';
 import Button from '../components/Reusable/Button';
 import { FlexContainer } from '../styled/layout.styled';
 import styled from 'styled-components';
+import Footer from '../components/Footer/Footer';
+import { useHistory } from "react-router-dom";
+
 
 const Home = () => {
+    const history = useHistory();
     return (
         <>
             <FlexContainer flexDirection='column' padding='40px 0'>
@@ -19,9 +23,16 @@ const Home = () => {
             </p>
 
 
-                <StyledHeaderFour> In order to access our books please register</StyledHeaderFour>
-                <Button type='button' width='200px' > Register</Button>
+                <StyledHeaderFour>
+                    In order to access our books please register
+                </StyledHeaderFour>
+                <Button
+                    type='button'
+                    width='200px'
+                    onClick={() => history.push('/register')} > Register
+                 </Button >
             </FlexContainer>
+            <Footer></Footer>
         </>
     );
 };
