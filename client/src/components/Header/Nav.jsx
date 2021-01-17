@@ -24,6 +24,7 @@ const Nav = () => {
                 justifyContent='space-between'
             >
                 <NavLink to='/'>{t('headerItem.item1')}</NavLink>
+                <NavLink to='/books'>{t('headerItem.item2')}</NavLink>
                 {!Object.keys(isAuth).length && <NavLink to='/login'>{t('headerItem.item3')}</NavLink>}
                 {Object.keys(isAuth).length ?
                     <FlexItem width='115px' onClick={() => handleLogOut()}>
