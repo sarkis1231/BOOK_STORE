@@ -1,6 +1,7 @@
 const {MESSAGES} = require("../utility/constants");
-const {body, param,check} = require("express-validator");
+const {body, param,checkSchema,check} = require("express-validator");
 const mongoose = require("mongoose");
+const {Fn} = require("../utility/functions");
 const {Books} = require("../models/Books");
 const {Genres} = require("../models/Genre");
 const {Authors} = require("../models/Author");
@@ -46,30 +47,23 @@ BookValidation.add = [
                 }
             });
         }),
-        /*checkSchema({
-            'image': {
-                notEmpty:{
-                    errorMessage:MESSAGES.REQUIRED_FIELDS
-                },
-                custom: {
-                    options: (value, { req, path }) => !!req.files[path],
-                    errorMessage: MESSAGES.IMAGE_SIZE_LIMIT,
-                },
-            },
-            'file': {
-                notEmpty:{
-                    errorMessage:MESSAGES.REQUIRED_FIELDS
-                },
-                custom: {
-                    options: (value, { req, path }) => !!req.files[path],
-                    errorMessage: MESSAGES.PDF_SIZE_LIMIT,
-                },
-            },
-        })*/
     check('files')
         .custom(function (value, {req}) {
+            const names = {
+                'file':'file',
+                'image':'image'
+            }
 
-        }),
+            if (!Fn.isEmpty(req.files)) {
+                throw new Error(MESSAGES.REQUIRED_FIELDS);
+            }
+
+            Object.keys(value,function (v){
+                if (!names[v]){
+                    throw new Error(MESSAGES.REQUIRED_FIELDS);
+                }
+            });
+        })
 
 ];
 

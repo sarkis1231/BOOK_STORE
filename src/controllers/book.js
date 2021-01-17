@@ -1,6 +1,6 @@
 const {MESSAGES,messageAlert} = require("../utility/constants");
 const {getCtrlFn} = require("../utility/controllers/functions");
-const {errorCatcher,errorValidation} = require("../utility/controllers/errors");
+const {errorCatcher,errorValidationFiles} = require("../utility/controllers/errors");
 const {alert} = require("../utility/controllers/messages");
 const {Books} = require("../models/Books");
 const {Fn} = require("../utility/functions");
@@ -11,19 +11,16 @@ async function addBook(req, res, next) {
 
 
     try {
-        console.log(req);
-        errorValidation(req);
-        let file,image;
-        file = req.files.file;
-        image = req.files.image;
-        console.log(req.body);
+        errorValidationFiles(req,['file','image']);
+
+        let file = req.files.file;
+        let image = req.files.image;
 
 
-
-        /*const newBook = new Books({name, genre,author});
+        const newBook = new Books({name, genre,author,file,image});
         if (await newBook.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.BOOK_ADDED);
-        }*/
+        }
 
     } catch (err) {
         errorCatcher(next, err);
@@ -34,22 +31,21 @@ async function editBook(req, res, next) {
     const {name, genre,author} = req.body;
 
     try {
-        errorValidation(req);
-        let file,image;
-        if (!Fn.isEmpty(req.files)) {
-            file = req.files.file;
-            image = req.files.image;
-        }
-        console.log(image,file);
+        errorValidationFiles(req,['file','image']);
 
-        /*const book = await Books.getById(req.params.id); //TODO check pass option
+        let file = req.files.file;
+        let image = req.files.image;
+
+        const book = await Books.getById(req.params.id); //TODO check pass option
         book.name = name;
         book.genre = genre;
         book.author = author;
+        book.file  = file;
+        book.image  = image;
 
         if (await book.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
-        }*/
+        }
 
     } catch (err) {
         errorCatcher(next, err);

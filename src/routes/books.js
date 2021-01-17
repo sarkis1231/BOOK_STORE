@@ -23,7 +23,9 @@ router.get('/:id', paramIdValidation, getBook);
 
 
 
-router.post('/', isAuth(), isAdmin(),
+router.post('/',
+    isAuth(),
+    isAdmin(),
     files,
     BookValidation.add,
     addBook
