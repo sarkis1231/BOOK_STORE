@@ -9,7 +9,7 @@ const Home = () => {
     const history = useHistory();
     return (
         <>
-            <FlexContainer flexDirection='column' padding='40px 0'>
+            <FlexContainer flexDirection='column' padding='40px 0' margin='0 0 20px 0'>
                 <StyledHeader>Welcome to our Book-store</StyledHeader>
                 <StyledHeaderTwo>About us </StyledHeaderTwo>
                 <p>

@@ -21,7 +21,9 @@ justify-content: center;
 display: flex;
 background: ${({ theme }) => theme.footer.background};
 align-items: center;
-border-top: ${({ theme }) => theme.footer.borderTop}
+border-top: ${({ theme }) => theme.footer.borderTop};
+position: absolute;
+bottom: 0;
 
 `
 const StyledFooterParagraph = styled.p`
