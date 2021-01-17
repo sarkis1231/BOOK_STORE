@@ -28,7 +28,7 @@ const Login = () => {
         axios.post('/users/login', values).then(res => {
             if(res) {
                 dispatch(loginUser(res));
-                history.push('/home');
+                history.push('/');
             }
         }).catch(e => console.log(e))
     }
