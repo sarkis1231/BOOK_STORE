@@ -1,17 +1,19 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components'
 import Header from "./Header/Header";
-import {ThemeDispatch} from "../context/ThemeContext/Context";
+import { ThemeDispatch } from "../context/ThemeContext/Context";
+import Footer from "./Footer/Footer";
 
 const Layout = ({ children }) => {
     const toggleTheme = useContext(ThemeDispatch)
 
     return (
         <>
-                <Header toggleTheme={toggleTheme}/>
-                <StyledLayout>
-                    {children}
-                </StyledLayout>
+            <Header toggleTheme={toggleTheme} />
+            <StyledLayout>
+                {children}
+            </StyledLayout>
+            <Footer></Footer>
         </>
     );
 };

@@ -18,8 +18,6 @@ export default Footer;
 const StyledFooterContainer = styled.div`
 width: 100%;
 justify-content: center;
-position: fixed;
-bottom: 0;
 display: flex;
 background: ${({ theme }) => theme.footer.background};
 align-items: center;

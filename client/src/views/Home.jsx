@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '../components/Reusable/Button';
 import { FlexContainer } from '../styled/layout.styled';
 import styled from 'styled-components';
-import Footer from '../components/Footer/Footer';
 import { useHistory } from "react-router-dom";
 
 
@@ -32,7 +31,6 @@ const Home = () => {
                     onClick={() => history.push('/register')} > Register
                  </Button >
             </FlexContainer>
-            <Footer></Footer>
         </>
     );
 };
