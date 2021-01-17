@@ -12,21 +12,28 @@ const {isAuth, isAdmin} = require("../middlewares/authentication");
 const router = Router();
 
 
+let files = upload.fields([
+    {name: 'image', maxCount: 1},
+    {name: 'file', maxCount: 1}
+]);
+
 router.get('/', getBooks);
 
-router.get('/:id', paramIdValidation ,getBook);
+router.get('/:id', paramIdValidation, getBook);
 
-router.post('/', isAuth(), isAdmin(), BookValidation.add,
-    /*upload.fields([
-        // {name: 'image', maxCount: 1},
-        {name: 'file', maxCount: 1}]),*/
-     addBook
+
+
+router.post('/', isAuth(), isAdmin(),
+    files,
+    BookValidation.add,
+    addBook
 );
 
-router.put('/:id', isAuth(), isAdmin(), paramIdValidation, BookValidation.edit,
-    /*upload.fields([
-        // {name: 'image', maxCount: 1},
-        {name: 'file', maxCount: 1}]),*/
+router.put('/:id',
+    isAuth(), isAdmin(),
+    paramIdValidation,
+    files,
+    BookValidation.edit,
     editBook
 );
 

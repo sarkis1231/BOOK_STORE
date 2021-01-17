@@ -1,5 +1,5 @@
 const {MESSAGES} = require("../utility/constants");
-const {body, param} = require("express-validator");
+const {body, param,check} = require("express-validator");
 const mongoose = require("mongoose");
 const {Books} = require("../models/Books");
 const {Genres} = require("../models/Genre");
@@ -45,6 +45,30 @@ BookValidation.add = [
                     return Promise.reject(MESSAGES.AUTHOR_IS_NOT_FOUND);
                 }
             });
+        }),
+        /*checkSchema({
+            'image': {
+                notEmpty:{
+                    errorMessage:MESSAGES.REQUIRED_FIELDS
+                },
+                custom: {
+                    options: (value, { req, path }) => !!req.files[path],
+                    errorMessage: MESSAGES.IMAGE_SIZE_LIMIT,
+                },
+            },
+            'file': {
+                notEmpty:{
+                    errorMessage:MESSAGES.REQUIRED_FIELDS
+                },
+                custom: {
+                    options: (value, { req, path }) => !!req.files[path],
+                    errorMessage: MESSAGES.PDF_SIZE_LIMIT,
+                },
+            },
+        })*/
+    check('files')
+        .custom(function (value, {req}) {
+
         }),
 
 ];
