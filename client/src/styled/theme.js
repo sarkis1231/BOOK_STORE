@@ -14,6 +14,17 @@ export const lightTheme = {
         bgColor: '#F1F1F1',
         color: '#000',
     },
+    inputFile: {
+        border: '#000',
+        focused: '#FFF',
+        bgColor: '#F1F1F1',
+        color: '#000',
+        button: {
+            color: '#000',
+            bgColor: '#F1F1F1',
+            border: '#000',
+        },
+    },
     dropDown: {
         color: '#000',
         bgColor: '#F1F1F1',
@@ -56,6 +67,17 @@ export const darkTheme = {
         focused: '#6B8096',
         bgColor: '#444',
         color: '#FFF',
+    },
+    inputFile: {
+        border: '#FFF',
+        focused: '#6B8096',
+        bgColor: '#444',
+        color: '#FFF',
+        button: {
+            color: '#FFF',
+            bgColor: '#444',
+            border: '#FFF',
+        },
     },
     dropDown: {
         color: '#FFF',

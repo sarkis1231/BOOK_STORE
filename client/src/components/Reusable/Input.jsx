@@ -28,6 +28,13 @@ const Input = forwardRef(({label, error, name, placeHolder, type, searchDisplay,
                     <StyledLine  expandInput={expandInput}/>
                 </StyledFlexContainer>
             )
+        case 'file':
+            return (
+            <StyledInputFileLabel>
+                <StyledInputFile type={type} name={name} ref={ref}/>
+                <StyledInputFileSpan />
+            </StyledInputFileLabel>
+            )
         default:
             return (
                 <FlexContainer flexDirection='column' width='100%' margin={margin}>
@@ -160,3 +167,69 @@ const StyledLine = styled.div`
   transition: all .3s ease;
 `
 
+
+const StyledInputFileLabel = styled.label`
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  height: 2.5rem;
+`
+
+const StyledInputFileSpan = styled.span`
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  height: 2.5rem;
+  padding: .5rem 1rem;
+  line-height: 1.5;
+  color: ${({theme}) => theme.inputFile.color};
+  background-color: ${({theme}) => theme.inputFile.bgColor};
+  border: ${({theme}) => `1px solid ${theme.inputFile.border}`};
+  border-radius: .25rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  &:before {
+    position: absolute;
+    top: -.075rem;
+    right: -.075rem;
+    bottom: -.075rem;
+    z-index: 6;
+    display: block;
+    content: "Browse";
+    height: 2.5rem;
+    padding: .5rem 1rem;
+    line-height: 1.5;
+    color: ${({theme}) => theme.inputFile.button.color};
+    background-color: ${({theme}) => theme.inputFile.button.bgColor};
+    border: ${({theme}) => `1px solid ${theme.inputFile.button.border}`};
+    border-radius: 0 .25rem .25rem 0;
+  }
+  &:after {
+    content: "Choose file...";
+  }
+`
+
+const StyledInputFile = styled.input.attrs('file')`
+  visibility: hidden;
+  &:before {
+    visibility: visible;
+    content: 'Select some files';
+    display: inline-block;
+    background: linear-gradient(top, #f9f9f9, #e3e3e3);
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+  }
+    
+`
