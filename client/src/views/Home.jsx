@@ -1,21 +1,26 @@
 import React from 'react';
 import Button from '../components/Reusable/Button';
-import {FlexContainer} from '../styled/layout.styled';
+import { FlexContainer } from '../styled/layout.styled';
 import styled from 'styled-components';
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Card from '../components/Reusable/Card';
+import photo from '../assets/svg/photo.png';
 
 
 const Home = () => {
+    const books = [{ image: photo, name: 'hovik', title: 'history' },
+    { name: 'philip', title: 'medicine' },
+    { name: 'sako', title: 'math' },]
     const history = useHistory();
     return (
         <>
-            <FlexContainer flexDirection='column' padding='40px 0' margin='0 0 20px 0'>
+            <FlexContainer flexDirection='column' padding='40px 20px' margin='0 0 20px 0'>
                 <StyledHeader>Welcome to our Book-store</StyledHeader>
                 <StyledHeaderTwo>About us </StyledHeaderTwo>
                 <p>
-                    We are an online book store that was established in 2020.<br/>
+                    We are an online book store that was established in 2020.<br />
                     we give our registered users access to download a large variety of books
-                    that belongs to different categories for free. <br/>
+                    that belongs to different categories for free. <br />
                     our goal is to help people get access to their desired books
                     from anywhere in the world easily and conveniently.
 
@@ -30,6 +35,9 @@ const Home = () => {
                     width='200px'
                     onClick={() => history.push('/register')}> Register
                 </Button>
+                <FlexContainer justifyContent='space-between' padding='20px 0' >
+                    {books.map((book) => { return (<Card image={book.image} name={book.name} title={book.title} ></Card>) })}
+                </FlexContainer>
             </FlexContainer>
         </>
     );

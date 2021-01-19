@@ -49,6 +49,10 @@ export const lightTheme = {
     footer: {
         background: '#F1F1F1',
         borderTop: '1px solid #FFF'
+    },
+    card: {
+        background: '#363537',
+        color: '#FAFAFA',
     }
 }
 
@@ -102,5 +106,9 @@ export const darkTheme = {
     footer: {
         background: '#444',
         borderTop: '1px solid #6B8096'
+    },
+    card: {
+        background: '#FAFAFA',
+        color: '#363537',
     }
 }
