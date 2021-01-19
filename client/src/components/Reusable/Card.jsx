@@ -4,18 +4,12 @@ import styled from 'styled-components';
 import { FlexContainer } from '../../styled/layout.styled';
 import noImage from '../../assets/svg/noImage.png'
 
-const Card = (props) => {
-    let details = {
-        image: props.image,
-        title: props.title,
-        author: props.name,
-
-    }
+const Card = ({ image, title, name }) => {
     return (
         <StyledCardContainer>
             <StyledImgContainer>
-                {details.image ?
-                    <StyledImg alt='' src={details.image} /> :
+                {image ?
+                    <StyledImg alt='' src={image} /> :
                     <StyledImg alt='' src={noImage} />}
             </StyledImgContainer>
             <FlexContainer
@@ -23,8 +17,8 @@ const Card = (props) => {
                 padding='0 0 10px 0'
                 flexDirection='column'
                 alignContent='flex-start' >
-                <span>{`Title: ${details.title}`}</span>
-                <span>{`author: ${details.author}`}</span>
+                <span>{`Title: ${title}`}</span>
+                <span>{`author: ${name}`}</span>
             </FlexContainer>
             <Button width='75%'>download</Button>
         </StyledCardContainer>
