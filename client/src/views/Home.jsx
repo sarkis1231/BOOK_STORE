@@ -3,14 +3,9 @@ import Button from '../components/Reusable/Button';
 import { FlexContainer } from '../styled/layout.styled';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
-import Card from '../components/Reusable/Card';
-import photo from '../assets/svg/photo.png';
 
 
 const Home = () => {
-    const books = [{ image: photo, name: 'hovik', title: 'history' },
-    { name: 'philip', title: 'medicine' },
-    { name: 'sako', title: 'math' },]
     const history = useHistory();
     return (
         <>
@@ -35,9 +30,6 @@ const Home = () => {
                     width='200px'
                     onClick={() => history.push('/register')}> Register
                 </Button>
-                <FlexContainer justifyContent='space-between' padding='20px 0' >
-                    {books.map((book) => { return (<Card image={book.image} name={book.name} title={book.title} ></Card>) })}
-                </FlexContainer>
             </FlexContainer>
         </>
     );
