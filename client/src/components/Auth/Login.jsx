@@ -35,7 +35,7 @@ const Login = () => {
 
     useEffect(() => {
         if(Object.keys(isAuth).length) {
-           history.push('/home')
+           history.push('/books')
         }
     }, [isAuth, history])
 
