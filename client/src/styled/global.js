@@ -19,5 +19,6 @@ html{
     transition: all 0.25s linear;
     min-height: 100%;
     position: relative;
+    overflow-x: hidden;
   }
 `

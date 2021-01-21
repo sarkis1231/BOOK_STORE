@@ -172,7 +172,9 @@ const StyledInputFileLabel = styled.label`
   position: relative;
   display: inline-block;
   cursor: pointer;
+  margin: 20px 0;
   height: 2.5rem;
+  width: 100%;
 `
 
 const StyledInputFileSpan = styled.span`
