@@ -53,7 +53,8 @@ export const lightTheme = {
     card: {
         background: '#363537',
         color: '#FAFAFA',
-    }
+    },
+    editDeleteIcon: '#FAFAFA',
 }
 
 export const darkTheme = {
@@ -110,5 +111,6 @@ export const darkTheme = {
     card: {
         background: '#FAFAFA',
         color: '#363537',
-    }
+    },
+    editDeleteIcon: '#363537',
 }

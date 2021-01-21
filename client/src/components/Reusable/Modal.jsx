@@ -102,7 +102,7 @@ const ModalTitle = styled.h3`
 `
 
 const StyledModalContent = styled.div`
-  margin-top: 20px;
+  margin-top: 30px;
   @media only screen and (max-width: 500px) {
      max-height: 500px; 
      height: 100%;

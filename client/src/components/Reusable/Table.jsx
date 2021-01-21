@@ -2,9 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import {dateYearFormat} from "../../utils";
 import {FlexContainer} from "../../styled/layout.styled";
+import {ReactComponent as EditIcon} from '../../assets/svg/edit.svg'
+import {ReactComponent as DeleteIcon} from '../../assets/svg/delete.svg'
 
-const Table = ({header, body, actionsTypes}) => {
-
+const Table = ({header, body, actionsTypes, editAction, deleteAction}) => {
 
     return (
         <StyledTableContainer>
@@ -22,17 +23,19 @@ const Table = ({header, body, actionsTypes}) => {
                 {body.map(item => (
                     <tr key={item._id}>
                         {actionsTypes ? <StyledTd>
-                            <FlexContainer justifyContent='space-around'>
+                            <FlexContainer justifyContent='space-around' width='100%'>
                                 {/*eslint-disable-next-line*/}
                                 {actionsTypes.map(action => {
                                     switch (action) {
                                         case 'EDIT':
                                             return (
-                                                <p key={action}>Edit</p>
+                                                <EditIcon key={action}
+                                                          onClick={editAction ? () => editAction({...item}) : null}/>
                                             )
                                         case 'DELETE':
                                             return (
-                                                <p key={action}>DELETE</p>
+                                                <DeleteIcon key={action}
+                                                            onClick={deleteAction ? () => deleteAction(item._id) : null}/>
                                             )
                                         default:
                                             break;
@@ -58,8 +61,8 @@ export default Table;
 
 const StyledTableContainer = styled.div`
   display: flex;
-  border: none;
-  justify-content: center;
+  flex-flow: row nowrap;
+  flex-grow: initial;
   width: 100%;
   overflow: auto;
 
@@ -85,6 +88,8 @@ const StyledTable = styled.table`
   width: 100%;
   background: ${({theme}) => theme.table.background};
   border-radius: 10px;
+  border-collapse: collapse;
+}
 `
 
 const StyledThead = styled.thead`
@@ -103,6 +108,12 @@ const StyledTd = styled.td`
 
   :last-child {
     border-right: none;
+  }
+
+  svg {
+    width: 20px;
+    cursor: pointer;
+    fill: ${({theme}) => theme.editDeleteIcon};
   }
 
 `
