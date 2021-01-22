@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AddGenre = () => {
+const Genre = () => {
     return (
         <div>
 
@@ -8,4 +8,4 @@ const AddGenre = () => {
     );
 };
 
-export default AddGenre;
+export default Genre;

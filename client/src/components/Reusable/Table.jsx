@@ -5,10 +5,10 @@ import {FlexContainer} from "../../styled/layout.styled";
 import {ReactComponent as EditIcon} from '../../assets/svg/edit.svg'
 import {ReactComponent as DeleteIcon} from '../../assets/svg/delete.svg'
 
-const Table = ({header, body, actionsTypes, editAction, deleteAction}) => {
+const Table = ({header, body, actionsTypes, editAction, deleteAction, margin}) => {
 
     return (
-        <StyledTableContainer>
+        <StyledTableContainer margin={margin}>
             <StyledTable>
                 <StyledThead>
                     <tr>
@@ -21,6 +21,7 @@ const Table = ({header, body, actionsTypes, editAction, deleteAction}) => {
                 </StyledThead>
                 <tbody>
                 {body.map(item => (
+                    !(item['role'] === 'Admin') ?
                     <tr key={item._id}>
                         {actionsTypes ? <StyledTd>
                             <FlexContainer justifyContent='space-around' width='100%'>
@@ -35,7 +36,7 @@ const Table = ({header, body, actionsTypes, editAction, deleteAction}) => {
                                         case 'DELETE':
                                             return (
                                                 <DeleteIcon key={action}
-                                                            onClick={deleteAction ? () => deleteAction(item._id) : null}/>
+                                                            onClick={deleteAction ? () => deleteAction({...item}) : null}/>
                                             )
                                         default:
                                             break;
@@ -49,7 +50,7 @@ const Table = ({header, body, actionsTypes, editAction, deleteAction}) => {
                                 :
                                 (<StyledTd key={key}>{item[key]}</StyledTd>)
                         ))}
-                    </tr>
+                    </tr> : null
                 ))}
                 </tbody>
             </StyledTable>
@@ -65,6 +66,7 @@ const StyledTableContainer = styled.div`
   flex-grow: initial;
   width: 100%;
   overflow: auto;
+  margin: ${({margin}) => margin ? margin : '40px 0'};
 
   ::-webkit-scrollbar {
     width: 30px;
@@ -104,7 +106,7 @@ const StyledTd = styled.td`
   text-align: center;
   font-size: 16px;
   width: calc(100% / 4);
-  padding: 10px 0;
+  padding: 10px;
 
   :last-child {
     border-right: none;

@@ -8,8 +8,8 @@ const Form = ({formTitle, inputs, handleSubmit, onSubmit, register, errors, btnN
     return (
         <FlexContainer width='100%'>
             <H1>{formTitle}</H1>
-            <StyledForm onSubmit={handleSubmit(onSubmit)}>
-                {inputs.map(({id, name, label, type, inputType, placeHolder}) => (
+            <StyledForm onSubmit={handleSubmit && handleSubmit(onSubmit)}>
+                {inputs ? inputs.map(({id, name, label, type, inputType, placeHolder}) => (
                     <Input
                         name={name}
                         label={label}
@@ -20,8 +20,8 @@ const Form = ({formTitle, inputs, handleSubmit, onSubmit, register, errors, btnN
                         type={type}
                         placeHolder={placeHolder}
                     />
-                ))}
-                <Button type='submit'>{btnName}</Button>
+                )) : null}
+                <Button margin='20px 0' type='submit'>{btnName}</Button>
             </StyledForm>
         </FlexContainer>
     );

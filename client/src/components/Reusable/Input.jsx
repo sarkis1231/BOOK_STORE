@@ -1,13 +1,26 @@
 import React, {useRef, useState, forwardRef} from 'react';
 import styled, {css} from 'styled-components';
 import {FlexContainer} from "../../styled/layout.styled";
-import {ReactComponent as SearchIcon } from "../../assets/svg/search.svg";
+import {ReactComponent as SearchIcon} from "../../assets/svg/search.svg";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
-const Input = forwardRef(({label, error, name, placeHolder, type, searchDisplay, mobileDisplay, margin, inputType}, ref) => {
+const Input = forwardRef(({
+                              label,
+                              error,
+                              name,
+                              placeHolder,
+                              type,
+                              searchDisplay,
+                              mobileDisplay,
+                              margin,
+                              inputType,
+                              value,
+                              serverError
+                          }, ref) => {
+
     const [expandInput, setExpandInput] = useState(false);
     const dropDownRf = useRef(null)
-    useOnClickOutside(dropDownRf, () =>  setExpandInput(false))
+    useOnClickOutside(dropDownRf, () => setExpandInput(false))
     switch (type) {
         case 'searchBar':
             return (
@@ -25,22 +38,24 @@ const Input = forwardRef(({label, error, name, placeHolder, type, searchDisplay,
                     <SearchIcon
                         onClick={() => setExpandInput(() => true)}
                     />
-                    <StyledLine  expandInput={expandInput}/>
+                    <StyledLine expandInput={expandInput}/>
                 </StyledFlexContainer>
             )
         case 'file':
             return (
-            <StyledInputFileLabel>
-                <StyledInputFile type={type} name={name} ref={ref}/>
-                <StyledInputFileSpan />
-            </StyledInputFileLabel>
+                <StyledInputFileLabel>
+                    <StyledInputFile type={type} name={name} ref={ref}/>
+                    <StyledInputFileSpan/>
+                </StyledInputFileLabel>
             )
         default:
             return (
                 <FlexContainer flexDirection='column' width='100%' margin={margin}>
                     {label && <StyledLabel>{label}</StyledLabel>}
-                    <StyledInput ref={ref} type={inputType} name={name} placeholder={placeHolder}/>
-                    {error && <StyledSpan>{error[name] && error[name].message}</StyledSpan>}
+                    <StyledInput ref={ref} type={inputType} defaultValue={value} name={name} placeholder={placeHolder}/>
+                    <StyledSpan errors={error || serverError}>
+                        {(error && error[name] && error[name].message) || (serverError && serverError[name])}
+                    </StyledSpan>
                 </FlexContainer>
             );
     }
@@ -56,24 +71,28 @@ const StyledFlexContainer = styled(FlexContainer)`
   align-items: center;
   width: 200px;
   justify-content: flex-end;
+
   svg {
     width: 24px;
     height: 24px;
     cursor: pointer;
     fill: ${({theme}) => theme.input.color};
     transform: rotate(75deg);
-  };
+  }
+;
   transition: all .3s ease;
   @media only screen and (max-width: 970px) {
-   display: ${({mobileDisplay}) => mobileDisplay};
+    display: ${({mobileDisplay}) => mobileDisplay};
     width: 70%;
     svg {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    fill: ${({theme}) => theme.input.color};
-    transform: rotate(75deg);
-  };
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      fill: ${({theme}) => theme.input.color};
+      transform: rotate(75deg);
+    }
+
+  ;
   }
 `
 
@@ -93,17 +112,21 @@ const StyledInput = styled.input`
   outline: none;
   color: ${({theme}) => theme.input.color};
   background: ${({theme}) => theme.input.bgColor};
-    &::placeholder{
+
+  &::placeholder {
     color: ${({theme}) => theme.input.color};
     opacity: 0.7;
   }
+
   &:focus {
     border: ${({theme}) => `2px solid ${theme.input.focused}`};
-    &::placeholder{
-        color: ${({theme}) => theme.input.color};
-        opacity: 0;
+
+    &::placeholder {
+      color: ${({theme}) => theme.input.color};
+      opacity: 0;
     }
   }
+
   transition: all .3s ease;
 
 `
@@ -113,6 +136,9 @@ const StyledSpan = styled.span`
   margin-top: 2px;
   font-size: 12px;
   font-weight: 600;
+  opacity: ${({errors}) => errors ? '1' : '0'};
+  visibility: ${({errors}) => errors ? 'visible' : 'hidden'};
+  transition: all .3s ease;
 `
 
 const StyledSearch = styled.input`
@@ -122,25 +148,28 @@ const StyledSearch = styled.input`
   color: ${({theme}) => theme.input.color};
   background: transparent;
   font-size: 16px;
-    &::placeholder{
+
+  &::placeholder {
     color: ${({theme}) => theme.input.color};
     opacity: 0.7;
   }
-  
+
   @media only screen and (max-width: 970px) {
-     width: 70%;
+    width: 70%;
   }
 
-  
-  ${({expandInput}) => expandInput ? 
-    css`
-    max-width: 155px; opacity: 1; visibility: visible;` 
-    :
-    css`  
-      max-width: 0;
-      opacity: 0;
-      visibility: hidden;
-    `
+
+  ${({expandInput}) => expandInput ?
+          css`
+            max-width: 155px;
+            opacity: 1;
+            visibility: visible;`
+          :
+          css`
+            max-width: 0;
+            opacity: 0;
+            visibility: hidden;
+          `
   };
   transition: all .3s ease;
 `
@@ -151,19 +180,21 @@ const StyledLine = styled.div`
   width: 100%;
   bottom: 0;
   background: ${({theme}) => theme.input.color};;
-   ${({expandInput}) => expandInput ?
-    css`max-width: 155px; opacity: 1; right: 24px;`
-    :
-    css`  
-      max-width: 0;
-      opacity: 0;
-      right: 0;
-    `
-};
-    
-   @media only screen and (max-width: 970px) {
-      width: 70%;
-   }
+  ${({expandInput}) => expandInput ?
+          css`max-width: 155px;
+            opacity: 1;
+            right: 24px;`
+          :
+          css`
+            max-width: 0;
+            opacity: 0;
+            right: 0;
+          `
+  };
+
+  @media only screen and (max-width: 970px) {
+    width: 70%;
+  }
   transition: all .3s ease;
 `
 
@@ -194,6 +225,7 @@ const StyledInputFileSpan = styled.span`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
   &:before {
     position: absolute;
     top: -.075rem;
@@ -210,6 +242,7 @@ const StyledInputFileSpan = styled.span`
     border: ${({theme}) => `1px solid ${theme.inputFile.button.border}`};
     border-radius: 0 .25rem .25rem 0;
   }
+
   &:after {
     content: "Choose file...";
   }
@@ -217,6 +250,7 @@ const StyledInputFileSpan = styled.span`
 
 const StyledInputFile = styled.input.attrs('file')`
   visibility: hidden;
+
   &:before {
     visibility: visible;
     content: 'Select some files';
@@ -233,5 +267,5 @@ const StyledInputFile = styled.input.attrs('file')`
     font-weight: 700;
     font-size: 10pt;
   }
-    
+
 `
