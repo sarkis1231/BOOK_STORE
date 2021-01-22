@@ -37,7 +37,7 @@ GenreValidation.edit = [
             if (!validId) {
                 throw new Error(MESSAGES.INVALID_QUERY_PARAM);
             }
-            return Genres.findOne({name: value}).then(function (genre) {
+            return Genres.findOne({_id: value}).then(function (genre) {
                 if (!genre) {
                     return Promise.reject(MESSAGES.GENRE_NOT_FOUND);
                 }

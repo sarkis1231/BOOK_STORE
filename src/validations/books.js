@@ -85,7 +85,7 @@ BookValidation.edit = [
             if (!validId) {
                 throw new Error(MESSAGES.INVALID_QUERY_PARAM);
             }
-            Books.findOne({name: value}).then(function (book) {
+            Books.findOne({_id: value}).then(function (book) {
                 if (!book) {
                     return Promise.reject(MESSAGES.BOOK_NOT_FOUND);
                 }

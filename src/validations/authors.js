@@ -38,7 +38,7 @@ AuthorsValidation.edit = [
             if (!validId) {
                 throw new Error(MESSAGES.INVALID_QUERY_PARAM);
             }
-            return Authors.findOne({name: value}).then(function (author) {
+            return Authors.findOne({_id: value}).then(function (author) {
                 if (!author) {
                     return Promise.reject(MESSAGES.BOOK_NOT_FOUND);
                 }
