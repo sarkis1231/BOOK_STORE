@@ -5,9 +5,8 @@ export default function useFetch(url, reFetch){
 
     useEffect(() => {
         axios.get(url).then(res => {
-            if(res) {
-                setData(prev => [...res.data])
-            }
+            res.data.empty ?  setData(() => []) :   setData(() => [...res.data])
+
         }).catch(e => {
             console.log(e)
         })

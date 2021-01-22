@@ -10,7 +10,7 @@ import {useForm} from "react-hook-form";
 import Button from "../../components/Reusable/Button";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {EditUsersSchema} from "./config";
-
+import {TABLE_ACTION_TYPES, USERS_HEADERS} from "../../constant";
 
 const Users = () => {
     const [reFetch, setReFetch] = useState(false)
@@ -60,15 +60,15 @@ const Users = () => {
     return (
         <>
             <Table
-                header={{createdAt: 'Created-At', name: 'Name', email: 'Email', role: 'Role'}}
+                header={USERS_HEADERS}
                 body={users}
-                actionsTypes={['EDIT', 'DELETE']}
+                actionsTypes={TABLE_ACTION_TYPES}
                 deleteAction={openDeleteModal}
                 editAction={openEditModal}
             />
             <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Delete users'>
                 <DeleteModalContent
-                    value={value}
+                    value={value?.email}
                     closeModal={closeModal}
                     handleDelete={handleDelete}
                 />

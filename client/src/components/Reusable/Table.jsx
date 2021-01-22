@@ -20,8 +20,8 @@ const Table = ({header, body, actionsTypes, editAction, deleteAction, margin}) =
                     </tr>
                 </StyledThead>
                 <tbody>
-                {body.map(item => (
-                    !(item['role'] === 'Admin') ?
+                {body.length ? body.map(item => (
+                    !((item['role'] && item['role']) === 'Admin') ?
                     <tr key={item._id}>
                         {actionsTypes ? <StyledTd>
                             <FlexContainer justifyContent='space-around' width='100%'>
@@ -51,7 +51,7 @@ const Table = ({header, body, actionsTypes, editAction, deleteAction, margin}) =
                                 (<StyledTd key={key}>{item[key]}</StyledTd>)
                         ))}
                     </tr> : null
-                ))}
+                )) : null}
                 </tbody>
             </StyledTable>
         </StyledTableContainer>
