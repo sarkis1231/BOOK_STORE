@@ -58,7 +58,7 @@ async function editUser(req, res, next) { //TODO check the edit and add Password
     try {
         errorValidation(req);
 
-        const user = await Users.getOne({id:req.params.id});
+        const user = await Users.getOne({_id:req.params.id});
         user.name = name;
         user.email = email;
 
