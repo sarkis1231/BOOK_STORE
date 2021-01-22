@@ -15,7 +15,7 @@ getCtrlFn.Delete = function (myModel) {
         try {
             errorValidation(req);
             const p = await myModel.disableById(req.params.id);
-            if (Fn.isEmpty(p)) {
+            if (!Fn.isEmpty(p)) {
                 errorThrower(MESSAGES.NO_SUCH_DATA_EXISTS, 422);
             }
             return alert(res, 200, messageAlert.success, MESSAGES.ITEM_DELETED);
