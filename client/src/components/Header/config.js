@@ -5,4 +5,5 @@ export const NAV_ITEM = [
     {id: 1, name: 'headerItem.item2', location: '/books', role: ALL_ROLES},
     {id: 2, name: 'Users', location: '/users', role: ADMIN_ROLE},
     {id: 3, name: 'Genre', location: '/genre', role: ADMIN_ROLE},
+    {id: 4, name: 'Author', location: '/author', role: ADMIN_ROLE},
 ]

@@ -10,3 +10,4 @@ export const INPUTS = [{id: 0, name: 'name', inputType: 'text', label: 'name', p
 
 export const USERS_HEADERS = {createdAt: 'Created-At', name: 'Name', email: 'Email', role: 'Role'}
 export const GENRE_HEADERS = {createdAt: 'Created-At', name: 'Name'}
+export const AUTHORS_HEADERS = {createdAt: 'Created-At', name: 'Name'}

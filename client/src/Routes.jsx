@@ -10,6 +10,7 @@ import PrivateRoute from "./HOC/Auth/PrivateRoute";
 import Genre from "./views/Genre/Genre";
 import Users from "./views/Users/Users";
 import {ADMIN_ROLE, ALL_ROLES} from "./constant";
+import Author from "./views/Author/Author";
 
 
 
@@ -17,6 +18,7 @@ const HL_HOME = HeaderFooterLayout(Home);
 const HL_BOOKS = HeaderFooterLayout(Books);
 const HL_ADDGenre = HeaderFooterLayout(Genre)
 const HL_USERS = HeaderFooterLayout(Users)
+const HL_AUTHOR = HeaderFooterLayout(Author)
 
 
 const Routes = () => {
@@ -26,6 +28,7 @@ const Routes = () => {
             <PrivateRoute exact path='/books' component={HL_BOOKS} allowedRoles={ALL_ROLES} />
             <PrivateRoute exact path='/genre' component={HL_ADDGenre} allowedRoles={ADMIN_ROLE} />
             <PrivateRoute exact path='/users' component={HL_USERS} allowedRoles={ADMIN_ROLE} />
+            <PrivateRoute exact path='/author' component={HL_AUTHOR} allowedRoles={ADMIN_ROLE} />
             <PublicRoute exact path='/login' component={Login} />
             <PublicRoute exact path='/register' component={Register} />
         </Switch>
