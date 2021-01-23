@@ -55,15 +55,23 @@ async function editBook(req, res, next) {
         const book = await Books.getById(req.params.id); //TODO check pass option
         book.name = name;
         book.genre = genre;
-        book.author = author;
         book.file  = file;
         book.image  = image;
+        let p2,p3;
 
-        //tODO check the author change than put the new id in author book delete and add
+        if (!Fn.sameObjectId(book.author,author)) {
+            p2 = Authors.deleteBookAuthor(book.author,req.params.id);
+            book.author = author;
+            p3 = Authors.addBookAuthor(book.author,book._id)
+        }
 
-        if (await book.save()) {
+        const p1 = book.save();
+        const p = await Promise.all([p1,p2,p3]);
+
+        if (!Fn.isEmpty(p) && !Fn.isEmpty(p[0]) && !Fn.isEmpty(p[1]) && !Fn.isEmpty(p[2])) {
             return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
         }
+        return errorThrower(MESSAGES.SOMETHING_WENT_WRONG, 422);
 
     } catch (err) {
         errorCatcher(next, err);
@@ -90,7 +98,7 @@ async function deleteBook (req,res,next) {
         if(!Fn.isEmpty(p2)) {
             return alert(res, 200, messageAlert.success, MESSAGES.ITEM_DELETED);
         }
-
+        return errorThrower(MESSAGES.SOMETHING_WENT_WRONG, 422);
 
     } catch (err) {
         errorCatcher(next, err);
