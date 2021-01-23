@@ -15,7 +15,7 @@ async function addBook(req, res, next) {
         let file = req.files.file[0].path;
         let image = req.files.image[0].path;
 
-
+       //TODO add to the author list as well
        const newBook = new Books({name, genre,author,file,image});
        if (await newBook.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.BOOK_ADDED);
@@ -51,10 +51,16 @@ async function editBook(req, res, next) {
     }
 }
 
+let getBooksWithFilter = async function(req, res, next) {
+
+}
+
 let getBooks = getCtrlFn.getAll(Books);
 
 let getBook = getCtrlFn.getId(Books);
 
 let deleteBook = getCtrlFn.Delete(Books);
 
-module.exports = {getBook, getBooks, addBook, editBook, deleteBook};
+
+
+module.exports = {getBook, getBooks, addBook, editBook, deleteBook,getBooksWithFilter};

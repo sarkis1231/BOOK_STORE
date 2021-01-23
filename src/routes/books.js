@@ -2,7 +2,7 @@ const {Router} = require('express');
 const BookValidation = require("../validations/books");
 const {paramIdValidation} = require("../validations/general");
 
-const {addBook, editBook, deleteBook, getBook, getBooks} = require("../controllers/book");
+const BooksCtrl = require("../controllers/book");
 
 const upload = require('../utility/files');
 
@@ -17,10 +17,11 @@ let files = upload.fields([
     {name: 'file', maxCount: 1}
 ]);
 
-router.get('/', getBooks);
+router.get('/', BooksCtrl.getBooks);
 
-router.get('/:id', paramIdValidation, getBook);
+router.get('/:id', paramIdValidation, BooksCtrl.getBook);
 
+router.get('/filter',BooksCtrl.getBooksWithFilter);
 
 
 router.post('/',
@@ -28,7 +29,7 @@ router.post('/',
     isAdmin(),
     files,
     BookValidation.add,
-    addBook
+    BooksCtrl.addBook
 );
 
 router.put('/:id',
@@ -36,9 +37,9 @@ router.put('/:id',
     paramIdValidation,
     files,
     BookValidation.edit,
-    editBook
+    BooksCtrl.editBook
 );
 
-router.delete('/:id', isAuth(), isAdmin(), paramIdValidation, deleteBook);
+router.delete('/:id', isAuth(), isAdmin(), paramIdValidation, BooksCtrl.deleteBook);
 
 module.exports = router
