@@ -3,7 +3,6 @@ const {getCtrlFn} = require("../utility/controllers/functions");
 const {errorCatcher,errorValidationFiles} = require("../utility/controllers/errors");
 const {alert} = require("../utility/controllers/messages");
 const {Books} = require("../models/Books");
-const {Fn} = require("../utility/functions");
 
 
 async function addBook(req, res, next) {
@@ -17,7 +16,7 @@ async function addBook(req, res, next) {
         let image = req.files.image[0].path;
 
 
-        const newBook = new Books({name, genre,author,file,image});
+       const newBook = new Books({name, genre,author,file,image});
        if (await newBook.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.BOOK_ADDED);
         }

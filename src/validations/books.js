@@ -64,7 +64,6 @@ BookValidation.add = [
                 }
             });
         })
-
 ];
 
 BookValidation.edit = [
@@ -73,7 +72,7 @@ BookValidation.edit = [
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            Books.findOne({name: value}).then(function (book) {
+            return Books.findOne({name: value}).then(function (book) {
                 if (book) {
                     return Promise.reject(MESSAGES.BOOK_NAME_ALREADY_EXIST);
                 }
@@ -85,7 +84,7 @@ BookValidation.edit = [
             if (!validId) {
                 throw new Error(MESSAGES.INVALID_QUERY_PARAM);
             }
-            Books.findOne({_id: value}).then(function (book) {
+            return Books.findById(value).then(function (book) {
                 if (!book) {
                     return Promise.reject(MESSAGES.BOOK_NOT_FOUND);
                 }
@@ -95,7 +94,7 @@ BookValidation.edit = [
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            Genres.findById(value).then(function (genre) {
+            return Genres.findById(value).then(function (genre) {
                 if (!genre) {
                     return Promise.reject(MESSAGES.GENRE_NOT_FOUND);
                 }
