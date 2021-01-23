@@ -27,8 +27,8 @@ const Header = ({toggleTheme}) => {
                     <Logo/>
                 </LogoContainer>
                 <MenuSearchContainer>
-                    <Input type='searchBar'
-                           placeHolder={t('searchPlaceHolder')}/>
+                    {/*<Input type='searchBar'*/}
+                    {/*       placeHolder={t('searchPlaceHolder')}/>*/}
                     <DropDown
                         items={items}
                         value={value}

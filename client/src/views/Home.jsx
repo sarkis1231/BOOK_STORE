@@ -30,6 +30,8 @@ const Home = () => {
                     width='200px'
                     onClick={() => history.push('/register')}> Register
                 </Button>
+                <StyledHeaderTwo>Contact us</StyledHeaderTwo>
+                <StyledA href="mailto:sakooghly@gmail.com" target="_blank" rel="noreferrer noopener">sakooghly@gmail.com</StyledA>
             </FlexContainer>
         </>
     );
@@ -51,4 +53,11 @@ const StyledHeaderTwo = styled.h2`
 const StyledHeaderFour = styled.h4`
   padding: 40px 0 20px 0;
 
+`
+const StyledA = styled.a`
+  text-decoration: none;
+  color: ${({theme}) => theme.text};
+  &:hover {
+    color: ${({theme}) => theme.text};
+  }
 `
