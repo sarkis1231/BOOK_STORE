@@ -46,8 +46,7 @@ const Users = () => {
         })
     }
 
-    const handleDelete = (value) => {
-        console.log(value._id)
+    const handleDelete = () => {
         axios.delete(`/users/${value._id}`).then(res => {
             console.log(res)
         }).catch(e => {

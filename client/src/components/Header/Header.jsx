@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import {FlexContainer} from "../../styled/layout.styled";
 import {ReactComponent as Logo} from "../../assets/svg/books-stack-of-three.svg";
-import Input from "../Reusable/Input";
+// import Input from "../Reusable/Input";
 import {useTranslation} from "react-i18next";
 import DropDown from "../Reusable/DropDown";
 import useDropDown from "../../hooks/useDropDown";
@@ -11,7 +11,7 @@ import ThemeToggle from "../ThemeToggle";
 
 const items = [{id: 0, name: 'EN', value: 'en'}, {id: 1, name: 'AM', value: 'am'}]
 const Header = ({toggleTheme}) => {
-    const {t, i18n} = useTranslation();
+    const {i18n} = useTranslation();
     const {onCLickHandler, value} = useDropDown(false,
         JSON.parse(localStorage.getItem('lang')) || {name: 'EN', value: 'en'},
         true
