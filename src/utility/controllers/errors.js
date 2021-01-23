@@ -51,8 +51,10 @@ const errorValidationFiles = function (req,array) {
                     errorArray.push(obj)
                 }
             }
+            if(errorArray.length) {
+                errorThrower("Validation Failed", 422, errors.mapped());
+            }
         }
-        errorThrower("Validation Failed", 422, errors.mapped());
     }
 
 }
