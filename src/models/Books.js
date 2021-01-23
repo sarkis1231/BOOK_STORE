@@ -27,6 +27,10 @@ const bookSchema = new Schema({
     publishedDate: {
         type: Date
     },
+    pageCount:{
+      type:Number,
+      required: true
+    },
     disabled: {
         type:Boolean
     }

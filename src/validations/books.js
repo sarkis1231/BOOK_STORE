@@ -63,7 +63,16 @@ BookValidation.add = [
                     throw new Error(MESSAGES.REQUIRED_FIELDS);
                 }
             });
-        })
+        }),
+    body('pageCount')
+        .notEmpty()
+        .withMessage(MESSAGES.REQUIRED_FIELDS)
+        .isInt({min:0,max:10000})
+        .withMessage(MESSAGES.NOT_VALID_NUMBER),
+    body('publishedDate')
+        .optional()
+        .isDate()
+        .withMessage(MESSAGES.NOT_VALID_DATE),
 ];
 
 BookValidation.edit = [
@@ -113,8 +122,32 @@ BookValidation.edit = [
                     return Promise.reject(MESSAGES.AUTHOR_IS_NOT_FOUND);
                 }
             });
-        })
-    // TODO add Validation
+        }),
+    check('files')
+        .custom(function (value, {req}) {
+            const names = {
+                'file': 'file',
+                'image': 'image'
+            };
+
+            if (!Fn.isEmpty(req.files)) {
+                throw new Error(MESSAGES.REQUIRED_FIELDS);
+            }
+
+            Object.keys(value, function (v) {
+                if (!names[v]) {
+                    throw new Error(MESSAGES.REQUIRED_FIELDS);
+                }
+            });
+        }),
+    body('pageCount')
+        .notEmpty()
+        .withMessage(MESSAGES.REQUIRED_FIELDS)
+        .isInt({min:0,max:10000})
+        .withMessage(MESSAGES.NO_SUCH_DATA_EXISTS),
+    body('publishedDate')
+        .isDate()
+        .withMessage(MESSAGES.REQUIRED_FIELDS)
 ];
 
 module.exports = BookValidation;

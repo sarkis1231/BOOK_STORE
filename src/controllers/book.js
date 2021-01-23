@@ -1,12 +1,16 @@
+const {errorThrower} = require("../utility/controllers/errors");
+const {errorValidation} = require("../utility/controllers/errors");
+const {Fn} = require("../utility/functions");
 const {MESSAGES,messageAlert} = require("../utility/constants");
 const {getCtrlFn} = require("../utility/controllers/functions");
 const {errorCatcher,errorValidationFiles} = require("../utility/controllers/errors");
 const {alert} = require("../utility/controllers/messages");
 const {Books} = require("../models/Books");
+const {Authors} = require("../models/Author");
 
 
 async function addBook(req, res, next) {
-    const {name, genre,author} = req.body;
+    const {name, genre,author,pageCount,publishedDate} = req.body;
 
 
     try {
@@ -15,11 +19,24 @@ async function addBook(req, res, next) {
         let file = req.files.file[0].path;
         let image = req.files.image[0].path;
 
-       //TODO add to the author list as well
-       const newBook = new Books({name, genre,author,file,image});
-       if (await newBook.save()) {
+        let book = {
+            name, genre, author, file, image, pageCount
+        };
+
+        if (!Fn.isEmpty(publishedDate)){
+            book.publishedDate = publishedDate;
+        }
+       const newBook = new Books(book);
+
+       const p1 = newBook.save();
+       const p2 = Authors.addBookAuthor(author,newBook._id);
+       const p = await Promise.all([p1,p2]);
+
+        if (!Fn.isEmpty(p) && (!Fn.isEmpty(p[0]) || !Fn.isEmpty(p[1]))) {
             return alert(res, 200, messageAlert.success, MESSAGES.BOOK_ADDED);
         }
+
+        errorThrower(MESSAGES.SOMETHING_WENT_WRONG, 422);
 
     } catch (err) {
         errorCatcher(next, err);
@@ -42,6 +59,8 @@ async function editBook(req, res, next) {
         book.file  = file;
         book.image  = image;
 
+        //tODO check the author change than put the new id in author book delete and add
+
         if (await book.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
         }
@@ -52,6 +71,7 @@ async function editBook(req, res, next) {
 }
 
 let getBooksWithFilter = async function(req, res, next) {
+    const {name, genre,author,publishedDate} = req.body;
 
 }
 
@@ -59,8 +79,23 @@ let getBooks = getCtrlFn.getAll(Books);
 
 let getBook = getCtrlFn.getId(Books);
 
-let deleteBook = getCtrlFn.Delete(Books);
+async function deleteBook (req,res,next) {
+    try {
+        errorValidation(req);
+        const p1 = await Books.disableById(req.params.id);
+        if (Fn.isEmpty(p1)) {
+            return errorThrower(MESSAGES.NO_SUCH_DATA_EXISTS, 422);
+        }
+        const p2 = await Authors.deleteBookAuthor(p1.author,req.params.id);
+        if(!Fn.isEmpty(p2)) {
+            return alert(res, 200, messageAlert.success, MESSAGES.ITEM_DELETED);
+        }
 
+
+    } catch (err) {
+        errorCatcher(next, err);
+    }
+}
 
 
 module.exports = {getBook, getBooks, addBook, editBook, deleteBook,getBooksWithFilter};

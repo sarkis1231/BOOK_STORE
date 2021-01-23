@@ -3,6 +3,9 @@ const MESSAGES = {
     USER_REGISTERED_SUCCESSFULLY: 'User is registered successfully',
     NOT_MODIFIED: "Sources Not modified",
     REQUIRED_FIELDS: "This Field is Required",
+    NOT_IN_BOUNDS: "The number is not in bounds",
+    NOT_VALID_NUMBER:"Not a Valid Number",
+    NOT_VALID_DATE:"Not a Valid Date",
     VALID_EMAIL: "Enter a valid Email",
     NO_USER_FOUND: "No user is Found",
     EMAIL_IS_REGISTERED: "Email already registered",
@@ -24,7 +27,7 @@ const MESSAGES = {
     GENRE_NOT_FOUND: "Genre not found",
     INVALID_QUERY_PARAM: "Invalid Query Param",
     INVALID_ID: "Invalid id",
-    NAME_ALREADY_EXIST: "name Already Exists",
+    NAME_ALREADY_EXIST: "Name Already Exists",
     AUTHOR_IS_NOT_FOUND: "Author is not found",
     PDF_SIZE_LIMIT: 'You should upload a PDF file up to 10Mb', //TODO should not be hard coded
     IMAGE_SIZE_LIMIT: 'You should upload image up to 1Mb',
