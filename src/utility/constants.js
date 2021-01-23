@@ -25,10 +25,10 @@ const MESSAGES = {
     INVALID_QUERY_PARAM: "Invalid Query Param",
     INVALID_ID: "Invalid id",
     NAME_ALREADY_EXIST: "name Already Exists",
-    AUTHOR_IS_NOT_FOUND:"Author is not found",
-    PDF_SIZE_LIMIT:'You should upload a PDF file up to 10Mb', //TODO should not be hard coded
-    IMAGE_SIZE_LIMIT:'You should upload image up to 1Mb',
-    INVALID_FILES:'Invalid Files'
+    AUTHOR_IS_NOT_FOUND: "Author is not found",
+    PDF_SIZE_LIMIT: 'You should upload a PDF file up to 10Mb', //TODO should not be hard coded
+    IMAGE_SIZE_LIMIT: 'You should upload image up to 1Mb',
+    INVALID_FILES: 'Invalid Files'
 };
 
 const messageAlert = {

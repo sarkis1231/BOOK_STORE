@@ -100,7 +100,7 @@ BookValidation.edit = [
                 }
             });
         }),
-    body('author') //TODO remove duplicates
+    body('author') // TODO remove duplicates
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
@@ -114,6 +114,7 @@ BookValidation.edit = [
                 }
             });
         })
+    // TODO add Validation
 ];
 
 module.exports = BookValidation;

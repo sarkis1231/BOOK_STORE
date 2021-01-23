@@ -24,6 +24,9 @@ const bookSchema = new Schema({
         type: String,
         required: true
     },
+    publishedDate: {
+        type: Date
+    },
     disabled: {
         type:Boolean
     }
