@@ -1,4 +1,5 @@
 const modelUtil = require("../utility/model");
+const {Fn} = require("../utility/functions");
 const {Schema, model} = require("mongoose");
 const {SCHEMES_NAMES} = require('../utility/constants');
 
@@ -43,7 +44,7 @@ authorSchema.statics.deleteBookAuthor = async function (authorId,bookId) {
         return Promise.reject('Invalid Id')
     }
     authorDisabled.books = authorDisabled.books.filter(function (bId){
-        return bId !== bookId;
+        return !Fn.sameObjectId(bId,bookId);
     });
     return authorDisabled.save();
 };

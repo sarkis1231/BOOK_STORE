@@ -1,7 +1,7 @@
 const {MESSAGES} = require("../utility/constants");
 const {body, param} = require("express-validator");
 const mongoose = require("mongoose");
-const {Books} = require("../models/Books");
+const {Fn} = require("../utility/functions");
 const {Authors} = require("../models/Author");
 
 const AuthorsValidation = {};
@@ -34,8 +34,7 @@ AuthorsValidation.edit = [
         }),
     param('id')
         .custom(function (value) {
-            let validId = mongoose.Types.ObjectId.isValid(value);
-            if (!validId) {
+            if (!Fn.isMongooseValidId(value)) {
                 throw new Error(MESSAGES.INVALID_QUERY_PARAM);
             }
             return Authors.findOne({_id: value}).then(function (author) {
