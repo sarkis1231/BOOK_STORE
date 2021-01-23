@@ -16,14 +16,14 @@ const bookSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: SCHEMES_NAMES.Authors,
     },
-   /* image: {
+    image: {
         type: String,
         required: true
     },
     file: {
         type: String,
         required: true
-    },*/
+    },
     disabled: {
         type:Boolean
     }

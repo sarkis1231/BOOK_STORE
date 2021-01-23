@@ -49,7 +49,7 @@ BookValidation.add = [
         }),
     check('files')
         .custom(function (value, {req}) {
-            const names = { //TODO check the types here and do something
+            const names = {
                 'file': 'file',
                 'image': 'image'
             };
@@ -58,8 +58,8 @@ BookValidation.add = [
                 throw new Error(MESSAGES.REQUIRED_FIELDS);
             }
 
-            Object.keys(value,function (v){
-                if (!names[v]){
+            Object.keys(value, function (v) {
+                if (!names[v]) {
                     throw new Error(MESSAGES.REQUIRED_FIELDS);
                 }
             });

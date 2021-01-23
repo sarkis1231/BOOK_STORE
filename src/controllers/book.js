@@ -13,12 +13,12 @@ async function addBook(req, res, next) {
     try {
         errorValidationFiles(req,['file','image']);
 
-        let file = req.files.file;
-        let image = req.files.image;
+        let file = req.files.file[0].path;
+        let image = req.files.image[0].path;
 
 
         const newBook = new Books({name, genre,author,file,image});
-        if (await newBook.save()) {
+       if (await newBook.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.BOOK_ADDED);
         }
 
