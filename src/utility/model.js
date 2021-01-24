@@ -12,23 +12,32 @@ modelUtil.getQueryWithFast = function (qry) {
     return {...qry, fast:true}
 };
 
-modelUtil.getAll = async function (query) {
+modelUtil.getAll = async function (query,lean) {
     query = modelUtil.getQueryWithDisable(query);
+    if(lean) {
+        return this.find(query).lean();
+    }
     return this.find(query);
 };
 
-modelUtil.getOne = async function (query) {
+modelUtil.getOne = async function (query,lean) {
     query = modelUtil.getQueryWithDisable(query);
+    if (lean){
+        return this.findOne(query).lean();
+    }
     return this.findOne(query);
 };
 
-modelUtil.getById = async function (id) {
+modelUtil.getById = async function (id,lean) {
     if(Fn.isUndefined(id)) {
         console.error('id should be defined');
         return;
     }
     let query = modelUtil.getQueryWithDisable({});
     query._id = id;
+    if (lean){
+        return this.findOne(query).lean();
+    }
     return this.findOne(query);
 };
 
@@ -36,7 +45,7 @@ modelUtil.disable = async function (query) {
     query = modelUtil.getQueryWithDisable(query);
     return this.update(query, {
         $set: {
-            disabled:true
+            disabled: true
         }
     });
 };
