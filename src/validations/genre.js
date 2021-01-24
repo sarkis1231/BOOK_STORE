@@ -2,6 +2,7 @@ const {MESSAGES} = require("../utility/constants");
 const {body, param} = require("express-validator");
 const {Genres} = require("../models/Genre");
 const mongoose = require("mongoose");
+const {Fn} = require("../utility/functions");
 
 const GenreValidation = {};
 
@@ -33,8 +34,7 @@ GenreValidation.edit = [
         }),
     param('id')
         .custom(function (value) {
-            let validId = mongoose.Types.ObjectId.isValid(value);
-            if (!validId) {
+            if (!Fn.isMongooseValidId(value)) {
                 throw new Error(MESSAGES.INVALID_QUERY_PARAM);
             }
             return Genres.findOne({_id: value}).then(function (genre) {

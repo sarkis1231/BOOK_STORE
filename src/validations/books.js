@@ -113,8 +113,7 @@ BookValidation.edit = [
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            let validId = mongoose.Types.ObjectId.isValid(value);
-            if (!validId) {
+            if (!Fn.isMongooseValidId(value)) {
                 throw new Error(MESSAGES.INVALID_ID);
             }
             return Authors.findById(value).then(function (author) {
