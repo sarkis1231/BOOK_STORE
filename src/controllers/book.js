@@ -80,7 +80,19 @@ async function editBook(req, res, next) {
 
 let getBooksWithFilter = async function(req, res, next) {
     const {name, genre,author,publishedDate} = req.body;
+    try {
+        let query = {
+            name:name,
+            genre:genre,
+            author:author,
+            publishedDate:publishedDate //TODO  create a from to
+        };
+        let books = Books.getAll(query);
 
+
+    } catch (err){
+        errorCatcher(next, err);
+    }
 }
 
 let getBooks = getCtrlFn.getAll(Books);
