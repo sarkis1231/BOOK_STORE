@@ -11,6 +11,8 @@ import {store} from "./store";
 import Routes from "./Routes";
 import {setAuthToken} from "./utils/redux";
 import {logOutUser, setCurrentUser} from "./actions/authActions";
+import ChatBot from "react-simple-chatbot";
+import MyChatBot from "./components/ChatBot/MyChatBot";
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
@@ -44,6 +46,7 @@ function App() {
         <ThemeProviderContext>
             <GlobalStyles/>
             <Provider store={store}>
+                <MyChatBot/>
                 <Router>
                    <Routes/>
                 </Router>

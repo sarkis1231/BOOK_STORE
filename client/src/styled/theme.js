@@ -55,6 +55,14 @@ export const lightTheme = {
         color: '#FAFAFA',
     },
     editDeleteIcon: '#FAFAFA',
+    background: '#363537',
+    headerBgColor: '#363537',
+    headerFontColor: '#fff',
+    headerFontSize: '15px',
+    botBubbleColor: '#fff',
+    botFontColor: '#363537',
+    userBubbleColor: '#fff',
+    userFontColor: '#4a4a4a',
 }
 
 export const darkTheme = {
@@ -113,4 +121,12 @@ export const darkTheme = {
         color: '#363537',
     },
     editDeleteIcon: '#363537',
+    background: '#FAFAFA',
+    headerBgColor: '#FAFAFA',
+    headerFontColor: '#363537',
+    headerFontSize: '15px',
+    botBubbleColor: '#363537',
+    botFontColor: '#fff',
+    userBubbleColor: '#fff',
+    userFontColor: '#4a4a4a',
 }
