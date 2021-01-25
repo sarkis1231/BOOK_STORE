@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import {FlexContainer} from "../../styled/layout.styled";
 import {ReactComponent as Logo} from "../../assets/svg/books-stack-of-three.svg";
-// import Input from "../Reusable/Input";
 import {useTranslation} from "react-i18next";
 import DropDown from "../Reusable/DropDown";
 import useDropDown from "../../hooks/useDropDown";
@@ -27,8 +26,6 @@ const Header = ({toggleTheme}) => {
                     <Logo/>
                 </LogoContainer>
                 <MenuSearchContainer>
-                    {/*<Input type='searchBar'*/}
-                    {/*       placeHolder={t('searchPlaceHolder')}/>*/}
                     <DropDown
                         items={items}
                         value={value}
