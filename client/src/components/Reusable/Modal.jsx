@@ -106,7 +106,6 @@ const StyledModalContent = styled.div`
   @media only screen and (max-width: 500px) {
      max-height: 500px; 
      height: 100%;
-    overflow-y: auto; 
      padding: 0;
   }
   
