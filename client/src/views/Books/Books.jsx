@@ -11,13 +11,14 @@ import Input from "../../components/Reusable/Input";
 import useFile from "../../hooks/useFile";
 
 const Books = () => {
-    const {openModal, closeModal, toggleModal} = useModal()
-    const {register, handleSubmit} = useForm()
+    const {openModal, closeModal, toggleModal} = useModal();
+    const {register, handleSubmit} = useForm();
+    const [handleBookFileChange, fileName] = useFile();
+
     const onSubmit = (value) => {
         console.log(value)
     }
-    const [handleBookFileChange, fileName, file] = useFile();
-    console.log(file, fileName)
+
 
     return (
         <>
