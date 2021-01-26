@@ -51,6 +51,9 @@ const Input = forwardRef(({
                         <StyledInputFile type={type} onChange={onFileChange ? (e) => onFileChange(e) : null} name={name} ref={ref}/>
                         <StyledInputFileSpan>{placeHolder}...</StyledInputFileSpan>
                     </StyledInputFileLabel>
+                    <StyledSpan errors={error || serverError}>
+                        {error && error.message}
+                    </StyledSpan>
                 </FlexContainer>
             )
         default:

@@ -13,13 +13,13 @@ import useFile from "../../hooks/useFile";
 const Books = () => {
     const {openModal, closeModal, toggleModal} = useModal();
     const {register, handleSubmit} = useForm();
-    const [handleBookFileChange, fileName] = useFile();
+    const [handleBookFileChange, fileName,file,  fileError] = useFile();
 
     const onSubmit = (value) => {
         console.log(value)
     }
 
-
+    console.log(fileError, file)
     return (
         <>
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
@@ -41,7 +41,7 @@ const Books = () => {
                         />
                     </FlexContainer>
                     <Input type='file' label='Choose a book' placeHolder={fileName}
-                           onFileChange={handleBookFileChange}/>
+                           onFileChange={handleBookFileChange} error={fileError}/>
                     <Button type='submit' margin='20px 0 0 0'>Add Books</Button>
                 </form>
             </Modal>
