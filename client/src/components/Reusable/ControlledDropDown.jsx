@@ -2,17 +2,23 @@ import React, {useState, useEffect, forwardRef} from 'react';
 import {ReactComponent as ArrowIcon} from '../../assets/svg/dropdown-icon.svg';
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import {StyledDropDownContainer, StyledItem, StyledListItemContainer, StyledTitle} from "../../styled/dropDown.styled";
+import axios from "axios";
 
 
-const ControlledDropDown = forwardRef(({dropDownDisplay, mobileDisplay, control, name, defaultValue}, ref) => {
+const ControlledDropDown = forwardRef(({dropDownDisplay, mobileDisplay, control, name, defaultValue, url}, ref) => {
     const [toggle, setToggle] = useState(false);
     const [data, setData] = useState([]);
     const [value, setValue] = useState(() => defaultValue);
 
     useOnClickOutside(ref, () => setToggle(false))
     useEffect(() => {
+        axios.get(url).then(res => {
+            console.log(res)
+        }).catch(e => {
+            console.log(e)
+        })
         setData(prev => [...prev, {id: 0, name: 'Math', value: 'math'}, {id: 1, name: 'Sex', value: 'sex'}])
-    }, [])
+    }, [url])
 
     return (
         <>
