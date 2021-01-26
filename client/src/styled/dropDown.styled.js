@@ -43,10 +43,11 @@ const StyledListItemContainer = styled(FlexContainer)`
   position: absolute;
   justify-content: center;
   align-items: center;
-  top: 30px;
+  top: ${({top}) => top ? top : '30px'};
   left: 0;
   right: 0;
   width: 100%;
+  border-radius: ${({borderRadius}) => borderRadius ? '10px' : 0};
   background: ${({theme}) => theme.dropDown.bgColor};
   z-index: 2;
 

@@ -10,3 +10,10 @@ export function dateYearFormat(date) {
         : newDate.getDate()
     return `${year}/${month}/${day}`
 }
+
+export const filterDataControlledDropDown = (data) => {
+
+    return data.map(item => {
+        return {value:item._id, name: item.name}
+    })
+}

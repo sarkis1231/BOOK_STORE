@@ -107,7 +107,7 @@ const StyledModalContent = styled.div`
      max-height: 500px; 
      height: 100%;
     overflow-y: auto; 
-     padding: 20px;
+     padding: 0;
   }
   
 `

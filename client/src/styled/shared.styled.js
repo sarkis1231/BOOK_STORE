@@ -29,3 +29,11 @@ export const Overlay = styled.div`
     background: ${({theme}) => theme.modal.overlayBackground};;
     z-index: ${({zIndex}) => zIndex ? zIndex : '2'};
 `;
+
+export const StyledLabel = styled.label`
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  margin-bottom: 2px;
+  color: ${({theme}) => theme.color}
+`

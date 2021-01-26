@@ -3,6 +3,7 @@ import styled, {css} from 'styled-components';
 import {FlexContainer} from "../../styled/layout.styled";
 import {ReactComponent as SearchIcon} from "../../assets/svg/search.svg";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
+import {StyledLabel} from "../../styled/shared.styled";
 
 const Input = forwardRef(({
                               label,
@@ -15,7 +16,8 @@ const Input = forwardRef(({
                               margin,
                               inputType,
                               value,
-                              serverError
+                              serverError,
+                              onFileChange
                           }, ref) => {
 
     const [expandInput, setExpandInput] = useState(false);
@@ -43,10 +45,13 @@ const Input = forwardRef(({
             )
         case 'file':
             return (
-                <StyledInputFileLabel>
-                    <StyledInputFile type={type} name={name} ref={ref}/>
-                    <StyledInputFileSpan/>
-                </StyledInputFileLabel>
+                <FlexContainer flexDirection='column'>
+                    {label && <StyledLabel>{label}</StyledLabel>}
+                    <StyledInputFileLabel>
+                        <StyledInputFile type={type} onChange={onFileChange ? (e) => onFileChange(e) : null} name={name} ref={ref}/>
+                        <StyledInputFileSpan>{placeHolder}...</StyledInputFileSpan>
+                    </StyledInputFileLabel>
+                </FlexContainer>
             )
         default:
             return (
@@ -96,14 +101,6 @@ const StyledFlexContainer = styled(FlexContainer)`
   }
 `
 
-
-const StyledLabel = styled.label`
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 800;
-  margin-bottom: 2px;
-  color: ${({theme}) => theme.color}
-`
 
 const StyledInput = styled.input`
   padding: 10px;
@@ -203,7 +200,6 @@ const StyledInputFileLabel = styled.label`
   position: relative;
   display: inline-block;
   cursor: pointer;
-  margin: 20px 0;
   height: 2.5rem;
   width: 100%;
 `
@@ -213,7 +209,7 @@ const StyledInputFileSpan = styled.span`
   top: 0;
   right: 0;
   left: 0;
-  z-index: 5;
+  z-index: 1;
   height: 2.5rem;
   padding: .5rem 1rem;
   line-height: 1.5;
@@ -244,7 +240,7 @@ const StyledInputFileSpan = styled.span`
   }
 
   &:after {
-    content: "Choose file...";
+    content:"";
   }
 `
 
