@@ -41,6 +41,7 @@ const Author = () => {
         axios.post('/authors', {...value}).then(res => {
             console.log(res)
             reset()
+            setReFetch(prev => !prev);
         }).catch(e => {
             console.log(e)
         })
