@@ -19,7 +19,7 @@ const Books = () => {
         console.log(value)
     }
 
-    console.log(fileError, file)
+    console.log(file)
     return (
         <>
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
@@ -27,7 +27,7 @@ const Books = () => {
             </AuthorizationElem>
             <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Add Book'>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <Input label='Book name' placeHolder='Book Name' name='name'/>
+                    <Input ref={register} label='Book name' placeHolder='Book Name' name='name'/>
                     <FlexContainer justifyContent='space-between'>
                         <ControlledDropDown ref={register} name='genre' url={'/genre'}
                                             defaultValue={{name: 'none', value: 'none'}}

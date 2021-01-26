@@ -16,11 +16,9 @@ export default function useFile(defaultFileName = 'Choose a book') {
             setFile(() => e.target.files[0])
 
         } else {
-            console.log('working')
             setError(prev => ({...prev, message: 'The file type should be PDF'}))
         }
 
     }
-    console.log(error)
     return [handleBookFileChange, fileName, file, error, setFileName]
 }
