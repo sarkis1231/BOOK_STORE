@@ -1,3 +1,4 @@
+const {noResult} = require("../utility/controllers/messages");
 const {errorThrower} = require("../utility/controllers/errors");
 const {errorValidation} = require("../utility/controllers/errors");
 const {Fn} = require("../utility/functions");
@@ -85,10 +86,13 @@ let getBooksWithFilter = async function(req, res, next) {
             name:name,
             genre:genre,
             author:author,
-            publishedDate:publishedDate //TODO  create a from to
+            // publishedDate:publishedDate //TODO  create a from to
         };
-        let books = Books.getAll(query);
-
+        let books = await Books.getAll(query);
+        if (!Fn.isEmpty(books)) {
+            return res.status(200).json(books);
+        }
+        noResult(res);
 
     } catch (err){
         errorCatcher(next, err);
