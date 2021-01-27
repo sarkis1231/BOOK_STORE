@@ -32,7 +32,7 @@ getCtrlFn.getAll = function (myModel) {
         return Fn.noop;
     }
     return async function (req,res,next) {
-        let items = await myModel.getAll();
+        let items = await myModel.getAll({},true);
         if (!Fn.isEmpty(items)) {
             return res.status(200).json(items);
         }
@@ -48,7 +48,7 @@ getCtrlFn.getId = function (myModel) {
     return async function (req,res,next) {
         try {
             errorValidation(req);
-            const item = await myModel.getById(req.params.id);
+            const item = await myModel.getById(req.params.id,true);
             if (!Fn.isEmpty(item)) {
                 return res.status(200).json(item);
             }
