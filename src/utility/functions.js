@@ -33,13 +33,13 @@ Fn.isDefined = function (item) {
 
 Fn.isMongooseValidId = function (id) {
     return mongoose.Types.ObjectId.isValid(id)
-}
+};
 
 Fn.sameObjectId = function (objId1, objId2) {
     if(!Fn.isMongooseValidId(objId1) ||!Fn.isMongooseValidId(objId2)) {
         return false;
     }
     return objId1.toString() === objId2.toString();
-}
+};
 
 module.exports = {Fn};

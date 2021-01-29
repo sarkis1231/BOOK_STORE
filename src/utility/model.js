@@ -7,30 +7,30 @@ modelUtil.getQueryWithDisable = function (qry) {
     return {...qry, disabled: {$ne: true}}
 };
 
-modelUtil.getAll = async function (query,lean) {
+modelUtil.getAll = async function (query, lean) {
     query = modelUtil.getQueryWithDisable(query);
-    if(lean) {
+    if (lean) {
         return this.find(query).lean();
     }
     return this.find(query);
 };
 
-modelUtil.getOne = async function (query,lean) {
+modelUtil.getOne = async function (query, lean) {
     query = modelUtil.getQueryWithDisable(query);
-    if (lean){
+    if (lean) {
         return this.findOne(query).lean();
     }
     return this.findOne(query);
 };
 
-modelUtil.getById = async function (id,lean) {
-    if(Fn.isUndefined(id)) {
+modelUtil.getById = async function (id, lean) {
+    if (Fn.isUndefined(id)) {
         console.error('id should be defined');
         return;
     }
     let query = modelUtil.getQueryWithDisable({});
     query._id = id;
-    if (lean){
+    if (lean) {
         return this.findOne(query).lean();
     }
     return this.findOne(query);
@@ -46,11 +46,11 @@ modelUtil.disable = async function (query) {
 };
 
 modelUtil.disableById = async function (id) {
-    if(Fn.isUndefined(id)) {
+    if (Fn.isUndefined(id)) {
         console.error('id should be defined');
         return;
     }
-    return this.findByIdAndUpdate(id,{disabled:true});
+    return this.findByIdAndUpdate(id, {disabled: true});
 };
 
 modelUtil.isModel = function (obj) {
