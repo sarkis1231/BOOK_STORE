@@ -82,14 +82,20 @@ async function editBook(req, res, next) {
 let getBooksWithFilter = async function(req, res, next) {
     const {name, genre,author,publishedDate} = req.body;
     try {
-        console.log('s');
-        let query = {
-            name: {$regex: new RegExp(name)},
-            genre:genre,
-            author:author,
+       let query = {
+            name: {$regex: new RegExp(name), $options: 'g'},
+            genre: genre,
+            author: author,
             // publishedDate:publishedDate //TODO  create a from to
         };
-        let books = await Books.getAll(query);
+
+        for (const queryKey in query) {
+            if(Fn.isUndefined(query[queryKey])){
+                delete query[queryKey];
+            }
+        }
+
+        let books = await Books.getAll(query,true);
         if (!Fn.isEmpty(books)) {
             return res.status(200).json(books);
         }

@@ -42,4 +42,8 @@ Fn.sameObjectId = function (objId1, objId2) {
     return objId1.toString() === objId2.toString();
 };
 
+Fn.sanitizeQuery = function (query){
+    query = query || {};
+}
+
 module.exports = {Fn};

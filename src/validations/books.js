@@ -1,12 +1,16 @@
 const {MESSAGES} = require("../utility/constants");
 const {body, param,check} = require("express-validator");
-const mongoose = require("mongoose");
 const {Fn} = require("../utility/functions");
 const {Books} = require("../models/Books");
 const {Genres} = require("../models/Genre");
 const {Authors} = require("../models/Author");
 
 const BookValidation = {};
+
+const FILES_VALIDATION_NAMES = {
+    'file': 'file',
+    'image': 'image'
+};
 
 BookValidation.add = [
     body('name')
@@ -47,18 +51,13 @@ BookValidation.add = [
         }),
     check('files')
         .custom(function (value, {req}) {
-            const names = {
-                'file': 'file',
-                'image': 'image'
-            };
-
             if (!Fn.isEmpty(req.files)) {
                 throw new Error(MESSAGES.REQUIRED_FIELDS);
             }
 
             let arr = Object.keys(value);
             for (let i = 0; i < arr.length; i++) {
-                if (!names[arr[i]]) {
+                if (!FILES_VALIDATION_NAMES[arr[i]]) {
                     throw new Error(MESSAGES.REQUIRED_FIELDS);
                 }
             }
@@ -122,18 +121,13 @@ BookValidation.edit = [
         }),
     check('files')
         .custom(function (value, {req}) {
-            const names = {
-                'file': 'file',
-                'image': 'image'
-            };
-
             if (!Fn.isEmpty(req.files)) {
                 throw new Error(MESSAGES.REQUIRED_FIELDS);
             }
 
             let arr = Object.keys(value);
             for (let i = 0; i < arr.length; i++) {
-                if (!names[arr[i]]) {
+                if (!FILES_VALIDATION_NAMES[arr[i]]) {
                     throw new Error(MESSAGES.REQUIRED_FIELDS);
                 }
             }
