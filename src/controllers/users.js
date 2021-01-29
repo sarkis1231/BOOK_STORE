@@ -53,7 +53,7 @@ async function login(req, res, next) {
 
 }
 
-async function editUser(req, res, next) { //TODO check the edit and add Password
+async function editUser(req, res, next) {
     const {name, email} = req.body;
     try {
         errorValidation(req);
