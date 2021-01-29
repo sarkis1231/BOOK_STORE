@@ -5,7 +5,7 @@ import {StyledDropDownContainer, StyledItem, StyledListItemContainer, StyledTitl
 import axios from "axios";
 import {filterDataControlledDropDown} from "../../utils";
 import {FlexContainer} from "../../styled/layout.styled";
-import {StyledLabel} from "../../styled/shared.styled";
+import {StyledLabel, StyledSpan} from "../../styled/shared.styled";
 import styled from 'styled-components';
 
 
@@ -17,7 +17,8 @@ const ControlledDropDown = forwardRef(({
                                            name,
                                            defaultValue,
                                            url,
-                                           width
+                                           width,
+                                           error
                                        }, ref) => {
     const [toggle, setToggle] = useState(false);
     const [data, setData] = useState([]);
@@ -57,6 +58,7 @@ const ControlledDropDown = forwardRef(({
                     </StyledListItemContainer>
                     <ArrowIcon/>
                 </StyledControlledDropDownContainer>
+                <StyledSpan errors={error}>{error && error[name] && error[name].message}</StyledSpan>
             </FlexContainer>
         </>
     );

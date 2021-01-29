@@ -9,17 +9,43 @@ import Modal from "../../components/Reusable/Modal";
 import {FlexContainer} from "../../styled/layout.styled";
 import Input from "../../components/Reusable/Input";
 import useFile from "../../hooks/useFile";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {AddBookSchema} from "./config";
+import axios from "axios";
 
 const Books = () => {
     const {openModal, closeModal, toggleModal} = useModal();
-    const {register, handleSubmit} = useForm();
-    const [handleBookFileChange, fileName,file,  fileError] = useFile();
+    const {register, handleSubmit, errors} = useForm({
+        resolver: yupResolver(AddBookSchema)
+    });
+    const [
+        handleBookFileChange,
+        fileName,
+        file,
+        fileError,
+    ] = useFile('Choose a Book', ['application/pdf'], 'The file type should be PDF');
+    const [
+        handleImageFileChange,
+        imageFileName,
+        image,
+        imageFileError,
+    ] = useFile(
+        'Choose an Image',
+        ['image/png', 'image/jpeg'],
+        'The file type should be png/jpeg'
+    );
+    console.log(errors)
 
-    const onSubmit = (value) => {
-        console.log(value)
+    const onSubmit = (value, e) => {
+        console.log(file, image)
+            axios.post('/books', {file:value.file[0].name}).then(res => {
+                console.log(res)
+            }).catch(e => {
+                console.log(e)
+            });
+
     }
 
-    console.log(file)
     return (
         <>
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
@@ -27,21 +53,25 @@ const Books = () => {
             </AuthorizationElem>
             <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Add Book'>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <Input ref={register} label='Book name' placeHolder='Book Name' name='name'/>
-                    <FlexContainer justifyContent='space-between'>
+                    <Input ref={register} label='Book name' placeHolder='Book Name' error={errors} name='name'/>
+                    <FlexContainer justifyContent='space-between' margin='20px 0'>
                         <ControlledDropDown ref={register} name='genre' url={'/genre'}
-                                            defaultValue={{name: 'none', value: 'none'}}
-                                            label='Genre'
+                                            defaultValue={{name: 'none', value: ''}}
+                      file                      label='Genre'
                                             width='49%'
+                                            error={errors}
                         />
                         <ControlledDropDown ref={register} name='authors' url={'/authors'}
-                                            defaultValue={{name: 'none', value: 'none'}}
+                                            defaultValue={{name: 'none', value: ''}}
                                             label='Authors'
                                             width='49%'
+                                            error={errors}
                         />
                     </FlexContainer>
-                    <Input type='file' label='Choose a book' placeHolder={fileName}
+                    <Input name='file' ref={register} type='file' label='Choose a book' placeHolder={fileName}
                            onFileChange={handleBookFileChange} error={fileError}/>
+                    <Input name='image' ref={register} type='file' label='Choose an Image' placeHolder={imageFileName}
+                           onFileChange={handleImageFileChange} error={imageFileError}/>
                     <Button type='submit' margin='20px 0 0 0'>Add Books</Button>
                 </form>
             </Modal>

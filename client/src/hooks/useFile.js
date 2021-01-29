@@ -1,24 +1,29 @@
-import {useState} from "react";
+import {useState, useCallback} from "react";
 
-export default function useFile(defaultFileName = 'Choose a book') {
+export default function useFile(defaultFileName = 'Choose a book', filetype, errorMessage, change) {
     const [fileName, setFileName] = useState(defaultFileName)
     const [file, setFile] = useState({})
-    const [error, setError] = useState({message:''})
+    const [error, setError] = useState({message: ''})
 
-    const handleBookFileChange = (e) => {
-        if (e.target.files[0].type === 'application/pdf') {
+    const handleBookFileChange = useCallback(async (e) => {
+        if (filetype.includes(e.target.files[0]?.type)) {
             setError({})
             if (e.target.files[0].name.length > 12) {
-                setFileName(() => `${e.target?.files[0].name.substring(0, 9).trim()}${e.target.files[0].name.match(/\.[0-9a-z]+$/i)}`)
+               await setFileName(() => `${e.target?.files[0].name.substring(0, 9).trim()}${e.target.files[0].name.match(/\.[0-9a-z]+$/i)}`)
             } else {
-                setFileName(() => e.target.files[0].name)
+               await setFileName(() => e.target.files[0].name)
             }
             setFile(() => e.target.files[0])
 
         } else {
-            setError(prev => ({...prev, message: 'The file type should be PDF'}))
+            setError(prev => ({...prev, message: errorMessage}))
         }
 
+    }, [errorMessage, filetype])
+
+    const reset = (defaultFileName) => {
+        setFileName(defaultFileName)
+        setFile(() => {})
     }
-    return [handleBookFileChange, fileName, file, error, setFileName]
+    return [handleBookFileChange, fileName, file, error, reset]
 }

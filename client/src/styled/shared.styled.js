@@ -37,3 +37,13 @@ export const StyledLabel = styled.label`
   margin-bottom: 2px;
   color: ${({theme}) => theme.color}
 `
+
+export const StyledSpan = styled.span`
+  color: ${({theme}) => theme.error};
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: ${({errors}) => errors ? '1' : '0'};
+  visibility: ${({errors}) => errors ? 'visible' : 'hidden'};
+  transition: all .3s ease;
+`

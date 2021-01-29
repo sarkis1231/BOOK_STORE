@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components';
 import {FlexContainer} from "../../styled/layout.styled";
 import {ReactComponent as SearchIcon} from "../../assets/svg/search.svg";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
-import {StyledLabel} from "../../styled/shared.styled";
+import {StyledLabel, StyledSpan} from "../../styled/shared.styled";
 
 const Input = forwardRef(({
                               label,
@@ -131,15 +131,6 @@ const StyledInput = styled.input`
 
 `
 
-const StyledSpan = styled.span`
-  color: ${({theme}) => theme.error};
-  margin-top: 2px;
-  font-size: 12px;
-  font-weight: 600;
-  opacity: ${({errors}) => errors ? '1' : '0'};
-  visibility: ${({errors}) => errors ? 'visible' : 'hidden'};
-  transition: all .3s ease;
-`
 
 const StyledSearch = styled.input`
   padding: 10px 0 10px 0;
