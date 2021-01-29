@@ -142,4 +142,36 @@ BookValidation.edit = [
         .withMessage(MESSAGES.REQUIRED_FIELDS)
 ];
 
+BookValidation.filter = [
+    body('genre')
+        .optional()
+        .custom(function (value, {req}) {
+            if (!Fn.isMongooseValidId(value)) {
+                throw new Error(MESSAGES.INVALID_ID);
+            }
+            return Genres.findById(value).then(function (genre) {
+                if (!genre) {
+                    return Promise.reject(MESSAGES.GENRE_NOT_FOUND);
+                }
+            });
+        }),
+    body('author')
+        .optional()
+        .custom(function (value, {req}) {
+            if (!Fn.isMongooseValidId(value)) {
+                throw new Error(MESSAGES.INVALID_ID);
+            }
+            return Authors.findById(value).then(function (author) {
+                if (!author) {
+                    return Promise.reject(MESSAGES.AUTHOR_IS_NOT_FOUND);
+                }
+            });
+        }),
+    body('pageCount')
+        .optional()
+        .isInt({min:0,max:10000})
+        .withMessage(MESSAGES.NOT_VALID_NUMBER),
+];
+
+
 module.exports = BookValidation;

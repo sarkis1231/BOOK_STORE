@@ -80,20 +80,18 @@ async function editBook(req, res, next) {
 }
 
 let getBooksWithFilter = async function(req, res, next) {
-    const {name, genre,author,publishedDate} = req.body;
+    const {name, genre,author,pageCount,publishedDate} = req.body;
     try {
+       errorValidation(req);
        let query = {
             name: {$regex: new RegExp(name), $options: 'g'},
             genre: genre,
             author: author,
-            // publishedDate:publishedDate //TODO  create a from to
+            pageCount:pageCount
+            // publishedDate:publishedDate
         };
 
-        for (const queryKey in query) {
-            if(Fn.isUndefined(query[queryKey])){
-                delete query[queryKey];
-            }
-        }
+        query = Fn.sanitizeQuery(query);
 
         let books = await Books.getAll(query,true);
         if (!Fn.isEmpty(books)) {
