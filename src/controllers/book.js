@@ -25,7 +25,7 @@ async function addBook(req, res, next) {
         };
 
         if (!Fn.isEmpty(publishedDate)){
-            book.publishedDate = publishedDate;
+            book.publishedDate = new Date(publishedDate);
         }
        const newBook = new Books(book);
 
@@ -45,29 +45,32 @@ async function addBook(req, res, next) {
 }
 
 async function editBook(req, res, next) {
-    const {name, genre,author} = req.body;
+    const {name, genre, author, pageCount, publishedDate} = req.body;
 
     try {
-        errorValidationFiles(req,['file','image']);
+        errorValidationFiles(req, ['file', 'image']);
 
         let file = req.files.file;
         let image = req.files.image;
 
-        const book = await Books.getById(req.params.id); //TODO check pass option
-        book.name = name;
-        book.genre = genre;
-        book.file  = file;
-        book.image  = image;
-        let p2,p3;
+        const book = await Books.getById(req.params.id);
+        book.name = name ? name : book.name;
+        book.genre = genre ? genre : book.genre;
+        book.file = file ? file : book.file;
+        book.image = image ? image : book.image;
+        book.publishedDate = publishedDate ? new Date(publishedDate) : book.publishedDate;
+        book.pageCount = pageCount ? pageCount : book.pageCount;
 
-        if (!Fn.sameObjectId(book.author,author)) {
-            p2 = Authors.deleteBookAuthor(book.author,req.params.id);
+        let p2, p3;
+
+        if (!Fn.sameObjectId(book.author, author)) {
+            p2 = Authors.deleteBookAuthor(book.author, req.params.id);
             book.author = author;
-            p3 = Authors.addBookAuthor(book.author,book._id)
+            p3 = Authors.addBookAuthor(book.author, book._id)
         }
 
         const p1 = book.save();
-        const p = await Promise.all([p1,p2,p3]);
+        const p = await Promise.all([p1, p2, p3]);
 
         if (!Fn.isEmpty(p) && !Fn.isEmpty(p[0]) && !Fn.isEmpty(p[1]) && !Fn.isEmpty(p[2])) {
             return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
@@ -87,13 +90,13 @@ let getBooksWithFilter = async function(req, res, next) {
             name: {$regex: new RegExp(name), $options: 'g'},
             genre: genre,
             author: author,
-            pageCount: pageCount ? {$gte: pageCount} : undefined
-            // publishedDate:publishedDate
+            pageCount: pageCount ? {$gte: pageCount} : undefined,
+            publishedDate: publishedDate ? {$gte: new Date(pageCount)} : undefined
         };
 
         query = Fn.sanitizeQuery(query);
 
-        let books = await Books.getAll(query,true);
+        let books = await Books.getAll(query,{'createdAt': 0, 'updatedAt': 0,file:0,image:0},true);
         if (!Fn.isEmpty(books)) {
             return res.status(200).json(books);
         }

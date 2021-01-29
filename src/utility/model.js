@@ -7,23 +7,27 @@ modelUtil.getQueryWithDisable = function (qry) {
     return {...qry, disabled: {$ne: true}}
 };
 
-modelUtil.getAll = async function (query, lean) {
-    query = modelUtil.getQueryWithDisable(query);
-    if (lean) {
-        return this.find(query).lean();
-    }
-    return this.find(query);
+modelUtil.ignoreQry = function (qry) {
+    return qry || {'createdAt': 0, 'updatedAt': 0};
 };
 
-modelUtil.getOne = async function (query, lean) {
+modelUtil.getAll = async function (query, ignore, lean) {
     query = modelUtil.getQueryWithDisable(query);
     if (lean) {
-        return this.findOne(query).lean();
+        return this.find(query, this.ignoreQry(ignore)).lean();
     }
-    return this.findOne(query);
+    return this.find(query, this.ignoreQry(ignore));
 };
 
-modelUtil.getById = async function (id, lean) {
+modelUtil.getOne = async function (query, ignore, lean) {
+    query = modelUtil.getQueryWithDisable(query);
+    if (lean) {
+        return this.findOne(query, this.ignoreQry(ignore)).lean();
+    }
+    return this.findOne(query, this.ignoreQry(ignore));
+};
+
+modelUtil.getById = async function (id, ignore, lean) {
     if (Fn.isUndefined(id)) {
         console.error('id should be defined');
         return;
@@ -31,9 +35,9 @@ modelUtil.getById = async function (id, lean) {
     let query = modelUtil.getQueryWithDisable({});
     query._id = id;
     if (lean) {
-        return this.findOne(query).lean();
+        return this.findOne(query, this.ignoreQry(ignore)).lean();
     }
-    return this.findOne(query);
+    return this.findOne(query, this.ignoreQry(ignore));
 };
 
 modelUtil.disable = async function (query) {

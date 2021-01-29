@@ -1,5 +1,5 @@
 const modelUtil = require("../utility/model");
-const {Schema,model} = require("mongoose");
+const {Schema, model} = require("mongoose");
 const {SCHEMES_NAMES} = require('../utility/constants');
 
 const bookSchema = new Schema({
@@ -27,22 +27,22 @@ const bookSchema = new Schema({
     publishedDate: {
         type: Date
     },
-    pageCount:{
-      type:Number,
-      required: true
+    pageCount: {
+        type: Number,
+        required: true
     },
     disabled: {
-        type:Boolean
+        type: Boolean
     }
-},{timestamps:true});
+}, {timestamps: true});
 
 bookSchema.statics.getAll = modelUtil.getAll;
 
-bookSchema.statics.getOne =  modelUtil.getOne;
+bookSchema.statics.getOne = modelUtil.getOne;
 
 bookSchema.statics.getById = modelUtil.getById;
 
-bookSchema.statics.disable =  modelUtil.disable;
+bookSchema.statics.disable = modelUtil.disable;
 
 bookSchema.statics.disableById = modelUtil.disableById;
 
