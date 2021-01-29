@@ -19,9 +19,9 @@ let files = upload.fields([
 
 router.get('/', BooksCtrl.getBooks);
 
-router.get('/:id', paramIdValidation, BooksCtrl.getBook);
-
 router.get('/filter',BooksCtrl.getBooksWithFilter);
+
+router.get('/:id', paramIdValidation, BooksCtrl.getBook);
 
 
 router.post('/',

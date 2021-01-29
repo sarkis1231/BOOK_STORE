@@ -82,8 +82,9 @@ async function editBook(req, res, next) {
 let getBooksWithFilter = async function(req, res, next) {
     const {name, genre,author,publishedDate} = req.body;
     try {
+        console.log('s');
         let query = {
-            name:name,
+            name: {$regex: new RegExp(name)},
             genre:genre,
             author:author,
             // publishedDate:publishedDate //TODO  create a from to
