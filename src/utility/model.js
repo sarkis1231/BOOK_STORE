@@ -14,17 +14,17 @@ modelUtil.ignoreQry = function (qry) {
 modelUtil.getAll = async function (query, ignore, lean) {
     query = modelUtil.getQueryWithDisable(query);
     if (lean) {
-        return this.find(query, this.ignoreQry(ignore)).lean();
+        return this.find(query, modelUtil.ignoreQry(ignore)).lean();
     }
-    return this.find(query, this.ignoreQry(ignore));
+    return this.find(query, modelUtil.ignoreQry(ignore));
 };
 
 modelUtil.getOne = async function (query, ignore, lean) {
     query = modelUtil.getQueryWithDisable(query);
     if (lean) {
-        return this.findOne(query, this.ignoreQry(ignore)).lean();
+        return this.findOne(query, modelUtil.ignoreQry(ignore)).lean();
     }
-    return this.findOne(query, this.ignoreQry(ignore));
+    return this.findOne(query, modelUtil.ignoreQry(ignore));
 };
 
 modelUtil.getById = async function (id, ignore, lean) {
@@ -35,9 +35,9 @@ modelUtil.getById = async function (id, ignore, lean) {
     let query = modelUtil.getQueryWithDisable({});
     query._id = id;
     if (lean) {
-        return this.findOne(query, this.ignoreQry(ignore)).lean();
+        return this.findOne(query, modelUtil.ignoreQry(ignore)).lean();
     }
-    return this.findOne(query, this.ignoreQry(ignore));
+    return this.findOne(query, modelUtil.ignoreQry(ignore));
 };
 
 modelUtil.disable = async function (query) {
