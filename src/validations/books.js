@@ -1,5 +1,5 @@
 const {MESSAGES} = require("../utility/constants");
-const {body, param,checkSchema,check} = require("express-validator");
+const {body, param,check} = require("express-validator");
 const mongoose = require("mongoose");
 const {Fn} = require("../utility/functions");
 const {Books} = require("../models/Books");
@@ -23,8 +23,7 @@ BookValidation.add = [
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            let validId = mongoose.Types.ObjectId.isValid(value);
-            if (!validId) {
+            if (!Fn.isMongooseValidId(value)) {
                 throw new Error(MESSAGES.INVALID_ID);
             }
             return Genres.findById(value).then(function (genre) {
@@ -37,8 +36,7 @@ BookValidation.add = [
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
         .custom(function (value, {req}) {
-            let validId = mongoose.Types.ObjectId.isValid(value);
-            if (!validId) {
+            if (!Fn.isMongooseValidId(value)) {
                 throw new Error(MESSAGES.INVALID_ID);
             }
             return Authors.findById(value).then(function (author) {
@@ -89,8 +87,7 @@ BookValidation.edit = [
         }),
     param('id')
         .custom(function (value) {
-            let validId = mongoose.Types.ObjectId.isValid(value);
-            if (!validId) {
+            if (!Fn.isMongooseValidId(value)) {
                 throw new Error(MESSAGES.INVALID_QUERY_PARAM);
             }
             return Books.findById(value).then(function (book) {

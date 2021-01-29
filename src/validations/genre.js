@@ -1,7 +1,6 @@
 const {MESSAGES} = require("../utility/constants");
 const {body, param} = require("express-validator");
 const {Genres} = require("../models/Genre");
-const mongoose = require("mongoose");
 const {Fn} = require("../utility/functions");
 
 const GenreValidation = {};

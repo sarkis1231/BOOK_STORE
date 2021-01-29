@@ -1,6 +1,5 @@
 const {MESSAGES} = require("../utility/constants");
 const {body, param} = require("express-validator");
-const mongoose = require("mongoose");
 const {Fn} = require("../utility/functions");
 const {Authors} = require("../models/Author");
 
