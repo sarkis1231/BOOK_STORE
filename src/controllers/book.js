@@ -83,11 +83,11 @@ let getBooksWithFilter = async function(req, res, next) {
     const {name, genre,author,pageCount,publishedDate} = req.body;
     try {
        errorValidation(req);
-       let query = {
+        let query = {
             name: {$regex: new RegExp(name), $options: 'g'},
             genre: genre,
             author: author,
-            pageCount:pageCount
+            pageCount: pageCount ? {$gte: pageCount} : undefined
             // publishedDate:publishedDate
         };
 
