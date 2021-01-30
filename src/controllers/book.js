@@ -95,7 +95,6 @@ let getBooksWithFilter = async function(req, res, next) {
         };
 
         query = Fn.sanitizeQuery(query);
-        console.log(query);
 
         let books = await Books.getAll(query, {'updatedAt': 0, file: 0, image: 0}, true);
         if (!Fn.isEmpty(books)) {
