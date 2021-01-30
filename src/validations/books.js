@@ -1,3 +1,4 @@
+const ValidationsFns = require("../utility/validations");
 const {MESSAGES} = require("../utility/constants");
 const {body, param,check} = require("express-validator");
 const {Fn} = require("../utility/functions");
@@ -165,11 +166,7 @@ BookValidation.filter = [
     body('publishedDate')
         .optional()
         .trim()
-        .custom(function (value){
-            if(!Fn.isValidDate(value)){
-                throw new Error(MESSAGES.NOT_VALID_DATE);
-            }
-        })
+        .custom(ValidationsFns.isItDate)
 ];
 
 
