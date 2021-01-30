@@ -39,16 +39,17 @@ const errorValidationFiles = function (req,array) {
             if(item.param === 'files') {
                 isFileError = i;
                 obj = errorArray[i];
-                errorArray.splice(i,1);
+                errorArray.splice(i, 1);
             }
         }
 
         if (isFileError !== -1) {
             for (let i = 0; i < array.length; i++) {
+                let currentError = {...obj};
                 let value = req.files[array[i]];
                  if(!value) {
-                    obj.param =  array[i];
-                    errorArray.push(obj)
+                    currentError.param =  array[i];
+                    errorArray.push(currentError);
                 }
             }
             if(errorArray.length) {

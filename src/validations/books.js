@@ -55,12 +55,12 @@ BookValidation.add = [
                 throw new Error(MESSAGES.REQUIRED_FIELDS);
             }
 
-            let arr = Object.keys(value);
+            /*let arr = Object.keys(value);
             for (let i = 0; i < arr.length; i++) {
                 if (!FILES_VALIDATION_NAMES[arr[i]]) {
                     throw new Error(MESSAGES.REQUIRED_FIELDS);
                 }
-            }
+            }*/
         }),
     body('pageCount')
         .notEmpty()
@@ -125,12 +125,12 @@ BookValidation.edit = [
                 throw new Error(MESSAGES.REQUIRED_FIELDS);
             }
 
-            let arr = Object.keys(value);
+            /*let arr = Object.keys(value);
             for (let i = 0; i < arr.length; i++) {
                 if (!FILES_VALIDATION_NAMES[arr[i]]) {
                     throw new Error(MESSAGES.REQUIRED_FIELDS);
                 }
-            }
+            }*/
         }),
     body('pageCount')
         .notEmpty()
