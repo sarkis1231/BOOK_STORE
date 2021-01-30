@@ -61,7 +61,7 @@ const StyledMenuContainer = styled.div`
         ` :
     css`
           opacity: 0;
-          transform: translateX(-300px);
+          transform: translateX(-700px);
         `
 };
   transition: all .3s ease;
@@ -77,7 +77,7 @@ const StyledButtonMenu = styled.div`
   width: 50px;
   height: 40px;
   border-radius: 0 10px 10px 0;
-  background: ${({theme}) => theme.text};
+  background: ${({theme}) => theme.button.bgColor};
   cursor: pointer;
   justify-content: center;
   display: flex;
@@ -101,7 +101,7 @@ const StyledBurgerMenuWrapper = styled.div`
   position: absolute;
   height: 2px;
   width: 20px;
-  background: ${({theme}) => theme.body};
+  background: #FFFFFF;
   border-radius: 9px;
   opacity: 1;
   left: 0;

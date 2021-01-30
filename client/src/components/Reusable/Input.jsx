@@ -17,7 +17,7 @@ const Input = forwardRef(({
                               inputType,
                               value,
                               serverError,
-                              onFileChange
+                              onFileChange,
                           }, ref) => {
 
     const [expandInput, setExpandInput] = useState(false);
@@ -52,7 +52,7 @@ const Input = forwardRef(({
                         <StyledInputFileSpan>{placeHolder}...</StyledInputFileSpan>
                     </StyledInputFileLabel>
                     <StyledSpan errors={error || serverError}>
-                        {error && error.message}
+                        {error && error[name] &&  error[name].message}
                     </StyledSpan>
                 </FlexContainer>
             )

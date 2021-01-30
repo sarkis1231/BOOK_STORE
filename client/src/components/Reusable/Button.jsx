@@ -13,13 +13,17 @@ const Button = ({ type, children, onClick, margin, width }) => {
 
 const StyledButton = styled.button`
   width: ${({ width }) => width ? width : '100%'};
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 20px;
+  padding: 15px;
   outline: none;
   border: none;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
   margin: ${({ margin }) => margin};
   color: ${({ theme }) => theme.button.color};
   background: ${({ theme }) => theme.button.bgColor};
+  box-shadow: ${({theme}) => theme.button.boxShadow};
   &:focus {
     outline: none;
   }

@@ -45,8 +45,8 @@ const StyledFlexContainer = styled(FlexContainer)`
    padding: 15px;
    align-items: center;
    justify-content: space-between;
-   background: ${({theme}) => theme.navBar.BgColor};
-   border-bottom: ${({theme}) => `1px solid ${theme.toggleBorder}`};
+   background: ${({theme}) => theme.button.BgColor};
+   border-bottom: ${({theme}) => `1px solid ${theme.navBar.borderColor}`};
    
 `
 

@@ -22,35 +22,35 @@ const Table = ({header, body, actionsTypes, editAction, deleteAction, margin}) =
                 <tbody>
                 {body.length ? body.map(item => (
                     !((item['role'] && item['role']) === 'Admin') ?
-                    <tr key={item._id}>
-                        {actionsTypes ? <StyledTd>
-                            <FlexContainer justifyContent='space-around' width='100%'>
-                                {/*eslint-disable-next-line*/}
-                                {actionsTypes.map(action => {
-                                    switch (action) {
-                                        case 'EDIT':
-                                            return (
-                                                <EditIcon key={action}
-                                                          onClick={editAction ? () => editAction({...item}) : null}/>
-                                            )
-                                        case 'DELETE':
-                                            return (
-                                                <DeleteIcon key={action}
-                                                            onClick={deleteAction ? () => deleteAction({...item}) : null}/>
-                                            )
-                                        default:
-                                            break;
-                                    }
-                                })}
-                            </FlexContainer>
-                        </StyledTd> : null}
-                        {Object.keys(header).map(key => (
-                            key === 'createdAt' ?
-                                (<StyledTd key={key}>{dateYearFormat(item[key])}</StyledTd>)
-                                :
-                                (<StyledTd key={key}>{item[key]}</StyledTd>)
-                        ))}
-                    </tr> : null
+                        <tr key={item._id}>
+                            {actionsTypes ? <StyledTd>
+                                <FlexContainer justifyContent='space-around' width='100%'>
+                                    {/*eslint-disable-next-line*/}
+                                    {actionsTypes.map(action => {
+                                        switch (action) {
+                                            case 'EDIT':
+                                                return (
+                                                    <EditIcon key={action}
+                                                              onClick={editAction ? () => editAction({...item}) : null}/>
+                                                )
+                                            case 'DELETE':
+                                                return (
+                                                    <DeleteIcon key={action}
+                                                                onClick={deleteAction ? () => deleteAction({...item}) : null}/>
+                                                )
+                                            default:
+                                                break;
+                                        }
+                                    })}
+                                </FlexContainer>
+                            </StyledTd> : null}
+                            {Object.keys(header).map(key => (
+                                key === 'createdAt' ?
+                                    (<StyledTd key={key}>{dateYearFormat(item[key])}</StyledTd>)
+                                    :
+                                    (<StyledTd key={key}>{item[key]}</StyledTd>)
+                            ))}
+                        </tr> : null
                 )) : null}
                 </tbody>
             </StyledTable>
@@ -67,6 +67,9 @@ const StyledTableContainer = styled.div`
   width: 100%;
   overflow: auto;
   margin: ${({margin}) => margin ? margin : '40px 0'};
+  box-shadow: ${({theme}) => theme.boxShadow};
+  border-radius: 25px;
+  background: ${({theme}) => theme.table.background};
 
   ::-webkit-scrollbar {
     width: 30px;
@@ -88,10 +91,7 @@ const StyledTableContainer = styled.div`
 `
 const StyledTable = styled.table`
   width: 100%;
-  background: ${({theme}) => theme.table.background};
-  border-radius: 10px;
   border-collapse: collapse;
-}
 `
 
 const StyledThead = styled.thead`
@@ -101,12 +101,11 @@ const StyledThead = styled.thead`
 `
 
 const StyledTd = styled.td`
-  border-right: ${({theme}) => theme.table.border};
   color: ${({theme}) => theme.table.color};
   text-align: center;
   font-size: 16px;
   width: calc(100% / 4);
-  padding: 10px;
+  padding: 20px;
 
   :last-child {
     border-right: none;
