@@ -50,8 +50,8 @@ async function editBook(req, res, next) {
     try {
         errorValidationFiles(req, ['file', 'image']);
 
-        let file = req.files.file;
-        let image = req.files.image;
+        let file = req.files.file[0].path;
+        let image = req.files.image[0].path;
 
         const book = await Books.getById(req.params.id);
         book.name = name ? name : book.name;
@@ -96,7 +96,7 @@ let getBooksWithFilter = async function(req, res, next) {
 
         query = Fn.sanitizeQuery(query);
 
-        let books = await Books.getAll(query,{'createdAt': 0, 'updatedAt': 0,file:0,image:0},true);
+        let books = await Books.getAll(query, {'createdAt': 0, 'updatedAt': 0, file: 0, image: 0}, true);
         if (!Fn.isEmpty(books)) {
             return res.status(200).json(books);
         }
