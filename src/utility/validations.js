@@ -10,4 +10,16 @@ ValidationsFns.isItDate = function (value) {
     }
 };
 
+// TODO is Author found
+
+// TODO Author is not found
+
+// TODO Book is found
+
+// TODO Book is not found
+
+// TODO User Found
+
+// User not Found
+
 module.exports = ValidationsFns;
