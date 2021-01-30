@@ -1,3 +1,4 @@
+const {MESSAGES} = require("../constants");
 const {validationResult} =  require("express-validator");
 
 const errorThrower = function (errMessage, statusCode, data) {
@@ -43,12 +44,13 @@ const errorValidationFiles = function (req,array) {
             }
         }
 
-        if (isFileError !== -1) {
+        if (isFileError !== -1) { //tODO  add other kind of errors
             for (let i = 0; i < array.length; i++) {
                 let currentError = {...obj};
                 let value = req.files[array[i]];
-                 if(!value) {
-                    currentError.param =  array[i];
+                if (!value) {
+                    currentError.param = array[i];
+                    currentError.msg = MESSAGES.REQUIRED_FIELDS;
                     errorArray.push(currentError);
                 }
             }
