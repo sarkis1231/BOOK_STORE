@@ -62,6 +62,7 @@ BookValidation.add = [
         .withMessage(MESSAGES.NOT_VALID_NUMBER),
     body('publishedDate')
         .optional()
+        .trim()
         .isDate()
         .withMessage(MESSAGES.NOT_VALID_DATE),
 ];
@@ -124,8 +125,12 @@ BookValidation.edit = [
         .isInt({min:0,max:10000})
         .withMessage(MESSAGES.NO_SUCH_DATA_EXISTS),
     body('publishedDate')
-        .isDate()
-        .withMessage(MESSAGES.REQUIRED_FIELDS)
+        .optional()
+        .custom(function (value){
+            if(!Fn.isValidDate(value)){
+                throw new Error(MESSAGES.NOT_VALID_DATE);
+            }
+        })
 ];
 
 BookValidation.filter = [
@@ -157,6 +162,14 @@ BookValidation.filter = [
         .optional()
         .isInt({min:0,max:10000})
         .withMessage(MESSAGES.NOT_VALID_NUMBER),
+    body('publishedDate')
+        .optional()
+        .trim()
+        .custom(function (value){
+            if(!Fn.isValidDate(value)){
+                throw new Error(MESSAGES.NOT_VALID_DATE);
+            }
+        })
 ];
 
 

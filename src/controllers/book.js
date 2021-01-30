@@ -91,7 +91,7 @@ let getBooksWithFilter = async function(req, res, next) {
             genre: genre ? genre : undefined,
             author: author ? author : undefined,
             pageCount: pageCount ? {$gte: pageCount} : undefined,
-            publishedDate: publishedDate ? {$gte: new Date(pageCount)} : undefined
+            publishedDate: publishedDate ? {$gte: new Date(publishedDate)} : undefined
         };
 
         query = Fn.sanitizeQuery(query);
