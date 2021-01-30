@@ -24,7 +24,7 @@ getCtrlFn.Delete = function (myModel) {
             errorCatcher(next, err);
         }
     }
-}
+};
 
 getCtrlFn.getAll = function (myModel) {
     if(!modelUtil.isModel(myModel)) {
@@ -38,7 +38,7 @@ getCtrlFn.getAll = function (myModel) {
         }
         noResult(res);
     }
-}
+};
 
 getCtrlFn.getId = function (myModel) {
     if(!modelUtil.isModel(myModel)) {
@@ -57,6 +57,6 @@ getCtrlFn.getId = function (myModel) {
             errorCatcher(next, err);
         }
     }
-}
+};
 
 module.exports = {getCtrlFn};

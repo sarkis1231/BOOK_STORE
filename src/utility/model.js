@@ -8,7 +8,7 @@ modelUtil.getQueryWithDisable = function (qry) {
 };
 
 modelUtil.ignoreQry = function (qry) {
-    return qry || {'createdAt': 0, 'updatedAt': 0};
+    return qry || {'updatedAt': 0};
 };
 
 modelUtil.getAll = async function (query, ignore, lean) {

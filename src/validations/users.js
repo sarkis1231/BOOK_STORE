@@ -78,7 +78,9 @@ UserValidation.edit = [
 ];
 
 UserValidation.changePassword = [
-    body("current_password").notEmpty().custom(function (value, {req}) {
+    body("current_password")
+        .notEmpty()
+        .custom(function (value, {req}) {
         return bcrypt.compare(value, req.user.password).then(function (match) {
             if (!match) {
                 return Promise.reject(MESSAGES.WRONG_PASSWORD);

@@ -87,16 +87,17 @@ let getBooksWithFilter = async function(req, res, next) {
     try {
        errorValidation(req);
         let query = {
-            name: {$regex: new RegExp(name), $options: 'g'},
-            genre: genre,
-            author: author,
+            name: name ? {$regex: new RegExp(name), $options: 'g'} : undefined,
+            genre: genre ? genre : undefined,
+            author: author ? author : undefined,
             pageCount: pageCount ? {$gte: pageCount} : undefined,
             publishedDate: publishedDate ? {$gte: new Date(pageCount)} : undefined
         };
 
         query = Fn.sanitizeQuery(query);
+        console.log(query);
 
-        let books = await Books.getAll(query, {'createdAt': 0, 'updatedAt': 0, file: 0, image: 0}, true);
+        let books = await Books.getAll(query, {'updatedAt': 0, file: 0, image: 0}, true);
         if (!Fn.isEmpty(books)) {
             return res.status(200).json(books);
         }

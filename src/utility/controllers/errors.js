@@ -44,7 +44,7 @@ const errorValidationFiles = function (req,array) {
             }
         }
 
-        if (isFileError !== -1) { //tODO  add other kind of errors
+        if (isFileError !== -1) { // tODO  add other kind of errors
             for (let i = 0; i < array.length; i++) {
                 let currentError = {...obj};
                 let value = req.files[array[i]];
@@ -60,6 +60,6 @@ const errorValidationFiles = function (req,array) {
         }
     }
 
-}
+};
 
 module.exports = {errorThrower, errorCatcher, errorFormatter, errorValidation,errorValidationFiles};
