@@ -91,12 +91,16 @@ let getBooksWithFilter = async function(req, res, next) {
             genre: genre ? genre : undefined,
             author: author ? author : undefined,
             pageCount: pageCount ? {$gte: pageCount} : undefined,
-            publishedDate: publishedDate ? {$gte: new Date(publishedDate)} : undefined
+            publishedDate: publishedDate ? {$gte: new Date(publishedDate)} : undefined,
+            disabled: {$ne: true}
         };
 
         query = Fn.sanitizeQuery(query);
 
-        let books = await Books.getAll(query, {'updatedAt': 0, file: 0, image: 0}, true);
+        let books = await Books.find(query, {'updatedAt': 0, file: 0, image: 0})
+            .populate({path: 'author', select: 'name'})
+            .populate({path:'genre',select:'name'})
+            .lean();
         if (!Fn.isEmpty(books)) {
             return res.status(200).json(books);
         }
