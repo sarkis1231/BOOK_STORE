@@ -11,7 +11,7 @@ router.get('/image/:id', function (req, res, next) {
     res.set({'Content-Type': imageType});
     fs.readFile(`${path}/${location}`)
         .then(function (image) {
-            console.log(image);
+            res.send(image);
         }).catch(function (err){
             console.log(err);
     });
@@ -23,7 +23,7 @@ router.get('/book/:id', function (req, res, next) {
 
     fs.readFile(`${path}/${location}`)
         .then(function (image) {
-            console.log(image);
+            res.send(image);
         }).catch(function (err){
         console.log(err);
     });
