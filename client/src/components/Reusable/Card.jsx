@@ -1,22 +1,20 @@
 import React from 'react';
 import Button from './Button';
-import styled from 'styled-components';
-import { FlexContainer } from '../../styled/layout.styled';
+import styled, {css} from 'styled-components';
+import {FlexContainer} from '../../styled/layout.styled';
 import noImage from '../../assets/svg/noImage.png'
 
-const Card = ({ image, title, name }) => {
+const Card = ({image, title, name}) => {
     return (
         <StyledCardContainer>
-            <StyledImgContainer>
                 {image ?
-                    <StyledImg alt='' src={image} /> :
-                    <StyledImg alt='' src={noImage} />}
-            </StyledImgContainer>
+                    <StyledImgContainer imageUrl={image}/> :
+                    <StyledImgContainer imageUrl={noImage}/>}
             <FlexContainer
                 width='100%'
                 padding='0 0 10px 0'
                 flexDirection='column'
-                alignContent='flex-start' >
+                alignContent='flex-start'>
                 <span>{`Title: ${title}`}</span>
                 <span>{`author: ${name}`}</span>
             </FlexContainer>
@@ -28,23 +26,27 @@ const Card = ({ image, title, name }) => {
 export default Card;
 
 const StyledCardContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 25%;
-    background: ${({ theme }) => theme.card.background};
-    color: ${({ theme }) => theme.card.color};
-    align-items: center;
-    padding: 20px;
-    border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  background: ${({theme}) => theme.card.background};
+  color: ${({theme}) => theme.card.color};
+  align-items: center;
+  padding: 20px;
+  border-radius: 32px;
 `
 
 const StyledImgContainer = styled.div`
-width: 100%;
-padding: 0 0 10px 0;
+  width: 100%;
+  padding: 0 0 10px 0;
+  height: 250px;
+  border-radius: 20px;
+  filter: drop-shadow(0px 20px 60px rgba(0, 0, 0, 0.15));
+  background: ${({imageUrl}) =>  css`url(${imageUrl})`};
+  background-size: 100%;
 `
 
 const StyledImg = styled.img`
-height: 250px;
-width: 100%;
+ 
 `
 

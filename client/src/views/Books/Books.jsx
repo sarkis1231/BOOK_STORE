@@ -9,12 +9,16 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {AddBookSchema} from "./config";
 import axios from "axios";
 import BooksFrom from "./BooksFrom";
+import useFetch from "../../hooks/useFetch";
+import Card from "../../components/Reusable/Card";
 
 const Books = () => {
     const {openModal, closeModal, toggleModal} = useModal();
     const {register, handleSubmit, errors, reset} = useForm({
         resolver: yupResolver(AddBookSchema),
     });
+    const books = useFetch('/books')
+    console.log(books)
 
     const onSubmit = (value, e) => {
         let formData = new FormData();
@@ -40,6 +44,7 @@ const Books = () => {
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
                 <Button width='200px' onClick={() => openModal(undefined)}>Add Books</Button>
             </AuthorizationElem>
+            <Card></Card>
             <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Add Book'>
                 <BooksFrom onSubmit={onSubmit} register={register} errors={errors} handleSubmit={handleSubmit}/>
             </Modal>

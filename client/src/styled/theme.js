@@ -123,8 +123,8 @@ export const darkTheme = {
         borderTop: '1px solid #8142FE',
     },
     card: {
-        background: '#FAFAFA',
-        color: '#363537',
+        background: '#0D0D0D',
+        color: '#FFFFFF',
     },
     editDeleteIcon: '#FFFFFF',
     background: '#0D0D0D',
