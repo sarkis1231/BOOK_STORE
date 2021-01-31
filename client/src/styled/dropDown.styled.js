@@ -50,13 +50,17 @@ const StyledListItemContainer = styled(FlexContainer)`
   border-radius: ${({borderRadius}) => borderRadius ? '10px' : 0};
   background: ${({theme}) => theme.dropDown.bgColor};
   z-index: 2;
+  border-radius: 10px;
 
   overflow: hidden;
   ${({toggleMenu}) => toggleMenu ?
           css` max-height: 220px;
-            overflow: hidden;`
+            overflow: hidden;
+            border: ${({theme}) => `1px solid ${theme.dropDown.border}`};
+          ;
+          `
           :
-          css`max-height: 0;`
+          css`max-height: 0;   border: 0px solid transparent;`
   };
   transition: all .3s ease;
 `
@@ -65,6 +69,9 @@ const StyledItem = styled.p`
   margin: 0;
   padding: 10px;
   font-size: 14px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
 `
 
 export {StyledDropDownContainer, StyledTitle, StyledListItemContainer, StyledItem}

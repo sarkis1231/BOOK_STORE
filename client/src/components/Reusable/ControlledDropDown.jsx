@@ -45,8 +45,8 @@ const ControlledDropDown = forwardRef(({
                     mobileDisplay={mobileDisplay}
                     dropDownDisplay={dropDownDisplay}
                 >
-                    <StyledTitle>{value.name}</StyledTitle>
-                    <StyledListItemContainer top='45px' borderRadius toggleMenu={toggle}>
+                    <StyledControlledTitle>{value.name}</StyledControlledTitle>
+                    <StyledControlledListItemContainer top='45px' borderRadius toggleMenu={toggle}>
                         {data.map(({value, name}) => (
                             <StyledItem
                                 key={name}
@@ -55,7 +55,7 @@ const ControlledDropDown = forwardRef(({
                                 {name}
                             </StyledItem>
                         ))}
-                    </StyledListItemContainer>
+                    </StyledControlledListItemContainer>
                     <ArrowIcon/>
                 </StyledControlledDropDownContainer>
                 <StyledSpan errors={error}>{error && error[name] && error[name].message}</StyledSpan>
@@ -68,12 +68,19 @@ const ControlledDropDown = forwardRef(({
 export default ControlledDropDown;
 
 const StyledControlledDropDownContainer = styled(StyledDropDownContainer)`
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
   position: relative;
   background: ${({theme}) => theme.input.bgColor};
+  border: ${({theme}) => `1px solid ${theme.input.border}`};
   padding: 10px;
   border-radius: 10px;
-
   margin: 0;
+`
+const StyledControlledTitle = styled(StyledTitle)`
+  color: ${({theme}) => theme.input.color};
+`
+const StyledControlledListItemContainer = styled(StyledListItemContainer)`
+  background: ${({theme}) => theme.dropDown.bgColor};
+ 
 `

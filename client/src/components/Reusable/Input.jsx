@@ -45,7 +45,7 @@ const Input = forwardRef(({
             )
         case 'file':
             return (
-                <FlexContainer flexDirection='column'>
+                <FlexContainer flexDirection='column' margin={margin} width='100%'>
                     {label && <StyledLabel>{label}</StyledLabel>}
                     <StyledInputFileLabel>
                         <StyledInputFile type={type} onChange={onFileChange ? (e) => onFileChange(e) : null} name={name} ref={ref}/>
@@ -60,7 +60,7 @@ const Input = forwardRef(({
             return (
                 <FlexContainer flexDirection='column' width='100%' margin={margin}>
                     {label && <StyledLabel>{label}</StyledLabel>}
-                    <StyledInput ref={ref} type={inputType} defaultValue={value} name={name} placeholder={placeHolder}/>
+                    <StyledInput ref={ref} type={inputType} opacity='0' defaultValue={value} name={name} placeholder={placeHolder}/>
                     <StyledSpan errors={error || serverError}>
                         {(error && error[name] && error[name].message) || (serverError && serverError[name])}
                     </StyledSpan>
@@ -198,7 +198,7 @@ const StyledInputFileLabel = styled.label`
   width: 100%;
 `
 
-const StyledInputFileSpan = styled.span`
+const StyledInputFileSpan = styled.div`
   position: absolute;
   top: 0;
   right: 0;
@@ -218,19 +218,18 @@ const StyledInputFileSpan = styled.span`
 
   &:before {
     position: absolute;
-    top: -.075rem;
-    right: -.075rem;
-    bottom: -.075rem;
+    top: 0;
+    right: 0;
+    bottom: 0;
     z-index: 6;
-    display: block;
     content: "Browse";
-    height: 2.5rem;
-    padding: .5rem 1rem;
-    line-height: 1.5;
+    padding: 15px;
     color: ${({theme}) => theme.inputFile.button.color};
-    background-color: ${({theme}) => theme.inputFile.button.bgColor};
-    border: ${({theme}) => `1px solid ${theme.inputFile.button.border}`};
+    background: ${({theme}) => theme.inputFile.button.bgColor};
     border-radius: 0 .25rem .25rem 0;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
   }
 
   &:after {
@@ -240,7 +239,7 @@ const StyledInputFileSpan = styled.span`
 
 const StyledInputFile = styled.input.attrs('file')`
   visibility: hidden;
-
+  opacity: 0;
   &:before {
     visibility: visible;
     content: 'Select some files';

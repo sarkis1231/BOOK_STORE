@@ -21,14 +21,15 @@ export const lightTheme = {
         bgColor: '#F1F1F1',
         color: '#00000091',
         button: {
-            color: '#00000091',
-            bgColor: '#F1F1F1',
+            color: '#FFF',
+            bgColor: 'linear-gradient(270deg, #8743FF 0%, #4136F1 100%)',
             border: '#00000003',
         },
     },
     dropDown: {
         color: '#00000091',
-        bgColor: 'rgba(0, 0, 0, 0.03)',
+        bgColor: 'rgba(255,255,255,1)',
+        border: '#594EF3',
     },
     button: {
         color: '#FFFFFF',
@@ -85,19 +86,20 @@ export const darkTheme = {
         color: '#FFFFFF80',
     },
     inputFile: {
-        border: '#FFF',
+        border: '#FFFFFF03',
         focused: '#6B8096',
-        bgColor: '#444',
-        color: '#FFF',
+        bgColor: 'rgba(255, 255, 255, 0.03)',
+        color: '#FFFFFF80',
         button: {
             color: '#FFF',
-            bgColor: '#444',
-            border: '#FFF',
+            bgColor: 'linear-gradient(270deg, #8743FF 0%, #4136F1 100%)',
+            border: '#FFFFFF03',
         },
     },
     dropDown: {
-        color: '#FFF',
-        bgColor: '#444',
+        color: '#FFFFFF80',
+        bgColor: 'rgba(0,0,0,1)',
+        border: '#594EF3',
     },
     button: {
         color: '#FFF',
