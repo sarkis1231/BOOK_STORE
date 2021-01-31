@@ -8,6 +8,10 @@ const {MONGODB_URI} = require("./config/keys");
 const {MONGOOSE_OPTIONS} = require("./config/keys");
 const passportConfig = require("./config/passport");
 
+const path = require("path");
+myPath = path.join(__dirname, 'uploads');
+module.exports = myPath; //tODO fix me later
+
 const app = express();
 
 //security xss
