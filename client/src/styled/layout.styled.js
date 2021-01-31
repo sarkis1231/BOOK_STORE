@@ -6,6 +6,7 @@ export const FlexContainer = styled.div`
   flex-direction: ${({ flexDirection }) => flexDirection || 'row'};
   justify-content: ${({ justifyContent }) => justifyContent};
   align-items: ${({ alignItems }) => alignItems};
+  max-width: ${({maxWidth}) =>maxWidth};
   flex-wrap: ${({ flexWrap }) => (flexWrap ? 'wrap' : 'nowrap')};
   flex-grow: ${({ flexGrow }) => (flexGrow ? 1 : 'initial')};
   padding: ${({ padding }) => padding};

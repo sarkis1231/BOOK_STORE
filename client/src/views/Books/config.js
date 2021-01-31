@@ -6,11 +6,9 @@ export const AddBookSchema = yup.object().shape({
         const regx = /^[-+]?[0-9]+$/;
         return regx.test(value)
     }),
-    publishedDate: yup.date().test('date', 'Must be a valid date', (value) => {
-        const regx = /^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/
-        regx.test(value)
-        console.log(regx.test(value))
-        return regx.test(value)
+    publishedDate: yup.string().test('date', 'Must be a valid date (YYYY-MM-DD)', (value) => {
+        const regx = /^\d{4}-\d{2}-\d{2}$/
+        return regx.test(value) || value.length === 0
     }),
     genre: yup.string().required(),
     authors: yup.string().required(),

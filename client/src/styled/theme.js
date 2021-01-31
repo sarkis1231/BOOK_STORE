@@ -54,8 +54,8 @@ export const lightTheme = {
         borderTop: '1px solid #FFF'
     },
     card: {
-        background: '#363537',
-        color: '#FAFAFA',
+        background: '#FFFFFF',
+        color: '#000000',
     },
     editDeleteIcon: '#000000',
     background: '#363537',

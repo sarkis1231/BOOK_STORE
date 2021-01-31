@@ -1,19 +1,19 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components'
 import Header from "./Header/Header";
-import { ThemeDispatch } from "../context/ThemeContext/Context";
+import {ThemeDispatch} from "../context/ThemeContext/Context";
 import Footer from "./Footer/Footer";
 
-const Layout = ({ children }) => {
+const Layout = ({children}) => {
     const toggleTheme = useContext(ThemeDispatch)
 
     return (
         <>
-            <Header toggleTheme={toggleTheme} />
+            <Header toggleTheme={toggleTheme}/>
             <StyledLayout>
                 {children}
             </StyledLayout>
-            <Footer />
+            <Footer/>
         </>
     );
 };
@@ -23,12 +23,13 @@ const StyledLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 30px;
   width: 100%;
+  overflow: auto;
   max-width: 1440px;
+  min-height: calc(100vh - 128px);
   margin: 0 auto;
-  
+
 `
 
 export default Layout;

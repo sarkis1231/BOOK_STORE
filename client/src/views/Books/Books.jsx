@@ -11,6 +11,7 @@ import axios from "axios";
 import BooksFrom from "./BooksFrom";
 import useFetch from "../../hooks/useFetch";
 import Card from "../../components/Reusable/Card";
+import {FlexContainer} from "../../styled/layout.styled";
 
 const Books = () => {
     const {openModal, closeModal, toggleModal} = useModal();
@@ -18,7 +19,6 @@ const Books = () => {
         resolver: yupResolver(AddBookSchema),
     });
     const books = useFetch('/books')
-    console.log(books)
 
     const onSubmit = (value, e) => {
         let formData = new FormData();
@@ -44,7 +44,11 @@ const Books = () => {
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
                 <Button width='200px' onClick={() => openModal(undefined)}>Add Books</Button>
             </AuthorizationElem>
-            <Card></Card>
+            <FlexContainer maxWidth='1440px' margin='20px auto 0' width='100%' justifyContent='space-between' flexWrap='wrap'>
+                {books.length ? books.map(({_id:id, file, image, name, author}) => (
+                    <Card image={image}  bookName={name} key={id}/>
+                )) : null}
+            </FlexContainer>
             <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Add Book'>
                 <BooksFrom onSubmit={onSubmit} register={register} errors={errors} handleSubmit={handleSubmit}/>
             </Modal>
