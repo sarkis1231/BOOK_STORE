@@ -7,6 +7,7 @@ const helmet = require("helmet");
 const {MONGODB_URI} = require("./config/keys");
 const {MONGOOSE_OPTIONS} = require("./config/keys");
 const passportConfig = require("./config/passport");
+const path = require("path");
 
 const app = express();
 
