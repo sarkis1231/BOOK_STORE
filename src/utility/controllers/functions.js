@@ -1,17 +1,17 @@
 const modelUtil = require("../model");
-const {MESSAGES,messageAlert} = require("../constants");
-const {errorValidation,errorThrower,errorCatcher} = require("./errors");
+const {MESSAGES, messageAlert} = require("../constants");
+const {errorValidation, errorThrower, errorCatcher} = require("./errors");
 const {Fn} = require("../functions");
-const  {alert,noResult} = require("./messages");
+const {alert, noResult} = require("./messages");
 
 let getCtrlFn = {};
 
 getCtrlFn.Delete = function (myModel) {
-    if(!modelUtil.isModel(myModel)) {
+    if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;
     }
-    return async function (req,res,next) {
+    return async function (req, res, next) {
         try {
             errorValidation(req);
             const p = await myModel.disableById(req.params.id);
@@ -27,12 +27,12 @@ getCtrlFn.Delete = function (myModel) {
 };
 
 getCtrlFn.getAll = function (myModel) {
-    if(!modelUtil.isModel(myModel)) {
+    if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;
     }
-    return async function (req,res,next) {
-        let items = await myModel.getAll({},false,true);
+    return async function (req, res, next) {
+        let items = await myModel.getAll({}, false, true);
         if (!Fn.isEmpty(items)) {
             return res.status(200).json(items);
         }
@@ -41,14 +41,14 @@ getCtrlFn.getAll = function (myModel) {
 };
 
 getCtrlFn.getId = function (myModel) {
-    if(!modelUtil.isModel(myModel)) {
+    if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;
     }
-    return async function (req,res,next) {
+    return async function (req, res, next) {
         try {
             errorValidation(req);
-            const item = await myModel.getById(req.params.id,false,true);
+            const item = await myModel.getById(req.params.id, false, true);
             if (!Fn.isEmpty(item)) {
                 return res.status(200).json(item);
             }
