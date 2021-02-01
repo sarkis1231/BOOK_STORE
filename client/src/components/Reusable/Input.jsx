@@ -18,6 +18,7 @@ const Input = forwardRef(({
                               value,
                               serverError,
                               onFileChange,
+                              onInputChange,
                           }, ref) => {
 
     const [expandInput, setExpandInput] = useState(false);
@@ -48,11 +49,12 @@ const Input = forwardRef(({
                 <FlexContainer flexDirection='column' margin={margin} width='100%'>
                     {label && <StyledLabel>{label}</StyledLabel>}
                     <StyledInputFileLabel>
-                        <StyledInputFile type={type} onChange={onFileChange ? (e) => onFileChange(e) : null} name={name} ref={ref}/>
+                        <StyledInputFile type={type} onChange={onFileChange ? (e) => onFileChange(e) : null} name={name}
+                                         ref={ref}/>
                         <StyledInputFileSpan>{placeHolder}...</StyledInputFileSpan>
                     </StyledInputFileLabel>
                     <StyledSpan errors={error || serverError}>
-                        {error && error[name] &&  error[name].message}
+                        {error && error[name] && error[name].message}
                     </StyledSpan>
                 </FlexContainer>
             )
@@ -60,7 +62,8 @@ const Input = forwardRef(({
             return (
                 <FlexContainer flexDirection='column' width='100%' margin={margin}>
                     {label && <StyledLabel>{label}</StyledLabel>}
-                    <StyledInput ref={ref} type={inputType} opacity='0' defaultValue={value} name={name} placeholder={placeHolder}/>
+                    <StyledInput ref={ref} type={inputType} onChange={onInputChange ? (e) => onInputChange(e) : null}
+                                 opacity='0' defaultValue={value} name={name} placeholder={placeHolder}/>
                     <StyledSpan errors={error || serverError}>
                         {(error && error[name] && error[name].message) || (serverError && serverError[name])}
                     </StyledSpan>
@@ -233,13 +236,14 @@ const StyledInputFileSpan = styled.div`
   }
 
   &:after {
-    content:"";
+    content: "";
   }
 `
 
 const StyledInputFile = styled.input.attrs('file')`
   visibility: hidden;
   opacity: 0;
+
   &:before {
     visibility: visible;
     content: 'Select some files';

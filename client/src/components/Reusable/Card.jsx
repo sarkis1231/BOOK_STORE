@@ -19,7 +19,7 @@ const Card = ({image, bookName, author, file}) => {
                 flexDirection='column'
                 alignContent='flex-start'>
                 <span>Book name {bookName}</span>
-                <span></span>
+                <span>Author {author.name}</span>
             </FlexContainer>
             <StyledA href={`http://localhost:8080/files/book/${splitFile[splitFile.length - 1]}`} target="_blank"
                      rel="noreferrer noopener" download>
