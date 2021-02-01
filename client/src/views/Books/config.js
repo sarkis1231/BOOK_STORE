@@ -11,7 +11,7 @@ export const AddBookSchema = yup.object().shape({
         return regx.test(value) || value.length === 0
     }),
     genre: yup.string().required(),
-    authors: yup.string().required(),
+    author: yup.string().required(),
     image: yup.mixed().required().test('fileType', 'Must be jpeg/png file type', (value) => {
         return ['image/jpeg', 'image/png'].includes(value[0]?.type)
     }),
