@@ -83,7 +83,7 @@ async function editBook(req, res, next) {
 }
 
 let getBooksWithFilter = async function(req, res, next) {
-    const {name, genre,author,pageCount,publishedDate} = req.body;
+    const {name, genre,author,pageCount,publishedDate} = req.params;
     try {
        errorValidation(req);
         let query = {
@@ -97,7 +97,7 @@ let getBooksWithFilter = async function(req, res, next) {
 
         query = Fn.sanitizeQuery(query);
 
-        let books = await Books.find(query, {'updatedAt': 0, file: 0, image: 0})
+        let books = await Books.find(query, {'updatedAt': 0})
             .populate({path: 'author', select: 'name'})
             .populate({path:'genre',select:'name'})
             .lean();

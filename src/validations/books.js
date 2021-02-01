@@ -8,11 +8,6 @@ const {Authors} = require("../models/Author");
 
 const BookValidation = {};
 
-const FILES_VALIDATION_NAMES = {
-    'file': 'file',
-    'image': 'image'
-};
-
 BookValidation.add = [
     body('name')
         .notEmpty()
@@ -135,7 +130,7 @@ BookValidation.edit = [
 ];
 
 BookValidation.filter = [
-    body('genre')
+    param('genre')
         .optional()
         .custom(function (value, {req}) {
             if (!Fn.isMongooseValidId(value)) {
@@ -147,7 +142,7 @@ BookValidation.filter = [
                 }
             });
         }),
-    body('author')
+    param('author')
         .optional()
         .custom(function (value, {req}) {
             if (!Fn.isMongooseValidId(value)) {
@@ -159,11 +154,11 @@ BookValidation.filter = [
                 }
             });
         }),
-    body('pageCount')
+    param('pageCount')
         .optional()
         .isInt({min:0,max:10000})
         .withMessage(MESSAGES.NOT_VALID_NUMBER),
-    body('publishedDate')
+    param('publishedDate')
         .optional()
         .trim()
         .custom(ValidationsFns.isItDate)
