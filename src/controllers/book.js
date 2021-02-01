@@ -83,7 +83,7 @@ async function editBook(req, res, next) {
 }
 
 let getBooksWithFilter = async function (req, res, next) {
-    const {name, genre, author, pageCount, publishedDate} = req.params;
+    const {name, genre, author, pageCount, publishedDate} = req.query;
     try {
         errorValidation(req);
         let query = {
