@@ -1,5 +1,5 @@
 const {isAuth} = require("../middlewares/authentication");
-const {readImage,readFile} = require("../controllers/file");
+const {readImage, readFile} = require("../controllers/file");
 const {Router} = require('express');
 const router = Router();
 

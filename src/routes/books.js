@@ -19,7 +19,7 @@ let files = upload.fields([
 
 router.get('/', BooksCtrl.getBooks);
 
-router.get('/filter',BookValidation.filter,BooksCtrl.getBooksWithFilter);
+router.get('/filter', BookValidation.filter, BooksCtrl.getBooksWithFilter);
 
 router.get('/:id', paramIdValidation, BooksCtrl.getBook);
 

@@ -2,20 +2,20 @@ const {noResult} = require("../utility/controllers/messages");
 const {errorThrower} = require("../utility/controllers/errors");
 const {errorValidation} = require("../utility/controllers/errors");
 const {Fn} = require("../utility/functions");
-const {MESSAGES,messageAlert} = require("../utility/constants");
+const {MESSAGES, messageAlert} = require("../utility/constants");
 const {getCtrlFn} = require("../utility/controllers/functions");
-const {errorCatcher,errorValidationFiles} = require("../utility/controllers/errors");
+const {errorCatcher, errorValidationFiles} = require("../utility/controllers/errors");
 const {alert} = require("../utility/controllers/messages");
 const {Books} = require("../models/Books");
 const {Authors} = require("../models/Author");
 
 
 async function addBook(req, res, next) {
-    const {name, genre,author,pageCount,publishedDate} = req.body;
+    const {name, genre, author, pageCount, publishedDate} = req.body;
 
 
     try {
-        errorValidationFiles(req,['file','image']);
+        errorValidationFiles(req, ['file', 'image']);
 
         let file = req.files.file[0].path;
         let image = req.files.image[0].path;
@@ -24,14 +24,14 @@ async function addBook(req, res, next) {
             name, genre, author, file, image, pageCount
         };
 
-        if (!Fn.isEmpty(publishedDate)){
+        if (!Fn.isEmpty(publishedDate)) {
             book.publishedDate = new Date(publishedDate);
         }
-       const newBook = new Books(book);
+        const newBook = new Books(book);
 
-       const p1 = newBook.save();
-       const p2 = Authors.addBookAuthor(author,newBook._id);
-       const p = await Promise.all([p1,p2]);
+        const p1 = newBook.save();
+        const p2 = Authors.addBookAuthor(author, newBook._id);
+        const p = await Promise.all([p1, p2]);
 
         if (!Fn.isEmpty(p) && (!Fn.isEmpty(p[0]) || !Fn.isEmpty(p[1]))) {
             return alert(res, 200, messageAlert.success, MESSAGES.BOOK_ADDED);
@@ -82,10 +82,10 @@ async function editBook(req, res, next) {
     }
 }
 
-let getBooksWithFilter = async function(req, res, next) {
-    const {name, genre,author,pageCount,publishedDate} = req.params;
+let getBooksWithFilter = async function (req, res, next) {
+    const {name, genre, author, pageCount, publishedDate} = req.params;
     try {
-       errorValidation(req);
+        errorValidation(req);
         let query = {
             name: name ? {$regex: new RegExp(name), $options: 'g'} : undefined,
             genre: genre ? genre : undefined,
@@ -99,14 +99,14 @@ let getBooksWithFilter = async function(req, res, next) {
 
         let books = await Books.find(query, {'updatedAt': 0})
             .populate({path: 'author', select: 'name'})
-            .populate({path:'genre',select:'name'})
+            .populate({path: 'genre', select: 'name'})
             .lean();
         if (!Fn.isEmpty(books)) {
             return res.status(200).json(books);
         }
         noResult(res);
 
-    } catch (err){
+    } catch (err) {
         errorCatcher(next, err);
     }
 }
@@ -115,15 +115,15 @@ let getBooks = getCtrlFn.getAll(Books);
 
 let getBook = getCtrlFn.getId(Books);
 
-async function deleteBook (req,res,next) {
+async function deleteBook(req, res, next) {
     try {
         errorValidation(req);
         const p1 = await Books.disableById(req.params.id);
         if (Fn.isEmpty(p1)) {
             return errorThrower(MESSAGES.NO_SUCH_DATA_EXISTS, 422);
         }
-        const p2 = await Authors.deleteBookAuthor(p1.author,req.params.id);
-        if(!Fn.isEmpty(p2)) {
+        const p2 = await Authors.deleteBookAuthor(p1.author, req.params.id);
+        if (!Fn.isEmpty(p2)) {
             return alert(res, 200, messageAlert.success, MESSAGES.ITEM_DELETED);
         }
         return errorThrower(MESSAGES.SOMETHING_WENT_WRONG, 422);
@@ -134,4 +134,4 @@ async function deleteBook (req,res,next) {
 }
 
 
-module.exports = {getBook, getBooks, addBook, editBook, deleteBook,getBooksWithFilter};
+module.exports = {getBook, getBooks, addBook, editBook, deleteBook, getBooksWithFilter};
