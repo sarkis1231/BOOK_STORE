@@ -53,7 +53,6 @@ const Books = () => {
             }
         })
         axios.post('/books', formData).then(res => {
-            console.log(res)
             reset();
             setReFetch(prev => !prev)
         }).catch(e => {
@@ -66,7 +65,11 @@ const Books = () => {
         axios.get('/books/filter', {
             params: filteredValue(value)
         }).then(res => {
-            setData(() => res.data)
+            if (res.data.empty) {
+                setData(prev => prev);
+            } else {
+                setData(() => res.data)
+            }
             searchReset()
         })
     }

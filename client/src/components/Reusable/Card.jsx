@@ -37,6 +37,8 @@ const StyledCardContainer = styled(FlexContainer)`
   color: ${({theme}) => theme.card.color};
   align-items: center;
   border-radius: 32px;
+  width: 30%;
+  margin-bottom: 20px;
 `
 
 const StyledImgContainer = styled.div`
