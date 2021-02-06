@@ -6,21 +6,36 @@ import useModal from "../../hooks/useModal";
 import {useForm} from "react-hook-form";
 import Modal from "../../components/Reusable/Modal";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {AddBookSchema} from "./config";
+import {AddBookSchema, EditBookSchema} from "./config";
 import axios from "axios";
 import BooksFrom from "./BooksFrom";
 // import useFetch from "../../hooks/useFetch";
 import Card from "../../components/Reusable/Card";
 import {FlexContainer} from "../../styled/layout.styled";
-import Input from "../../components/Reusable/Input";
-import ControlledDropDown from "../../components/Reusable/ControlledDropDown";
-import {filteredValue} from "../../utils";
+import booksFormData, {filteredValue} from "../../utils";
+import DeleteModalContent from "../../components/Reusable/DeleteModalContent";
+import FilterForm from "./FilterForm";
 
 const Books = () => {
     const {openModal, closeModal, toggleModal} = useModal();
     const {openModal: searchOpenModal, closeModal: searchCloseModal, toggleModal: searchToggleModal} = useModal();
+    const {
+        openModal: editOpenModal,
+        closeModal: editCloseModal,
+        toggleModal: editToggleModal,
+        value: editValue
+    } = useModal();
+    const {
+        openModal: deleteOpenModal,
+        closeModal: deleteCloseModal,
+        toggleModal: deleteToggleModal,
+        value: deleteValue
+    } = useModal();
     const {register, handleSubmit, errors, reset} = useForm({
         resolver: yupResolver(AddBookSchema),
+    });
+    const {register: editRegister, handleSubmit: editHandleSubmit, errors: editErrors} = useForm({
+        resolver: yupResolver(EditBookSchema),
     });
     const [data, setData] = useState([])
     const {
@@ -52,7 +67,7 @@ const Books = () => {
                 formData.append(key, value[key])
             }
         })
-        axios.post('/books', formData).then(res => {
+        axios.post('/books', formData).then(() => {
             reset();
             setReFetch(prev => !prev)
         }).catch(e => {
@@ -73,52 +88,56 @@ const Books = () => {
             searchReset()
         })
     }
+    const onDelete = () => {
+        axios.delete(`/books/${deleteValue.id}`).then(res => {
+            console.log(res);
+        }).catch(e => {
+            console.log(e)
+        })
+        setReFetch(prev => !prev)
+        deleteCloseModal();
+    }
 
+    const onEdit = (value) => {
+        console.log(value)
+        console.log(booksFormData(value))
+        axios.put(`/books/${editValue.id}`, booksFormData(value)).then(res => {
+            console.log(res)
+            setReFetch(prev => !prev)
+        }).catch(e => {
+            console.log(e)
+        })
+        editCloseModal()
+    }
     return (
         <>
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
                 <Button width='200px' onClick={() => openModal(undefined)}>Add Books</Button>
             </AuthorizationElem>
-            <Button margin='20px 0 0' onClick={() => searchOpenModal()}>Search</Button>
+            <Button margin='20px 0 0' onClick={() => searchOpenModal(undefined)}>Search</Button>
             <FlexContainer maxWidth='1440px' margin='30px auto 0' width='100%' justifyContent='space-between'
                            flexWrap='wrap'>
-                {data.length ? data.map(({_id: id, file, image, name, author}) => (
-                    <Card image={image} bookName={name} key={id} file={file} author={author}/>
+                {data.length ? data.map(({_id: id, file, image, name, author, pageCount, genre}) => (
+                    <Card image={image} bookName={name} id={id} key={id} file={file} author={author}
+                          pageCount={pageCount}
+                          genre={genre} onDelete={deleteOpenModal} onEdit={editOpenModal}/>
                 )) : null}
             </FlexContainer>
             <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Add Book'>
-                <BooksFrom onSubmit={onSubmit} register={register} errors={errors} handleSubmit={handleSubmit}/>
+                <BooksFrom buttonName='Add Book' onSubmit={onSubmit} register={register} errors={errors}
+                           handleSubmit={handleSubmit}/>
             </Modal>
             <Modal toggleModal={searchToggleModal} handleCloseModal={searchCloseModal} modalTitle='Search Book'>
-                <form onSubmit={searchHandleSubmit(onSearchSubmit)}>
-                    <Input ref={searchRegister} label='Book name' placeHolder='Book Name' error={searchErrors}
-                           name='name'
-                           onInputChange={e => e.target.value.trim()}/>
-                    <Input ref={searchRegister} label='Book page count' placeHolder='count' margin='20px 0'
-                           error={searchErrors}
-                           name='pageCount'
-                           onInputChange={e => e.target.value.trim()}/>
-
-                    <Input ref={searchRegister} label='Published Date' name='publishedDate' placeHolder='YYYY-MM-DD'
-                           error={searchErrors}
-                           onInputChange={e => e.target.value.trim()}
-                    />
-                    <FlexContainer justifyContent='space-between' margin='20px 0'>
-                        <ControlledDropDown ref={searchRegister} name='genre' url={'/genre'}
-                                            defaultValue={{name: 'none', value: ''}}
-                                            label='Genre'
-                                            width='49%'
-                                            error={searchErrors}
-                        />
-                        <ControlledDropDown ref={searchRegister} name='author' url={'/authors'}
-                                            defaultValue={{name: 'none', value: ''}}
-                                            label='Authors'
-                                            width='49%'
-                                            error={searchErrors}
-                        />
-                    </FlexContainer>
-                    <Button type='submit' margin='20px 0'>Search Books</Button>
-                </form>
+                <FilterForm onSearchSubmit={onSearchSubmit} searchHandleSubmit={searchHandleSubmit}
+                            searchErrors={searchErrors} searchRegister={searchRegister}/>
+            </Modal>
+            <Modal toggleModal={deleteToggleModal} handleCloseModal={deleteCloseModal} modalTitle='Delete Book'>
+                <DeleteModalContent closeModal={deleteCloseModal} value={deleteValue?.bookName}
+                                    handleDelete={onDelete}/>
+            </Modal>
+            <Modal toggleModal={editToggleModal} modalTitle='Edit Books' handleCloseModal={editCloseModal}>
+                <BooksFrom handleSubmit={editHandleSubmit} errors={editErrors} register={editRegister}
+                           onSubmit={onEdit} values={editValue} buttonName='Edit Book'/>
             </Modal>
         </>
     )

@@ -9,7 +9,6 @@ import {useSelector} from "react-redux";
 const Home = () => {
     const history = useHistory();
     const user = useSelector(state => state.auth.user)
-    console.log(user)
     return (
         <>
             <FlexContainer flexDirection='column' padding='40px 20px' margin='0 0 20px 0'>

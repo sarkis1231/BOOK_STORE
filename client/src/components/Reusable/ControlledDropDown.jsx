@@ -23,6 +23,11 @@ const ControlledDropDown = forwardRef(({
     const [toggle, setToggle] = useState(false);
     const [data, setData] = useState([]);
     const [value, setValue] = useState(() => defaultValue);
+    useEffect(() => {
+        if(defaultValue) {
+            setValue(() => defaultValue)
+        }
+    }, [defaultValue])
     const inputRef = useRef(null)
     useOnClickOutside(inputRef, () => setToggle(false))
     useEffect(() => {
