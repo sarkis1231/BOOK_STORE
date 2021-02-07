@@ -59,7 +59,22 @@ async function editUser(req, res, next) {
     const {name, email} = req.body;
     try {
         errorValidation(req);
-        // TODO edit permission
+        const user = await Users.getOne({_id:req.params.id});
+        user.name = name;
+        user.email = email;
+
+        if(await user.save()){
+            return  alert(res,200,messageAlert.success,MESSAGES.VALUE_IS_CHANGED);
+        }
+    } catch (err) {
+        errorCatcher(next, err);
+    }
+}
+
+async function editUserPermission(req, res, next){
+    const {name, email} = req.body;
+    try {
+        errorValidation(req);
         const user = await Users.getOne({_id:req.params.id});
         user.name = name;
         user.email = email;
@@ -78,4 +93,4 @@ let getUsers = getCtrlFn.getAll(Users);
 
 let deleteUser = getCtrlFn.Delete(Users);
 
-module.exports = {login, register, editUser,deleteUser,getUser,getUsers};
+module.exports = {login, register, editUser,deleteUser,getUser,getUsers,editUserPermission};

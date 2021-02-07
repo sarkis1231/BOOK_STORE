@@ -2,6 +2,7 @@ const {body, param} = require("express-validator");
 const {Users} = require("../models/Users");
 const {ALL_USER_ROLES} = require("../roles");
 const bcrypt = require("bcryptjs");
+const {Fn} = require("../utility/functions");
 const {MESSAGES} = require("../utility/constants");
 
 const UserValidation = {};
@@ -57,6 +58,17 @@ UserValidation.register = [
 ];
 
 UserValidation.edit = [
+    param('id')
+        .custom(function (value) {
+            if (!Fn.isMongooseValidId(value)) {
+                throw new Error(MESSAGES.INVALID_QUERY_PARAM);
+            }
+            return Users.findById(value).then(function (user) {
+                if (!user) {
+                    return Promise.reject(MESSAGES.NO_USER_FOUND);
+                }
+            });
+        }),
     body('name')
         .trim()
         .notEmpty()
@@ -75,6 +87,21 @@ UserValidation.edit = [
                 }
             });
         }).normalizeEmail()
+];
+
+UserValidation.editUserPermission = [
+    param('id')
+        .custom(function (value) {
+            if (!Fn.isMongooseValidId(value)) {
+                throw new Error(MESSAGES.INVALID_QUERY_PARAM);
+            }
+            return Users.findById(value).then(function (user) {
+                if (!user) {
+                    return Promise.reject(MESSAGES.NO_USER_FOUND);
+                }
+            });
+        }),
+
 ];
 
 UserValidation.changePassword = [
