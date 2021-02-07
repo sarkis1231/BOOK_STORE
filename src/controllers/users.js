@@ -76,7 +76,7 @@ async function editUserPermission(req, res, next) {
     const {premium, genre, limit} = req.body;
     try {
         errorValidation(req);
-        const user = await Users.getOne({_id: req.user._id});
+        const user = await Users.getOne({_id: req.params.id});
 
         if (!Fn.isEmpty(premium)) {
            user.premiumPermission();

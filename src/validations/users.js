@@ -110,20 +110,37 @@ UserValidation.editUserPermission = [
                 }
             }
 
-            if(value.length === req.body.limit.length) {
+            if (Fn.isEmpty(req.body.limit)) {
                 throw new Error(MESSAGES.ID_NOT_MATCH);
             }
+
+            if(value.length !== req.body.limit.length) {
+                throw new Error(MESSAGES.ID_NOT_MATCH);
+            }
+            return true;
             // trust FE to always send Valid Genre Id ;)
         }),
     body('limit')
         .optional()
         .custom(function (value, {req}) {
             for (let i = 0; i < value.length; i++) {
-                if(!Fn.Fn.isNumber(value[i])){
+                if(!Fn.isNumber(parseInt(value[i]))){
                     throw new Error(MESSAGES.INVALID_NUMBERS);
                 }
             }
+
+            if (Fn.isEmpty(req.body.genre)) {
+                throw new Error(MESSAGES.ID_NOT_MATCH);
+            }
+
+            if(value.length !== req.body.genre.length) {
+                throw new Error(MESSAGES.ID_NOT_MATCH);
+            }
+            return true;
         }),
+    body('premium')
+        .optional()
+        .isBoolean()
 ];
 
 UserValidation.changePassword = [
