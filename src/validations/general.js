@@ -1,5 +1,4 @@
 const {param} = require("express-validator");
-const mongoose = require("mongoose");
 const {Fn} = require("../utility/functions");
 
 const paramIdValidation = [
