@@ -87,7 +87,7 @@ async function editUserPermission(req, res, next) {
             return alert(res, 200, messageAlert.success, MESSAGES.SOMETHING_WENT_WRONG);
         }
 
-        if (Fn.isEmpty(genre) || Fn.isEmpty(limit)) {
+        if (Fn.isEmpty(genre) || Fn.isEmpty(limit)) { // TODO this will be never reached
             return res.status(400).json({status: MESSAGES.REQUIRED_FIELDS});
         }
 
@@ -111,7 +111,7 @@ async function getUsers(req, res, next) {
     try {
         errorValidation(req);
         let userId = req['user']._id;
-        let items = await Users.getAll({_id: {$ne: userId}}, false, true);
+        let items = await Users.getAll({_id: {$ne: userId}}, {'password':0,'role':0,'permission':0,'updatedAt':0}, true);
         if (!Fn.isEmpty(items)) {
             return res.status(200).json(items);
         }
