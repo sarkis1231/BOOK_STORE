@@ -60,32 +60,29 @@ userSchema.statics.disable = modelUtil.disable;
 
 userSchema.statics.disableById = modelUtil.disableById;
 
-userSchema.methods.addDefaultPermission = async function () {
+userSchema.methods.addDefaultPermission =  async function () {
     const firstGenre = await Genres.getOne({});
     this.permission.genre.push({
         id: firstGenre._id,
         limit: LIMITS.min
     });
     this.permission.premium = false;
-    // return this.save();
 };
 
-userSchema.methods.premiumPermission = async function () {
+userSchema.methods.premiumPermission =  function () {
     this.permission.genre.length = 0;
     this.permission.premium = true;
-    return this.save();
 };
 
-userSchema.methods.addGenre = async function (genreId, limit) {
+userSchema.methods.addGenre = function (genreId, limit) {
     limit = LIMITS[limit] || LIMITS['min'];
     this.permission.genre.push({
         id: genreId,
         limit: limit
     });
-    return this.save();
 };
 
-userSchema.methods.editLimitGenre = async function (genreId, limit) {
+userSchema.methods.editLimitGenre =  function (genreId, limit) {
     limit = LIMITS[limit] || LIMITS['min'];
     this.permission.genre = this.permission.genre.map(function (genre) {
         if (Fn.sameObjectId(genre._id, genreId)) {
@@ -93,14 +90,12 @@ userSchema.methods.editLimitGenre = async function (genreId, limit) {
         }
         return genre;
     });
-    return this.save();
 };
 
-userSchema.methods.removeGenrePermission = async function (genreId){
+userSchema.methods.removeGenrePermission = function (genreId){
     this.permission.genre = this.permission.genre.filter(function (genre) {
         return !Fn.sameObjectId(genreId,genre._id);
     });
-    return this.save();
 };
 
 const Users = model(SCHEMES_NAMES.Users, userSchema);

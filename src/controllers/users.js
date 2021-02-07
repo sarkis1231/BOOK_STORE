@@ -4,10 +4,9 @@ const bcrypt = require("bcryptjs");
 const {Fn} = require("../utility/functions");
 const {getCtrlFn} = require("../utility/controllers/functions");
 const {Users} = require("../models/Users");
-const {MESSAGES,messageAlert} = require("../utility/constants");
-const  {errorCatcher,errorValidation} = require("../utility/controllers/errors");
-const  {alert} = require("../utility/controllers/messages");
-
+const {MESSAGES, messageAlert} = require("../utility/constants");
+const {errorCatcher, errorValidation} = require("../utility/controllers/errors");
+const {alert} = require("../utility/controllers/messages");
 
 
 async function register(req, res, next) {
@@ -20,8 +19,9 @@ async function register(req, res, next) {
         const salt = await bcrypt.genSalt(10);
         newUser.password = await bcrypt.hash(newUser.password, salt);
 
-        // TODO add default permission here
-        if(await newUser.save()){
+        newUser.addDefaultPermission();
+
+        if (await newUser.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.USER_REGISTERED_SUCCESSFULLY);
         }
         alert(res, 304, messageAlert.success, MESSAGES.NOT_MODIFIED);
@@ -60,36 +60,45 @@ async function editUser(req, res, next) {
     const {name, email} = req.body;
     try {
         errorValidation(req);
-        const user = await Users.getOne({_id:req.params.id});
+        const user = await Users.getOne({_id: req.params.id});
         user.name = name;
         user.email = email;
 
-        if(await user.save()){
-            return  alert(res,200,messageAlert.success,MESSAGES.VALUE_IS_CHANGED);
+        if (await user.save()) {
+            return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
         }
     } catch (err) {
         errorCatcher(next, err);
     }
 }
 
-async function editUserPermission(req, res, next){
-    const {premium,genre,limit} = req.body;
+async function editUserPermission(req, res, next) {
+    const {premium, genre, limit} = req.body;
     try {
         errorValidation(req);
-        let res = null;
-        const user = await Users.getOne({_id:req.user._id});
+        const user = await Users.getOne({_id: req.user._id});
 
-        if(!Fn.isEmpty(premium)) {
-            res = await user.premiumPermission();
+        if (!Fn.isEmpty(premium)) {
+           user.premiumPermission();
+            if(await user.save()){
+                return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
+            }
+            return alert(res, 200, messageAlert.success, MESSAGES.SOMETHING_WENT_WRONG);
         }
 
-        
-
-
-
-        if(res){
-            return  alert(res,200,messageAlert.success,MESSAGES.VALUE_IS_CHANGED);
+        if(Fn.isEmpty(genre) || Fn.isEmpty(limit)) {
+            return res.status(400).json({status: MESSAGES.REQUIRED_FIELDS});
         }
+
+        for (let i = 0; i < genre.length; i++) {
+            user.addGenre(genre[i],limit[i]);
+        }
+
+        if(await user.save()){
+            return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
+        }
+        return alert(res, 200, messageAlert.success, MESSAGES.SOMETHING_WENT_WRONG);
+
     } catch (err) {
         errorCatcher(next, err);
     }
@@ -101,4 +110,4 @@ let getUsers = getCtrlFn.getAll(Users);
 
 let deleteUser = getCtrlFn.Delete(Users);
 
-module.exports = {login, register, editUser,deleteUser,getUser,getUsers,editUserPermission};
+module.exports = {login, register, editUser, deleteUser, getUser, getUsers, editUserPermission};
