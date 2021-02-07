@@ -32,7 +32,10 @@ const MESSAGES = {
     AUTHOR_IS_NOT_FOUND: "Author is not found",
     PDF_SIZE_LIMIT: 'You should upload a PDF file up to 10Mb', //TODO should not be hard coded
     IMAGE_SIZE_LIMIT: 'You should upload image up to 1Mb',
-    INVALID_FILES: 'Invalid Files'
+    INVALID_FILES: 'Invalid Files',
+    INVALID_IDS:'Invalid Ids',
+    ID_NOT_MATCH:'Ids do not match',
+    INVALID_NUMBERS:'Invalid numbers'
 };
 
 const messageAlert = {

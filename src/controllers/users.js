@@ -1,6 +1,7 @@
 const {SECRET_KEY} = require("../config/keys");
 const {sign} = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const {Fn} = require("../utility/functions");
 const {getCtrlFn} = require("../utility/controllers/functions");
 const {Users} = require("../models/Users");
 const {MESSAGES,messageAlert} = require("../utility/constants");
@@ -72,14 +73,21 @@ async function editUser(req, res, next) {
 }
 
 async function editUserPermission(req, res, next){
-    const {name, email} = req.body;
+    const {premium,genre,limit} = req.body;
     try {
         errorValidation(req);
-        const user = await Users.getOne({_id:req.params.id});
-        user.name = name;
-        user.email = email;
+        let res = null;
+        const user = await Users.getOne({_id:req.user._id});
 
-        if(await user.save()){
+        if(!Fn.isEmpty(premium)) {
+            res = await user.premiumPermission();
+        }
+
+        
+
+
+
+        if(res){
             return  alert(res,200,messageAlert.success,MESSAGES.VALUE_IS_CHANGED);
         }
     } catch (err) {

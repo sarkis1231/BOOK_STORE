@@ -101,7 +101,29 @@ UserValidation.editUserPermission = [
                 }
             });
         }),
+    body('genre')
+        .optional()
+        .custom(function (value, {req}) {
+            for (let i = 0; i < value.length; i++) {
+                if(!Fn.isMongooseValidId(value[i])){
+                    throw new Error(MESSAGES.INVALID_IDS);
+                }
+            }
 
+            if(value.length === req.body.limit.length) {
+                throw new Error(MESSAGES.ID_NOT_MATCH);
+            }
+            // trust FE to always send Valid Genre Id ;)
+        }),
+    body('limit')
+        .optional()
+        .custom(function (value, {req}) {
+            for (let i = 0; i < value.length; i++) {
+                if(!Fn.Fn.isNumber(value[i])){
+                    throw new Error(MESSAGES.INVALID_NUMBERS);
+                }
+            }
+        }),
 ];
 
 UserValidation.changePassword = [

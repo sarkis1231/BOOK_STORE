@@ -63,4 +63,8 @@ Fn.isValidDate = function (value) {
     return date.toISOString().slice(0, 10) === value;
 };
 
+Fn.isNumber = function (value){
+    return typeof value === 'number';
+};
+
 module.exports = {Fn};

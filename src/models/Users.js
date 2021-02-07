@@ -73,8 +73,7 @@ userSchema.methods.addDefaultPermission = async function () {
 userSchema.methods.premiumPermission = async function () {
     this.permission.genre.length = 0;
     this.permission.premium = true;
-
-    // return this.save();
+    return this.save();
 };
 
 userSchema.methods.addGenre = async function (genreId, limit) {
@@ -83,7 +82,7 @@ userSchema.methods.addGenre = async function (genreId, limit) {
         id: genreId,
         limit: limit
     });
-    // return this.save();
+    return this.save();
 };
 
 userSchema.methods.editLimitGenre = async function (genreId, limit) {
@@ -94,12 +93,14 @@ userSchema.methods.editLimitGenre = async function (genreId, limit) {
         }
         return genre;
     });
+    return this.save();
 };
 
 userSchema.methods.removeGenrePermission = async function (genreId){
     this.permission.genre = this.permission.genre.filter(function (genre) {
         return !Fn.sameObjectId(genreId,genre._id);
     });
+    return this.save();
 };
 
 const Users = model(SCHEMES_NAMES.Users, userSchema);
