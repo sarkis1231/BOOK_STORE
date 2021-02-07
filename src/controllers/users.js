@@ -1,6 +1,7 @@
 const {SECRET_KEY} = require("../config/keys");
 const {sign} = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const {noResult} = require("../utility/controllers/messages");
 const {Fn} = require("../utility/functions");
 const {getCtrlFn} = require("../utility/controllers/functions");
 const {Users} = require("../models/Users");
@@ -79,22 +80,22 @@ async function editUserPermission(req, res, next) {
         const user = await Users.getOne({_id: req.params.id});
 
         if (!Fn.isEmpty(premium)) {
-           user.premiumPermission();
-            if(await user.save()){
+            user.premiumPermission();
+            if (await user.save()) {
                 return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
             }
             return alert(res, 200, messageAlert.success, MESSAGES.SOMETHING_WENT_WRONG);
         }
 
-        if(Fn.isEmpty(genre) || Fn.isEmpty(limit)) {
+        if (Fn.isEmpty(genre) || Fn.isEmpty(limit)) {
             return res.status(400).json({status: MESSAGES.REQUIRED_FIELDS});
         }
 
         for (let i = 0; i < genre.length; i++) {
-            user.addGenre(genre[i],limit[i]);
+            user.addGenre(genre[i], limit[i]);
         }
 
-        if(await user.save()){
+        if (await user.save()) {
             return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
         }
         return alert(res, 200, messageAlert.success, MESSAGES.SOMETHING_WENT_WRONG);
@@ -106,7 +107,19 @@ async function editUserPermission(req, res, next) {
 
 let getUser = getCtrlFn.getId(Users);
 
-let getUsers = getCtrlFn.getAll(Users);
+async function getUsers(req, res, next) {
+    try {
+        errorValidation(req);
+        let userId = req['user']._id;
+        let items = await Users.getAll({_id: {$ne: userId}}, false, true);
+        if (!Fn.isEmpty(items)) {
+            return res.status(200).json(items);
+        }
+        noResult(res);
+    } catch (err) {
+        errorCatcher(next, err);
+    }
+}
 
 let deleteUser = getCtrlFn.Delete(Users);
 
