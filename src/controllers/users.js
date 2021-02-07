@@ -39,7 +39,7 @@ async function login(req, res, next) {
         let isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
-            return res.status(400).json({email: 'Wrong Auth'})
+            return res.status(400).json({email: MESSAGES.WRONG_AUTH});
         }
         const payload = {
             id: user.id,

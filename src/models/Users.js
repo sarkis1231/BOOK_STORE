@@ -1,8 +1,11 @@
 const modelUtil = require("../utility/model");
+const {Fn} = require("../utility/functions");
+const {LIMITS} = require("../utility/constants");
 const {Schema, model} = require("mongoose");
 const {USER_ROLES, ALL_USER_ROLES} = require("../roles.js");
 const {SCHEMES_NAMES} = require('../utility/constants');
 const {Genres} = require('./Genre');
+
 
 const userSchema = new Schema({
     name: {
@@ -28,14 +31,18 @@ const userSchema = new Schema({
     permission: {
         genre: [
             {
-                type: Schema.Types.ObjectId,
-                ref: SCHEMES_NAMES.Books
+                id: {
+                    type: Schema.Types.ObjectId,
+                    ref: SCHEMES_NAMES.Books,
+                    required: true
+                },
+                limit: {
+                    type: Number,
+                    default: LIMITS.min,
+                    required: true
+                }
             }
         ],
-        limit: {
-            type: Number,
-            required: true
-        },
         premium: {
             type: Boolean,
             default: false,
@@ -55,17 +62,44 @@ userSchema.statics.disableById = modelUtil.disableById;
 
 userSchema.methods.addDefaultPermission = async function () {
     const firstGenre = await Genres.getOne({});
-    this.permission.genre.push(firstGenre._id);
+    this.permission.genre.push({
+        id: firstGenre._id,
+        limit: LIMITS.min
+    });
     this.permission.premium = false;
     // return this.save();
 };
 
-
-userSchema.methods.premiumPermission = async function() {
+userSchema.methods.premiumPermission = async function () {
     this.permission.genre.length = 0;
     this.permission.premium = true;
 
     // return this.save();
+};
+
+userSchema.methods.addGenre = async function (genreId, limit) {
+    limit = LIMITS[limit] || LIMITS['min'];
+    this.permission.genre.push({
+        id: genreId,
+        limit: limit
+    });
+    // return this.save();
+};
+
+userSchema.methods.editLimitGenre = async function (genreId, limit) {
+    limit = LIMITS[limit] || LIMITS['min'];
+    this.permission.genre = this.permission.genre.map(function (genre) {
+        if (Fn.sameObjectId(genre._id, genreId)) {
+            genre.limit = limit;
+        }
+        return genre;
+    });
+};
+
+userSchema.methods.removeGenrePermission = async function (genreId){
+    this.permission.genre = this.permission.genre.filter(function (genre) {
+        return !Fn.sameObjectId(genreId,genre._id);
+    });
 };
 
 const Users = model(SCHEMES_NAMES.Users, userSchema);

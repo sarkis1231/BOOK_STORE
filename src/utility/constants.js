@@ -1,11 +1,12 @@
 const MESSAGES = {
     SOMETHING_WENT_WRONG: "Something went Wrong",
+    WRONG_AUTH: 'Wrong Auth',
     USER_REGISTERED_SUCCESSFULLY: 'User is registered successfully',
     NOT_MODIFIED: "Sources Not modified",
     REQUIRED_FIELDS: "This Field is Required",
     NOT_IN_BOUNDS: "The number is not in bounds",
-    NOT_VALID_NUMBER:"Not a Valid Number",
-    NOT_VALID_DATE:"Not a Valid Date",
+    NOT_VALID_NUMBER: "Not a Valid Number",
+    NOT_VALID_DATE: "Not a Valid Date",
     VALID_EMAIL: "Enter a valid Email",
     NO_USER_FOUND: "No user is Found",
     EMAIL_IS_REGISTERED: "Email already registered",
@@ -41,8 +42,6 @@ const messageAlert = {
     info: 'info',
 };
 
-
-
 const SCHEMES_NAMES = {
     'Books': 'Books',
     'Authors': 'Authors',
@@ -50,4 +49,10 @@ const SCHEMES_NAMES = {
     'Users': 'Users'
 };
 
-module.exports = {MESSAGES, messageAlert, SCHEMES_NAMES};
+const LIMITS = {
+    min: 5,
+    mid: 20,
+    max: -1
+};
+
+module.exports = {MESSAGES, messageAlert, SCHEMES_NAMES,LIMITS};
