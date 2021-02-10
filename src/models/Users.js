@@ -59,7 +59,7 @@ userSchema.methods.createDefaultPermission =  async function () {
 };
 
 userSchema.methods.premiumPermission =  function () {
-    const permission = Permissions.getOne({_id:this.permission});
+    const permission = Permissions.getById(this.permission);
     permission.genre.length = 0;
     permission.premium = true;
     return permission.save();
@@ -67,7 +67,7 @@ userSchema.methods.premiumPermission =  function () {
 
 userSchema.methods.addEditGenre = function (genreId, limit) {
     limit = LIMITS[limit] || LIMITS['min'];
-    const permission = Permissions.getOne({_id: this.permission});
+    const permission = Permissions.getById(this.permission);
 
     // TODO  maybe hash it for Algorithmic speed
     let permissionIndex = permission.genre.indexOf(function (item) {
@@ -83,15 +83,18 @@ userSchema.methods.addEditGenre = function (genreId, limit) {
         id: genreId,
         limit: limit
     });
+
+    return permission.save();
 };
 
 userSchema.methods.removeGenrePermission = function (genreId){
-    const permission = Permissions.getOne({_id: this.permission});
+    const permission = Permissions.getById(this.permission);
 
     permission.genre = permission.genre.filter(function (genre) {
         return !Fn.sameObjectId(genreId,genre._id);
     });
 
+    return permission.save();
 };
 
 const Users = model(SCHEMES_NAMES.Users, userSchema);
