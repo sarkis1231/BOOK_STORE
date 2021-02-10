@@ -50,37 +50,48 @@ userSchema.methods.createDefaultPermission =  async function () {
     const firstGenre = await Genres.getOne({});
     const permission = new Permissions();
     permission.genre = [{
-
-    }]
+        id:firstGenre._id,
+        limit:LIMITS.min
+    }];
+    permission.uid = this._id;
+    this.permission = permission._id;
+    return Promise.all([this.save(),permission.save()]);
 };
 
 userSchema.methods.premiumPermission =  function () {
-    this.permission.genre.length = 0;
-    this.permission.premium = true;
+    const permission = Permissions.getOne({_id:this.permission});
+    permission.genre.length = 0;
+    permission.premium = true;
+    return permission.save();
 };
 
-userSchema.methods.addGenre = function (genreId, limit) {
+userSchema.methods.addEditGenre = function (genreId, limit) {
     limit = LIMITS[limit] || LIMITS['min'];
-    this.permission.genre.push({
+    const permission = Permissions.getOne({_id: this.permission});
+
+    // TODO  maybe hash it for Algorithmic speed
+    let permissionIndex = permission.genre.indexOf(function (item) {
+        return Fn.sameObjectId(item.id, genreId);
+    });
+
+    if (permissionIndex !== -1) {
+        permission.genre[permissionIndex].limit = limit;
+        return permission.save();
+    }
+
+    permission.genre.push({
         id: genreId,
         limit: limit
     });
 };
 
-userSchema.methods.editLimitGenre =  function (genreId, limit) {
-    limit = LIMITS[limit] || LIMITS['min'];
-    this.permission.genre = this.permission.genre.map(function (genre) {
-        if (Fn.sameObjectId(genre._id, genreId)) {
-            genre.limit = limit;
-        }
-        return genre;
-    });
-};
-
 userSchema.methods.removeGenrePermission = function (genreId){
-    this.permission.genre = this.permission.genre.filter(function (genre) {
+    const permission = Permissions.getOne({_id: this.permission});
+
+    permission.genre = permission.genre.filter(function (genre) {
         return !Fn.sameObjectId(genreId,genre._id);
     });
+
 };
 
 const Users = model(SCHEMES_NAMES.Users, userSchema);

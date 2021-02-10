@@ -26,6 +26,6 @@ const permissionSchema = new Schema({
     }
 }, {timestamps: true});
 
-const Permissions = model(SCHEMES_NAMES.Users, permissionSchema);
+const Permissions = model(SCHEMES_NAMES.Permissions, permissionSchema);
 
 module.exports = {Permissions};
