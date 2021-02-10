@@ -65,24 +65,26 @@ userSchema.methods.premiumPermission =  function () {
     return permission.save();
 };
 
-userSchema.methods.addEditGenre = function (genreId, limit) {
-    limit = LIMITS[limit] || LIMITS['min'];
+userSchema.methods.addEditPermission = function (permissionArray) {
     const permission = Permissions.getById(this.permission);
 
-    // TODO  maybe hash it for Algorithmic speed
-    let permissionIndex = permission.genre.indexOf(function (item) {
-        return Fn.sameObjectId(item.id, genreId);
-    });
+    let permissionObj = Fn.arrayToObj(permission.genre, 'id');
+    let newPermissions = [];
 
-    if (permissionIndex !== -1) {
-        permission.genre[permissionIndex].limit = limit;
-        return permission.save();
+    for (let i = 0; i < permissionArray.length; i++) {
+        let genreId = permissionArray[i].genre;
+        let limit = permissionArray[i].limit;
+        if (permissionObj[genreId]) {
+            permissionObj.limit = limit;
+        } else {
+            newPermissions.push({
+                id: genreId,
+                limit: limit
+            });
+        }
     }
 
-    permission.genre.push({
-        id: genreId,
-        limit: limit
-    });
+    permission.genre = [...Object.values(permissionObj), ...newPermissions];
 
     return permission.save();
 };

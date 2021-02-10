@@ -80,8 +80,8 @@ async function editUserPermission(req, res, next) {
         const user = await Users.getOne({_id: req.params.id});
 
         if (!Fn.isEmpty(premium)) {
-            user.premiumPermission();
-            if (await user.save()) {
+
+            if (await user.premiumPermission()) {
                 return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
             }
             return alert(res, 200, messageAlert.success, MESSAGES.SOMETHING_WENT_WRONG);
@@ -91,11 +91,15 @@ async function editUserPermission(req, res, next) {
             return res.status(400).json({status: MESSAGES.REQUIRED_FIELDS});
         }
 
-        for (let i = 0; i < genre.length; i++) {
-            user.addGenre(genre[i], limit[i]);
+        const permissionArray = [];
+        for (let i = 0; i < genre[i]; i++) {
+            permissionArray.push({
+                genre:genre[i],
+                limit:limit[i]
+            })
         }
 
-        if (await user.save()) {
+        if (await user.addEditPermission(permissionArray)) {
             return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
         }
         return alert(res, 200, messageAlert.success, MESSAGES.SOMETHING_WENT_WRONG);

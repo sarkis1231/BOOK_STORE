@@ -67,4 +67,13 @@ Fn.isNumber = function (value){
     return typeof value === 'number';
 };
 
+Fn.arrayToObj = function (array, key) {
+    return array.reduce(function (accumulator, currentValue) {
+        let obj = {...accumulator};
+        let id = currentValue[key];
+        obj[id] = currentValue;
+        return obj;
+    }, {});
+};
+
 module.exports = {Fn};
