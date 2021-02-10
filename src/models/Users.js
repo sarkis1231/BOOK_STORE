@@ -5,6 +5,7 @@ const {Schema, model} = require("mongoose");
 const {USER_ROLES, ALL_USER_ROLES} = require("../roles.js");
 const {SCHEMES_NAMES} = require('../utility/constants');
 const {Genres} = require('./Genre');
+const {Permissions} = require('./Permisssions');
 
 
 const userSchema = new Schema({
@@ -45,13 +46,12 @@ userSchema.statics.disable = modelUtil.disable;
 
 userSchema.statics.disableById = modelUtil.disableById;
 
-userSchema.methods.addDefaultPermission =  async function () {
+userSchema.methods.createDefaultPermission =  async function () {
     const firstGenre = await Genres.getOne({});
-    this.permission.genre.push({
-        id: firstGenre._id,
-        limit: LIMITS.min
-    });
-    this.permission.premium = false;
+    const permission = new Permissions();
+    permission.genre = [{
+
+    }]
 };
 
 userSchema.methods.premiumPermission =  function () {
