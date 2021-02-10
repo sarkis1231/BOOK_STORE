@@ -49,7 +49,8 @@ const SCHEMES_NAMES = {
     'Books': 'Books',
     'Authors': 'Authors',
     'Genres': 'Genres',
-    'Users': 'Users'
+    'Users': 'Users',
+    'Permissions':'Permissions'
 };
 
 const LIMITS = {

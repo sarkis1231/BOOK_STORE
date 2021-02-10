@@ -29,24 +29,9 @@ const userSchema = new Schema({
         type: Boolean
     },
     permission: {
-        genre: [
-            {
-                id: {
-                    type: Schema.Types.ObjectId,
-                    ref: SCHEMES_NAMES.Books,
-                    required: true
-                },
-                limit: {
-                    type: Number,
-                    default: LIMITS.min,
-                    required: true
-                }
-            }
-        ],
-        premium: {
-            type: Boolean,
-            default: false,
-        }
+        type: Schema.Types.ObjectId,
+        ref: SCHEMES_NAMES.Permissions,
+        required: true
     },
 }, {timestamps: true});
 
