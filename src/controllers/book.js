@@ -1,3 +1,4 @@
+const modelUtil = require("../utility/model");
 const {noResult} = require("../utility/controllers/messages");
 const {errorThrower} = require("../utility/controllers/errors");
 const {errorValidation} = require("../utility/controllers/errors");
@@ -82,7 +83,7 @@ async function editBook(req, res, next) {
     }
 }
 
-let getBooksWithFilter = async function (req, res, next) {
+async function getBooksWithFilter (req, res, next) {
     const {name, genre, author, pageCount, publishedDate} = req.query;
     try {
         errorValidation(req);
@@ -111,7 +112,27 @@ let getBooksWithFilter = async function (req, res, next) {
     }
 }
 
-let getBooks = getCtrlFn.getAll(Books);
+async function getBooks(req, res, next) {
+    let query = modelUtil.getQueryWithPermission(req.user);
+    if (!Fn.isArray(query)) { //regular case
+        let items = await Books.getAll(query, false, true);
+        if (!Fn.isEmpty(items)) {
+            return res.status(200).json(items);
+        }
+        return noResult(res);
+    }
+
+    let promiseArray = [];
+    for (let i = 0; i < query.length; i++) {
+        let pr = Books.getAll(query, false, true);
+        promiseArray.push(pr);
+    }
+
+    let result = await Promise.all(promiseArray);
+    let data = result.flat();
+    return res.status(200).json(data);
+}
+
 
 let getBook = getCtrlFn.getId(Books);
 

@@ -36,11 +36,18 @@ getCtrlFn.getAll = function (myModel,withPermission) {
         if (withPermission) {
             query = modelUtil.getQueryWithPermission(req.user);
         }
-        let items = await myModel.getAll(query, false, true);
-        if (!Fn.isEmpty(items)) {
-            return res.status(200).json(items);
+        if (!Fn.isArray(query)) {
+            let items = await myModel.getAll(query, false, true);
+            if (!Fn.isEmpty(items)) {
+                return res.status(200).json(items);
+            }
+            return noResult(res);
         }
-        noResult(res);
+
+        for (let q = 0; q < query.length; q++) {
+
+        }
+
     }
 };
 
