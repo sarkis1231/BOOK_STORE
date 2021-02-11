@@ -124,7 +124,8 @@ async function getBooks(req, res, next) {
 
     let promiseArray = [];
     for (let i = 0; i < query.length; i++) {
-        let pr = Books.getAll(query, false, true);
+        let currentQuery = query[i];
+        let pr = Books.getAll({genre:currentQuery.id}, false, true).limit(currentQuery.limit);
         promiseArray.push(pr);
     }
 
