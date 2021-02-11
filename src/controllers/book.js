@@ -113,7 +113,8 @@ async function getBooksWithFilter (req, res, next) {
 }
 
 async function getBooks(req, res, next) {
-    let query = modelUtil.getQueryWithPermission(req.user);
+    let query = await modelUtil.getQueryWithPermission(req.user);
+
     if (!Fn.isArray(query)) { //regular case
         let items = await Books.getAll(query, false, true);
         if (!Fn.isEmpty(items)) {

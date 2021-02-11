@@ -1,3 +1,6 @@
+const modelUtil = require("../utility/model");
+const {noResult} = require("../utility/controllers/messages");
+const {Fn} = require("../utility/functions");
 const {messageAlert,MESSAGES} = require("../utility/constants");
 const {getCtrlFn} = require("../utility/controllers/functions");
 const {errorCatcher,errorValidation} = require("../utility/controllers/errors");
@@ -36,7 +39,24 @@ async function editGenre(req, res, next) {
     }
 }
 
-let getGenres = getCtrlFn.getAll(Genres);
+async function getGenres(req, res, next) {
+    let query = await modelUtil.getQueryWithPermission(req.user);
+
+    if (!Fn.isArray(query)) { //regular case
+        let items = await Genres.getAll(query, false, true);
+        if (!Fn.isEmpty(items)) {
+            return res.status(200).json(items);
+        }
+        return noResult(res);
+    }
+
+    let genreIdList = query.map(function (item){
+        return item.id
+    });
+
+    let result = await Genres.getAll({_id: {$in:genreIdList}}, false, true);
+    return res.status(200).json(result);
+}
 
 let getGenre = getCtrlFn.getId(Genres);
 

@@ -26,28 +26,17 @@ getCtrlFn.Delete = function (myModel) {
     }
 };
 
-getCtrlFn.getAll = function (myModel,withPermission) {
+getCtrlFn.getAll = function (myModel) {
     if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;
     }
     return async function (req, res, next) {
-        let query = {};
-        if (withPermission) {
-            query = modelUtil.getQueryWithPermission(req.user);
+        let items = await myModel.getAll({}, false, true);
+        if (!Fn.isEmpty(items)) {
+            return res.status(200).json(items);
         }
-        if (!Fn.isArray(query)) {
-            let items = await myModel.getAll(query, false, true);
-            if (!Fn.isEmpty(items)) {
-                return res.status(200).json(items);
-            }
-            return noResult(res);
-        }
-
-        for (let q = 0; q < query.length; q++) {
-
-        }
-
+        noResult(res);
     }
 };
 
