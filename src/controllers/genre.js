@@ -42,17 +42,16 @@ async function editGenre(req, res, next) {
 async function getGenres(req, res, next) {
     let query = await modelUtil.getQueryWithPermission(req.user);
 
-    let items = null;
+    let q = {}
 
     if (!Fn.isArray(query)) { //regular case
         let genreIdList = query.map(function (item) {
             return item.id
         });
-        items = await Genres.getAll({_id: {$in: genreIdList}}, false, true);
-    } else {
-        items = await Genres.getAll(query, false, true);
+        q = {_id: {$in: genreIdList}};
     }
 
+    let items = await Genres.getAll(q, false, true);
     if (!Fn.isEmpty(items)) {
         return res.status(200).json(items);
     }
