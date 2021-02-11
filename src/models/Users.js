@@ -46,6 +46,10 @@ userSchema.statics.disable = modelUtil.disable;
 
 userSchema.statics.disableById = modelUtil.disableById;
 
+userSchema.methods.isAdmin = function (){
+    return this.role === USER_ROLES.Admin;
+};
+
 userSchema.methods.createDefaultPermission =  async function () {
     const firstGenre = await Genres.getOne({});
     const permission = new Permissions();

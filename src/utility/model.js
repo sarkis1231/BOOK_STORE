@@ -63,11 +63,13 @@ modelUtil.isModel = function (obj) {
 };
 
 modelUtil.getQueryWithPermission = async function (userModal) {
+    if (userModal.isAdmin()) {
+        return {};
+    }
     let myUserModal = await userModal.populate('permission');
     let permission = myUserModal['permission'];
-    let query = {};
     if (permission.premium) {
-        return query; //all permissions
+        return {}; //all permissions
     }
 
     return permission.groups;
