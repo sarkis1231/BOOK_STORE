@@ -33,7 +33,8 @@ router.post('/',
 );
 
 router.put('/:id',
-    isAuth(), isAdmin(),
+    isAuth(),
+    isAdmin(),
     paramIdValidation,
     files,
     BookValidation.edit,

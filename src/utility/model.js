@@ -62,4 +62,15 @@ modelUtil.isModel = function (obj) {
     return obj.prototype instanceof Model
 };
 
+modelUtil.getQueryWithPermission = async function (userModal) {
+    let myUserModal =  await userModal.populate('permission');
+    let permission = myUserModal['permission'];
+    let query = {};
+    if (permission.premium) {
+        return query; //all permissions
+    }
+
+
+};
+
 module.exports = modelUtil;
