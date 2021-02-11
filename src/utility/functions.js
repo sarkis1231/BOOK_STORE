@@ -76,4 +76,8 @@ Fn.arrayToObj = function (array, key) {
     }, {});
 };
 
+Fn.isArray = function (array) {
+    return Array.isArray(array);
+};
+
 module.exports = {Fn};

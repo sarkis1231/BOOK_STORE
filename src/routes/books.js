@@ -21,7 +21,7 @@ router.get('/', BooksCtrl.getBooks);
 
 router.get('/filter', BookValidation.filter, BooksCtrl.getBooksWithFilter);
 
-router.get('/:id', paramIdValidation, BooksCtrl.getBook);
+router.get('/:id', isAuth(), isAdmin(), paramIdValidation, BooksCtrl.getBook);
 
 
 router.post('/',
