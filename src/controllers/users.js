@@ -20,9 +20,7 @@ async function register(req, res, next) {
         const salt = await bcrypt.genSalt(10);
         newUser.password = await bcrypt.hash(newUser.password, salt);
 
-        newUser.createDefaultPermission();
-
-        if (await newUser.save()) {
+        if (!Fn.isEmpty(await newUser.createDefaultPermission())) {
             return alert(res, 200, messageAlert.success, MESSAGES.USER_REGISTERED_SUCCESSFULLY);
         }
         alert(res, 304, messageAlert.success, MESSAGES.NOT_MODIFIED);
