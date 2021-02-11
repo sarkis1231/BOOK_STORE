@@ -16,9 +16,9 @@ router.post("/login", UserValidation.login, UserCtrl.login);
 
 router.get("/all", isAuth(), isAdmin(), UserCtrl.getUsers);
 
-router.get("/:id", isAuth(), isAdmin(), paramIdValidation, UserCtrl.getUser);
-
 router.put('/permission/:id', isAuth(), isAdmin(), UserValidation.editUserPermission, UserCtrl.editUserPermission);
+
+router.get("/:id", isAuth(), isAdmin(), paramIdValidation, UserCtrl.getUser);
 
 router.put('/:id', isAuth(), isAdmin(), UserValidation.edit, UserCtrl.editUser);
 

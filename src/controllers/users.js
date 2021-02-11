@@ -75,7 +75,7 @@ async function editUserPermission(req, res, next) {
     const {premium, genre, limit} = req.body;
     try {
         errorValidation(req);
-        const user = await Users.getOne({_id: req.params.id});
+        const user = await Users.getById(req.params.id);
 
         if (!Fn.isEmpty(premium)) {
 
@@ -85,8 +85,15 @@ async function editUserPermission(req, res, next) {
             return alert(res, 200, messageAlert.success, MESSAGES.SOMETHING_WENT_WRONG);
         }
 
-        if (Fn.isEmpty(genre) || Fn.isEmpty(limit)) { // TODO this will be never reached
-            return res.status(400).json({status: MESSAGES.REQUIRED_FIELDS});
+        if (Fn.isEmpty(genre) || Fn.isEmpty(limit)) {
+            return res.status(400).json(
+                {
+                    "data": {
+                        "genre": MESSAGES.REQUIRED_FIELDS,
+                        "limit": MESSAGES.REQUIRED_FIELDS,
+                    }
+                }
+            );
         }
 
         const permissionArray = [];

@@ -36,6 +36,8 @@ const userSchema = new Schema({
     },
 }, {timestamps: true});
 
+// TODO for pull add Descriptions
+
 userSchema.statics.getAll = modelUtil.getAll;
 
 userSchema.statics.getOne = modelUtil.getOne;
@@ -46,23 +48,23 @@ userSchema.statics.disable = modelUtil.disable;
 
 userSchema.statics.disableById = modelUtil.disableById;
 
-userSchema.methods.isAdmin = function (){
+userSchema.methods.isAdmin = function () {
     return this.role === USER_ROLES.Admin;
 };
 
-userSchema.methods.createDefaultPermission =  async function () {
+userSchema.methods.createDefaultPermission = async function () {
     const firstGenre = await Genres.getOne({});
     const permission = new Permissions();
     permission.genre = [{
-        id:firstGenre._id,
-        limit:LIMITS.min
+        id: firstGenre._id,
+        limit: LIMITS.min
     }];
     permission.uid = this._id;
     this.permission = permission._id;
-    return Promise.all([this.save(),permission.save()]);
+    return Promise.all([this.save(), permission.save()]);
 };
 
-userSchema.methods.premiumPermission =  function () {
+userSchema.methods.premiumPermission = function () {
     const permission = Permissions.getById(this.permission);
     permission.genre.length = 0;
     permission.premium = true;
@@ -93,11 +95,11 @@ userSchema.methods.addEditPermission = function (permissionArray) {
     return permission.save();
 };
 
-userSchema.methods.removeGenrePermission = function (genreId){
+userSchema.methods.removeGenrePermission = function (genreId) {
     const permission = Permissions.getById(this.permission);
 
     permission.genre = permission.genre.filter(function (genre) {
-        return !Fn.sameObjectId(genreId,genre._id);
+        return !Fn.sameObjectId(genreId, genre._id);
     });
 
     return permission.save();
