@@ -1,3 +1,4 @@
+const modelUtil = require("../utility/model");
 const {SCHEMES_NAMES,LIMITS} = require("../utility/constants");
 const {Schema, model} = require("mongoose");
 
@@ -25,6 +26,8 @@ const permissionSchema = new Schema({
         type: Boolean
     }
 }, {timestamps: true});
+
+permissionSchema.statics.getById = modelUtil.getById;
 
 const Permissions = model(SCHEMES_NAMES.Permissions, permissionSchema);
 

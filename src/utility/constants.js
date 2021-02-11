@@ -35,7 +35,8 @@ const MESSAGES = {
     INVALID_FILES: 'Invalid Files',
     INVALID_IDS:'Invalid Ids',
     ID_NOT_MATCH:'Ids do not match',
-    INVALID_NUMBERS:'Invalid numbers'
+    INVALID_NUMBERS:'Invalid numbers',
+    INVALID_LIMIT_PARAMETER:'Invalid Limit Parameter'
 };
 
 const messageAlert = {
@@ -56,7 +57,7 @@ const SCHEMES_NAMES = {
 const LIMITS = {
     min: 5,
     mid: 20,
-    max: -1
+    max: 10000 //physical limit :)
 };
 
 module.exports = {MESSAGES, messageAlert, SCHEMES_NAMES,LIMITS};

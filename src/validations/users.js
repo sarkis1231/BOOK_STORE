@@ -2,6 +2,7 @@ const {body, param} = require("express-validator");
 const {Users} = require("../models/Users");
 const {ALL_USER_ROLES} = require("../roles");
 const bcrypt = require("bcryptjs");
+const {LIMITS} = require("../utility/constants");
 const {Fn} = require("../utility/functions");
 const {MESSAGES} = require("../utility/constants");
 
@@ -124,8 +125,8 @@ UserValidation.editUserPermission = [
         .optional()
         .custom(function (value, {req}) {
             for (let i = 0; i < value.length; i++) {
-                if(!Fn.isNumber(parseInt(value[i]))){
-                    throw new Error(MESSAGES.INVALID_NUMBERS);
+                if (!LIMITS[value[i]]) {
+                    throw new Error(MESSAGES.INVALID_LIMIT_PARAMETER);
                 }
             }
 

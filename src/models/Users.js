@@ -64,15 +64,15 @@ userSchema.methods.createDefaultPermission = async function () {
     return Promise.all([this.save(), permission.save()]);
 };
 
-userSchema.methods.premiumPermission = function () {
-    const permission = Permissions.getById(this.permission);
+userSchema.methods.premiumPermission = async function () {
+    const permission = await Permissions.getById(this.permission);
     permission.genre.length = 0;
     permission.premium = true;
     return permission.save();
 };
 
-userSchema.methods.addEditPermission = function (permissionArray) {
-    const permission = Permissions.getById(this.permission);
+userSchema.methods.addEditPermission = async function (permissionArray) {
+    const permission = await Permissions.getById(this.permission);
 
     let permissionObj = Fn.arrayToObj(permission.genre, 'id');
     let newPermissions = [];
@@ -95,8 +95,8 @@ userSchema.methods.addEditPermission = function (permissionArray) {
     return permission.save();
 };
 
-userSchema.methods.removeGenrePermission = function (genreId) {
-    const permission = Permissions.getById(this.permission);
+userSchema.methods.removeGenrePermission = async function (genreId) {
+    const permission = await Permissions.getById(this.permission);
 
     permission.genre = permission.genre.filter(function (genre) {
         return !Fn.sameObjectId(genreId, genre._id);
