@@ -78,10 +78,10 @@ userSchema.methods.addEditPermission = async function (permissionArray) {
     let newPermissions = [];
 
     for (let i = 0; i < permissionArray.length; i++) {
-        let genreId = permissionArray[i].genre;
+        let genreId = permissionArray[i].genreId;
         let limit = permissionArray[i].limit;
         if (permissionObj[genreId]) {
-            permissionObj.limit = limit;
+            permissionObj[genreId].limit = limit;
         } else {
             newPermissions.push({
                 id: genreId,

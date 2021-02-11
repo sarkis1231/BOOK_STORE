@@ -1,6 +1,7 @@
 const {SECRET_KEY} = require("../config/keys");
 const {sign} = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const {LIMITS} = require("../utility/constants");
 const {noResult} = require("../utility/controllers/messages");
 const {Fn} = require("../utility/functions");
 const {getCtrlFn} = require("../utility/controllers/functions");
@@ -97,10 +98,10 @@ async function editUserPermission(req, res, next) {
         }
 
         const permissionArray = [];
-        for (let i = 0; i < genre[i]; i++) {
+        for (let i = 0; i < genre.length; i++) {
             permissionArray.push({
-                genre:genre[i],
-                limit:limit[i]
+                genreId:genre[i],
+                limit:LIMITS[limit[i]]
             })
         }
 
