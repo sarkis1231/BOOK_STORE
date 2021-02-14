@@ -73,4 +73,13 @@ modelUtil.getQueryWithPermission = async function (userModal) {
     return permission.groups;
 };
 
+const staticsFn = ['getAll', 'getOne', 'getById', 'disable', 'disableById'];
+
+modelUtil.addSchemaStaticFunctions = function (schema) {
+    for (let i = 0; i < staticsFn.length; i++) {
+        schema.statics[staticsFn[i]] = modelUtil[staticsFn[i]];
+    }
+    return schema;
+};
+
 module.exports = modelUtil;

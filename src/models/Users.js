@@ -8,7 +8,7 @@ const {Genres} = require('./Genre');
 const {Permissions} = require('./Permisssions');
 
 
-const userSchema = new Schema({
+let userSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -38,16 +38,7 @@ const userSchema = new Schema({
 
 // TODO for pull add Descriptions
 
-// TODO and this part maybe with foreach ?
-userSchema.statics.getAll = modelUtil.getAll;
-
-userSchema.statics.getOne = modelUtil.getOne;
-
-userSchema.statics.getById = modelUtil.getById;
-
-userSchema.statics.disable = modelUtil.disable;
-
-userSchema.statics.disableById = modelUtil.disableById;
+userSchema = modelUtil.addSchemaStaticFunctions(userSchema);
 
 userSchema.methods.isAdmin = function () {
     return this.role === USER_ROLES.Admin;

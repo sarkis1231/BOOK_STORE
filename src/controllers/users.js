@@ -1,14 +1,12 @@
 const {SECRET_KEY} = require("../config/keys");
 const {sign} = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const {LIMITS} = require("../utility/constants");
-const {noResult} = require("../utility/controllers/messages");
 const {Fn} = require("../utility/functions");
 const {getCtrlFn} = require("../utility/controllers/functions");
 const {Users} = require("../models/Users");
-const {MESSAGES, messageAlert} = require("../utility/constants");
+const {MESSAGES, messageAlert,LIMITS} = require("../utility/constants");
 const {errorCatcher, errorValidation} = require("../utility/controllers/errors");
-const {alert} = require("../utility/controllers/messages");
+const {alert,noResult} = require("../utility/controllers/messages");
 
 
 async function register(req, res, next) {

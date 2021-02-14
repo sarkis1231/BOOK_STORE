@@ -2,7 +2,7 @@ const modelUtil = require("../utility/model");
 const {Schema, model} = require("mongoose");
 const {SCHEMES_NAMES} = require('../utility/constants');
 
-const genreSchema = new Schema({
+let genreSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -17,15 +17,7 @@ const genreSchema = new Schema({
     }
 }, {timestamps: true});
 
-genreSchema.statics.getAll = modelUtil.getAll;
-
-genreSchema.statics.getOne = modelUtil.getOne;
-
-genreSchema.statics.getById = modelUtil.getById;
-
-genreSchema.statics.disable = modelUtil.disable;
-
-genreSchema.statics.disableById = modelUtil.disableById;
+genreSchema = modelUtil.addSchemaStaticFunctions(genreSchema);
 
 const Genres = model(SCHEMES_NAMES.Genres, genreSchema);
 

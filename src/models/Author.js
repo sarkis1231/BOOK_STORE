@@ -3,7 +3,7 @@ const {Fn} = require("../utility/functions");
 const {Schema, model} = require("mongoose");
 const {SCHEMES_NAMES} = require('../utility/constants');
 
-const authorSchema = new Schema({
+let authorSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -19,15 +19,7 @@ const authorSchema = new Schema({
     }
 }, {timestamps: true});
 
-authorSchema.statics.getAll = modelUtil.getAll;
-
-authorSchema.statics.getOne = modelUtil.getOne;
-
-authorSchema.statics.getById = modelUtil.getById;
-
-authorSchema.statics.disable = modelUtil.disable;
-
-authorSchema.statics.disableById = modelUtil.disableById;
+authorSchema = modelUtil.addSchemaStaticFunctions(authorSchema);
 
 authorSchema.statics.addBookAuthor = async function (authorId, bookId) {
     let author = await this.getById(authorId);

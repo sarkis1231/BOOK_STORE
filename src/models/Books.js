@@ -2,7 +2,7 @@ const modelUtil = require("../utility/model");
 const {Schema, model} = require("mongoose");
 const {SCHEMES_NAMES} = require('../utility/constants');
 
-const bookSchema = new Schema({
+let bookSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -36,15 +36,7 @@ const bookSchema = new Schema({
     }
 }, {timestamps: true});
 
-bookSchema.statics.getAll = modelUtil.getAll;
-
-bookSchema.statics.getOne = modelUtil.getOne;
-
-bookSchema.statics.getById = modelUtil.getById;
-
-bookSchema.statics.disable = modelUtil.disable;
-
-bookSchema.statics.disableById = modelUtil.disableById;
+bookSchema = modelUtil.addSchemaStaticFunctions(bookSchema);
 
 const Books = model(SCHEMES_NAMES.Books, bookSchema);
 
