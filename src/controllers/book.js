@@ -116,17 +116,16 @@ async function getBooksWithFilter(req, res, next) {
             aggregateArray.push({$match: {...query}});
         }
 
-        aggregateArray.push({
+        let $lookups = [
+            {
                 $lookup: {
                     from: SCHEMES_NAMES.Authors.toLowerCase(),
                     localField: "author",
                     foreignField: "_id",
                     as: 'author'
-
                 }
-            }
-        );
-        aggregateArray.push({
+            },
+            {
                 $lookup: {
                     from: SCHEMES_NAMES.Genres.toLowerCase(),
                     localField: "genre",
@@ -134,8 +133,8 @@ async function getBooksWithFilter(req, res, next) {
                     as: 'genre'
                 }
             }
-        );
-
+        ];
+        aggregateArray.push(...$lookups);
         let books = await Books.aggregate(aggregateArray);
 
         if (!Fn.isEmpty(books)) {
@@ -159,8 +158,8 @@ async function getBooks(req, res, next) {
         if (Fn.isArray(query)) { //non regular case
             for (let i = 0; i < query.length; i++) {
                 let item = query[i]
-                aggregateArray.push({$match: {genre: item.id}})
-                aggregateArray.push({$limit: item.limit})
+                aggregateArray.push({$match: {genre: item.id}});
+                aggregateArray.push({$limit: item.limit});
             }
         }
 
