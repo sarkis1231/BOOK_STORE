@@ -10,7 +10,7 @@ const {isAuth, isAdmin} = require("../middlewares/authentication");
 const router = Router();
 
 
-router.get('/', GenresCtrl.getGenres);
+router.get('/', isAuth() ,GenresCtrl.getGenres);
 
 router.get('/:id', isAuth(), isAdmin(),paramIdValidation, GenresCtrl.getGenre);
 

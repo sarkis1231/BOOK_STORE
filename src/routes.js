@@ -11,6 +11,8 @@ const router = Router();
 
 router.use('/users', users);
 
+// add isAuth as a middleware here in order not to add by hand
+
 router.use('/books',books);
 
 router.use('/authors',authors)
@@ -19,6 +21,6 @@ router.use('/genre',genre);
 
 router.use('/files',files);
 
-router.use('/chatBot',files);
+router.use('/chatBot',chatBot);
 
 module.exports = router;

@@ -8,9 +8,9 @@ const AuthorValidation = require("../validations/authors");
 
 const router = Router();
 
-router.get('/', AuthorsCtrl.getAuthors);
+router.get('/', isAuth(),AuthorsCtrl.getAuthors);
 
-router.get('/:id', paramIdValidation, AuthorsCtrl.getAuthor);
+router.get('/:id', isAuth(),paramIdValidation, AuthorsCtrl.getAuthor);
 
 router.post('/', isAuth(), isAdmin(), AuthorValidation.add, AuthorsCtrl.addAuthor);
 

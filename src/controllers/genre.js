@@ -40,22 +40,27 @@ async function editGenre(req, res, next) {
 }
 
 async function getGenres(req, res, next) {
-    let query = await modelUtil.getQueryWithPermission(req.user);
+    try {
+        console.log(req.user);
+        let query = await modelUtil.getQueryWithPermission(req.user);
 
-    let q = {}
 
-    if (!Fn.isArray(query)) { //regular case
-        let genreIdList = query.map(function (item) {
-            return item.id
-        });
-        q = {_id: {$in: genreIdList}};
+        let q = {}
+        if (Fn.isArray(query)) { //regular case
+            let genreIdList = query.map(function (item) {
+                return item.id
+            });
+            q = {_id: {$in: genreIdList}};
+        }
+
+        let items = await Genres.getAll(q, false, true);
+        if (!Fn.isEmpty(items)) {
+            return res.status(200).json(items);
+        }
+        return noResult(res);
+    } catch (err) {
+        errorCatcher(next, err);
     }
-
-    let items = await Genres.getAll(q, false, true);
-    if (!Fn.isEmpty(items)) {
-        return res.status(200).json(items);
-    }
-    return noResult(res);
 }
 
 let getGenre = getCtrlFn.getId(Genres);

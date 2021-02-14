@@ -17,9 +17,9 @@ let files = upload.fields([
     {name: 'file', maxCount: 1}
 ]);
 
-router.get('/', BooksCtrl.getBooks);
+router.get('/', isAuth(),BooksCtrl.getBooks);
 
-router.get('/filter', BookValidation.filter, BooksCtrl.getBooksWithFilter);
+router.get('/filter', isAuth(),BookValidation.filter, BooksCtrl.getBooksWithFilter);
 
 router.get('/:id', isAuth(), isAdmin(), paramIdValidation, BooksCtrl.getBook);
 
