@@ -27,9 +27,9 @@ const Card = ({id, image, bookName, author, file, pageCount, genre, onDelete, on
                 <span style={{width: '49%'}}>Book name</span>
                 <span style={{width: '49%', textAlign: 'end'}}>{bookName}</span>
                 <span style={{width: '49%'}}>Author</span>
-                <span style={{width: '49%', textAlign: 'end'}}>{author.name}</span>
+                <span style={{width: '49%', textAlign: 'end'}}>{author[0].name}</span>
                 <span style={{width: '49%'}}>Genre</span>
-                <span style={{width: '49%', textAlign: 'end'}}>{genre.name}</span>
+                <span style={{width: '49%', textAlign: 'end'}}>{genre[0].name}</span>
                 <span style={{width: '49%'}}>Page count</span>
                 <span style={{width: '49%', textAlign: 'end'}}>{pageCount}</span>
             </FlexContainer>
@@ -40,7 +40,7 @@ const Card = ({id, image, bookName, author, file, pageCount, genre, onDelete, on
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
                 <FlexContainer width='100%' justifyContent='space-between' margin='10px 0 0'>
                     <Button width='48%'
-                            onClick={() => onEdit({id, image, bookName, author, pageCount, genre})}>Edit</Button>
+                            onClick={() => onEdit({id, image, bookName, author:author[0], pageCount, genre:genre[0]})}>Edit</Button>
                     <Button width='48%' onClick={() => onDelete({id, bookName})}>Delete</Button>
                 </FlexContainer>
             </AuthorizationElem>

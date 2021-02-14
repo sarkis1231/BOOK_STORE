@@ -9,7 +9,6 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {AddBookSchema, EditBookSchema} from "./config";
 import axios from "axios";
 import BooksFrom from "./BooksFrom";
-// import useFetch from "../../hooks/useFetch";
 import Card from "../../components/Reusable/Card";
 import {FlexContainer} from "../../styled/layout.styled";
 import booksFormData, {filteredValue} from "../../utils";
@@ -45,7 +44,6 @@ const Books = () => {
         reset: searchReset
     } = useForm();
     const [reFetch, setReFetch] = useState(false)
-    // const books = useFetch('/books/filter', reFetch)
     useEffect(() => {
         axios.get('/books/filter').then(res => {
             res.data.empty ? setData(() => []) : setData(() => [...res.data])
