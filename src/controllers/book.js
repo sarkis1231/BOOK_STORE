@@ -1,7 +1,6 @@
 const modelUtil = require("../utility/model");
 const {noResult} = require("../utility/controllers/messages");
-const {errorThrower} = require("../utility/controllers/errors");
-const {errorValidation} = require("../utility/controllers/errors");
+const {errorThrower,errorValidation} = require("../utility/controllers/errors");
 const {Fn} = require("../utility/functions");
 const {MESSAGES, messageAlert,SCHEMES_NAMES} = require("../utility/constants");
 const {getCtrlFn} = require("../utility/controllers/functions");

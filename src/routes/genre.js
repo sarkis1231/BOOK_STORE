@@ -12,7 +12,7 @@ const router = Router();
 
 router.get('/', isAuth() ,GenresCtrl.getGenres);
 
-router.get('/:id', isAuth(), isAdmin(),paramIdValidation, GenresCtrl.getGenre);
+router.get('/:id', isAuth(), isAdmin(), paramIdValidation, GenresCtrl.getGenre);
 
 router.post('/', isAuth(), isAdmin(), GenreValidation.add, GenresCtrl.addGenre);
 
