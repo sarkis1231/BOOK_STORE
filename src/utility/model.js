@@ -29,8 +29,7 @@ modelUtil.getOne = async function (query, ignore, lean) {
 
 modelUtil.getById = async function (id, ignore, lean) {
     if (Fn.isUndefined(id)) {
-        console.error('id should be defined');
-        return;
+        return Promise.reject('id should be defined');
     }
     let query = modelUtil.getQueryWithDisable({});
     query._id = id;
@@ -51,8 +50,7 @@ modelUtil.disable = async function (query) {
 
 modelUtil.disableById = async function (id) {
     if (Fn.isUndefined(id)) {
-        console.error('id should be defined');
-        return;
+        return Promise.reject('id should be defined');
     }
     return this.findByIdAndUpdate(id, {disabled: true});
 };

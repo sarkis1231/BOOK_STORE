@@ -41,12 +41,10 @@ async function editGenre(req, res, next) {
 
 async function getGenres(req, res, next) {
     try {
-        console.log(req.user);
         let query = await modelUtil.getQueryWithPermission(req.user);
 
-
         let q = {}
-        if (Fn.isArray(query)) { //regular case
+        if (Fn.isArray(query)) { //non regular case
             let genreIdList = query.map(function (item) {
                 return item.id
             });

@@ -113,26 +113,29 @@ async function getBooksWithFilter (req, res, next) {
 }
 
 async function getBooks(req, res, next) {
-    let query = await modelUtil.getQueryWithPermission(req.user);
+    try {
+        let query = await modelUtil.getQueryWithPermission(req.user);
 
-    if (!Fn.isArray(query)) { //regular case
-        let items = await Books.getAll(query, false, true);
-        if (!Fn.isEmpty(items)) {
-            return res.status(200).json(items);
+        if (!Fn.isArray(query)) { //regular case
+            let items = await Books.getAll(query, false, true);
+            if (!Fn.isEmpty(items)) {
+                return res.status(200).json(items);
+            }
+            return noResult(res);
         }
-        return noResult(res);
-    }
 
-    let promiseArray = [];
-    for (let i = 0; i < query.length; i++) {
-        let currentQuery = query[i];
-        let pr = Books.getAll({genre:currentQuery.id}, false, true).limit(currentQuery.limit);
-        promiseArray.push(pr);
-    }
+        let promiseArray = [];
+        for (let i = 0; i < query.length; i++) {
+            let currentQuery = query[i];
+            let pr = Books.getAll({genre: currentQuery.id}, false, true).limit(currentQuery.limit);
+            promiseArray.push(pr);
+        }
 
-    let result = await Promise.all(promiseArray);
-    let data = result.flat();
-    return res.status(200).json(data);
+        let result = await Promise.all(promiseArray);
+        return res.status(200).json(result.flat());
+    } catch (err) {
+        errorCatcher(err);
+    }
 }
 
 
