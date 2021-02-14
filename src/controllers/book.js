@@ -98,6 +98,7 @@ async function getBooksWithFilter (req, res, next) {
 
         query = Fn.sanitizeQuery(query);
 
+
         let books = await Books.find(query, {'updatedAt': 0})
             .populate({path: 'author', select: 'name'})
             .populate({path: 'genre', select: 'name'})
@@ -127,7 +128,7 @@ async function getBooks(req, res, next) {
         let promiseArray = [];
         for (let i = 0; i < query.length; i++) {
             let currentQuery = query[i];
-            let pr = Books.getAll({genre: currentQuery.id}, false, true).limit(currentQuery.limit);
+            let pr = Books.getAll({genre: currentQuery.id}, false, true);
             promiseArray.push(pr);
         }
 

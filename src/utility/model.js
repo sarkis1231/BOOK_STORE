@@ -64,13 +64,19 @@ modelUtil.getQueryWithPermission = async function (userModal) {
     if (userModal.isAdmin()) {
         return {};
     }
-    let myUserModal = await userModal.populate('permission');
+
+    // Call the `populate()` method on a document to populate a path.
+    // Need to call `execPopulate()` to actually execute the `populate()`.
+    let myUserModal = await userModal.populate('permission').execPopulate();
+
+    // TODO figure out a way to add lean()
+
     let permission = myUserModal['permission'];
     if (permission.premium) {
         return {}; //all permissions
     }
 
-    return permission.groups;
+    return permission.genre;
 };
 
 const staticsFn = ['getAll', 'getOne', 'getById', 'disable', 'disableById'];

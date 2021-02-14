@@ -2,7 +2,7 @@ const modelUtil = require("../utility/model");
 const {SCHEMES_NAMES,LIMITS} = require("../utility/constants");
 const {Schema, model} = require("mongoose");
 
-const permissionSchema = new Schema({
+let permissionSchema = new Schema({
     uid: {
         type: Schema.Types.ObjectId,
         ref: SCHEMES_NAMES.Users,
