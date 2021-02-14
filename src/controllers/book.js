@@ -83,7 +83,7 @@ async function editBook(req, res, next) {
     }
 }
 
-async function getBooksWithFilter (req, res, next) {
+async function getBooksWithFilter(req, res, next) {
     const {name, genre, author, pageCount, publishedDate} = req.query;
     try {
         errorValidation(req);
@@ -116,24 +116,22 @@ async function getBooksWithFilter (req, res, next) {
 async function getBooks(req, res, next) {
     try {
         let query = await modelUtil.getQueryWithPermission(req.user);
-
-        if (!Fn.isArray(query)) { //regular case
-            let items = await Books.getAll(query, false, true);
-            if (!Fn.isEmpty(items)) {
-                return res.status(200).json(items);
-            }
-            return noResult(res);
+        let items = [];
+        let q = {}
+        if (Fn.isArray(query)) { //non regular case
+            let genreIdList = query.map(function (item) {
+                return item.id
+            });
+            q = {genre: {$in: genreIdList}};
         }
 
-        let promiseArray = [];
-        for (let i = 0; i < query.length; i++) {
-            let currentQuery = query[i];
-            let pr = Books.getAll({genre: currentQuery.id}, false, true);
-            promiseArray.push(pr);
-        }
+        items = await Books.getAll(q, false, true);
 
-        let result = await Promise.all(promiseArray);
-        return res.status(200).json(result.flat());
+        if (!Fn.isEmpty(items)) {
+            return res.status(200).json(items);
+        }
+        return noResult(res);
+
     } catch (err) {
         errorCatcher(err);
     }
