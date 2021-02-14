@@ -1,7 +1,6 @@
 const {SECRET_KEY} = require("../config/keys");
 const {sign} = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const {SCHEMES_NAMES} = require("../utility/constants");
 const {Fn} = require("../utility/functions");
 const {getCtrlFn} = require("../utility/controllers/functions");
 const {Users} = require("../models/Users");
@@ -120,7 +119,9 @@ async function getUsers(req, res, next) {
     try {
         errorValidation(req);
         let userId = req['user']._id;
-        let items = await Users.find({_id: {$ne: userId}, disabled: {$ne: true}}, {'password': 0, 'updatedAt': 0})
+        let items = await Users.find(
+            {_id: {$ne: userId}, disabled: {$ne: true}},
+            {'password': 0, 'updatedAt': 0})
             .populate({
                 path: 'permission', populate: {
                     path: 'genre.id',
