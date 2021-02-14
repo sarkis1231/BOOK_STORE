@@ -38,6 +38,7 @@ const userSchema = new Schema({
 
 // TODO for pull add Descriptions
 
+// TODO and this part maybe with foreach ?
 userSchema.statics.getAll = modelUtil.getAll;
 
 userSchema.statics.getOne = modelUtil.getOne;
