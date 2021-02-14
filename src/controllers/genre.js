@@ -1,10 +1,9 @@
 const modelUtil = require("../utility/model");
-const {noResult} = require("../utility/controllers/messages");
 const {Fn} = require("../utility/functions");
 const {messageAlert, MESSAGES} = require("../utility/constants");
 const {getCtrlFn} = require("../utility/controllers/functions");
 const {errorCatcher, errorValidation} = require("../utility/controllers/errors");
-const {alert} = require("../utility/controllers/messages");
+const {alert,noResult} = require("../utility/controllers/messages");
 const {Genres} = require("../models/Genre");
 
 

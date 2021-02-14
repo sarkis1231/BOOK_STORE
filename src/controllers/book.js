@@ -1,4 +1,5 @@
 const modelUtil = require("../utility/model");
+const {SCHEMES_NAMES} = require("../utility/constants");
 const {noResult} = require("../utility/controllers/messages");
 const {errorThrower} = require("../utility/controllers/errors");
 const {errorValidation} = require("../utility/controllers/errors");
@@ -93,16 +94,50 @@ async function getBooksWithFilter(req, res, next) {
             author: author ? author : undefined,
             pageCount: pageCount ? {$gte: pageCount} : undefined,
             publishedDate: publishedDate ? {$gte: new Date(publishedDate)} : undefined,
-            disabled: {$ne: true}
         };
 
         query = Fn.sanitizeQuery(query);
 
+        let permissionQuery = await modelUtil.getQueryWithPermission(req.user);
 
-        let books = await Books.find(query, {'updatedAt': 0})
-            .populate({path: 'author', select: 'name'})
-            .populate({path: 'genre', select: 'name'})
-            .lean();
+        let aggregateArray = [];
+
+        if (Fn.isArray(permissionQuery)) { //non regular case
+            for (let i = 0; i < permissionQuery.length; i++) {
+                let item = permissionQuery[i]
+                aggregateArray.push({$match: {genre: item.id}})
+                aggregateArray.push({$limit: item.limit})
+            }
+        }
+
+        aggregateArray.push({$match: {disabled: {$ne: true}}});
+
+        if (!Fn.isEmpty(query)) {
+            aggregateArray.push({$match: {...query}});
+        }
+
+        aggregateArray.push({
+                $lookup: {
+                    from: SCHEMES_NAMES.Authors.toLowerCase(),
+                    localField: "author",
+                    foreignField: "_id",
+                    as: 'author'
+
+                }
+            }
+        );
+        aggregateArray.push({
+                $lookup: {
+                    from: SCHEMES_NAMES.Genres.toLowerCase(),
+                    localField: "genre",
+                    foreignField: "_id",
+                    as: 'genre'
+                }
+            }
+        );
+
+        let books = await Books.aggregate(aggregateArray);
+
         if (!Fn.isEmpty(books)) {
             return res.status(200).json(books);
         }
@@ -116,16 +151,20 @@ async function getBooksWithFilter(req, res, next) {
 async function getBooks(req, res, next) {
     try {
         let query = await modelUtil.getQueryWithPermission(req.user);
-        let items = [];
-        let q = {}
+
+        let aggregateArray = [];
+
+        aggregateArray.push({$match: {disabled: {$ne: true}}});
+
         if (Fn.isArray(query)) { //non regular case
-            let genreIdList = query.map(function (item) {
-                return item.id
-            });
-            q = {genre: {$in: genreIdList}};
+            for (let i = 0; i < query.length; i++) {
+                let item = query[i]
+                aggregateArray.push({$match: {genre: item.id}})
+                aggregateArray.push({$limit: item.limit})
+            }
         }
 
-        items = await Books.getAll(q, false, true);
+        let items = await Books.aggregate(aggregateArray);
 
         if (!Fn.isEmpty(items)) {
             return res.status(200).json(items);
