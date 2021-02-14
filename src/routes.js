@@ -4,6 +4,7 @@ const books = require("./routes/books");
 const genre = require("./routes/genre");
 const authors = require("./routes/authors");
 const files = require("./routes/file");
+const permissions = require("./routes/permissions");
 const chatBot = require("./routes/chatBot");
 
 
@@ -20,6 +21,8 @@ router.use('/authors',authors)
 router.use('/genre',genre);
 
 router.use('/files',files);
+
+router.use('/permissions',permissions);
 
 router.use('/chatBot',chatBot);
 

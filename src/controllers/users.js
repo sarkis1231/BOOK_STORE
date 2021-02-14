@@ -119,15 +119,8 @@ async function getUsers(req, res, next) {
     try {
         errorValidation(req);
         let userId = req['user']._id;
-        let items = await Users.find(
-            {_id: {$ne: userId}, disabled: {$ne: true}},
-            {'password': 0, 'updatedAt': 0})
-            .populate({
-                path: 'permission', populate: {
-                    path: 'genre.id',
-                    select: 'name'
-                }, select: 'genre'
-            })
+        let items = await Users.find({_id: {$ne: userId}, disabled: {$ne: true}},
+            {'password': 0, 'updatedAt': 0,'permission':0})
         if (!Fn.isEmpty(items)) {
             return res.status(200).json(items);
         }
