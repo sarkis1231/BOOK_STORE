@@ -87,7 +87,7 @@ async function getBooksWithFilter(req, res, next) {
     try {
         errorValidation(req);
         let query = {
-            name: name ? {$regex: new RegExp(name), $options: 'g'} : undefined,
+            name: name ? {$regex: new RegExp(name), $options: 'gi'} : undefined,
             genre: genre ? Fn.toObjectId(genre) : undefined,
             author: author ? Fn.toObjectId(author) : undefined,
             pageCount: pageCount ? {$gte: parseInt(pageCount)} : undefined,
@@ -138,7 +138,6 @@ async function getBooksWithFilter(req, res, next) {
             }
         ];
 
-        console.log(aggregateArray);
         aggregateArray.push(...$lookups);
         let books = await Books.aggregate(aggregateArray);
 
