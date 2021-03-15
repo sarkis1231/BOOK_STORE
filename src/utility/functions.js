@@ -35,6 +35,10 @@ Fn.isMongooseValidId = function (id) {
     return mongoose.Types.ObjectId.isValid(id)
 };
 
+Fn.toObjectId = function (id) {
+    return new mongoose.Types.ObjectId(id);
+}
+
 Fn.sameObjectId = function (objId1, objId2) {
     if(!Fn.isMongooseValidId(objId1) ||!Fn.isMongooseValidId(objId2)) {
         return false;
