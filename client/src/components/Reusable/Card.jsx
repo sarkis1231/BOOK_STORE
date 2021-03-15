@@ -5,6 +5,7 @@ import {FlexContainer} from '../../styled/layout.styled';
 import noImage from '../../assets/svg/noImage.png'
 import AuthorizationElem from "../../HOC/Auth/AuthorizationElem";
 import {ADMIN_ROLE} from "../../constant";
+import AuthenticatedLink from "./AuthenticatedLink";
 
 const Card = ({id, image, bookName, author, file, pageCount, genre, onDelete, onEdit}) => {
     let splitImage = image.split('/');
@@ -33,9 +34,10 @@ const Card = ({id, image, bookName, author, file, pageCount, genre, onDelete, on
                 <span style={{width: '49%'}}>Page count</span>
                 <span style={{width: '49%', textAlign: 'end'}}>{pageCount}</span>
             </FlexContainer>
+            <AuthenticatedLink filename={splitFile[splitFile.length - 1]} url={`http://localhost:8080/files/book/${splitFile[splitFile.length - 1]}`}><Button width='100%'>download</Button></AuthenticatedLink>
             <StyledA href={`http://localhost:8080/files/book/${splitFile[splitFile.length - 1]}`} target="_blank"
                      rel="noreferrer noopener" download>
-                <Button width='100%'>download</Button>
+
             </StyledA>
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
                 <FlexContainer width='100%' justifyContent='space-between' margin='10px 0 0'>
