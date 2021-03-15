@@ -161,7 +161,15 @@ BookValidation.filter = [
     param('publishedDate')
         .optional()
         .trim()
-        .custom(ValidationsFns.isItDate)
+        .custom(ValidationsFns.isItDate),
+    param('limitBy')
+        .optional()
+        .isInt({min:0,max:100})
+        .withMessage(MESSAGES.NOT_VALID_NUMBER),
+    param('index')
+        .optional()
+        .isInt({min:0})
+        .withMessage(MESSAGES.NOT_VALID_NUMBER),
 ];
 
 
