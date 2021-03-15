@@ -110,6 +110,11 @@ async function getBooksWithFilter(req, res, next) {
 
         aggregateArray.push({$match: {disabled: {$ne: true}}});
 
+        aggregateArray.push({$limit: limitBy ? parseInt(limitBy) : 10});
+
+        aggregateArray.push({$skip: index ? parseInt(index) : 0});
+
+
         if (!Fn.isEmpty(query)) {
             aggregateArray.push({$match: {...query}});
         }
@@ -133,6 +138,7 @@ async function getBooksWithFilter(req, res, next) {
             }
         ];
 
+        console.log(aggregateArray);
         aggregateArray.push(...$lookups);
         let books = await Books.aggregate(aggregateArray);
 
