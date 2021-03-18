@@ -34,11 +34,7 @@ const Card = ({id, image, bookName, author, file, pageCount, genre, onDelete, on
                 <span style={{width: '49%'}}>Page count</span>
                 <span style={{width: '49%', textAlign: 'end'}}>{pageCount}</span>
             </FlexContainer>
-            <AuthenticatedLink filename={splitFile[splitFile.length - 1]} url={`http://localhost:8080/files/book/${splitFile[splitFile.length - 1]}`}><Button width='100%'>download</Button></AuthenticatedLink>
-            <StyledA href={`http://localhost:8080/files/book/${splitFile[splitFile.length - 1]}`} target="_blank"
-                     rel="noreferrer noopener" download>
-
-            </StyledA>
+            <AuthenticatedLink filename={bookName} url={`http://localhost:8080/files/book/${splitFile[splitFile.length - 1]}`}><Button width='100%'>download</Button></AuthenticatedLink>
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
                 <FlexContainer width='100%' justifyContent='space-between' margin='10px 0 0'>
                     <Button width='48%'
@@ -77,8 +73,4 @@ const StyledImgContainer = styled.div`
   background-size: 100%;
   margin: 0 0 20px;
 
-`
-const StyledA = styled.a`
-  cursor: pointer;
-  width: 100%;
 `
