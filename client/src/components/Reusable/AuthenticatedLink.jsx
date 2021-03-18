@@ -1,11 +1,7 @@
-import React, {createRef, useEffect, useState} from 'react';
+import React, {createRef} from 'react';
 
 
 const AuthenticatedLink = ({ url, filename, children }) => {
-    const [] = useState()
-    useEffect(() => {
-
-    }, [url])
     const link = createRef()
     const authHeaders = {
         Authorization: localStorage.getItem('token')
@@ -29,6 +25,7 @@ const AuthenticatedLink = ({ url, filename, children }) => {
 
     return (
         <>
+            {/*eslint-disable-next-line*/}
             <a noHref style={{width: "100%"}}  target="_blank"
                rel="noreferrer noopener" ref={link} onClick={handleAction}>{children}</a>
         </>
