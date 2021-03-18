@@ -26,7 +26,7 @@ const AuthenticatedLink = ({ url, filename, children }) => {
     return (
         <>
             {/*eslint-disable-next-line*/}
-            <a noHref style={{width: "100%"}}  target="_blank"
+            <a style={{width: "100%"}}  target="_blank"
                rel="noreferrer noopener" ref={link} onClick={handleAction}>{children}</a>
         </>
     )
