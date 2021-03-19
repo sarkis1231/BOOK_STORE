@@ -14,6 +14,7 @@ import {FlexContainer} from "../../styled/layout.styled";
 import booksFormData, {filteredValue} from "../../utils";
 import DeleteModalContent from "../../components/Reusable/DeleteModalContent";
 import FilterForm from "./FilterForm";
+import styled from "styled-components";
 
 const Books = () => {
     const {openModal, closeModal, toggleModal} = useModal();
@@ -110,9 +111,12 @@ const Books = () => {
     return (
         <>
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
-                <Button width='200px' onClick={() => openModal(undefined)}>Add Books</Button>
+                <Button width='200px' margin='10px' onClick={() => openModal(undefined)}>Add Books</Button>
             </AuthorizationElem>
-            <Button margin='20px 0 0' onClick={() => searchOpenModal(undefined)}>Search</Button>
+            <StyledFilterFormContainer>
+            <FilterForm onSearchSubmit={onSearchSubmit} searchHandleSubmit={searchHandleSubmit}
+                            searchErrors={searchErrors} searchRegister={searchRegister}/>
+            </StyledFilterFormContainer>
             <FlexContainer maxWidth='1440px' margin='30px auto 0' width='100%' justifyContent='space-between'
                            flexWrap='wrap'>
                 {data.length ? data.map(({_id: id, file, image, name, author, pageCount, genre}) => (
@@ -144,3 +148,8 @@ const Books = () => {
 
 
 export default Books;
+
+const StyledFilterFormContainer = styled.div`
+  width: 50%;
+
+`
