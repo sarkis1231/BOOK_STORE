@@ -66,6 +66,8 @@ export const lightTheme = {
     botFontColor: '#363537',
     userBubbleColor: '#fff',
     userFontColor: '#4a4a4a',
+    checkBox: '#000000',
+    checkMark: '#FFFFFF',
 }
 
 export const darkTheme = {
@@ -135,4 +137,6 @@ export const darkTheme = {
     botFontColor: '#FFF',
     userBubbleColor: '#000',
     userFontColor: '#4a4a4a',
+    checkBox: '#FFFFFF',
+    checkMark: '#000000',
 }
