@@ -16,6 +16,9 @@ import DeleteModalContent from "../../components/Reusable/DeleteModalContent";
 import FilterForm from "./FilterForm";
 import styled from "styled-components";
 
+import PaginationBar from "../../components/Reusable/PaginationBar";
+import usePagination from "../../hooks/usePagination";
+
 const Books = () => {
     const {openModal, closeModal, toggleModal} = useModal();
     const {
@@ -43,15 +46,24 @@ const Books = () => {
         errors: searchErrors,
         reset: searchReset
     } = useForm();
+    const  {
+        slicedData,
+        pagination,
+        prevPage: goToPrevPage,
+        nextPage: goToNextPage,
+        changePage,
+        currentPage
+    } = usePagination(3,data,1,);
+
     const [reFetch, setReFetch] = useState(false)
     useEffect(() => {
-        axios.get('/books/filter').then(res => {
+        axios.get(`/books/filter/?limitBy=3`).then(res => {
             res.data.empty ? setData(() => []) : setData(() => [...res.data])
 
         }).catch(e => {
             console.log(e)
         })
-    }, [reFetch])
+    }, [reFetch, currentPage])
 
     const onSubmit = (value) => {
         if (value.publishedDate.length === 0) {
@@ -109,6 +121,7 @@ const Books = () => {
         })
         editCloseModal()
     }
+
     return (
         <>
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
@@ -120,12 +133,13 @@ const Books = () => {
             </StyledFilterFormContainer>
             <FlexContainer maxWidth='1440px' margin='30px auto 0' width='100%' justifyContent='space-between'
                            flexWrap='wrap'>
-                {!data.empty ? data.map(({_id: id, file, image, name, author, pageCount, genre}) => (
+                {!data.empty ? slicedData.map(({_id: id, file, image, name, author, pageCount, genre}) => (
                     <Card image={image} bookName={name} id={id} key={id} file={file} author={author}
                           pageCount={pageCount}
                           genre={genre} onDelete={deleteOpenModal} onEdit={editOpenModal}/>
                 )) : "No result found"}
             </FlexContainer>
+            <PaginationBar changePage={changePage} pageNumber={pagination} next={goToNextPage} prev={goToPrevPage}/>
             <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Add Book'>
                 <BooksFrom buttonName='Add Book' onSubmit={onSubmit} register={register} errors={errors}
                            handleSubmit={handleSubmit}/>
