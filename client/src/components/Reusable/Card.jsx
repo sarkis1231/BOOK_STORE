@@ -6,6 +6,7 @@ import noImage from '../../assets/svg/noImage.png'
 import AuthorizationElem from "../../HOC/Auth/AuthorizationElem";
 import {ADMIN_ROLE} from "../../constant";
 import AuthenticatedLink from "./AuthenticatedLink";
+import AuthenticatedImage from "./AuthenticatedImage";
 
 const Card = ({id, image, bookName, author, file, pageCount, genre, onDelete, onEdit}) => {
     let splitImage = image.split('/');
@@ -13,10 +14,7 @@ const Card = ({id, image, bookName, author, file, pageCount, genre, onDelete, on
 
     return (
         <StyledCardContainer width='25%' mobileWidth='50%' padding='20px 25px'>
-            {image ?
-                <StyledImgContainer
-                    imageUrl={` http://localhost:8080/files/image/${splitImage[splitImage.length - 1]}`}/> :
-                <StyledImgContainer imageUrl={noImage}/>}
+            <AuthenticatedImage src={`http://localhost:8080/files/image/${splitImage[splitImage.length - 1]}`}/>
             <FlexContainer
                 width='100%'
                 padding='0 0 10px 0'
@@ -64,13 +62,3 @@ const StyledCardContainer = styled(FlexContainer)`
   }
 `
 
-const StyledImgContainer = styled.div`
-  width: 100%;
-  height: 248px;
-  border-radius: 20px;
-  filter: drop-shadow(0px 20px 60px rgba(0, 0, 0, 0.15));
-  background: ${({imageUrl}) => css`url(${imageUrl})no-repeat center`};
-  background-size: 100%;
-  margin: 0 0 20px;
-
-`
