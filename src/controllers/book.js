@@ -140,13 +140,15 @@ async function getBooksWithFilter(req, res, next) {
         ];
 
         aggregateArray.push(...$lookups);
-        let books = await Books.aggregate(aggregateArray);
+        let books = Books.aggregate(aggregateArray);
 
-		let count = await Books.countDocuments(modelUtil.getQueryWithDisable({}));
+		let count = Books.countDocuments(modelUtil.getQueryWithDisable({}));
+		
+		let data = await Promise.all([books,count]);
 
 		let result = {
-	    	data: books,
-	    	totalLength: count
+	    	data: data[0],
+	    	totalLength: data[1]
         };
 
 
