@@ -142,7 +142,8 @@ async function getBooksWithFilter(req, res, next) {
         aggregateArray.push(...$lookups);
         let books = await Books.aggregate(aggregateArray);
 
-		let count = await Books.count();    
+		let count = await Books.getAll({}).count();
+
 		let result = {
 	    	data: books,
 	    	totalLength: count
@@ -150,7 +151,7 @@ async function getBooksWithFilter(req, res, next) {
 
 
         if (!Fn.isEmpty(books)) {
-            return res.status(200).json(books);
+            return res.status(200).json(result);
         }
         noResult(res);
 
