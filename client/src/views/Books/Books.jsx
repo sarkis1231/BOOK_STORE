@@ -40,6 +40,7 @@ const Books = () => {
         resolver: yupResolver(EditBookSchema),
     });
     const [data, setData] = useState([])
+    const [totalLength, setTotalLength] = useState(0)
     const {
         register: searchRegister,
         handleSubmit: searchHandleSubmit,
@@ -52,18 +53,18 @@ const Books = () => {
         prevPage: goToPrevPage,
         nextPage: goToNextPage,
         changePage,
-        currentPage
-    } = usePagination(3,data,1,);
-
+    } = usePagination(3,data,1,false, totalLength);
     const [reFetch, setReFetch] = useState(false)
     useEffect(() => {
-        axios.get(`/books/filter/?limitBy=3`).then(res => {
-            res.data.empty ? setData(() => []) : setData(() => [...res.data])
+        axios.get(`/books/filter/?limitBy=3&index=0`).then(res => {
+            setTotalLength(res.data.totalLength)
+            res.data.empty ? setData(() => []) : setData(() => [...res.data.data])
 
         }).catch(e => {
             console.log(e)
         })
-    }, [reFetch, currentPage])
+    }, [reFetch])
+
 
     const onSubmit = (value) => {
         if (value.publishedDate.length === 0) {
@@ -90,11 +91,11 @@ const Books = () => {
         axios.get('/books/filter', {
             params: filteredValue(value)
         }).then(res => {
-            console.log(res.data.empty)
             if (res.data.empty) {
-                setData(() => res.data);
-            } else {
                 setData(() => res.data)
+            } else {
+                setData(() => res.data.data);
+                setTotalLength(() => res.data.totalLength);
             }
             searchReset()
         })
@@ -111,8 +112,6 @@ const Books = () => {
     }
 
     const onEdit = (value) => {
-        console.log(value)
-        console.log(booksFormData(value))
         axios.put(`/books/${editValue.id}`, booksFormData(value)).then(res => {
             console.log(res)
             setReFetch(prev => !prev)

@@ -1,14 +1,16 @@
 import {useEffect,useState} from 'react';
 
-const usePagination = (itemsPerPage, data, startFrom, remove = false) => {
+const usePagination = (itemsPerPage, data, startFrom, remove = false, totalLength) => {
     const perPage = itemsPerPage || 10;
-    const pages = Math.ceil(data.length / perPage);
+    const pages = Math.ceil(totalLength / perPage);
     const pagination = [];
     const [currentPage, setCurrentPage] = useState(startFrom <= pages ? startFrom : 1);
     const [slicedData, setSlicedData] = useState(data);
+
     useEffect(() => {
+
         setSlicedData(() => [...data].slice((currentPage - 1) * perPage, currentPage * perPage));
-    }, [data]);
+    }, [data, currentPage, perPage]);
 
     let ellipsisLeft = false;
     let ellipsisRight = false;
@@ -58,7 +60,7 @@ const usePagination = (itemsPerPage, data, startFrom, remove = false) => {
                 setCurrentPage(prev => prev - 1);
             }
         }
-    }, [data]);
+    }, [data, remove, currentPage, perPage]);
 
     return {
         slicedData,

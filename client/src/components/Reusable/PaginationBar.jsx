@@ -5,7 +5,7 @@ import {FlexContainer} from "../../styled/layout.styled";
 
 
 const PaginationBar = ({pageNumber, next, prev, changePage}) => {
-    console.log(next)
+
     return (
 
             <FlexContainer width="40%" justifyContent='space-around' alignItems="center">
