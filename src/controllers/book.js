@@ -109,10 +109,11 @@ async function getBooksWithFilter(req, res, next) {
         }
 
         aggregateArray.push({$match: {disabled: {$ne: true}}});
-
+	
+        aggregateArray.push({$skip: index ? parseInt(index) : 0});
+	    
         aggregateArray.push({$limit: limitBy ? parseInt(limitBy) : 10});
 
-        aggregateArray.push({$skip: index ? parseInt(index) : 0});
 
 
         if (!Fn.isEmpty(query)) {
