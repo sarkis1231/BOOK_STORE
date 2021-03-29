@@ -114,8 +114,6 @@ async function getBooksWithFilter(req, res, next) {
 	    
         aggregateArray.push({$limit: limitBy ? parseInt(limitBy) : 10});
 
-
-
         if (!Fn.isEmpty(query)) {
             aggregateArray.push({$match: {...query}});
         }
@@ -140,17 +138,17 @@ async function getBooksWithFilter(req, res, next) {
         ];
 
         aggregateArray.push(...$lookups);
+
         let books = Books.aggregate(aggregateArray);
 
 		let count = Books.countDocuments(modelUtil.getQueryWithDisable({}));
-		
+
 		let data = await Promise.all([books,count]);
 
 		let result = {
 	    	data: data[0],
 	    	totalLength: data[1]
         };
-
 
         if (!Fn.isEmpty(books)) {
             return res.status(200).json(result);
