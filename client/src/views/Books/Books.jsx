@@ -14,11 +14,7 @@ import {FlexContainer} from "../../styled/layout.styled";
 import booksFormData, {filteredValue} from "../../utils";
 import DeleteModalContent from "../../components/Reusable/DeleteModalContent";
 import FilterForm from "./FilterForm";
-import styled from "styled-components";
-import {ReactComponent as DeleteIcon} from '../../assets/svg/delete.svg';
-import ControlledDropDown from "../../components/Reusable/ControlledDropDown";
-import {ReactComponent as AddIcon} from "../../assets/svg/Add.svg";
-import {loginUser} from "../../actions/authActions";
+
 
 const Books = () => {
     const {openModal, closeModal, toggleModal} = useModal();
@@ -113,27 +109,6 @@ const Books = () => {
         editCloseModal()
     }
 
-    let [check,setCheck] = useState(undefined);
-    let handleChangeCheck = (e)=>{
-
-        return setCheck(e.target.checked)
-    };
-
-
-
-    const [fields, setFields] = useState([]);
-
-    function handleAdd() {
-        const values = [...fields];
-        values.push({ value: null });
-        setFields(values);
-    }
-    function handleRemove(i) {
-        const values = [...fields];
-        values.splice(i, 1);
-        setFields(values);
-    }
-
 
     return (
         <>
@@ -148,63 +123,6 @@ const Books = () => {
                           pageCount={pageCount}
                           genre={genre} onDelete={deleteOpenModal} onEdit={editOpenModal}/>
                 )) : null}
-                    <FlexContainer width='100%' flexDirection='column'>
-                    <FlexContainer width='100%' justifyContent='space-between' alignItems='center'>
-                      <StyledCheckboxContainer>
-                          <StyledCheckbox type='checkbox' value="false" onChange={handleChangeCheck}></StyledCheckbox>
-                      </StyledCheckboxContainer>
-
-                        <ControlledDropDown disabled ref={register} name='sameer' url={'/genre'}
-                                            defaultValue={'sameer' ? {
-                                                name: 'sameer',
-                                                value: 'sameer'
-                                            } : {name: 'none', value: ''}}
-                                            width='40%'
-                                            error={errors}
-                                            opacity={ check ? '0.4': '100'}
-                                            pointerEvents={check ? 'none':''}
-                        />
-                        <ControlledDropDown disabled ref={register} name='sameer' url={'/genre'}
-                                            defaultValue={'sameer' ? {
-                                                name: 'sameer',
-                                                value: 'sameer'
-                                            } : {name: 'none', value: ''}}
-                                            width='40%'
-                                            error={errors}
-                                            opacity={ check ? '0.4': '100'}
-                                            pointerEvents={check ? 'none':''}
-                        />
-                        <StyledIconContainer opacity={ check ? '0.4': '100'}
-                                             pointerEvents={check ? 'none':''} onClick={()=> handleAdd()} ><AddIcon></AddIcon></StyledIconContainer>
-
-                    </FlexContainer>
-                        {fields.map((field, idx) => {
-                            return (
-                                <FlexContainer width='100%' justifyContent='space-between' alignItems='center' padding='10px 0 0 0' key={`${field}-${idx}`}>
-                                    <StyledCheckboxContainer margin='0 30px 0 0'>
-                                        <StyledCheckbox type='checkbox' value="false" display='none'></StyledCheckbox>
-                                    </StyledCheckboxContainer>
-                                    <ControlledDropDown disabled ref={register} name='sameer' url={'/genre'}
-                                                        defaultValue={'sameer' ? {
-                                                            name: 'sameer',
-                                                            value: 'sameer'
-                                                        } : {name: 'none', value: ''}}
-                                                        width='40%'
-                                                        error={errors}
-                                    />
-                                    <ControlledDropDown disabled ref={register} name='sameer' url={'/genre'}
-                                                        defaultValue={'sameer' ? {
-                                                            name: 'sameer',
-                                                            value: 'sameer'
-                                                        } : {name: 'none', value: ''}}
-                                                        width='40%'
-                                                        error={errors}
-                                    />
-                                    <StyledIconContainer onClick={()=> handleRemove(idx)}><DeleteIcon /></StyledIconContainer>
-                                </FlexContainer>
-                            );
-                        })}
-                    </FlexContainer>
             </FlexContainer>
             <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Add Book'>
                 <BooksFrom buttonName='Add Book' onSubmit={onSubmit} register={register} errors={errors}
@@ -229,56 +147,4 @@ const Books = () => {
 
 export default Books;
 
-const StyledCheckboxContainer = styled.label`
-  display: inline-block;
-  vertical-align: middle;
-  margin: ${({margin})=> margin? margin: '0'};
-`
 
-const StyledCheckbox = styled.input`
-  display: inline-block;
-  width: 25px;
-  height: 25px;
-  background: ${({theme}) => theme.checkBox};
-  cursor: pointer;
-  display: ${({display})=> display? display: ''};
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -o-appearance: none;
-  appearance: none;
-  border:none;
-  border-radius: 4px;
-  outline: none;
-  background-color:${({theme}) => theme.checkBox};
-  &:checked:before{
-    content: '\\2713';
-    display: block;
-    font-weight: bold;
-    text-align: center;
-    border: none;
-    color:${({theme}) =>theme.checkMark};
-    position: absolute;
-    font-size: 20px;
-    left: 0.5rem;
-  }
-  
-`
-const StyledIconContainer = styled.button`
-  border: none;
-  background: none;
-  opacity: ${({ opacity }) => opacity};
-  pointer-events: ${({ pointerEvents }) => pointerEvents};
-  &:focus{
-    outline: none;
-  }
-  svg {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    fill: ${({theme}) => theme.editDeleteIcon};
-    path{
-      fill: ${({theme}) => theme.editDeleteIcon};
-  }
-  }
-
-`
