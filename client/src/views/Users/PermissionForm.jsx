@@ -28,7 +28,7 @@ const PermissionForm = () => {
         setFields(values);
     }
 
-    const {register: inputRegister,handleSubmit: editHovSubmit, reset: editReset} = useForm()
+    const {register: inputRegister,handleSubmit: editHovSubmit, reset: editReset, errors} = useForm()
     const [genreArr,setGenreArr] = useState([]);
     const[permArr,setPermArr] = useState([]);
     const[dataArr,setDataArr] = useState([]);
