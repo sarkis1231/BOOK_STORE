@@ -14,11 +14,13 @@ import {FlexContainer} from "../../styled/layout.styled";
 import booksFormData, {filteredValue} from "../../utils";
 import DeleteModalContent from "../../components/Reusable/DeleteModalContent";
 import FilterForm from "./FilterForm";
+import styled from "styled-components";
 
+import PaginationBar from "../../components/Reusable/PaginationBar";
+import usePagination from "../../hooks/usePagination";
 
 const Books = () => {
     const {openModal, closeModal, toggleModal} = useModal();
-    const {openModal: searchOpenModal, closeModal: searchCloseModal, toggleModal: searchToggleModal} = useModal();
     const {
         openModal: editOpenModal,
         closeModal: editCloseModal,
@@ -38,16 +40,26 @@ const Books = () => {
         resolver: yupResolver(EditBookSchema),
     });
     const [data, setData] = useState([])
+    const [totalLength, setTotalLength] = useState(0)
     const {
         register: searchRegister,
         handleSubmit: searchHandleSubmit,
         errors: searchErrors,
         reset: searchReset
     } = useForm();
+    const  {
+        slicedData,
+        pagination,
+        prevPage: goToPrevPage,
+        nextPage: goToNextPage,
+        changePage,
+    } = usePagination(3,data,1,false, totalLength);
     const [reFetch, setReFetch] = useState(false)
     useEffect(() => {
-        axios.get('/books/filter').then(res => {
-            res.data.empty ? setData(() => []) : setData(() => [...res.data])
+        axios.get(`/books/filter`, {
+        }).then(res => {
+            setTotalLength(res.data.totalLength)
+            res.data.empty ? setData(() => []) : setData(() => [...res.data.data])
 
         }).catch(e => {
             console.log(e)
@@ -58,7 +70,7 @@ const Books = () => {
         if (value.publishedDate.length === 0) {
             delete value.publishedDate
         }
-        let formData = new FormData();
+        const formData = new FormData();
         Object.keys(value).forEach((key) => {
             if (key === 'file' || key === 'image') {
                 formData.append(key, value[key][0])
@@ -76,17 +88,19 @@ const Books = () => {
     }
 
     const onSearchSubmit = (value) => {
-        axios.get('/books/filter', {
+        axios.get(`/books/filter`, {
             params: filteredValue(value)
         }).then(res => {
             if (res.data.empty) {
-                setData(prev => prev);
-            } else {
                 setData(() => res.data)
+            } else {
+                setData(() => res.data.data);
+                setTotalLength(() => res.data.totalLength);
             }
-            searchReset()
         })
+        searchReset()
     }
+
     const onDelete = () => {
         axios.delete(`/books/${deleteValue.id}`).then(res => {
             console.log(res);
@@ -98,8 +112,6 @@ const Books = () => {
     }
 
     const onEdit = (value) => {
-        console.log(value)
-        console.log(booksFormData(value))
         axios.put(`/books/${editValue.id}`, booksFormData(value)).then(res => {
             console.log(res)
             setReFetch(prev => !prev)
@@ -109,28 +121,27 @@ const Books = () => {
         editCloseModal()
     }
 
-
     return (
         <>
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
-                <Button width='200px' onClick={() => openModal(undefined)}>Add Books</Button>
+                <Button width='200px' margin='10px' onClick={() => openModal(undefined)}>Add Books</Button>
             </AuthorizationElem>
-            <Button margin='20px 0 0' onClick={() => searchOpenModal(undefined)}>Search</Button>
+            <StyledFilterFormContainer>
+                <FilterForm onSearchSubmit={onSearchSubmit} searchHandleSubmit={searchHandleSubmit}
+                            searchErrors={searchErrors} searchRegister={searchRegister}/>
+            </StyledFilterFormContainer>
             <FlexContainer maxWidth='1440px' margin='30px auto 0' width='100%' justifyContent='space-between'
                            flexWrap='wrap'>
-                {data.length ? data.map(({_id: id, file, image, name, author, pageCount, genre}) => (
+                {!data.empty ? slicedData.map(({_id: id, file, image, name, author, pageCount, genre}) => (
                     <Card image={image} bookName={name} id={id} key={id} file={file} author={author}
                           pageCount={pageCount}
                           genre={genre} onDelete={deleteOpenModal} onEdit={editOpenModal}/>
-                )) : null}
+                )) : "No result found"}
             </FlexContainer>
+            <PaginationBar changePage={changePage} pageNumber={pagination} next={goToNextPage} prev={goToPrevPage}/>
             <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Add Book'>
                 <BooksFrom buttonName='Add Book' onSubmit={onSubmit} register={register} errors={errors}
                            handleSubmit={handleSubmit}/>
-            </Modal>
-            <Modal toggleModal={searchToggleModal} handleCloseModal={searchCloseModal} modalTitle='Search Book'>
-                <FilterForm onSearchSubmit={onSearchSubmit} searchHandleSubmit={searchHandleSubmit}
-                            searchErrors={searchErrors} searchRegister={searchRegister}/>
             </Modal>
             <Modal toggleModal={deleteToggleModal} handleCloseModal={deleteCloseModal} modalTitle='Delete Book'>
                 <DeleteModalContent closeModal={deleteCloseModal} value={deleteValue?.bookName}
@@ -142,9 +153,12 @@ const Books = () => {
             </Modal>
         </>
     )
+
 }
 
 
 export default Books;
 
-
+const StyledFilterFormContainer = styled.div`
+  width: 50%;
+`
