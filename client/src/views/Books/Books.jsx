@@ -56,7 +56,8 @@ const Books = () => {
     } = usePagination(3,data,1,false, totalLength);
     const [reFetch, setReFetch] = useState(false)
     useEffect(() => {
-        axios.get(`/books/filter/?limitBy=3&index=0`).then(res => {
+        axios.get(`/books/filter`, {
+        }).then(res => {
             setTotalLength(res.data.totalLength)
             res.data.empty ? setData(() => []) : setData(() => [...res.data.data])
 
@@ -65,12 +66,11 @@ const Books = () => {
         })
     }, [reFetch])
 
-
     const onSubmit = (value) => {
         if (value.publishedDate.length === 0) {
             delete value.publishedDate
         }
-        let formData = new FormData();
+        const formData = new FormData();
         Object.keys(value).forEach((key) => {
             if (key === 'file' || key === 'image') {
                 formData.append(key, value[key][0])
@@ -88,7 +88,7 @@ const Books = () => {
     }
 
     const onSearchSubmit = (value) => {
-        axios.get('/books/filter', {
+        axios.get(`/books/filter`, {
             params: filteredValue(value)
         }).then(res => {
             if (res.data.empty) {
@@ -97,8 +97,8 @@ const Books = () => {
                 setData(() => res.data.data);
                 setTotalLength(() => res.data.totalLength);
             }
-            searchReset()
         })
+            searchReset()
     }
 
     const onDelete = () => {

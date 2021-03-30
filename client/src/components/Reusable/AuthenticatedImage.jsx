@@ -1,21 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import styled, {css} from "styled-components";
 import { fetchBase64 } from 'react-fetch-image'
 
 
 const AuthenticatedImage = ({src}) => {
     const [url, setUrl] = useState('')
-    const fetcher = {
-        url: src,
-        settings: {
-            headers: {
-                authorization: `${localStorage.getItem('token')}`
+
+    const memoizedFetcher =  useMemo(() => {
+        return  {
+            url: src,
+            settings: {
+                headers: {
+                    authorization: `${localStorage.getItem('token')}`
+                }
             }
         }
-    }
+    }, [src])
+
     useEffect(() => {
         fetchBase64({
-            ...fetcher,
+            ...memoizedFetcher,
             ...{
                 callback: (base64) => {
                     setUrl(base64)
@@ -24,7 +28,7 @@ const AuthenticatedImage = ({src}) => {
                 }
             }
         })
-    }, [src])
+    }, [memoizedFetcher])
 
     return (
         <>

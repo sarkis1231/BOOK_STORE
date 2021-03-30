@@ -2,16 +2,17 @@ import {useEffect,useState} from 'react';
 
 const usePagination = (itemsPerPage, data, startFrom, remove = false, totalLength) => {
     const perPage = itemsPerPage || 10;
-    const pages = Math.ceil(totalLength / perPage);
+    const pages = Math.ceil(data.length / perPage);
     const pagination = [];
     const [currentPage, setCurrentPage] = useState(startFrom <= pages ? startFrom : 1);
     const [slicedData, setSlicedData] = useState(data);
-
+    // const [index, setIndex] = useState(0)
+    console.log("currentPage", currentPage)
     useEffect(() => {
 
         setSlicedData(() => [...data].slice((currentPage - 1) * perPage, currentPage * perPage));
-    }, [data, currentPage, perPage]);
-
+        // eslint-disable-next-line
+    }, [data]);
     let ellipsisLeft = false;
     let ellipsisRight = false;
 
@@ -34,6 +35,7 @@ const usePagination = (itemsPerPage, data, startFrom, remove = false, totalLengt
         if (page !== currentPage) {
             setCurrentPage(page);
             setSlicedData([...data].slice((page - 1) * perPage, page * perPage));
+            // setIndex(prev => prev - ((currentPage - page) * itemsPerPage))
         }
     };
 
@@ -42,6 +44,7 @@ const usePagination = (itemsPerPage, data, startFrom, remove = false, totalLengt
         setCurrentPage(prevVal => (prevVal - 1 === 0 ? prevVal : prevVal - 1));
         if (currentPage !== 1) {
             setSlicedData([...data].slice((currentPage - 2) * perPage, (currentPage - 1) * perPage));
+            // setIndex((prev) => prev - itemsPerPage)
         }
     };
 
@@ -50,6 +53,7 @@ const usePagination = (itemsPerPage, data, startFrom, remove = false, totalLengt
         setCurrentPage(prevVal => (prevVal === pages ? prevVal : prevVal + 1));
         if (currentPage !== pages) {
             setSlicedData([...data].slice(currentPage * perPage, (currentPage + 1) * perPage));
+            // setIndex((prev) => prev + itemsPerPage)
         }
     };
 
@@ -62,6 +66,7 @@ const usePagination = (itemsPerPage, data, startFrom, remove = false, totalLengt
         }
     }, [data, remove, currentPage, perPage]);
 
+    console.log(slicedData)
     return {
         slicedData,
         pagination,
