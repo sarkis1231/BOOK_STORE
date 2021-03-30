@@ -98,7 +98,7 @@ const Books = () => {
                 setTotalLength(() => res.data.totalLength);
             }
         })
-        searchReset()
+            searchReset()
     }
 
     const onDelete = () => {
@@ -127,7 +127,7 @@ const Books = () => {
                 <Button width='200px' margin='10px' onClick={() => openModal(undefined)}>Add Books</Button>
             </AuthorizationElem>
             <StyledFilterFormContainer>
-                <FilterForm onSearchSubmit={onSearchSubmit} searchHandleSubmit={searchHandleSubmit}
+            <FilterForm onSearchSubmit={onSearchSubmit} searchHandleSubmit={searchHandleSubmit}
                             searchErrors={searchErrors} searchRegister={searchRegister}/>
             </StyledFilterFormContainer>
             <FlexContainer maxWidth='1440px' margin='30px auto 0' width='100%' justifyContent='space-between'
@@ -161,4 +161,5 @@ export default Books;
 
 const StyledFilterFormContainer = styled.div`
   width: 50%;
+
 `
