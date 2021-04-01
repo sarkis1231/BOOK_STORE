@@ -123,11 +123,11 @@ async function getBooksWithFilter(req, res, next) {
 
             data = await Promise.all([books,count]);
 
-            data[0] = [].concat(...data[0]);
+            data[0] = [].concat(...data[0]); // 2d array to 1d
 
         } else {
             books = Books.aggregate(aggregateArray); //promise
-            data = await Promise.all([books,count])
+            data = await Promise.all([books,count]);
         }
 
 
