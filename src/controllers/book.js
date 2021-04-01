@@ -100,25 +100,29 @@ async function getBooksWithFilter(req, res, next) {
 
         let aggregateArray = [];
 
+        aggregateArray.push({$match: {disabled: {$ne: true}}});
+
+
         if (Fn.isArray(permissionQuery)) { //non regular case
             for (let i = 0; i < permissionQuery.length; i++) {
                 let item = permissionQuery[i]
                 aggregateArray.push({$match: {genre: item.id}});
-                aggregateArray.push({$match: {disabled: {$ne: true}}});
                 aggregateArray.push({$limit: item.limit});
             }
         }
 
-
-	
+	    // pagination
         aggregateArray.push({$skip: index ? parseInt(index) : 0});
-	    
+
+        // pagination limit
         aggregateArray.push({$limit: limitBy ? parseInt(limitBy) : 10});
 
+        // query adding
         if (!Fn.isEmpty(query)) {
             aggregateArray.push({$match: {...query}});
         }
 
+        // joins
         let $lookups = [
             {
                 $lookup: {
@@ -139,7 +143,6 @@ async function getBooksWithFilter(req, res, next) {
         ];
 
         aggregateArray.push(...$lookups);
-        console.log(aggregateArray);
 
         let books = Books.aggregate(aggregateArray);
 
