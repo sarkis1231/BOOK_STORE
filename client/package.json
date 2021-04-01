@@ -27,7 +27,8 @@
     "styled-components": "^5.2.1",
     "thunk": "^0.0.1",
     "web-vitals": "^0.2.4",
-    "yup": "^0.32.8"
+    "yup": "^0.32.8",
+    "react-fetch-image": "^1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
