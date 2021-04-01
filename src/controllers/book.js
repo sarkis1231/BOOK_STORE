@@ -103,12 +103,13 @@ async function getBooksWithFilter(req, res, next) {
         if (Fn.isArray(permissionQuery)) { //non regular case
             for (let i = 0; i < permissionQuery.length; i++) {
                 let item = permissionQuery[i]
-                aggregateArray.push({$match: {genre: item.id}})
-                aggregateArray.push({$limit: item.limit})
+                aggregateArray.push({$match: {genre: item.id}});
+                aggregateArray.push({$match: {disabled: {$ne: true}}});
+                aggregateArray.push({$limit: item.limit});
             }
         }
 
-        aggregateArray.push({$match: {disabled: {$ne: true}}});
+
 	
         aggregateArray.push({$skip: index ? parseInt(index) : 0});
 	    
@@ -138,6 +139,7 @@ async function getBooksWithFilter(req, res, next) {
         ];
 
         aggregateArray.push(...$lookups);
+        console.log(aggregateArray);
 
         let books = Books.aggregate(aggregateArray);
 
