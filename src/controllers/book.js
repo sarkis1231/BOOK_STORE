@@ -1,4 +1,5 @@
 const modelUtil = require("../utility/model");
+const UTIL = require("../utility/controllers/util");
 const {noResult} = require("../utility/controllers/messages");
 const {errorThrower,errorValidation} = require("../utility/controllers/errors");
 const {Fn} = require("../utility/functions");
@@ -98,64 +99,44 @@ async function getBooksWithFilter(req, res, next) {
 
         let permissionQuery = await modelUtil.getQueryWithPermission(req.user);
 
-        let aggregateArray = [];
+        let aggregateArray = UTIL.getBooksFilterAggregate({index,limitBy,query});
 
-        aggregateArray.push({$match: {disabled: {$ne: true}}});
+        let books = [];
 
+        let booksPromise = [];
+
+        let count = Books.countDocuments(modelUtil.getQueryWithDisable({}));
+
+        let data = null;
 
         if (Fn.isArray(permissionQuery)) { //non regular case
             for (let i = 0; i < permissionQuery.length; i++) {
-                let item = permissionQuery[i]
-                aggregateArray.push({$match: {genre: item.id}});
-                aggregateArray.push({$limit: item.limit});
+                let subAggregate = [...aggregateArray];
+                let item = permissionQuery[i];
+                let firstElement = subAggregate[0];
+                subAggregate[0] = ({$limit: item.limit});
+                subAggregate.unshift({$match: {genre: item.id}});
+                subAggregate.unshift(firstElement);
+                booksPromise.push(Books.aggregate(subAggregate));
             }
+            books = Promise.all(booksPromise);
+
+            data = await Promise.all([books,count]);
+
+            data[0] = [].concat(...data[0]);
+
+        } else {
+            books = Books.aggregate(aggregateArray); //promise
+            data = await Promise.all([books,count])
         }
 
-	    // pagination
-        aggregateArray.push({$skip: index ? parseInt(index) : 0});
-
-        // pagination limit
-        aggregateArray.push({$limit: limitBy ? parseInt(limitBy) : 10});
-
-        // query adding
-        if (!Fn.isEmpty(query)) {
-            aggregateArray.push({$match: {...query}});
-        }
-
-        // joins
-        let $lookups = [
-            {
-                $lookup: {
-                    from: SCHEMES_NAMES.Authors.toLowerCase(),
-                    localField: "author",
-                    foreignField: "_id",
-                    as: 'author'
-                }
-            },
-            {
-                $lookup: {
-                    from: SCHEMES_NAMES.Genres.toLowerCase(),
-                    localField: "genre",
-                    foreignField: "_id",
-                    as: 'genre'
-                }
-            }
-        ];
-
-        aggregateArray.push(...$lookups);
-
-        let books = Books.aggregate(aggregateArray);
-
-		let count = Books.countDocuments(modelUtil.getQueryWithDisable({}));
-
-		let data = await Promise.all([books,count]);
 
 		let result = {
 	    	data: data[0],
 	    	totalLength: data[1]
         };
 
-        if (!Fn.isEmpty(books)) {
+        if (!Fn.isEmpty(data) && !Fn.isEmpty(data[0]) && !Fn.isEmpty(data[1])) {
             return res.status(200).json(result);
         }
         noResult(res);
