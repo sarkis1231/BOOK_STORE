@@ -35,6 +35,7 @@ const Users = () => {
         closeModal: permissionCLoseModal,
         value: permissionValue
     } = useModal()
+
     const openDeleteModal = (item) => {
         openModal(item)
     }
@@ -110,7 +111,7 @@ const Users = () => {
                 </form>
             </Modal>
             <Modal maxWidth='550px' toggleModal={permissionToggleModal} handleCloseModal={permissionCLoseModal} modalTitle="Edit Permissions">
-                <PermissionForm />
+                <PermissionForm userId={permissionValue?._id} closeModal={permissionCLoseModal}/>
             </Modal>
         </>
     );

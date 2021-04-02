@@ -9,7 +9,7 @@ export const INPUTS = [{id: 0, name: 'name', inputType: 'text', label: 'name', p
     label: 'name'
 }, {id: 2, name: 'File', type: 'file'}]
 
-export const PERMISSION_DROPDOWN_DATA = [{name:'MIN', value:5}, {name:'MID', value:20}, {name:'MAX', value:1000}]
+export const PERMISSION_DROPDOWN_DATA = [{name:'MIN', value:'min'}, {name:'MID', value:'mid'}, {name:'MAX', value:'max'}]
 
 export const USERS_HEADERS = {createdAt: 'Created-At', name: 'Name', email: 'Email', role: 'Role'}
 export const GENRE_HEADERS = {createdAt: 'Created-At', name: 'Name'}

@@ -8,8 +8,9 @@ import {PERMISSION_DROPDOWN_DATA} from "../../constant";
 import PermissionDropDown from "../../components/Reusable/PermissionDropDown";
 import {filterDataControlledDropDown} from "../../utils";
 import useFetch from "../../hooks/useFetch";
+import axios from "axios";
 
-const PermissionForm = () => {
+const PermissionForm = ({userId, closeModal}) => {
     const [fields, setFields] = useState([{permission: 0, genre: 0}]);
     const [check, setCheck] = useState(false);
     const [permission, setPermission] = useState({name: 'none', value: 0})
@@ -31,7 +32,7 @@ const PermissionForm = () => {
     }
 
     function handleRemove(i, key, fieldPer) {
-        const values = [...fields].filter(({genre, permission}, index) => permission !== fieldPer);
+        const values = [...fields].filter(({ permission}) => permission !== fieldPer);
         setFields(values);
         delete permissionValue[key]
         setPermissionValue(permissionValue)
@@ -40,12 +41,28 @@ const PermissionForm = () => {
     }
     console.log('fields',fields)
 
-    const formSubmit = (e) => {
+    const formSubmit = async (e) => {
         e.preventDefault()
-        console.log('permission',Object.values(permissionValue))
-        console.log('genre',Object.values(genreValue))
+        if(check) {
+            try {
+                const res = await axios.put(`users/permission/${userId}`, {premium: check})
+                console.log(res)
+                closeModal();
+            }catch (err) {
+                console.error(err)
+            }
+        }
+
+        try {
+            const res = await axios.put(`users/permission/${userId}`, {genre: Object.values(genreValue), limit: Object.values(permissionValue)})
+            console.log(res)
+            closeModal();
+        }catch (err) {
+            console.error(err)
+        }
+
     }
-    console.log(permission.name)
+
 
     const handleClick = (name, value, idx) => {
         setPermissionValue(prev => ({...prev, [idx]: value}))
@@ -76,7 +93,6 @@ const PermissionForm = () => {
                                 <PermissionDropDown idx={field.permission} setData={setPermission}
                                                     defaultName={permission.name} list={PERMISSION_DROPDOWN_DATA}
                                                     handleClick={handleClick}/>
-                                {console.log('this is the name',permission.name)}
                                 <PermissionDropDown idx={field.genre} setData={setGenre} defaultName={genre.name}
                                                     list={filterDataControlledDropDown(getGenre)}
                                                     handleClick={handleGenreClick}/>
@@ -128,15 +144,13 @@ const StyledCheckboxContainer = styled.label`
 `
 
 const StyledCheckbox = styled.input`
-  display: inline-block;
   width: 25px;
   height: 25px;
   background: ${({theme}) => theme.checkBox};
   cursor: pointer;
-  display: ${({display}) => display ? display : ''};
+  display: ${({display}) => display ? display : 'inline-block'};
   -webkit-appearance: none;
   -moz-appearance: none;
-  -o-appearance: none;
   appearance: none;
   border: none;
   border-radius: 4px;
