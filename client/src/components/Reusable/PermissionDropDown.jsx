@@ -64,7 +64,7 @@ export default PermissionDropDown;
 
 const StyledControlledDropDownContainer = styled(StyledDropDownContainer)`
   justify-content: space-between;
-  width: 100%;
+  width: 90%;
   position: relative;
   background: ${({theme}) => theme.input.bgColor};
   border: ${({theme}) => `1px solid ${theme.input.border}`};

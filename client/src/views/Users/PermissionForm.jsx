@@ -6,7 +6,7 @@ import Button from "../../components/Reusable/Button";
 import styled from "styled-components";
 import {PERMISSION_DROPDOWN_DATA} from "../../constant";
 import PermissionDropDown from "../../components/Reusable/PermissionDropDown";
-import {filterDataControlledDropDown, filteredValue} from "../../utils";
+import {filterDataControlledDropDown} from "../../utils";
 import useFetch from "../../hooks/useFetch";
 
 const PermissionForm = () => {
@@ -24,19 +24,21 @@ const PermissionForm = () => {
     };
 
     function handleAdd(i) {
+        console.log(fields[i].permission + 1)
         setFields(prev => [...prev, {permission: prev[i].permission + 1, genre: prev[i].genre + 1}]);
         setPermission({name: 'none', value: 0})
         setGenre({name: 'none', value: 0})
     }
 
-    function handleRemove(i, key) {
-        const values = [...fields].filter((_, index) => index !== i);
+    function handleRemove(i, key, fieldPer) {
+        const values = [...fields].filter(({genre, permission}, index) => permission !== fieldPer);
         setFields(values);
         delete permissionValue[key]
         setPermissionValue(permissionValue)
         delete genreValue[key]
         setGenreValue(genreValue)
     }
+    console.log('fields',fields)
 
     const formSubmit = (e) => {
         e.preventDefault()
@@ -51,11 +53,9 @@ const PermissionForm = () => {
     }
 
     const handleGenreClick = (name, value, idx) => {
-        console.log(name)
         setGenreValue(prev => ({...prev, [idx]: value}))
         setGenre({name: name, value:value})
     }
-    console.log(genre)
 
 
     return (
@@ -64,6 +64,7 @@ const PermissionForm = () => {
                 <FlexContainer width='100%' flexDirection='column'>
                     <StyledCheckboxContainer>
                         <StyledCheckbox name='premium' type='checkbox' value="false" onChange={handleChangeCheck}/>
+                        <p>Premium</p>
                     </StyledCheckboxContainer>
                     {check ? '' : fields.map((field, idx) => {
                         return (
@@ -75,23 +76,35 @@ const PermissionForm = () => {
                                 <PermissionDropDown idx={field.permission} setData={setPermission}
                                                     defaultName={permission.name} list={PERMISSION_DROPDOWN_DATA}
                                                     handleClick={handleClick}/>
+                                {console.log('this is the name',permission.name)}
                                 <PermissionDropDown idx={field.genre} setData={setGenre} defaultName={genre.name}
                                                     list={filterDataControlledDropDown(getGenre)}
                                                     handleClick={handleGenreClick}/>
-                                {fields.length !== 1 ?
-                                    <StyledIconContainer type='button' onClick={() => handleRemove(idx, Object.keys(permissionValue)[idx])}>
+                                {fields.length > 1 && idx === fields.length-1 ?
+                                    <StyledIconContainer type='button'
+                                                         onClick={() => handleRemove(idx, Object.keys(permissionValue)[idx], field.permission, genre.name)}>
                                         <DeleteIcon/>
-                                    </StyledIconContainer> : null}
-                                {fields.length - 1 === idx && <StyledIconContainer type='button'
+                                    </StyledIconContainer> : <StyledIconContainer type='button'
+                                                                                  opacity='0'
+                                                                                  pointerEvents='none'>
+                                        <DeleteIcon/>
+                                    </StyledIconContainer>}
+                                {fields.length - 1 === idx ? <StyledIconContainer type='button'
                                                                                    opacity={check ? '0.4' : '100'}
                                                                                    pointerEvents={check ? 'none' : ''}
                                                                                    onClick={() => handleAdd(idx)}>
+                                    <AddIcon/>
+                                </StyledIconContainer> : <StyledIconContainer type='button'
+                                                                              opacity='0'
+                                                                              pointerEvents='none'
+                                >
                                     <AddIcon/>
                                 </StyledIconContainer>}
                             </FlexContainer>
                         );
                     })}
-                    <Button type='submit' disabled={permission.name === 'none' || genre.name === 'none'} width='50%' alignSelf='center' margin='10px 0 0 0'>Submit</Button>
+                    <Button type='submit' disabled={permission.name === 'none' || genre.name === 'none'} width='50%'
+                            alignSelf='center' margin='10px 0 0 0'>Submit</Button>
                 </FlexContainer>
             </StyledForm>
 
@@ -106,9 +119,12 @@ const StyledForm = styled.form`
 `
 
 const StyledCheckboxContainer = styled.label`
-  display: inline-block;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
   margin: ${({margin}) => margin ? margin : '0'};
+  p{
+    margin-left: 10px;
+  }
 `
 
 const StyledCheckbox = styled.input`
