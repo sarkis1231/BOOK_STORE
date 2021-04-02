@@ -39,7 +39,6 @@ const PermissionForm = ({userId, closeModal}) => {
         delete genreValue[key]
         setGenreValue(genreValue)
     }
-    console.log('fields',fields)
 
     const formSubmit = async (e) => {
         e.preventDefault()

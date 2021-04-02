@@ -44,7 +44,6 @@ const Users = () => {
     }
 
     const openPermissionModal  = (item) => {
-        console.log(item)
         permissionOpenModal(item)
     }
     const onSubmit = (value) => {
