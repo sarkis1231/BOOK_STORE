@@ -4,8 +4,10 @@ import {dateYearFormat} from "../../utils";
 import {FlexContainer} from "../../styled/layout.styled";
 import {ReactComponent as EditIcon} from '../../assets/svg/edit.svg'
 import {ReactComponent as DeleteIcon} from '../../assets/svg/delete.svg'
+import {ReactComponent as PermissionIcon} from '../../assets/svg/user.svg'
 
-const Table = ({header, body, actionsTypes, editAction, deleteAction, margin}) => {
+
+const Table = ({header, body, actionsTypes, editAction, deleteAction,permissionAction, margin}) => {
 
     return (
         <StyledTableContainer margin={margin}>
@@ -37,6 +39,11 @@ const Table = ({header, body, actionsTypes, editAction, deleteAction, margin}) =
                                                 return (
                                                     <DeleteIcon key={action}
                                                                 onClick={deleteAction ? () => deleteAction({...item}) : null}/>
+                                                )
+                                            case 'PERMISSION':
+                                                return (
+                                                    <PermissionIcon key={action}
+                                                              onClick={permissionAction ? () => permissionAction({...item}) : null}/>
                                                 )
                                             default:
                                                 break;
@@ -113,6 +120,7 @@ const StyledTd = styled.td`
 
   svg {
     width: 20px;
+    height: 20px;
     cursor: pointer;
     fill: ${({theme}) => theme.editDeleteIcon};
   }

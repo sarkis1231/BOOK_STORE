@@ -47,6 +47,7 @@ const ControlledDropDown = forwardRef(({
                 <StyledControlledDropDownContainer
                     ref={inputRef}
                     toggleIcon={toggle}
+                    type="button"
                     onClick={() => setToggle(prev => !prev)}
                     mobileDisplay={mobileDisplay}
                     dropDownDisplay={dropDownDisplay}
@@ -84,8 +85,8 @@ const StyledControlledDropDownContainer = styled(StyledDropDownContainer)`
   padding: 10px;
   border-radius: 10px;
   margin: 0;
-  opacity: ${({ opacity }) => opacity};
-  pointer-events: ${({ pointerEvents }) => pointerEvents};
+  opacity: ${({opacity}) => opacity};
+  pointer-events: ${({pointerEvents}) => pointerEvents};
 `
 const StyledControlledTitle = styled(StyledTitle)`
   color: ${({theme}) => theme.input.color};
