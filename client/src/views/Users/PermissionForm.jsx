@@ -63,6 +63,7 @@ const PermissionForm = ({userId, closeModal}) => {
     }
 
 
+
     const handleClick = (name, value, idx) => {
         setPermissionValue(prev => ({...prev, [idx]: value}))
         setPermission({name: name, value:value})
