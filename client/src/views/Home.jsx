@@ -4,57 +4,67 @@ import {FlexContainer} from '../styled/layout.styled';
 import styled from 'styled-components';
 import {useHistory} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
 
 
 const Home = () => {
     const history = useHistory();
+    const {t} = useTranslation();
     const user = useSelector(state => state.auth.user)
     return (
         <>
             <FlexContainer flexDirection='column' padding='40px 20px' margin='0 0 20px 0'>
-                <StyledHeader>Welcome to our Book-store</StyledHeader>
-                <StyledHeaderTwo>About us </StyledHeaderTwo>
+                <StyledHeader>{t("homePage.pageTitle")}</StyledHeader>
+                <StyledHeaderTwo>{t("homePage.aboutUs")} </StyledHeaderTwo>
                 <p>
-                    We are an online book store that was established in 2020.<br/>
-                    we give our registered users access to download a large variety of books
-                    that belongs to different categories for free. <br/>
-                    our goal is to help people get access to their desired books
-                    from anywhere in the world easily and conveniently.
-
+                    {t("homePage.introduction")}
                 </p>
 
 
                 <StyledHeaderFour>
-                    In order to access our books please register
+                    {t("homePage.inOrder")}
                 </StyledHeaderFour>
-                {Object.keys(user).length ? null : < Button
-                    type='button'
-                    width='200px'
-                    onClick={() => history.push('/register')}> Register
-                </Button>}
-                <StyledHeaderTwo>Contact us</StyledHeaderTwo>
+                {Object.keys(user).length ? null :
+                    <FlexContainer alignItems='center' justifyContent='flex-start'>
+                        <Button
+                            type='button'
+                            width='200px'
+                            onClick={() => history.push('/register')}>
+                            {t("register")}
+                        </Button>
+                        <p style={{margin: '0 20px'}}>{t("homePage.or")}</p>
+                        <Button
+                            type='button'
+                            width='200px'
+                            onClick={() => history.push('/login')}>
+                            {t("login")}
+                        </Button>
+                    </FlexContainer>
+                }
+                <StyledHeaderTwo>{t("homePage.contactUs")}</StyledHeaderTwo>
                 <StyledA href="mailto:sakooghly@gmail.com" target="_blank"
                          rel="noreferrer noopener">sakooghly@gmail.com</StyledA>
             </FlexContainer>
         </>
     );
-};
+}
+;
 
 export default Home;
 
 
 const StyledHeader = styled.h1`
-  text-align: center;
+text-align: center;
 
 `
 
 const StyledHeaderTwo = styled.h2`
-  padding: 40px 0 20px 0;
+padding: 40px 0 20px 0;
 
 `
 
 const StyledHeaderFour = styled.h4`
-  padding: 40px 0 20px 0;
+padding: 40px 0 20px 0;
 
 `
 const StyledA = styled.a`

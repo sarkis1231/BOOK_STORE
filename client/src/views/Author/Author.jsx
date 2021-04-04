@@ -12,9 +12,11 @@ import Modal from "../../components/Reusable/Modal";
 import DeleteModalContent from "../../components/Reusable/DeleteModalContent";
 import Input from "../../components/Reusable/Input";
 import Button from "../../components/Reusable/Button";
+import {useTranslation} from "react-i18next";
 
 
 const Author = () => {
+    const {t} = useTranslation()
     const [reFetch, setReFetch] = useState(false)
     const authors = useFetch('/authors', reFetch)
     const {register, errors, handleSubmit, reset} = useForm({
@@ -80,7 +82,7 @@ const Author = () => {
                 inputs={AUTHOR_INPUTS}
                 errors={errors}
                 register={register}
-                btnName='Add Author'
+                btnName={t("author.addAuthor")}
                 handleSubmit={handleSubmit}
                 onSubmit={onSubmit}
             />

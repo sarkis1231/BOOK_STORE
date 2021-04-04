@@ -12,8 +12,10 @@ import Modal from "../../components/Reusable/Modal";
 import DeleteModalContent from "../../components/Reusable/DeleteModalContent";
 import Input from "../../components/Reusable/Input";
 import Button from "../../components/Reusable/Button";
+import {useTranslation} from "react-i18next";
 
 const Genre = () => {
+    const {t} = useTranslation()
     const [reFetch, setReFetch] = useState(false)
     const genre = useFetch('/genre', reFetch)
     const {errors, handleSubmit, register, reset} = useForm({
@@ -77,7 +79,7 @@ const Genre = () => {
         <>
             <Form
                 inputs={GENRE_INPUTS}
-                btnName='Add Genre'
+                btnName={t("genre.addGenre")}
                 register={register}
                 errors={errors}
                 handleSubmit={handleSubmit}

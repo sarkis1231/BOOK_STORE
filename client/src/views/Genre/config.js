@@ -5,8 +5,8 @@ export const GENRE_INPUTS = [
         id: 0,
         name: 'name',
         inputType: 'text',
-        label: 'Genre',
-        placeHolder: 'Genre'
+        label: 'genre.genre',
+        placeHolder: 'genre.genre'
     },
 ]
 

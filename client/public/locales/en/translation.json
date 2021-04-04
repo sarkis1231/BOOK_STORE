@@ -2,13 +2,42 @@
   "headerItem": {
     "item1": "Home",
     "item2": "Books",
-    "item3": "Login"
+    "item3": "Login",
+    "item4": "Genre",
+    "item5": "Author",
+    "item6": "Users"
   },
   "searchPlaceHolder": "Search",
   "login": "Login",
   "email": "Email",
-  "password":"Password",
-  "register":"Register",
+  "password": "Password",
+  "register": "Register",
   "confirmPassword": "Confirm password",
-  "logOut" : "Log out"
+  "logOut": "Log out",
+  "homePage": {
+    "pageTitle": "Welcome to our Book-Library",
+    "aboutUs": "About us",
+    "introduction": "We are an online book store that was established in 2020.\nwe give our registered users access to download a large variety of books that belongs to different categories for free.\nour goal is to help people get access to their desired books from anywhere in the world easily and conveniently.",
+    "inOrder": "In order to access our books please register",
+    "or": "or",
+    "contactUs": "Contact us"
+  },
+  "author": {
+      "author": "Author",
+      "addAuthor": "Add Author"
+  },
+  "genre": {
+    "genre": "Genre",
+    "addGenre": "Add Genre"
+  },
+  "table": {
+    "actions": "Actions",
+    "createdAt": "Created-At",
+    "name": "Name"
+  }
 }
+
+
+
+
+

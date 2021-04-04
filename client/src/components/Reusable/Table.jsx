@@ -7,19 +7,21 @@ import {ReactComponent as DeleteIcon} from '../../assets/svg/delete.svg'
 import {ReactComponent as PermissionIcon} from '../../assets/svg/user.svg'
 import usePagination from "../../hooks/usePagination";
 import {ReactComponent as NextIcon} from '../.././assets/svg/nextArrow.svg'
+import {useTranslation} from "react-i18next";
 
 
 const Table = ({header, body, actionsTypes, editAction, deleteAction, permissionAction, margin}) => {
+    const {t} = useTranslation()
     const {slicedData, currentPage, nextPage, prevPage, pagination} = usePagination(5, body, 1)
     return (
         <StyledTableContainer margin={margin}>
             <StyledTable>
                 <StyledThead>
                     <tr>
-                        {actionsTypes && <StyledTd>Actions</StyledTd>}
+                        {actionsTypes && <StyledTd>{t('table.actions')}</StyledTd>}
                         {Object.values(header).map(item => (
 
-                            <StyledTd key={item}>{item}</StyledTd>
+                            <StyledTd key={item}>{t(`${item}`)}</StyledTd>
                         ))}
                     </tr>
                 </StyledThead>

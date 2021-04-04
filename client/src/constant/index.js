@@ -11,6 +11,6 @@ export const INPUTS = [{id: 0, name: 'name', inputType: 'text', label: 'name', p
 
 export const PERMISSION_DROPDOWN_DATA = [{name:'MIN', value:'min'}, {name:'MID', value:'mid'}, {name:'MAX', value:'max'}]
 
-export const USERS_HEADERS = {createdAt: 'Created-At', name: 'Name', email: 'Email', role: 'Role'}
-export const GENRE_HEADERS = {createdAt: 'Created-At', name: 'Name'}
-export const AUTHORS_HEADERS = {createdAt: 'Created-At', name: 'Name'}
+export const USERS_HEADERS = {createdAt: 'table.createdAt', name: 'table.name', email: 'Email', role: 'Role'}
+export const GENRE_HEADERS = {createdAt: 'table.createdAt', name: 'table.name'}
+export const AUTHORS_HEADERS = {createdAt: 'table.createdAt', name: 'table.name'}

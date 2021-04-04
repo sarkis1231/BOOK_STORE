@@ -5,8 +5,8 @@ export const AUTHOR_INPUTS = [
         id: 0,
         name: 'name',
         inputType: 'text',
-        label: 'Author',
-        placeHolder: 'Author'
+        label: 'author.author',
+        placeHolder: 'author.author'
     },
 ]
 export const AuthorSchema = yup.object().shape({
