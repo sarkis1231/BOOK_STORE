@@ -34,10 +34,10 @@ const Login = () => {
                 history.push('/');
             }
         }).catch(e => {
-            if(e.response.data.email) {
+            if(e.response.data?.email) {
                 setAlert({show: true, message: e.response.data.email, severity: 'error'})
             }
-            if(e.response.data.data.email) {
+            if(e.response.data.data?.email) {
                 setAlert({show: true, message: e.response.data.data.email, severity: 'error'})
             }
         })
