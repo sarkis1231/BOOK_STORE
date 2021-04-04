@@ -5,10 +5,12 @@ import {FlexContainer} from "../../styled/layout.styled";
 import {ReactComponent as EditIcon} from '../../assets/svg/edit.svg'
 import {ReactComponent as DeleteIcon} from '../../assets/svg/delete.svg'
 import {ReactComponent as PermissionIcon} from '../../assets/svg/user.svg'
+import usePagination from "../../hooks/usePagination";
+import {ReactComponent as NextIcon} from '../.././assets/svg/nextArrow.svg'
 
 
-const Table = ({header, body, actionsTypes, editAction, deleteAction,permissionAction, margin}) => {
-
+const Table = ({header, body, actionsTypes, editAction, deleteAction, permissionAction, margin}) => {
+    const {slicedData, currentPage, nextPage, prevPage, pagination} = usePagination(5, body, 1)
     return (
         <StyledTableContainer margin={margin}>
             <StyledTable>
@@ -22,7 +24,7 @@ const Table = ({header, body, actionsTypes, editAction, deleteAction,permissionA
                     </tr>
                 </StyledThead>
                 <tbody>
-                {body.length ? body.map(item => (
+                {slicedData.length ? slicedData.map(item => (
                     !((item['role'] && item['role']) === 'Admin') ?
                         <tr key={item._id}>
                             {actionsTypes ? <StyledTd>
@@ -43,7 +45,7 @@ const Table = ({header, body, actionsTypes, editAction, deleteAction,permissionA
                                             case 'PERMISSION':
                                                 return (
                                                     <PermissionIcon key={action}
-                                                              onClick={permissionAction ? () => permissionAction({...item}) : null}/>
+                                                                    onClick={permissionAction ? () => permissionAction({...item}) : null}/>
                                                 )
                                             default:
                                                 break;
@@ -61,6 +63,13 @@ const Table = ({header, body, actionsTypes, editAction, deleteAction,permissionA
                 )) : null}
                 </tbody>
             </StyledTable>
+            <StyledPaginationContainer pagination={pagination.length > 1} prev={currentPage === 1}
+                                       next={currentPage === pagination.length} justifyContent='center'>
+
+                <NextIcon className='pervIcon' onClick={(e) => prevPage(e)}/>
+                <p>{currentPage}</p>
+                <NextIcon className='nextIcon' onClick={(e) => nextPage(e)}/>
+            </StyledPaginationContainer>
         </StyledTableContainer>
     )
 }
@@ -71,6 +80,7 @@ const StyledTableContainer = styled.div`
   display: flex;
   flex-flow: row nowrap;
   flex-grow: initial;
+  flex-direction: column;
   width: 100%;
   overflow: auto;
   margin: ${({margin}) => margin ? margin : '40px 0'};
@@ -125,4 +135,36 @@ const StyledTd = styled.td`
     fill: ${({theme}) => theme.editDeleteIcon};
   }
 
+`
+
+const StyledPaginationContainer = styled(FlexContainer)`
+  border-top: ${({theme}) => theme.table.border};
+  align-items: center;
+  padding: 10px;
+  visibility: ${({pagination}) => pagination ? 'visible' : 'hidden'};
+  opacity: ${({pagination}) => pagination ? '1' : '0'};
+  transition: all 0.3s ease;
+
+  > svg {
+    width: 20px;
+    height: 20px;
+
+    path {
+      fill: ${({theme}) => theme.nextPrevIcon};
+    }
+
+  }
+
+  .pervIcon {
+    transform: rotateY(-180deg);
+    cursor: ${({prev}) => prev ? 'not-allowed' : 'pointer'};
+  }
+
+  .nextIcon {
+    cursor: ${({next}) => next ? 'not-allowed' : 'pointer'};
+  }
+
+  p {
+    margin: 0 10px;
+  }
 `
