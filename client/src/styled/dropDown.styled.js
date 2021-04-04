@@ -41,26 +41,25 @@ const StyledTitle = styled.p`
 const StyledListItemContainer = styled(FlexContainer)`
   flex-direction: column;
   position: absolute;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   top: ${({top}) => top ? top : '30px'};
   left: 0;
   right: 0;
   width: 100%;
-  border-radius: ${({borderRadius}) => borderRadius ? '10px' : 0};
+  border-radius: ${({borderRadius}) => borderRadius ? borderRadius : '10px'};
   background: ${({theme}) => theme.dropDown.bgColor};
   z-index: 2;
-  border-radius: 10px;
 
   overflow: hidden;
   ${({toggleMenu}) => toggleMenu ?
           css` max-height: 220px;
-            overflow: hidden;
+            overflow: auto;
             border: ${({theme}) => `1px solid ${theme.dropDown.border}`};
           ;
           `
           :
-          css`max-height: 0;   border: 0px solid transparent;`
+          css`max-height: 0;   border: 0 solid transparent;`
   };
   transition: all .3s ease;
 `

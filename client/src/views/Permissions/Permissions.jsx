@@ -10,12 +10,12 @@ const Permissions = () => {
     const usersPermission = useFetch('/permissions');
     const [genre, setGenre] = useState([])
     const {toggleModal, openModal, closeModal} = useModal()
-    console.log(usersPermission)
+
     const handleOpenModal = (genre) => {
         setGenre(genre)
         openModal()
     }
-    console.log(genre)
+
     return (
         <>
             <FlexContainer flexDirection="column" width='50%'>
