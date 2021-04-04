@@ -10,7 +10,7 @@ import {filterDataControlledDropDown} from "../../utils";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 
-const PermissionForm = ({userId, closeModal}) => {
+const PermissionForm = ({userId, closeModal, setAlert}) => {
     const [fields, setFields] = useState([{permission: 0, genre: 0}]);
     const [check, setCheck] = useState(false);
     const [permission, setPermission] = useState({name: 'none', value: 0})
@@ -45,8 +45,8 @@ const PermissionForm = ({userId, closeModal}) => {
         if(check) {
             try {
                 const res = await axios.put(`users/permission/${userId}`, {premium: check})
-                console.log(res)
                 closeModal();
+                setAlert({show: true, message: res.data.message, severity: res.data.alert})
             }catch (err) {
                 console.error(err)
             }
@@ -54,7 +54,7 @@ const PermissionForm = ({userId, closeModal}) => {
 
         try {
             const res = await axios.put(`users/permission/${userId}`, {genre: Object.values(genreValue), limit: Object.values(permissionValue)})
-            console.log(res)
+            setAlert({show: true, message: res.data.message, severity: res.data.alert})
             closeModal();
         }catch (err) {
             console.error(err)

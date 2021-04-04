@@ -69,6 +69,12 @@ export const lightTheme = {
     userFontColor: '#4a4a4a',
     checkBox: '#000000',
     checkMark: '#FFFFFF',
+    alert: {
+        successBg:'#4CAF4F',
+        errorBg:'#F44336',
+        warningBg:'#FF9800',
+        color: '#FFFFFF'
+    }
 }
 
 export const darkTheme = {
@@ -141,4 +147,10 @@ export const darkTheme = {
     userFontColor: '#4a4a4a',
     checkBox: '#FFFFFF',
     checkMark: '#000000',
+    alert: {
+        successBg:'#4CAF4F',
+        errorBg:'#F44336',
+        warningBg:'#FF9800',
+        color: '#FFFFFF'
+    }
 }

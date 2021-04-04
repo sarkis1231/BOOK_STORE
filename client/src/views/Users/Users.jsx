@@ -12,6 +12,8 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {EditUsersSchema} from "./config";
 import {TABLE_ACTION_TYPES_ALL, USERS_HEADERS} from "../../constant";
 import PermissionForm from "./PermissionForm";
+import Alert from "../../components/Reusable/Alert";
+import useAlert from "../../hooks/useAlert";
 
 const Users = () => {
     const [reFetch, setReFetch] = useState(false)
@@ -21,6 +23,7 @@ const Users = () => {
     const {register, errors, handleSubmit} = useForm({
         resolver: yupResolver(EditUsersSchema),
     })
+    const [alert, setAlert] = useAlert()
 
     const {
         toggleModal: editToggleModal,
@@ -49,12 +52,11 @@ const Users = () => {
     const onSubmit = (value) => {
         const {name, email} = value
         axios.put(`/users/${editValue._id}`, {name, email}).then(res => {
-            console.log(res)
             setReFetch(prev => !prev)
             setServerErrors({})
             editCLoseModal()
+            setAlert({show: true, message: res.data.message, severity: res.data.alert})
         }).catch(e => {
-            console.log(e)
             setServerErrors(prev => ({...prev, ...e.response.data.data}))
         })
     }
@@ -110,8 +112,9 @@ const Users = () => {
                 </form>
             </Modal>
             <Modal maxWidth='550px' toggleModal={permissionToggleModal} handleCloseModal={permissionCLoseModal} modalTitle="Edit Permissions">
-                <PermissionForm userId={permissionValue?._id} closeModal={permissionCLoseModal}/>
+                <PermissionForm setAlert={setAlert} userId={permissionValue?._id} closeModal={permissionCLoseModal}/>
             </Modal>
+            <Alert severity={alert.severity} message={alert.message} setShow={setAlert} show={alert.show}/>
         </>
     );
 };
