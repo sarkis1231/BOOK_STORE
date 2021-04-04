@@ -5,13 +5,13 @@ import {ReactComponent as CloseIcon} from '../../assets/svg/close.svg';
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import {Overlay} from "../../styled/shared.styled";
 
-const Modal = ({toggleModal, handleCloseModal, modalTitle, children}) => {
+const Modal = ({toggleModal, handleCloseModal, modalTitle, children, maxWidth}) => {
     const ref = useRef(null);
     useOnClickOutside(ref, () => handleCloseModal() ? handleCloseModal() : null);
     return (
         <>
             <StyledOverlay toggleModal={toggleModal}>
-                <StyledModalContainer ref={ref} toggleModal={toggleModal}>
+                <StyledModalContainer maxWidth={maxWidth} ref={ref} toggleModal={toggleModal}>
                     <ModalTitle>{modalTitle}</ModalTitle>
                     <CloseIcon className='close-icon' onClick={() => handleCloseModal()}/>
                     <StyledModalContent>
@@ -80,7 +80,7 @@ const StyledModalContainer = styled(FlexContainer)`
   padding: 20px;
   border-radius: 15px;
   width: 100%;
-  max-width: 400px;
+  max-width: ${({maxWidth}) => maxWidth || '400px'};
   transform: translateY(-1000px);
   ${({toggleModal}) => toggleModal ?  css`
            transform: translateY(0);

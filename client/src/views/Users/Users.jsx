@@ -10,7 +10,8 @@ import {useForm} from "react-hook-form";
 import Button from "../../components/Reusable/Button";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {EditUsersSchema} from "./config";
-import {TABLE_ACTION_TYPES, USERS_HEADERS} from "../../constant";
+import {TABLE_ACTION_TYPES_ALL, USERS_HEADERS} from "../../constant";
+import PermissionForm from "./PermissionForm";
 
 const Users = () => {
     const [reFetch, setReFetch] = useState(false)
@@ -27,11 +28,23 @@ const Users = () => {
         closeModal: editCLoseModal,
         value: editValue
     } = useModal()
+
+    const {
+        toggleModal: permissionToggleModal,
+        openModal: permissionOpenModal,
+        closeModal: permissionCLoseModal,
+        value: permissionValue
+    } = useModal()
+
     const openDeleteModal = (item) => {
         openModal(item)
     }
     const openEditModal = (item) => {
         editOpenModal(item)
+    }
+
+    const openPermissionModal  = (item) => {
+        permissionOpenModal(item)
     }
     const onSubmit = (value) => {
         const {name, email} = value
@@ -61,9 +74,10 @@ const Users = () => {
             <Table
                 header={USERS_HEADERS}
                 body={users}
-                actionsTypes={TABLE_ACTION_TYPES}
+                actionsTypes={TABLE_ACTION_TYPES_ALL}
                 deleteAction={openDeleteModal}
                 editAction={openEditModal}
+                permissionAction={openPermissionModal}
             />
             <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Delete users'>
                 <DeleteModalContent
@@ -94,6 +108,9 @@ const Users = () => {
                     />
                     <Button type='submit'>Edit</Button>
                 </form>
+            </Modal>
+            <Modal maxWidth='550px' toggleModal={permissionToggleModal} handleCloseModal={permissionCLoseModal} modalTitle="Edit Permissions">
+                <PermissionForm userId={permissionValue?._id} closeModal={permissionCLoseModal}/>
             </Modal>
         </>
     );
