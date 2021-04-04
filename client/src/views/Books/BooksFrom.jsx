@@ -4,7 +4,18 @@ import {FlexContainer} from "../../styled/layout.styled";
 import ControlledDropDown from "../../components/Reusable/ControlledDropDown";
 import Button from "../../components/Reusable/Button";
 
-const BooksFrom = ({handleSubmit, onSubmit, errors, register, values, buttonName}) => {
+const BooksFrom = ({
+                       handleSubmit,
+                       onSubmit,
+                       errors,
+                       register,
+                       values,
+                       buttonName,
+                       handleAddBookFile,
+                       handleAddImageFile,
+                       addImageFile,
+                       addBookFilePlaceHolder
+                   }) => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -37,9 +48,11 @@ const BooksFrom = ({handleSubmit, onSubmit, errors, register, values, buttonName
                                     error={errors}
                 />
             </FlexContainer>
-            <Input name='file' ref={register} type='file' label='Choose a Book' placeHolder={'Choose a Book'}
+            <Input name='file' onFileChange={handleAddBookFile} ref={register} type='file' label='Choose a Book'
+                   placeHolder={addBookFilePlaceHolder}
                    error={errors}/>
-            <Input name='image' ref={register} type='file' label='Choose an Image' placeHolder={'Choose an Image'}
+            <Input onFileChange={handleAddImageFile} name='image' ref={register} type='file' label='Choose an Image'
+                   placeHolder={addImageFile}
                    error={errors} margin='20px 0 0'/>
             <Button type='submit' margin='20px 0'>{buttonName}</Button>
         </form>

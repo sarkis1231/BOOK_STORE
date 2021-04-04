@@ -22,8 +22,6 @@ export const filteredValue = (values) => {
     let filteredValue = {}
     Object.keys(values).forEach(key => {
         if (values[key].length > 0) {
-            console.log(values[key])
-            console.log(values[key])
             filteredValue = {...filteredValue, [key]: values[key].trim()}
         }
     })
@@ -43,4 +41,9 @@ export default function booksFormData(value) {
         }
     })
     return formData;
+}
+
+export function formatFileName(fileName) {
+    const splitFileName =  fileName.split('.');
+    return `${splitFileName[0].slice(0, 20)}.${splitFileName[1]}`
 }

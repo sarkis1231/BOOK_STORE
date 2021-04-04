@@ -11,7 +11,7 @@ import axios from "axios";
 import BooksFrom from "./BooksFrom";
 import Card from "../../components/Reusable/Card";
 import {FlexContainer} from "../../styled/layout.styled";
-import booksFormData, {filteredValue} from "../../utils";
+import booksFormData, {filteredValue, formatFileName} from "../../utils";
 import DeleteModalContent from "../../components/Reusable/DeleteModalContent";
 import FilterForm from "./FilterForm";
 import styled from "styled-components";
@@ -36,6 +36,7 @@ const Books = () => {
     const {register, handleSubmit, errors, reset} = useForm({
         resolver: yupResolver(AddBookSchema),
     });
+    const [filePlaceHolder, setFilePlaceHolder] = useState({addBook: 'Choose a Book', addImage: 'Choose an Image'})
     const {register: editRegister, handleSubmit: editHandleSubmit, errors: editErrors} = useForm({
         resolver: yupResolver(EditBookSchema),
     });
@@ -47,17 +48,16 @@ const Books = () => {
         errors: searchErrors,
         reset: searchReset
     } = useForm();
-    const  {
+    const {
         slicedData,
         pagination,
         prevPage: goToPrevPage,
         nextPage: goToNextPage,
         changePage,
-    } = usePagination(3,data,1,false, totalLength);
+    } = usePagination(3, data, 1, false, totalLength);
     const [reFetch, setReFetch] = useState(false)
     useEffect(() => {
-        axios.get(`/books/filter`, {
-        }).then(res => {
+        axios.get(`/books/filter`, {}).then(res => {
             setTotalLength(res.data.totalLength)
             res.data.empty ? setData(() => []) : setData(() => [...res.data.data])
 
@@ -81,6 +81,7 @@ const Books = () => {
         axios.post('/books', formData).then(() => {
             reset();
             setReFetch(prev => !prev)
+            setFilePlaceHolder(prev => ({...prev, addBook: 'Choose a Book', addImage: 'Choose an Image'}))
         }).catch(e => {
             console.log(e)
         });
@@ -98,7 +99,7 @@ const Books = () => {
                 setTotalLength(() => res.data.totalLength);
             }
         })
-            searchReset()
+        searchReset()
     }
 
     const onDelete = () => {
@@ -120,6 +121,14 @@ const Books = () => {
         })
         editCloseModal()
     }
+    const handleAddBookFile = (e) => {
+        const {files} = e.target
+        setFilePlaceHolder(prev => ({...prev, addBook: formatFileName(files[0].name)}))
+    }
+    const handleAddImageFile = (e) => {
+        const {files} = e.target
+        setFilePlaceHolder(prev => ({...prev, addImage: formatFileName(files[0].name)}))
+    }
 
     return (
         <>
@@ -127,7 +136,7 @@ const Books = () => {
                 <Button width='200px' margin='10px' onClick={() => openModal(undefined)}>Add Books</Button>
             </AuthorizationElem>
             <StyledFilterFormContainer>
-            <FilterForm onSearchSubmit={onSearchSubmit} searchHandleSubmit={searchHandleSubmit}
+                <FilterForm onSearchSubmit={onSearchSubmit} searchHandleSubmit={searchHandleSubmit}
                             searchErrors={searchErrors} searchRegister={searchRegister}/>
             </StyledFilterFormContainer>
             <FlexContainer maxWidth='1440px' margin='30px auto 0' width='100%' justifyContent='space-between'
@@ -140,7 +149,10 @@ const Books = () => {
             </FlexContainer>
             <PaginationBar changePage={changePage} pageNumber={pagination} next={goToNextPage} prev={goToPrevPage}/>
             <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Add Book'>
-                <BooksFrom buttonName='Add Book' onSubmit={onSubmit} register={register} errors={errors}
+                <BooksFrom addImageFile={filePlaceHolder.addImage} addBookFilePlaceHolder={filePlaceHolder.addBook}
+                           handleAddImageFile={handleAddImageFile}
+                           handleAddBookFile={handleAddBookFile}
+                           buttonName='Add Book' onSubmit={onSubmit} register={register} errors={errors}
                            handleSubmit={handleSubmit}/>
             </Modal>
             <Modal toggleModal={deleteToggleModal} handleCloseModal={deleteCloseModal} modalTitle='Delete Book'>

@@ -47,7 +47,7 @@ const StyledListItemContainer = styled(FlexContainer)`
   left: 0;
   right: 0;
   width: 100%;
-  border-radius: ${({borderRadius}) => borderRadius ? borderRadius : '10px'};
+  border-radius: ${({borderRadius}) => borderRadius ? "10px" : '10px'};
   background: ${({theme}) => theme.dropDown.bgColor};
   z-index: 2;
 
