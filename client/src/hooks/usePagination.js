@@ -1,13 +1,12 @@
 import {useEffect,useState} from 'react';
 
-const usePagination = (itemsPerPage, data, startFrom, remove = false, totalLength) => {
+const usePagination = (itemsPerPage, data, startFrom, remove = false) => {
     const perPage = itemsPerPage || 10;
     const pages = Math.ceil(data.length / perPage);
     const pagination = [];
     const [currentPage, setCurrentPage] = useState(startFrom <= pages ? startFrom : 1);
     const [slicedData, setSlicedData] = useState(data);
-    // const [index, setIndex] = useState(0)
-    console.log("currentPage", currentPage)
+
     useEffect(() => {
 
         setSlicedData(() => [...data].slice((currentPage - 1) * perPage, currentPage * perPage));
@@ -66,7 +65,6 @@ const usePagination = (itemsPerPage, data, startFrom, remove = false, totalLengt
         }
     }, [data, remove, currentPage, perPage]);
 
-    console.log(slicedData)
     return {
         slicedData,
         pagination,
