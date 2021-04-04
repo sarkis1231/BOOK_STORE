@@ -5,15 +5,15 @@ import {ReactComponent as SuccessIcon} from '../../assets/svg/checked.svg'
 import {ReactComponent as ErrorIcon} from '../../assets/svg/error.svg'
 import {ReactComponent as WarningIcon} from '../../assets/svg/warning.svg'
 
-const Alert = ({show,setShow, message, severity, delay= 3000}) => {
+const Alert = ({show, setShow, message, severity, delay = 3000}) => {
 
-   const handleShow =  useCallback(() => {
+    const handleShow = useCallback(() => {
         setShow(false)
     }, [setShow])
 
     useEffect(() => {
         let timerId = null;
-        if(show) {
+        if (show) {
             timerId = setTimeout(() => {
                 handleShow()
             }, delay)
@@ -21,30 +21,14 @@ const Alert = ({show,setShow, message, severity, delay= 3000}) => {
         return () => clearTimeout(timerId)
     }, [show, handleShow, delay])
 
-    switch (severity) {
-        case 'error':
-            return (
-                <StyledFlexContainer show={show} severity='error'>
-                    <ErrorIcon />
-                    <p>{message}</p>
-                </StyledFlexContainer>
-            );
-        case 'warning':
-            return (
-                <StyledFlexContainer show={show} severity='warning'>
-                    <WarningIcon />
-                    <p>{message}</p>
-                </StyledFlexContainer>
-            );
-        default:
-            return (
-                <StyledFlexContainer show={show} severity='success'>
-                    <SuccessIcon />
-                    <p>{message}</p>
-                </StyledFlexContainer>
-            );
-    }
-
+    return (
+        <StyledFlexContainer show={show} severity={severity}>
+            {severity === 'error' && <ErrorIcon/>}
+            {severity === 'success' && <SuccessIcon/>}
+            {severity === 'warning' && <WarningIcon/>}
+            <p>{message}</p>
+        </StyledFlexContainer>
+    );
 };
 
 export default Alert;
@@ -63,14 +47,14 @@ const StyledFlexContainer = styled(FlexContainer)`
   ${({severity, theme}) => severity === 'success' && `background:${theme.alert.successBg}`};
   ${({severity, theme}) => severity === 'warning' && `background:${theme.alert.warningBg}`};
   z-index: 1000;
-  
+
   svg {
     width: 24px;
     height: 24px;
     margin-right: 10px;
     fill: ${({theme}) => theme.alert.color};
   }
-  
+
   p {
     margin: 0;
     font-size: 14px;

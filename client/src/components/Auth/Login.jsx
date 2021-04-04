@@ -12,11 +12,14 @@ import {LoginValSchema} from "./config";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {loginUser} from "../../actions/authActions";
+import useAlert from "../../hooks/useAlert";
+import Alert from "../Reusable/Alert";
 
 
 const Login = () => {
     const { t } = useTranslation();
     const history = useHistory();
+    const [alert, setAlert] = useAlert()
     const isAuth  = useSelector(state => state.auth.isAuthenticated);
     const { register, handleSubmit, errors } = useForm({
         resolver: yupResolver(LoginValSchema)
@@ -30,7 +33,14 @@ const Login = () => {
                 dispatch(loginUser(res));
                 history.push('/');
             }
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            if(e.response.data.email) {
+                setAlert({show: true, message: e.response.data.email, severity: 'error'})
+            }
+            if(e.response.data.data.email) {
+                setAlert({show: true, message: e.response.data.data.email, severity: 'error'})
+            }
+        })
     }
 
     useEffect(() => {
@@ -49,7 +59,7 @@ const Login = () => {
                     name='email'
                     margin='0 0 20px 0'
                     label={t('email')}
-                    inputType='email'
+                    inputType='text'
                     ref={register}
                     error={errors}
 
@@ -66,6 +76,7 @@ const Login = () => {
                 <Button type='submit' margin='0 0 20px 0'>{t('login')}</Button>
                 <Button type='button' onClick={() => history.push('/register')} >{t('register')}</Button>
             </StyledForm>
+            <Alert show={alert.show} severity={alert.severity} setShow={setAlert} message={alert.message}/>
         </StyledFlexContainer>
     );
 };

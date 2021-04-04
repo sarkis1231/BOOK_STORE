@@ -11,6 +11,8 @@ import {RegisterValSchema} from "./config";
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from "axios";
 import {useSelector} from "react-redux";
+import useAlert from "../../hooks/useAlert";
+import Alert from "../Reusable/Alert";
 
 
 const Register = () => {
@@ -21,14 +23,16 @@ const Register = () => {
         resolver: yupResolver(RegisterValSchema)
     });
     const isAuth  = useSelector(state => state.auth.isAuthenticated);
+    const [alert,setAlert] = useAlert();
 
     const onSubmit = (values) => {
-        console.log(values)
         axios.put('/users/register', values).then(res => {
             if(res) {
                 history.push('/login');
             }
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            setAlert({show: true, message:e.response.data.data.email,severity: 'error' })
+        })
     }
 
     useEffect(() => {
@@ -77,6 +81,7 @@ const Register = () => {
                 <Button type='submit' margin='0 0 20px 0'>{t('register')}</Button>
                 <Button type='button' onClick={() => history.push('/login')}>{t('login')}</Button>
             </StyledForm>
+            <Alert show={alert.show} message={alert.message} setShow={setAlert} severity={alert.severity}/>
         </StyledFlexContainer>
     );
 };
