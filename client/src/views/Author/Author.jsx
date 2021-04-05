@@ -39,7 +39,6 @@ const Author = () => {
     } = useModal()
 
     const onSubmit = (value) => {
-        console.log(value)
         axios.post('/authors', {...value}).then(res => {
             console.log(res)
             reset()

@@ -81,21 +81,3 @@ const StyledControlledListItemContainer = styled(StyledListItemContainer)`
   background: ${({theme}) => theme.dropDown.bgColor};
 
 `
-
-
-
-
-
-
-// useEffect(() => {
-//     if (url.length) {
-//         axios.get(url).then(res => {
-//             res.data.empty ? setData(() => []) : setData(() => filterDataControlledDropDown(res.data))
-//         }).catch(e => {
-//             console.log(e)
-//         })
-//     }
-//
-//
-// }, [url])
-// console.log(valueName)

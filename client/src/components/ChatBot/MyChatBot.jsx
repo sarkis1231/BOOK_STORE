@@ -7,7 +7,6 @@ const MyChatBot = () => {
     const [opened, setOpened] = useState(false)
     const [key, setKey] = useState(0)
     const handleEnd = (renderedSteps, steps, values) => {
-        console.log(renderedSteps, steps, values)
         if (values[2] === 'bye') {
             setTimeout(() => {
                 setOpened(() => false)

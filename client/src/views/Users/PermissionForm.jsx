@@ -25,7 +25,6 @@ const PermissionForm = ({userId, closeModal, setAlert}) => {
     };
 
     function handleAdd(i) {
-        console.log(fields[i].permission + 1)
         setFields(prev => [...prev, {permission: prev[i].permission + 1, genre: prev[i].genre + 1}]);
         setPermission({name: 'none', value: 0})
         setGenre({name: 'none', value: 0})
