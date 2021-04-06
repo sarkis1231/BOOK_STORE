@@ -35,10 +35,10 @@ const Login = () => {
             }
         }).catch(e => {
             if(e.response.data?.email) {
-                setAlert({show: true, message: "Please check your email or password", severity: 'error'})
+                setAlert({show: true, message: `${t("logIn.passwordError")}`, severity: 'error'})
             }
             if(e.response.data.data?.email) {
-                setAlert({show: true, message: e.response.data.data.email, severity: 'error'})
+                setAlert({show: true, message: `${t("logIn.notValidEmail")}`, severity: 'error'})
             }
         })
     }

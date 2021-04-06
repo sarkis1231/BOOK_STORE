@@ -45,6 +45,17 @@
     "count": "count",
     "publishedDate": "Published Date",
     "searchBooks": "Search Books"
+  },
+  "users": {
+    "changeValue": "Value is Changed"
+
+  },
+  "logIn": {
+    "passwordError": "Please check your email or password",
+    "notValidEmail": "No user is Found OR not a valid Email"
+  },
+  "registerAlert": {
+    "registerError": "Email already registered"
   }
 }
 

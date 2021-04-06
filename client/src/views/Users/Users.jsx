@@ -14,8 +14,10 @@ import {TABLE_ACTION_TYPES_ALL, USERS_HEADERS} from "../../constant";
 import PermissionForm from "./PermissionForm";
 import Alert from "../../components/Reusable/Alert";
 import useAlert from "../../hooks/useAlert";
+import {useTranslation} from "react-i18next";
 
 const Users = () => {
+    const {t} = useTranslation()
     const [reFetch, setReFetch] = useState(false)
     const [serverErrors, setServerErrors] = useState({});
     const users = useFetch('/users/all', reFetch);
@@ -59,6 +61,7 @@ const Users = () => {
         }).catch(e => {
             setServerErrors(prev => ({...prev, ...e.response.data.data}))
         })
+
     }
 
     const handleDelete = () => {
@@ -114,7 +117,7 @@ const Users = () => {
             <Modal maxWidth='550px' toggleModal={permissionToggleModal} handleCloseModal={permissionCLoseModal} modalTitle="Edit Permissions">
                 <PermissionForm setAlert={setAlert} userId={permissionValue?._id} closeModal={permissionCLoseModal}/>
             </Modal>
-            <Alert severity={alert.severity} message={alert.message} setShow={setAlert} show={alert.show}/>
+            <Alert severity={alert.severity} message={t(`${alert.message}`)} setShow={setAlert} show={alert.show}/>
         </>
     );
 };

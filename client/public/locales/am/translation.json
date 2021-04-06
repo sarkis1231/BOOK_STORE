@@ -45,5 +45,16 @@
     "count": "հաշվել",
     "publishedDate": "Հրապարակված Ամսաթիվ",
     "searchBooks": "Գրքեր որոնել"
+  },
+  "users": {
+    "changeValue": "Արժեքը փոխվում է"
+
+  },
+  "logIn": {
+    "passwordError": "Խնդրում ենք ստուգել ձեր էլ. Փոստը կամ գաղտնաբառը",
+    "notValidEmail": "Ոչ մի օգտվող չի գտնվել, կամ ոչ վավեր էլ"
+  },
+  "registerAlert": {
+    "registerError": "Էլ.փոստը արդեն գրանցված է"
   }
 }

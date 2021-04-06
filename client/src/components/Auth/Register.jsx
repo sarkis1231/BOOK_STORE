@@ -30,8 +30,8 @@ const Register = () => {
             if(res) {
                 history.push('/login');
             }
-        }).catch(e => {
-            setAlert({show: true, message:e.response.data.data.email,severity: 'error' })
+        }).catch(() => {
+            setAlert({show: true, message:`${t("registerAlert.registerError")}`,severity: 'error' })
         })
     }
 
@@ -82,6 +82,7 @@ const Register = () => {
                 <Button type='button' onClick={() => history.push('/login')}>{t('login')}</Button>
             </StyledForm>
             <Alert show={alert.show} message={alert.message} setShow={setAlert} severity={alert.severity}/>
+            {console.log(alert.message)}
         </StyledFlexContainer>
     );
 };

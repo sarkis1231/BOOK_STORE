@@ -53,7 +53,7 @@ const PermissionForm = ({userId, closeModal, setAlert}) => {
 
         try {
             const res = await axios.put(`users/permission/${userId}`, {genre: Object.values(genreValue), limit: Object.values(permissionValue)})
-            setAlert({show: true, message: res.data.message, severity: res.data.alert})
+            setAlert({show: true, message: 'users.changeValue', severity: res.data.alert})
             closeModal();
         }catch (err) {
             console.error(err)
