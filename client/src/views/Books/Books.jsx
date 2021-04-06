@@ -15,11 +15,12 @@ import booksFormData, {filteredValue, formatFileName} from "../../utils";
 import DeleteModalContent from "../../components/Reusable/DeleteModalContent";
 import FilterForm from "./FilterForm";
 import styled from "styled-components";
-
 import PaginationBar from "../../components/Reusable/PaginationBar";
 import usePagination from "../../hooks/usePagination";
+import {useTranslation} from "react-i18next";
 
 const Books = () => {
+    const {t} = useTranslation()
     const {openModal, closeModal, toggleModal} = useModal();
     const {
         openModal: editOpenModal,
@@ -133,7 +134,7 @@ const Books = () => {
     return (
         <>
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
-                <Button width='200px' margin='10px' onClick={() => openModal(undefined)}>Add Books</Button>
+                <Button width='200px' margin='10px' onClick={() => openModal(undefined)}>{t('books.addBook')}</Button>
             </AuthorizationElem>
             <StyledFilterFormContainer>
                 <FilterForm onSearchSubmit={onSearchSubmit} searchHandleSubmit={searchHandleSubmit}

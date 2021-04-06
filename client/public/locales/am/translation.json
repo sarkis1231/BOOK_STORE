@@ -34,6 +34,16 @@
   "table": {
     "actions": "Գործողություններ",
     "createdAt": "Ստեղծված-ժամը",
-    "name": "Անուն"
+    "name": "Անուն",
+    "email": "էլ",
+    "role": "Դերը"
+  },
+  "books": {
+    "addBook": "Գիրք ավելացնել",
+    "bookName": "Գրքի անվանումը",
+    "bookPageCount": "Գրքերի էջերի քանակը",
+    "count": "հաշվել",
+    "publishedDate": "Հրապարակված Ամսաթիվ",
+    "searchBooks": "Գրքեր որոնել"
   }
 }

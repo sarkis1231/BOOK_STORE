@@ -34,7 +34,17 @@
   "table": {
     "actions": "Actions",
     "createdAt": "Created-At",
-    "name": "Name"
+    "name": "Name",
+    "email": "Email",
+    "role": "Role"
+  },
+  "books": {
+    "addBook": "Add Book",
+    "bookName": "Book name",
+    "bookPageCount": "Book page count",
+    "count": "count",
+    "publishedDate": "Published Date",
+    "searchBooks": "Search Books"
   }
 }
 
