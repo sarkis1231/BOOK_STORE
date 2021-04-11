@@ -1,8 +1,7 @@
 import React from 'react';
 import Button from './Button';
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import {FlexContainer} from '../../styled/layout.styled';
-import noImage from '../../assets/svg/noImage.png'
 import AuthorizationElem from "../../HOC/Auth/AuthorizationElem";
 import {ADMIN_ROLE} from "../../constant";
 import AuthenticatedLink from "./AuthenticatedLink";

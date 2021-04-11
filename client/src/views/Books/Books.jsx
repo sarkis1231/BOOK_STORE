@@ -162,7 +162,11 @@ const Books = () => {
             </Modal>
             <Modal toggleModal={editToggleModal} modalTitle='Edit Books' handleCloseModal={editCloseModal}>
                 <BooksFrom handleSubmit={editHandleSubmit} errors={editErrors} register={editRegister}
-                           onSubmit={onEdit} values={editValue} buttonName='Edit Book'/>
+                           onSubmit={onEdit} values={editValue} buttonName='Edit Book'
+                           addImageFile={filePlaceHolder.addImage} addBookFilePlaceHolder={filePlaceHolder.addBook}
+                           handleAddImageFile={handleAddImageFile}
+                           handleAddBookFile={handleAddBookFile}
+                />
             </Modal>
         </>
     )

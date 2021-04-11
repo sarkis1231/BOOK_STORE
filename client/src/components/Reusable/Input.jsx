@@ -49,7 +49,7 @@ const Input = forwardRef(({
                 <FlexContainer flexDirection='column' margin={margin} width='100%'>
                     {label && <StyledLabel>{label}</StyledLabel>}
                     <StyledInputFileLabel>
-                        <StyledInputFile type={type} onChange={onFileChange ? (e) => onFileChange(e) : null} name={name}
+                        <StyledInputFile value={value} type={type} onChange={onFileChange ? (e) => onFileChange(e) : null} name={name}
                                          ref={ref}/>
                         <StyledInputFileSpan>{placeHolder}...</StyledInputFileSpan>
                     </StyledInputFileLabel>
