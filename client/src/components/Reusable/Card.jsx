@@ -23,7 +23,7 @@ const Card = ({id, image, bookName, author, file, pageCount, genre, onDelete, on
                 justifyContent='space-between'
             >
                 <span style={{width: '49%'}}>Book name</span>
-                <span style={{width: '49%', textAlign: 'end'}}>{bookName}</span>
+                <span style={{width: '49%', textAlign: 'end'}} title={bookName} className="bookName">{bookName}</span>
                 <span style={{width: '49%'}}>Author</span>
                 <span style={{width: '49%', textAlign: 'end'}}>{author[0].name}</span>
                 <span style={{width: '49%'}}>Genre</span>
@@ -58,6 +58,12 @@ const StyledCardContainer = styled(FlexContainer)`
   }
   @media only screen and (max-width: 521px) {
     width: 100%;
+  }
+  
+  .bookName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `
 
