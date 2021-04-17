@@ -11,7 +11,6 @@ const {ChatBots} = require("../models/ChatBot");
 async function getBotMessages(req, res, next) {
     try {
         errorValidation(req);
-        let userId = req['user']._id;
         let items =
             await ChatBots.find({disabled: {$ne: true}})
                 .populate({
