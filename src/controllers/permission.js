@@ -8,7 +8,10 @@ async function getPermissions(req, res, next) {
     try {
         errorValidation(req);
         let items = await Permissions.find(
-            {disabled: {$ne: true}},
+            {
+                uid: {$ne: req.user._id},
+                disabled: {$ne: true}
+            },
             {'createdAt': 0, 'updatedAt': 0})
             .populate({
                 path: 'genre.id', select: 'name'
@@ -30,8 +33,10 @@ async function getPermission(req, res, next) {
     try {
         errorValidation(req);
         let items = await Permissions.find(
-            {id:req.params.id,
-                disabled: {$ne: true}},
+            {
+                id: req.params.id,
+                disabled: {$ne: true}
+            },
             {'createdAt': 0, 'updatedAt': 0})
             .populate({
                 path: 'genre.id', select: 'name'
@@ -48,4 +53,4 @@ async function getPermission(req, res, next) {
     }
 }
 
-module.exports = {getPermissions,getPermission};
+module.exports = {getPermissions, getPermission};
