@@ -28,7 +28,8 @@ const ControlledDropDown = forwardRef(({
         if(defaultValue) {
             setValue(() => defaultValue)
         }
-    }, [defaultValue])
+        // eslint-disable-next-line
+    }, [])
     const inputRef = useRef(null)
     useOnClickOutside(inputRef, () => setToggle(false))
     useEffect(() => {

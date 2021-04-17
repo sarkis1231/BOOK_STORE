@@ -1270,11 +1270,6 @@ rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-fetch-image@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-fetch-image/-/react-fetch-image-1.2.0.tgz#47f70f2ab4200bd66c831bf82a7643e0f074b17e"
-  integrity sha512-KSRkEMLpdtVtY0xouMvG5c7LPYlXgacD98ihf6SuOUFJK0ugbEiMCXTfb9PwrmGPju3PeV30BMr+qeEEWVX1vQ==
-
 readable-stream@1.1.x:
   version "1.1.14"
   resolved "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.14.tgz"

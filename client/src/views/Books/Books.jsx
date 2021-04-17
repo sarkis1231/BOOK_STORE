@@ -49,14 +49,14 @@ const Books = () => {
         errors: searchErrors,
         reset: searchReset
     } = useForm();
+    const [reFetch, setReFetch] = useState(false)
     const {
         slicedData,
         pagination,
         prevPage: goToPrevPage,
         nextPage: goToNextPage,
         changePage,
-    } = usePagination(3, data, 1, false, totalLength);
-    const [reFetch, setReFetch] = useState(false)
+    } = usePagination(3, data?.empty ? [] : data, 1, false, totalLength);
     useEffect(() => {
         axios.get(`/books/filter`, {}).then(res => {
             setTotalLength(res.data.totalLength)

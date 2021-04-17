@@ -8,10 +8,10 @@ const usePagination = (itemsPerPage, data, startFrom, remove = false) => {
     const [slicedData, setSlicedData] = useState(data);
 
     useEffect(() => {
-
         setSlicedData(() => [...data].slice((currentPage - 1) * perPage, currentPage * perPage));
+        if(data.length) return
         // eslint-disable-next-line
-    }, [data]);
+    }, [data.length]);
     let ellipsisLeft = false;
     let ellipsisRight = false;
 
