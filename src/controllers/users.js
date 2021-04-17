@@ -113,7 +113,6 @@ async function editUserPermission(req, res, next) {
     }
 }
 
-
 async function changePassword(req, res, next) {
     const {password} = req.body;
     try {

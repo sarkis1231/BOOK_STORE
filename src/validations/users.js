@@ -106,7 +106,7 @@ UserValidation.editUserPermission = [
         .optional()
         .custom(function (value, {req}) {
             for (let i = 0; i < value.length; i++) {
-                if(!Fn.isMongooseValidId(value[i])){
+                if (!Fn.isMongooseValidId(value[i])) {
                     throw new Error(MESSAGES.INVALID_IDS);
                 }
             }
@@ -115,7 +115,7 @@ UserValidation.editUserPermission = [
                 throw new Error(MESSAGES.ID_NOT_MATCH);
             }
 
-            if(value.length !== req.body.limit.length) {
+            if (value.length !== req.body.limit.length) {
                 throw new Error(MESSAGES.ID_NOT_MATCH);
             }
             return true;
@@ -134,7 +134,7 @@ UserValidation.editUserPermission = [
                 throw new Error(MESSAGES.ID_NOT_MATCH);
             }
 
-            if(value.length !== req.body.genre.length) {
+            if (value.length !== req.body.genre.length) {
                 throw new Error(MESSAGES.ID_NOT_MATCH);
             }
             return true;
@@ -145,22 +145,20 @@ UserValidation.editUserPermission = [
 ];
 
 UserValidation.changePassword = [
-    body("current_password")
-        .notEmpty()
-        .custom(function (value, {req}) {
-        return bcrypt.compare(value, req.user.password).then(function (match) {
-            if (!match) {
-                return Promise.reject(MESSAGES.WRONG_PASSWORD);
+    param('id')
+        .custom(function (value) {
+            if (!Fn.isMongooseValidId(value)) {
+                throw new Error(MESSAGES.INVALID_QUERY_PARAM);
             }
-        })
-    }),
-    body("new_password")
+            return Users.findById(value).then(function (user) {
+                if (!user) {
+                    return Promise.reject(MESSAGES.NO_USER_FOUND);
+                }
+            });
+        }),
+    body("password")
         .trim()
-        .isLength({min: 5}),
-    body("confirm_new_password")
-        .custom(function (value, {req}) {
-        return value === req.body.new_password;
-    })
+        .isLength({min: 5})
 ];
 
 UserValidation.Role = [
