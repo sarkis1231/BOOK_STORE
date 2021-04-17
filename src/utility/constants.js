@@ -36,7 +36,8 @@ const MESSAGES = {
     INVALID_IDS:'Invalid Ids',
     ID_NOT_MATCH:'Ids do not match',
     INVALID_NUMBERS:'Invalid numbers',
-    INVALID_LIMIT_PARAMETER:'Invalid Limit Parameter'
+    INVALID_LIMIT_PARAMETER:'Invalid Limit Parameter',
+    PASSWORD_IS_CHANGED:'Password is changed'
 };
 
 const messageAlert = {

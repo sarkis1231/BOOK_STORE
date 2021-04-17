@@ -113,6 +113,22 @@ async function editUserPermission(req, res, next) {
     }
 }
 
+
+async function changePassword(req, res, next) {
+    const {password} = req.body;
+    try {
+        errorValidation(req);
+        const user = await Users.getById(req.params.id);
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+        if (await user.save()) {
+            return alert(res, 200, messageAlert.success, MESSAGES.PASSWORD_IS_CHANGED);
+        }
+    } catch (err) {
+        errorCatcher(next, err);
+    }
+}
+
 let getUser = getCtrlFn.getId(Users);
 
 async function getUsers(req, res, next) {
@@ -120,7 +136,7 @@ async function getUsers(req, res, next) {
         errorValidation(req);
         let userId = req['user']._id;
         let items = await Users.find({_id: {$ne: userId}, disabled: {$ne: true}},
-            {'password': 0, 'updatedAt': 0,'permission':0})
+            {'password': 0, 'updatedAt': 0, 'permission': 0})
         if (!Fn.isEmpty(items)) {
             return res.status(200).json(items);
         }
@@ -132,4 +148,4 @@ async function getUsers(req, res, next) {
 
 let deleteUser = getCtrlFn.Delete(Users);
 
-module.exports = {login, register, editUser, deleteUser, getUser, getUsers, editUserPermission};
+module.exports = {login, register, editUser, deleteUser, getUser, getUsers, editUserPermission, changePassword};
