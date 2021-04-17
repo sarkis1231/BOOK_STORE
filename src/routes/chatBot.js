@@ -1,6 +1,8 @@
 const {Router} = require('express');
 const {isAuth, isAdmin} = require("../middlewares/authentication");
 const chatBotCtrl = require('../controllers/chatBot');
+const chatBotValidation = require("../controllers/chatBot");
+const {paramIdValidation} = require("../validations/general");
 
 const router = Router();
 
@@ -8,8 +10,8 @@ const router = Router();
 
 router.get('/', isAuth(), isAdmin(), chatBotCtrl.getBotMessages);
 
-router.post('/', isAuth(), isAdmin(), chatBotCtrl.addBotMessages);
+router.post('/', isAuth(), isAdmin(), chatBotValidation.addBotMessages, chatBotCtrl.addBotMessages);
 
-router.delete('/:id', isAuth(), isAdmin(), chatBotCtrl.deleteBotMessage);
+router.delete('/:id', isAuth(), isAdmin(), paramIdValidation, chatBotCtrl.deleteBotMessage);
 
 module.exports = router;
