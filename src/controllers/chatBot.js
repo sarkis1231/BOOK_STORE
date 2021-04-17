@@ -1,3 +1,5 @@
+const {noResult} = require("../utility/controllers/messages");
+const {Fn} = require("../utility/functions");
 const {getCtrlFn} = require("../utility/controllers/functions");
 const {errorCatcher} = require("../utility/controllers/errors");
 const {errorValidation} = require("../utility/controllers/errors");
@@ -6,8 +8,23 @@ const {MESSAGES} = require("../utility/constants");
 const {alert} = require("../utility/controllers/messages");
 const {ChatBots} = require("../models/ChatBot");
 
-
-let getBotMessages = getCtrlFn.getAll();
+async function getBotMessages(req, res, next) {
+    try {
+        errorValidation(req);
+        let userId = req['user']._id;
+        let items =
+            await ChatBots.find({disabled: {$ne: true}})
+                .populate({
+                    path: 'uid', select: 'name email'
+                })
+        if (!Fn.isEmpty(items)) {
+            return res.status(200).json(items);
+        }
+        noResult(res);
+    } catch (err) {
+        errorCatcher(next, err);
+    }
+}
 
 async function addBotMessages(req, res, next) {
     const {message} = req.body;
