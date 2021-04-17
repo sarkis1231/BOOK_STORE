@@ -37,7 +37,8 @@ const MESSAGES = {
     ID_NOT_MATCH:'Ids do not match',
     INVALID_NUMBERS:'Invalid numbers',
     INVALID_LIMIT_PARAMETER:'Invalid Limit Parameter',
-    PASSWORD_IS_CHANGED:'Password is changed'
+    PASSWORD_IS_CHANGED:'Password is changed',
+    NEW_MESSAGE_ADDED:'New Message is added'
 };
 
 const messageAlert = {
@@ -52,7 +53,8 @@ const SCHEMES_NAMES = {
     'Authors': 'Authors',
     'Genres': 'Genres',
     'Users': 'Users',
-    'Permissions':'Permissions'
+    'Permissions':'Permissions',
+    'ChatBot':'ChatBot'
 };
 
 const LIMITS = {
