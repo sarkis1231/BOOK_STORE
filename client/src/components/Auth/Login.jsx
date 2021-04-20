@@ -34,7 +34,7 @@ const Login = () => {
                 history.push('/');
             }
         }).catch(e => {
-            if(e.response?.data?.email) {
+            if(e.response?.data?.email || e.response?.data?.message) {
                 setAlert({show: true, message: `${t("logIn.passwordError")}`, severity: 'error'})
             }
             if(e.response?.data.data?.email) {
