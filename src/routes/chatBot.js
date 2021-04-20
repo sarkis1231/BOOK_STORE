@@ -10,7 +10,7 @@ const router = Router();
 
 router.get('/', isAuth(), isAdmin(), chatBotCtrl.getBotMessages);
 
-router.post('/', isAuth(), isAdmin(), chatBotValidation.add, chatBotCtrl.addBotMessages);
+router.post('/', isAuth(), chatBotValidation.add, chatBotCtrl.addBotMessages);
 
 router.delete('/:id', isAuth(), isAdmin(), paramIdValidation, chatBotCtrl.deleteBotMessage);
 

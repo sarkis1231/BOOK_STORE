@@ -1,7 +1,5 @@
 import React from "react";
 import PermissionList from "./PermissionList";
-import PasswordMessage from "./PasswordMessage";
-const emailRg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const STEPS = [
     {
@@ -35,9 +33,14 @@ export const STEPS = [
         ],
     },
     {
-        id: '6',
-        message: 'Please provide us with your email 😀',
-        trigger: "passwordValue",
+        id:6,
+        component: (<a
+            href="mailto:sakooghly@gmail.com?subject=Mail from Our Site"
+            target="_blank" rel="noreferrer noopener"
+        >
+            Email Customer Support
+        </a>),
+        trigger: '8'
     },
     {
         id: '7',
@@ -65,26 +68,6 @@ export const STEPS = [
                 return `Please enter a message`
             }
         }
-    },
-    {
-        id: "passwordValue",
-        user: true,
-        trigger: "passwordReview",
-        validator: (value) => {
-            if(typeof value === "string" && emailRg.test(value)) {
-                return true
-            }else if (value.length === 0) {
-                return `Please enter your email`
-            } else {
-                return "Please enter a valid email"
-            }
-        }
-    },
-    {
-        id: 'passwordReview',
-        component: (<PasswordMessage/>),
-        asMessage: true,
-        trigger: '8'
     },
     {
         id: 'review',
