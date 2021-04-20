@@ -18,15 +18,16 @@ const Permissions = () => {
 
     return (
         <>
-            <FlexContainer flexDirection="column" width='50%'>
-                {usersPermission.map(({_id, uid, genre}) => (
+            <StyledPermissionContainer flexDirection="column" width='50%' mobileWidth="100%" miniWidth="100%" >
+                {usersPermission.map(({_id, uid, genre, premium}) => (
               uid && uid._id !== "60605074f89e2605888850f7" ?
-                        <FlexContainer key={_id} justifyContent='space-between' margin='0 0 10px'>
+                        <FlexContainer key={_id}  justifyContent='space-between' margin='0 0 10px'>
                         <p>{uid && uid.email}</p>
-                        <Button width='40%' type='button' onClick={() => handleOpenModal(genre)}>Permissions</Button>
+                            {premium ? <p>The user is premium</p> : <Button width='40%' type='button'
+                                               onClick={() => handleOpenModal(genre)}>Permissions</Button>}
                     </FlexContainer> : null
                 ))}
-            </FlexContainer>
+            </StyledPermissionContainer>
             <Modal modalTitle="View Permissions" handleCloseModal={closeModal} toggleModal={toggleModal}>
                 <StyledFlexContainer width="100%">
                     <StyledRow justifyContent='space-between' width="100%" alignItems='center'>
@@ -47,6 +48,27 @@ const Permissions = () => {
 };
 
 export default Permissions;
+
+const StyledPermissionContainer = styled(FlexContainer)`
+  p {
+    text-align: center;
+  }
+
+  @media only screen and (max-width: 500px) {
+    p {
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    button {
+      width: 100%;
+      font-size: 12px;
+      padding: 10px;
+      width: 100px;
+    }
+  }
+`
 
 const StyledFlexContainer = styled(FlexContainer)`
   flex-direction: column;
