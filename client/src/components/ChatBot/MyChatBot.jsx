@@ -7,8 +7,9 @@ const MyChatBot = () => {
     const [opened, setOpened] = useState(false)
     const [key, setKey] = useState(0)
     const handleEnd = (renderedSteps, steps, values) => {
-        if (values[2] === 'bye') {
+        if (values.find(value => value === 'bye')) {
             setTimeout(() => {
+                console.log(values[2])
                 setOpened(() => false)
                 setKey(() => Math.round(Math.random() * 1000000000))
             }, 1500);

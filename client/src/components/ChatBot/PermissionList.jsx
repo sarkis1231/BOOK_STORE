@@ -1,12 +1,18 @@
-import React from 'react';
-import useFetch from "../../hooks/useFetch";
+import React, {useEffect} from 'react';
+import usePrevious from "../../hooks/usePrevious";
 
-const PermissionList = () => {
-    const genre = useFetch('/genre');
-    console.log(genre)
+const PermissionList = ({steps}) => {
+    const {permissionValue} = steps
+    const prevPermission = usePrevious(permissionValue.message)
+
+    useEffect(() => {
+        if(prevPermission !== permissionValue.message) {
+            console.log(permissionValue.message)
+        }
+    }, [prevPermission, permissionValue.message])
     return (
         <div>
-        <p>Hello</p>
+        <p>Wait for our message we will get back to you ASAP</p>
         </div>
     );
 };

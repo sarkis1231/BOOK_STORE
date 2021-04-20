@@ -1,14 +1,24 @@
 import React from "react";
+import PermissionList from "./PermissionList";
+import PasswordMessage from "./PasswordMessage";
+const emailRg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const STEPS = [
     {
         id: '1',
-        message: 'Hello there What is your name?',
+        message: 'Hello there 👋🏻, What is your name?',
         trigger: '2',
     },
     {
         id: '2',
         user: true,
+        validator: (value) => {
+            if(typeof value === "string" && value.length > 0) {
+                return true
+            }else {
+                return `Please enter your name`
+            }
+        },
         trigger: '3',
     },
     {
@@ -21,17 +31,13 @@ export const STEPS = [
         options: [
             {value: 1, label: 'Problem with login', trigger: '6'},
             {value: 2, label: 'Report an issue ', trigger: '7'},
+            {value: 3, label: 'Request Permission ', trigger: '11'},
         ],
     },
     {
         id: '6',
-        component: (<a
-            href="mailto:sakooghly@gmail.com?subject=Mail from Our Site"
-            target="_blank" rel="noreferrer noopener"
-        >
-            Email Customer Support
-        </a>),
-        trigger: '8'
+        message: 'Please provide us with your email 😀',
+        trigger: "passwordValue",
     },
     {
         id: '7',
@@ -41,6 +47,49 @@ export const STEPS = [
         >
             WhatsApp
         </a>),
+        trigger: '8'
+    },
+    {
+        id: '11',
+        message: 'Please Write us your message',
+        trigger: "permissionValue",
+    },
+    {
+        id: "permissionValue",
+        user: true,
+        trigger: "review",
+        validator: (value) => {
+            if(typeof value === "string" && value.length > 0) {
+                return true
+            }else {
+                return `Please enter a message`
+            }
+        }
+    },
+    {
+        id: "passwordValue",
+        user: true,
+        trigger: "passwordReview",
+        validator: (value) => {
+            if(typeof value === "string" && emailRg.test(value)) {
+                return true
+            }else if (value.length === 0) {
+                return `Please enter your email`
+            } else {
+                return "Please enter a valid email"
+            }
+        }
+    },
+    {
+        id: 'passwordReview',
+        component: (<PasswordMessage/>),
+        asMessage: true,
+        trigger: '8'
+    },
+    {
+        id: 'review',
+        component: (<PermissionList/>),
+        asMessage: true,
         trigger: '8'
     },
     {
@@ -57,7 +106,7 @@ export const STEPS = [
     },
     {
         id: '10',
-        message: 'Have a nice Day)) Good Bye',
+        message: 'Have a nice Day 😁 Good Bye 👋🏻',
         end: true,
     }
 ]
