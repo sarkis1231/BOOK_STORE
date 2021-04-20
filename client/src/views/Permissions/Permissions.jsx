@@ -5,6 +5,7 @@ import {FlexContainer} from "../../styled/layout.styled";
 import Button from "../../components/Reusable/Button";
 import useModal from "../../hooks/useModal";
 import Modal from "../../components/Reusable/Modal";
+import {PERMISSIONS} from "../../constant";
 
 const Permissions = () => {
     const usersPermission = useFetch('/permissions');
@@ -37,7 +38,7 @@ const Permissions = () => {
                     {genre.map(({id:{name}, limit}) => (
                         <StyledRow lastElement={genre[genre.length - 1].id.name === name}  key={name} justifyContent='space-between' width="100%" alignItems='center'>
                             <p>{name}</p>
-                            <p>{limit}</p>
+                            <p>{PERMISSIONS[limit]}</p>
                         </StyledRow>
                     ))}
 
