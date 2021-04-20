@@ -62,7 +62,6 @@ const StyledPermissionContainer = styled(FlexContainer)`
       text-overflow: ellipsis;
     }
     button {
-      width: 100%;
       font-size: 12px;
       padding: 10px;
       width: 100px;
