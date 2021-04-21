@@ -50,13 +50,13 @@ export function formatFileName(fileName) {
 
 export function formatMessages(messages) {
     let obj = {}
-    console.log(obj)
     messages.forEach(({message, uid: {email, name}, _id}) => {
-        obj = {...obj, [email]: {[_id] : {name ,message}}}
+        if(!obj[email]) {
+            obj[email] = [{name, message, _id}]
+        }else {
+            obj[email] = [...obj[email],{name:name, message, _id}]
+        }
     })
-    console.log(obj)
-    return messages.map(({message, uid: {email, name}, _id}) => {
-        return {[email]: {_id, message, name}}
-    })
+    return obj
 
 }
