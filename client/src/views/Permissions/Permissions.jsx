@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import styled from "styled-components";
 import useFetch from "../../hooks/useFetch";
 import {FlexContainer} from "../../styled/layout.styled";
 import Button from "../../components/Reusable/Button";
 import useModal from "../../hooks/useModal";
 import Modal from "../../components/Reusable/Modal";
 import {PERMISSIONS} from "../../constant";
+import {StyledFlexContainer, StyledPermissionContainer, StyledRow} from "../../styled/shared.styled";
 
 const Permissions = () => {
     const usersPermission = useFetch('/permissions');
@@ -50,39 +50,3 @@ const Permissions = () => {
 
 export default Permissions;
 
-const StyledPermissionContainer = styled(FlexContainer)`
-  p {
-    text-align: center;
-  }
-
-  @media only screen and (max-width: 500px) {
-    p {
-      font-size: 12px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    button {
-      font-size: 12px;
-      padding: 10px;
-      width: 100px;
-    }
-  }
-`
-
-const StyledFlexContainer = styled(FlexContainer)`
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  max-height: 600px;
-  overflow-y: auto;
-  p{
-    width: 40%;
-    text-align: center;
-  }
-`
-
-const StyledRow = styled(FlexContainer)`
-  border-bottom: ${({theme, lastElement}) => lastElement ? '' : theme.table.border};
-`

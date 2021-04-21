@@ -47,3 +47,16 @@ export function formatFileName(fileName) {
     const splitFileName =  fileName.split('.');
     return `${splitFileName[0].slice(0, 20)}.${splitFileName[1]}`
 }
+
+export function formatMessages(messages) {
+    let obj = {}
+    console.log(obj)
+    messages.forEach(({message, uid: {email, name}, _id}) => {
+        obj = {...obj, [email]: {[_id] : {name ,message}}}
+    })
+    console.log(obj)
+    return messages.map(({message, uid: {email, name}, _id}) => {
+        return {[email]: {_id, message, name}}
+    })
+
+}

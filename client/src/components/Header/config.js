@@ -7,4 +7,5 @@ export const NAV_ITEM = [
     {id: 3, name: 'headerItem.item4', location: '/genre', role: ADMIN_ROLE},
     {id: 4, name: 'headerItem.item5', location: '/author', role: ADMIN_ROLE},
     {id: 5, name: 'headerItem.item7', location: '/permissions', role: ADMIN_ROLE},
+    {id: 6, name: 'headerItem.item8', location: '/messages', role: ADMIN_ROLE},
 ]

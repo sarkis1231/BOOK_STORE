@@ -113,6 +113,8 @@ const ModalTitle = styled.h3`
 
 const StyledModalContent = styled.div`
   margin-top: 30px;
+  max-height: 600px;
+  overflow-y: auto;
   @media only screen and (max-width: 500px) {
     max-height: 1000px;
     height: 100%;

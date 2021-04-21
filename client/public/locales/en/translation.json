@@ -6,7 +6,8 @@
     "item4": "Genre",
     "item5": "Author",
     "item6": "Users",
-    "item7": "Permissions"
+    "item7": "Permissions",
+    "item8": "Messages"
   },
   "searchPlaceHolder": "Search",
   "login": "Login",

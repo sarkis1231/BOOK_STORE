@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {FlexContainer} from "./layout.styled";
 
 
 export const H1 = styled.h1`
@@ -46,4 +47,38 @@ export const StyledSpan = styled.span`
   opacity: ${({errors}) => errors ? '1' : '0'};
   visibility: ${({errors}) => errors ? 'visible' : 'hidden'};
   transition: all .3s ease;
+`
+
+export const StyledPermissionContainer = styled(FlexContainer)`
+  p {
+    text-align: center;
+  }
+
+  @media only screen and (max-width: 500px) {
+    p {
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    button {
+      font-size: 12px;
+      padding: 10px;
+      width: 100px;
+    }
+  }
+`
+
+export const StyledFlexContainer = styled(FlexContainer)`
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  p{
+    width: 40%;
+    text-align: center;
+  }
+`
+
+export const StyledRow = styled(FlexContainer)`
+  border-bottom: ${({theme, lastElement}) => lastElement ? '' : theme.table.border};
 `
