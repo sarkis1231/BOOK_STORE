@@ -52,6 +52,9 @@ export function formatFileName(fileName) {
 
 export function formatMessages(messages) {
     let obj = {}
+    if(!messages.length) {
+        return []
+    }
     messages.forEach(({message, uid: {email, name}, _id}) => {
         if(!obj[email]) {
             obj[email] = [{name, message, _id}]

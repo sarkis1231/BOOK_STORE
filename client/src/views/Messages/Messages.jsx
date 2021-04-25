@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
+import styled from "styled-components";
 import {formatMessages} from "../../utils";
 import {StyledFlexContainer, StyledPermissionContainer, StyledRow} from "../../styled/shared.styled";
 import {FlexContainer} from "../../styled/layout.styled";
@@ -35,11 +36,22 @@ const Messages = () => {
         openModal()
     }
 
+    const handleDeleteMessage = (messageId) => {
+        const filteredModalContent = modalContent.length && modalContent.filter(({_id}) =>_id !== messageId)
+        axios.delete(`/chatBot/${messageId}`).then(res => {
+            console.log(res)
+        }).catch(err =>  {
+            console.log(err.response)
+            setModalContent(filteredModalContent)
+        })
+    }
 
     return (
         <>
             <StyledPermissionContainer flexDirection="column" width='50%' mobileWidth="100%" miniWidth="100%" >
-                {Object.keys(formatMessages(messages)).map( key => (
+                {!Object.keys(formatMessages(messages)).length ? <><p>No messages</p></>
+                    :
+                    Object.keys(formatMessages(messages)).map( key => (
                     <FlexContainer key={key}  justifyContent='space-between' margin='0 0 10px'>
                         <p>{key}</p>
                         <Button
@@ -54,20 +66,22 @@ const Messages = () => {
             </StyledPermissionContainer>
             <Modal modalTitle="View messages" handleCloseModal={closeModal} toggleModal={toggleModal}>
                 <StyledFlexContainer width="100%">
-                    {modalContent.map(({_id, message, name}) => (
+                    {!modalContent.length ? <p>No messages</p>:
+                        modalContent.map(({_id, message, name}) => (
                        <StyledRow
-                           lastElement={modalContent[modalContent.length - 1].message === message}
+                           lastElement
                            key={_id}
                            justifyContent='space-between'
                            width="100%"
                            alignItems='center'
+                           margin="0 0 10px"
                        >
-                           <p>{name}</p>
-                           <p>{message}</p>
+                           <StyledMessageContainer onClick={() => handleDeleteMessage(_id)}>
+                               <span>{name}</span>
+                               <p className="message">{message}</p>
+                           </StyledMessageContainer>
                         </StyledRow>
                     ) )}
-
-
 
                 </StyledFlexContainer>
             </Modal>
@@ -76,3 +90,21 @@ const Messages = () => {
 };
 
 export default Messages;
+
+const StyledMessageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  border-radius: 20px 0 20px 0;
+  padding: 20px;
+  border: 1px solid ${({theme}) => theme.border};
+  span {
+    font-size: 12px;
+  } 
+  .message {
+    margin: 0;
+    font-size: 14px;
+    width: 100%;
+    text-align: left;
+  }
+`

@@ -4,6 +4,7 @@ export const lightTheme = {
     toggleBorder: '#FFF',
     gradient: 'linear-gradient(#39598A, #79D7ED)',
     error: '#F44336',
+    border: '#594EF3',
     boxShadow: '0px 15px 30px rgba(20, 102, 204, 0.16)',
     navBar: {
         BgColor: '#EAF2FF',
@@ -81,6 +82,7 @@ export const darkTheme = {
     body: '#171717',
     text: '#FFF',
     toggleBorder: '#6B8096',
+    border: '#594EF3',
     gradient: 'linear-gradient(#091236, #1E215D)',
     error: '#DC004E',
     boxShadow: '0px 15px 30px rgba(20, 102, 204, 0.16)',
