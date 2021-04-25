@@ -52,6 +52,7 @@ const StyledMenuContainer = styled.div`
   bottom: 0;
   height: 100vh;
   width: 300px;
+  border-radius: 0 20px 20px 0;
   background: ${({theme}) => theme.navBar.BgColor};
   z-index: 3;
    ${({toggleMenu}) => toggleMenu ?
