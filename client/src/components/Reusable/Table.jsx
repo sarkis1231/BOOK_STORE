@@ -5,12 +5,13 @@ import {FlexContainer} from "../../styled/layout.styled";
 import {ReactComponent as EditIcon} from '../../assets/svg/edit.svg'
 import {ReactComponent as DeleteIcon} from '../../assets/svg/delete.svg'
 import {ReactComponent as PermissionIcon} from '../../assets/svg/user.svg'
+import {ReactComponent as PasswordIcon} from '../../assets/svg/secure.svg'
 import usePagination from "../../hooks/usePagination";
 import {ReactComponent as NextIcon} from '../.././assets/svg/nextArrow.svg'
 import {useTranslation} from "react-i18next";
 
 
-const Table = ({header, body, actionsTypes, editAction, deleteAction, permissionAction, margin}) => {
+const Table = ({header, body, actionsTypes, editAction, deleteAction, passwordAction, permissionAction, margin}) => {
     const {t} = useTranslation()
     const {slicedData, currentPage, nextPage, prevPage, pagination} = usePagination(5, body, 1)
     return (
@@ -41,13 +42,18 @@ const Table = ({header, body, actionsTypes, editAction, deleteAction, permission
                                                 )
                                             case 'DELETE':
                                                 return (
-                                                    <DeleteIcon key={action}
+                                                    <DeleteIcon className="deleteIcon" key={action}
                                                                 onClick={deleteAction ? () => deleteAction({...item}) : null}/>
                                                 )
                                             case 'PERMISSION':
                                                 return (
-                                                    <PermissionIcon key={action}
+                                                    <PermissionIcon className="permissionIcon" key={action}
                                                                     onClick={permissionAction ? () => permissionAction({...item}) : null}/>
+                                                )
+                                            case 'PASSWORD':
+                                                return (
+                                                    <PasswordIcon key={action}
+                                                                    onClick={passwordAction ? () => passwordAction(item?._id) : null}/>
                                                 )
                                             default:
                                                 break;
@@ -136,7 +142,14 @@ const StyledTd = styled.td`
     cursor: pointer;
     fill: ${({theme}) => theme.editDeleteIcon};
   }
-
+  @media (max-width: 1030px) {
+    .deleteIcon {
+      margin: 0 10px;
+    }
+    .permissionIcon {
+      margin: 0 10px 0 0;
+    }
+  }
 `
 
 const StyledPaginationContainer = styled(FlexContainer)`

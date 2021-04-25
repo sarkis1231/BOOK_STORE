@@ -1,7 +1,7 @@
 export const ALL_ROLES = ['Admin', 'User']
 export const ADMIN_ROLE = ['Admin']
 export const TABLE_ACTION_TYPES = ['EDIT', 'DELETE']
-export const TABLE_ACTION_TYPES_ALL = ['EDIT', 'DELETE', 'PERMISSION']
+export const TABLE_ACTION_TYPES_ALL = ['EDIT', 'DELETE', 'PERMISSION', "PASSWORD"]
 export const INPUTS = [{id: 0, name: 'name', inputType: 'text', label: 'name', placeHolder: 'name'}, {
     id: 1,
     name: 'email',

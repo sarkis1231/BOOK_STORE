@@ -9,12 +9,13 @@ import Input from "../../components/Reusable/Input";
 import {useForm} from "react-hook-form";
 import Button from "../../components/Reusable/Button";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {EditUsersSchema} from "./config";
+import {ChangePasswordSchema} from "./config";
 import {TABLE_ACTION_TYPES_ALL, USERS_HEADERS} from "../../constant";
 import PermissionForm from "./PermissionForm";
 import Alert from "../../components/Reusable/Alert";
 import useAlert from "../../hooks/useAlert";
 import {useTranslation} from "react-i18next";
+import EditUsersForm from "./EditUsersForm";
 
 const Users = () => {
     const {t} = useTranslation()
@@ -22,8 +23,14 @@ const Users = () => {
     const [serverErrors, setServerErrors] = useState({});
     const users = useFetch('/users/all', reFetch);
     const {toggleModal, openModal, closeModal, value} = useModal()
-    const {register, errors, handleSubmit} = useForm({
-        resolver: yupResolver(EditUsersSchema),
+
+    const {
+        register: registerChangePassword,
+        errors: errorsChangePassword,
+        handleSubmit: handleSubmitChangePassword,
+        reset: resetChangePassword
+    } = useForm({
+        resolver: yupResolver(ChangePasswordSchema),
     })
     const [alert, setAlert] = useAlert()
 
@@ -41,6 +48,13 @@ const Users = () => {
         value: permissionValue
     } = useModal()
 
+    const {
+        toggleModal: changePasswordToggleModal,
+        openModal: changePasswordOpenModal,
+        closeModal: changePasswordCLoseModal,
+        value: changePasswordValue
+    } = useModal()
+
     const openDeleteModal = (item) => {
         openModal(item)
     }
@@ -50,6 +64,9 @@ const Users = () => {
 
     const openPermissionModal  = (item) => {
         permissionOpenModal(item)
+    }
+    const openChangePasswordModal  = (item) => {
+        changePasswordOpenModal(item)
     }
     const onSubmit = (value) => {
         const {name, email} = value
@@ -74,6 +91,16 @@ const Users = () => {
         closeModal();
     }
 
+    const handleChangePassword = (value) => {
+        axios.put(`/users/change-password/${changePasswordValue}`, value).then(res => {
+            setAlert({show: true, message: res.data.message, severity: res.data.alert})
+            resetChangePassword()
+            changePasswordCLoseModal()
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+
     return (
         <>
             <Table
@@ -83,6 +110,7 @@ const Users = () => {
                 deleteAction={openDeleteModal}
                 editAction={openEditModal}
                 permissionAction={openPermissionModal}
+                passwordAction={openChangePasswordModal}
             />
             <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Delete users'>
                 <DeleteModalContent
@@ -92,30 +120,29 @@ const Users = () => {
                 />
             </Modal>
             <Modal toggleModal={editToggleModal} handleCloseModal={editCLoseModal} modalTitle='Edit users'>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <Input
-                        name='name'
-                        label='Name'
-                        placeHolder='Name'
-                        value={editValue?.name}
-                        errors={errors || serverErrors}
-                        ref={register}
-                    />
-                    <Input
-                        name='email'
-                        label='Email'
-                        placeHolder='Email'
-                        value={editValue?.email}
-                        errors={errors}
-                        serverError={serverErrors}
-                        ref={register}
-                        margin='20px 0'
-                    />
-                    <Button type='submit'>Edit</Button>
-                </form>
+                <EditUsersForm editValue={editValue} serverErrors={serverErrors} onSubmit={onSubmit}/>
             </Modal>
             <Modal maxWidth='550px' toggleModal={permissionToggleModal} handleCloseModal={permissionCLoseModal} modalTitle="Edit Permissions">
                 <PermissionForm setAlert={setAlert} userId={permissionValue?._id} closeModal={permissionCLoseModal}/>
+            </Modal>
+            <Modal
+                maxWidth='550px'
+                toggleModal={changePasswordToggleModal}
+                handleCloseModal={changePasswordCLoseModal}
+                modalTitle="Change Password"
+            >
+                <form onSubmit={handleSubmitChangePassword(handleChangePassword)}>
+                    <Input
+                        name='password'
+                        label='Change password'
+                        placeHolder='Change password'
+                        inputType="text"
+                        error={errorsChangePassword}
+                        ref={registerChangePassword}
+                        margin="0 0 20px"
+                    />
+                    <Button type="submit">Change</Button>
+                </form>
             </Modal>
             <Alert severity={alert.severity} message={t(`${alert.message}`)} setShow={setAlert} show={alert.show}/>
         </>
