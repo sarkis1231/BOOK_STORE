@@ -18,6 +18,8 @@ const AuthenticatedImage = ({src}) => {
     }, [src])
 
     useEffect(() => {
+        let mount = true
+        if(mount)
         fetchBase64({
             ...memoizedFetcher,
             ...{
@@ -28,6 +30,9 @@ const AuthenticatedImage = ({src}) => {
                 }
             }
         })
+        return () => {
+            mount =false
+        }
     }, [memoizedFetcher])
 
     return (

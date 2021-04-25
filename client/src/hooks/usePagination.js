@@ -1,17 +1,22 @@
 import {useEffect,useState} from 'react';
+import usePrevious from "./usePrevious";
 
 const usePagination = (itemsPerPage, data, startFrom, remove = false) => {
     const perPage = itemsPerPage || 10;
     const pages = Math.ceil(data.length / perPage);
     const pagination = [];
-    const [currentPage, setCurrentPage] = useState(startFrom <= pages ? startFrom : 1);
-    const [slicedData, setSlicedData] = useState(data);
-
+    const [currentPage, setCurrentPage] = useState(() => startFrom <= pages ? startFrom : 1);
+    const [slicedData, setSlicedData] = useState(() => data);
+    const prevDataLength = usePrevious(data.length)
     useEffect(() => {
-        setSlicedData(() => [...data].slice((currentPage - 1) * perPage, currentPage * perPage));
-        if(data.length) return
-        // eslint-disable-next-line
-    }, [data.length]);
+        if(!data.length) {
+            return;
+        }
+        if(data?.length !== prevDataLength?.length) {
+            setSlicedData(() => [...data].slice((currentPage - 1) * perPage, currentPage * perPage));
+        }
+
+    }, [data.length, prevDataLength?.length, currentPage, perPage, data]);
     let ellipsisLeft = false;
     let ellipsisRight = false;
 

@@ -90,6 +90,7 @@ const Books = () => {
     }
 
     const onSearchSubmit = (value) => {
+        console.log(value)
         axios.get(`/books/filter`, {
             params: filteredValue(value)
         }).then(res => {

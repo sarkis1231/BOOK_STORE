@@ -12,10 +12,12 @@ export function dateYearFormat(date) {
 }
 
 export const filterDataControlledDropDown = (data) => {
-
-    return data.map(item => {
+    const obj = {value: "", name: "none"}
+    const Filtered = data.map(item => {
         return {value: item._id, name: item.name}
     })
+
+    return [obj, ...Filtered]
 }
 
 export const filteredValue = (values) => {
