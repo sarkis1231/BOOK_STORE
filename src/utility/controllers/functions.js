@@ -40,6 +40,7 @@ getCtrlFn.getAll = function (myModel) {
     }
 };
 
+// TODO adding a caching layer here for individual fetching
 getCtrlFn.getId = function (myModel) {
     if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
