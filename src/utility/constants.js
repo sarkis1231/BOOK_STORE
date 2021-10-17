@@ -1,3 +1,4 @@
+// TODO maybe add i118
 const MESSAGES = {
     SOMETHING_WENT_WRONG: "Something went Wrong",
     WRONG_AUTH: 'Wrong Auth',
