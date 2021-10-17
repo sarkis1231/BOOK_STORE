@@ -6,6 +6,10 @@ const {alert, noResult} = require("./messages");
 
 let getCtrlFn = {};
 
+/**
+ * @description get command for model Route wrap up
+ * @param myModel {Model}
+ * */
 getCtrlFn.Delete = function (myModel) {
     if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
@@ -27,6 +31,10 @@ getCtrlFn.Delete = function (myModel) {
 };
 
 // TODO adding a caching layer here for individual fetching maybe ??
+/**
+ * @description get command for model Route wrap up
+ * @param myModel {Model}
+ * */
 getCtrlFn.getAll = function (myModel) {
     if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
@@ -42,6 +50,10 @@ getCtrlFn.getAll = function (myModel) {
 };
 
 // TODO adding a caching layer here for individual fetching
+/**
+ * @description get command for model Route wrap up
+ * @param myModel {Model}
+ * */
 getCtrlFn.getId = function (myModel) {
     if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
