@@ -2,4 +2,6 @@ const MONGODB_URI = `mongodb://localhost:${process.env.MONGODB_PORT}/${process.e
 const MONGOOSE_OPTIONS = {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false};
 const SECRET_KEY = process.env.SECRET_KEY;
 
+const REDIS_URI = `redis://localhost:${process.env.REDIS_PORT}/${process.env.REDIS_DB_NAME}`;
+
 module.exports = {MONGOOSE_OPTIONS, MONGODB_URI,SECRET_KEY}
