@@ -26,6 +26,7 @@ getCtrlFn.Delete = function (myModel) {
     }
 };
 
+// TODO adding a caching layer here for individual fetching maybe ??
 getCtrlFn.getAll = function (myModel) {
     if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
