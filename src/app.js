@@ -10,8 +10,10 @@ const {MONGODB_URI, REDIS_URI, MONGOOSE_OPTIONS} = require("./config/keys");
 const passportConfig = require("./config/passport");
 
 const path = require("path");
+
+// tODO fix me later with express variable global
 myPath = path.join(__dirname, 'uploads');
-module.exports = myPath; //tODO fix me later
+module.exports = myPath;
 
 const app = express();
 
