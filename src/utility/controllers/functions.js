@@ -6,6 +6,10 @@ const {alert, noResult} = require("./messages");
 
 let getCtrlFn = {};
 
+/**
+ * @description get command for model Route wrap up
+ * @param myModel {Model}
+ * */
 getCtrlFn.Delete = function (myModel) {
     if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
@@ -26,6 +30,10 @@ getCtrlFn.Delete = function (myModel) {
     }
 };
 
+/**
+ * @description get command for model Route wrap up
+ * @param myModel {Model}
+ * */
 getCtrlFn.getAll = function (myModel) {
     if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
@@ -40,6 +48,10 @@ getCtrlFn.getAll = function (myModel) {
     }
 };
 
+/**
+ * @description get command for model Route wrap up
+ * @param myModel {Model}
+ * */
 getCtrlFn.getId = function (myModel) {
     if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
@@ -49,6 +61,57 @@ getCtrlFn.getId = function (myModel) {
         try {
             errorValidation(req);
             const item = await myModel.getById(req.params.id, false, true);
+            if (!Fn.isEmpty(item)) {
+                return res.status(200).json(item);
+            }
+            noResult(res);
+        } catch (err) {
+            errorCatcher(next, err);
+        }
+    }
+};
+
+/**
+ * @description get controller function with in memory cached Query
+ * @param myModel {Model}
+ * */
+getCtrlFn.getIdWithCache = function (myModel) {
+    if (!modelUtil.isModel(myModel)) {
+        console.error("Model not defined");
+        return Fn.noop;
+    }
+    return async function (req, res, next) {
+        try {
+            errorValidation(req);
+            const item = await myModel.getById(req.params.id, false, true);
+            const modelName = myModel.modelName;
+
+            
+            if (!Fn.isEmpty(item)) {
+                return res.status(200).json(item);
+            }
+            noResult(res);
+        } catch (err) {
+            errorCatcher(next, err);
+        }
+    }
+};
+
+/**
+ * @description get controller function with in memory cached Query
+ * @param myModel {Model}
+ * */
+getCtrlFn.getAllWithCache = function (myModel) {
+    if (!modelUtil.isModel(myModel)) {
+        console.error("Model not defined");
+        return Fn.noop;
+    }
+    return async function (req, res, next) {
+        try {
+            errorValidation(req);
+            const item = await myModel.getById(req.params.id, false, true);
+            const modelName = myModel.modelName;
+
             if (!Fn.isEmpty(item)) {
                 return res.status(200).json(item);
             }

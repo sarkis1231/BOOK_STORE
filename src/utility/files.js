@@ -1,5 +1,10 @@
 const multer = require('multer');
 const path = require("path");
+const util = require('util');
+const fs = require('fs');
+
+const fsMkdirPromise = util.promisify(fs.mkdir);
+
 
 const FILE_TYPES = {
     'image/jpeg': 'image/jpeg',
@@ -9,7 +14,15 @@ const FILE_TYPES = {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'src/uploads');
+        const path = 'src/uploads';
+        // directory does not exist create otherwise save
+        fsMkdirPromise(path, {recursive: true})
+            .then(function () {
+                cb(null, path);
+            }).catch(function (err) {
+            console.log(err);
+        });
+
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}-${path.extname(file.originalname)}`);

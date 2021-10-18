@@ -3,14 +3,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const redis = require("redis");
+
 const helmet = require("helmet");
-const {MONGODB_URI} = require("./config/keys");
-const {MONGOOSE_OPTIONS} = require("./config/keys");
+const {MONGODB_URI, REDIS_URI, MONGOOSE_OPTIONS} = require("./config/keys");
 const passportConfig = require("./config/passport");
 
-const path = require("path");
-myPath = path.join(__dirname, 'uploads');
-module.exports = myPath; //tODO fix me later
 
 const app = express();
 
@@ -45,7 +43,7 @@ const router = require('./routes');
 app.use(router);
 
 
-//errors
+// errors
 app.use(function (err, req, res, next) {
     const status = err.statusCode || 500;
     const message = err.message;
@@ -75,12 +73,23 @@ mongoose.connection.on('disconnected', function () {
 mongoose.connect(MONGODB_URI, MONGOOSE_OPTIONS)
     .then(function () {
         app.listen(port, () => {
-            console.log(`server started on port ${port}`);
+            console.log(`HTTP server started on port ${port}`);
         });
     }).catch(function (err) {
     console.log(err);
 });
 
+
+// redis
+let redis_client = redis.createClient(REDIS_URI);
+
+redis_client.on('ready', function () {
+    console.log(`Redis connection is ready ${REDIS_URI}`);
+});
+
+redis_client.on('error', function (error) {
+    console.log(error);
+});
 
 process.on('SIGINT', function () {
     mongoose.connection.close(function () {

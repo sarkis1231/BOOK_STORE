@@ -1,5 +1,11 @@
-const fs = require('promise-fs');
-const path = require("../app");
+const {readFile} = require('fs');
+
+const {Fn} = require("../utility/functions");
+const path = Fn.getUploadsDirectory();
+const util = require('util');
+
+const readFilePromise = util.promisify(readFile);
+
 const {errorCatcher} = require("../utility/controllers/errors");
 
 function readImage(req, res, next) {
@@ -11,7 +17,7 @@ function readImage(req, res, next) {
     type = type.substr(1); //get rid of point
     imageType = imageType + type;
     res.set({'Content-Type': imageType});
-    fs.readFile(`${path}/${location}`)
+    readFilePromise(`${path}/${location}`)
         .then(function (image) {
             res.send(image);
         }).catch(function (err) {
@@ -19,11 +25,11 @@ function readImage(req, res, next) {
     });
 }
 
-function readFile(req, res, next) {
+function readAFile(req, res, next) {
     let location = req.params.id;
     res.set({'Content-Type': 'application/pdf'});
 
-    fs.readFile(`${path}/${location}`)
+    readFilePromise(`${path}/${location}`)
         .then(function (image) {
             res.send(image);
         }).catch(function (err) {
@@ -31,4 +37,4 @@ function readFile(req, res, next) {
     });
 }
 
-module.exports = {readImage, readFile};
+module.exports = {readImage, readAFile};
