@@ -1,5 +1,6 @@
 const fs = require('promise-fs');
-const path = require("../app");
+// TODO  use the inherent node functions
+const {path} = require("../app");
 const {errorCatcher} = require("../utility/controllers/errors");
 
 function readImage(req, res, next) {

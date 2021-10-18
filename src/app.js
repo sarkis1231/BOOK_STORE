@@ -13,7 +13,7 @@ const path = require("path");
 
 // tODO fix me later with express variable global
 myPath = path.join(__dirname, 'uploads');
-module.exports = myPath;
+module.exports.path = myPath;
 
 const app = express();
 
