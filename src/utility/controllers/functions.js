@@ -84,6 +84,9 @@ getCtrlFn.getIdWithCache = function (myModel) {
         try {
             errorValidation(req);
             const item = await myModel.getById(req.params.id, false, true);
+            const modelName = myModel.modelName;
+
+            
             if (!Fn.isEmpty(item)) {
                 return res.status(200).json(item);
             }
@@ -93,7 +96,6 @@ getCtrlFn.getIdWithCache = function (myModel) {
         }
     }
 };
-
 
 /**
  * @description get controller function with in memory cached Query
@@ -108,6 +110,8 @@ getCtrlFn.getAllWithCache = function (myModel) {
         try {
             errorValidation(req);
             const item = await myModel.getById(req.params.id, false, true);
+            const modelName = myModel.modelName;
+
             if (!Fn.isEmpty(item)) {
                 return res.status(200).json(item);
             }
@@ -117,6 +121,5 @@ getCtrlFn.getAllWithCache = function (myModel) {
         }
     }
 };
-
 
 module.exports = {getCtrlFn};
