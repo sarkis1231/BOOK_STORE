@@ -16,17 +16,11 @@ const FILE_TYPES = {
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const path = 'src/uploads';
-
-        fsAccessPromise(path).then(function () {
-            // console.log('I only should work');
-            cb(null, path);
-        }).catch(function (err) {
-            return fsMkdirPromise(path)
-        }).then(function (mkdirData) {
-            // console.log(mkdirData);
-            // console.log('If catch is not there');
-            cb(null, path);
-        }).catch(function (err) {
+        // directory does not exist create otherwise save
+        fsMkdirPromise(path, {recursive: true})
+            .then(function () {
+                cb(null, path);
+            }).catch(function (err) {
             console.log(err);
         });
 
