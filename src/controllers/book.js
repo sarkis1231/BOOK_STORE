@@ -16,6 +16,7 @@ async function addBook(req, res, next) {
     try {
         errorValidationFiles(req, ['file', 'image']);
 
+        // TODO maybe add streams
         let file = req.files.file[0].path;
         let image = req.files.image[0].path;
 

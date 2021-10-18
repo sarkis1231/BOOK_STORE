@@ -1,5 +1,11 @@
 const multer = require('multer');
 const path = require("path");
+const util = require('util');
+const fs = require('fs');
+
+const fsAccessPromise = util.promisify(fs.access);
+const fsMkdirPromise = util.promisify(fs.mkdir);
+
 
 const FILE_TYPES = {
     'image/jpeg': 'image/jpeg',
@@ -9,7 +15,21 @@ const FILE_TYPES = {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'src/uploads');
+        const path = 'src/uploads';
+
+        fsAccessPromise(path).then(function () {
+            // console.log('I only should work');
+            cb(null, path);
+        }).catch(function (err) {
+            return fsMkdirPromise(path)
+        }).then(function (mkdirData) {
+            // console.log(mkdirData);
+            // console.log('If catch is not there');
+            cb(null, path);
+        }).catch(function (err) {
+            console.log(err);
+        });
+
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}-${path.extname(file.originalname)}`);
