@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const path = require('path');
 
 let Fn = {};
 
@@ -12,7 +13,8 @@ Fn.isEmpty = function (value) {
     );
 }; //prototype Lib Util let's say
 
-Fn.noop = function (){};
+Fn.noop = function () {
+};
 
 Fn.isString = function (str) {
     return typeof str === 'string' || str instanceof String;
@@ -40,7 +42,7 @@ Fn.toObjectId = function (id) {
 }
 
 Fn.sameObjectId = function (objId1, objId2) {
-    if(!Fn.isMongooseValidId(objId1) ||!Fn.isMongooseValidId(objId2)) {
+    if (!Fn.isMongooseValidId(objId1) || !Fn.isMongooseValidId(objId2)) {
         return false;
     }
     return objId1.toString() === objId2.toString();
@@ -57,7 +59,7 @@ Fn.sanitizeQuery = function (query) {
 };
 
 Fn.isValidDate = function (value) {
-    if (!value.match(/^\d{4}-\d{2}-\d{2}$/)){
+    if (!value.match(/^\d{4}-\d{2}-\d{2}$/)) {
         return false;
     }
     const date = new Date(value);
@@ -67,7 +69,7 @@ Fn.isValidDate = function (value) {
     return date.toISOString().slice(0, 10) === value;
 };
 
-Fn.isNumber = function (value){
+Fn.isNumber = function (value) {
     return typeof value === 'number';
 };
 
@@ -83,5 +85,14 @@ Fn.arrayToObj = function (array, key) {
 Fn.isArray = function (array) {
     return Array.isArray(array);
 };
+
+Fn.getRootDirectory = function () {
+    return path.dirname(process.mainModule.filename);
+};
+
+Fn.getUploadsDirectory = function () {
+    return path.join(this.getRootDirectory(), 'uploads');
+};
+
 
 module.exports = {Fn};

@@ -1,6 +1,7 @@
-const fs = require('promise-fs');
 // TODO  use the inherent node functions
-const {path} = require("../app");
+const fs = require('promise-fs');
+const {Fn} = require("../utility/functions");
+const path = Fn.getUploadsDirectory();
 const {errorCatcher} = require("../utility/controllers/errors");
 
 function readImage(req, res, next) {
