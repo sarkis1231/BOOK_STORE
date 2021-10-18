@@ -30,7 +30,6 @@ getCtrlFn.Delete = function (myModel) {
     }
 };
 
-// TODO adding a caching layer here for individual fetching maybe ??
 /**
  * @description get command for model Route wrap up
  * @param myModel {Model}
@@ -49,7 +48,6 @@ getCtrlFn.getAll = function (myModel) {
     }
 };
 
-// TODO adding a caching layer here for individual fetching
 /**
  * @description get command for model Route wrap up
  * @param myModel {Model}
@@ -72,5 +70,53 @@ getCtrlFn.getId = function (myModel) {
         }
     }
 };
+
+/**
+ * @description get controller function with in memory cached Query
+ * @param myModel {Model}
+ * */
+getCtrlFn.getIdWithCache = function (myModel) {
+    if (!modelUtil.isModel(myModel)) {
+        console.error("Model not defined");
+        return Fn.noop;
+    }
+    return async function (req, res, next) {
+        try {
+            errorValidation(req);
+            const item = await myModel.getById(req.params.id, false, true);
+            if (!Fn.isEmpty(item)) {
+                return res.status(200).json(item);
+            }
+            noResult(res);
+        } catch (err) {
+            errorCatcher(next, err);
+        }
+    }
+};
+
+
+/**
+ * @description get controller function with in memory cached Query
+ * @param myModel {Model}
+ * */
+getCtrlFn.getAllWithCache = function (myModel) {
+    if (!modelUtil.isModel(myModel)) {
+        console.error("Model not defined");
+        return Fn.noop;
+    }
+    return async function (req, res, next) {
+        try {
+            errorValidation(req);
+            const item = await myModel.getById(req.params.id, false, true);
+            if (!Fn.isEmpty(item)) {
+                return res.status(200).json(item);
+            }
+            noResult(res);
+        } catch (err) {
+            errorCatcher(next, err);
+        }
+    }
+};
+
 
 module.exports = {getCtrlFn};
