@@ -3,7 +3,6 @@ const path = require("path");
 const util = require('util');
 const fs = require('fs');
 
-const fsAccessPromise = util.promisify(fs.access);
 const fsMkdirPromise = util.promisify(fs.mkdir);
 
 
