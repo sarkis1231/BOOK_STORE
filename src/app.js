@@ -56,21 +56,9 @@ const port = process.env.PORT || 8080;
 
 
 // mongodb
-mongoose.connection.on('connected', function () {
-    console.log('Mongoose default connection open to ' + MONGODB_URI);
-});
+const mongoose_server =  require('./mongoose_server');
 
-// If the connection throws an error
-mongoose.connection.on('error', function (err) {
-    console.log('Mongoose default connection error: ' + err);
-});
-
-// When the connection is disconnected
-mongoose.connection.on('disconnected', function () {
-    console.log('Mongoose default connection disconnected');
-});
-
-mongoose.connect(MONGODB_URI, MONGOOSE_OPTIONS)
+mongoose_server.connect(MONGODB_URI, MONGOOSE_OPTIONS)
     .then(function () {
         app.listen(port, () => {
             console.log(`HTTP server started on port ${port}`);
