@@ -1,8 +1,8 @@
-const modelUtil = require("../utility/model");
 const {Schema, model} = require("mongoose");
 const {SCHEMES_NAMES} = require('../utility/constants');
+const CustomSchema = require("../CustomSchema");
 
-let genreSchema = new Schema({
+let genreSchema = new CustomSchema({
     name: {
         type: String,
         required: true
@@ -16,8 +16,6 @@ let genreSchema = new Schema({
         type: Boolean
     }
 }, {timestamps: true});
-
-genreSchema = modelUtil.addSchemaStaticFunctions(genreSchema);
 
 const Genres = model(SCHEMES_NAMES.Genres, genreSchema);
 
