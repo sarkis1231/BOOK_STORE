@@ -1,6 +1,6 @@
 const {SCHEMES_NAMES,LIMITS} = require("../utility/constants");
 const {Schema, model} = require("mongoose");
-const CustomSchema = require("../CustomSchema");
+const {CustomSchema} = require("../mongoose_custom");
 
 let permissionSchema = new CustomSchema({
     uid: {

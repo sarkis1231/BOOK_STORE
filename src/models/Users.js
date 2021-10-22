@@ -5,7 +5,7 @@ const {USER_ROLES, ALL_USER_ROLES} = require("../roles.js");
 const {SCHEMES_NAMES} = require('../utility/constants');
 const {Genres} = require('./Genre');
 const {Permissions} = require('./Permisssions');
-const CustomSchema = require("../CustomSchema");
+const {CustomSchema} = require("../mongoose_custom");
 
 
 let userSchema = CustomSchema({

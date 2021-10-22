@@ -1,7 +1,7 @@
 const {Fn} = require("../utility/functions");
 const {Schema, model} = require("mongoose");
 const {SCHEMES_NAMES} = require('../utility/constants');
-const CustomSchema = require("../CustomSchema");
+const {CustomSchema} = require("../mongoose_custom");
 
 let authorSchema = new CustomSchema({
     name: {

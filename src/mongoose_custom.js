@@ -1,6 +1,5 @@
 // General Mongoose ORM configs
 
-const mongoose = require('mongoose');
 const {Schema} = require("mongoose");
 const modelUtil = require("./utility/model");
 const {Fn} = require("./utility/functions");
@@ -58,6 +57,6 @@ function CustomSchema(...params) {
 
 
 
-module.exports = CustomSchema;
+module.exports = {CustomSchema};
 
 
