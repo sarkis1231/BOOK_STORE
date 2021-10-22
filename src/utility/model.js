@@ -1,4 +1,3 @@
-const {Fn} = require("./functions");
 const {Model} = require("mongoose");
 let modelUtil = {};
 
@@ -10,8 +9,6 @@ modelUtil.getQueryWithDisable = function (qry) {
 modelUtil.ignoreQry = function (qry) {
     return qry || {'updatedAt': 0};
 };
-
-
 
 modelUtil.isModel = function (obj) {
     obj = obj || {}

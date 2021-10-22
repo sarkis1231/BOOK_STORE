@@ -1,6 +1,7 @@
 const redis = require("redis");
 const {REDIS_URI} = require("./config/keys");
 const util = require('util');
+const {Fn} = require("./utility/functions");
 
 let redis_client = redis.createClient(REDIS_URI);
 
@@ -16,4 +17,6 @@ redis_client.on('error', function (error) {
     console.log(error);
 });
 
-module.exports = redis_client;
+
+
+module.exports = {redis_client};

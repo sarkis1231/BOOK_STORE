@@ -1,4 +1,4 @@
-const {clearRedisKey} = require('../mongoose_custom');
+const {clearRedisKey} = require("../utility/cache");
 
 async function clearCache(req, res, next) {
     await next(); // this will wait handler request handler
