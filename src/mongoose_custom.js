@@ -88,12 +88,19 @@ const exec = Query.prototype.exec;
  * @return {Promise}
  * */
 Query.prototype.exec = async function () {
+
     if(!this.useCache) {
         return exec.apply(this, arguments);
     }
 
     let key = JSON.stringify({...this.getQuery(), collection: this.mongooseCollection.collectionName});
-    const cacheValue = await redis_client.get(key);
+
+    let cacheValue;
+    if (this.hashKey) {
+        cacheValue = await redis_client.hget(this.hashKey, key);
+    } else {
+        cacheValue = await redis_client.get(key);
+    }
 
     if (cacheValue) {
         const data = JSON.parse(cacheValue);
@@ -107,17 +114,23 @@ Query.prototype.exec = async function () {
 
     // Document instance
     const result = await exec.apply(this, arguments);
-    redis_client.set(key, JSON.stringify(result));
+    if(this.hashKey) {
+        redis_client.hset(this.hashKey, key, JSON.stringify(result));
+    } else {
+        redis_client.set(key, JSON.stringify(result));
+    }
 
     return result
 };
 
 /**
  * @description adding cache parameter in Query instance
+ * @param options {Object}
  * @return {Query}
  * */
-Query.prototype.cache = function () {
+Query.prototype.cache = function (options= {}) {
     this.useCache = true;
+    this.hashKey = options.key ? JSON.stringify(options.key) : null;
     return this;
 };
 
