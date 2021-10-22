@@ -61,14 +61,18 @@ const exec = Query.prototype.exec;
 /**
  * @return {Promise}
  * */
-Query.prototype.exect = async function () {
+Query.prototype.exec = async function () {
+    if(!this.useCache) {
+        return exec.apply(this, arguments);
+    }
+
     let key = JSON.stringify({...this.getQuery(), collection: this.mongooseCollection.collectionName});
     const cacheValue = await redis_client.get(key);
 
-    if(cacheValue) {
+    if (cacheValue) {
         const data = JSON.parse(cacheValue);
-        if(Array.isArray(data)){
-            return data.map((item) =>{
+        if (Array.isArray(data)) {
+            return data.map((item) => {
                 return new this.model(item);
             });
         }
@@ -80,6 +84,15 @@ Query.prototype.exect = async function () {
     redis_client.set(key, JSON.stringify(result));
 
     return result
+};
+
+/**
+ * @description adding cache parameter in Query instance
+ * @return {Query}
+ * */
+Query.prototype.cache = function () {
+    this.useCache = true;
+    return this;
 };
 
 
