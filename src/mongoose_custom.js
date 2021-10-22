@@ -139,10 +139,13 @@ Query.prototype.cache = function (options = {}) {
  * @param {String} hashKey
  * @return Promise
  * */
-function clearHash(hashKey) {
-    return redis_client.del(hashKey);
+function clearRedisKey(hashKey) {
+    if(Fn.isString(hashKey)){
+        return redis_client.del(hashKey);
+    }
+    return Promise.reject('Not a string');
 }
 
-module.exports = {CustomSchema, clearHash};
+module.exports = {CustomSchema, clearRedisKey};
 
 
