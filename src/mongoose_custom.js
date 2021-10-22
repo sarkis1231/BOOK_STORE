@@ -3,6 +3,7 @@
 const {Schema, Query} = require("mongoose");
 const modelUtil = require("./utility/model");
 const {Fn} = require("./utility/functions");
+const redis_client = require("./redis_client");
 
 
 function CustomSchema(...params) {
@@ -60,12 +61,25 @@ const exec = Query.prototype.exec;
 /**
  * @return {Promise}
  * */
-Query.prototype.exec = function () {
-    let keyString = JSON.stringify({...this.getQuery(), collection: this.mongooseCollection.collectionName});
+Query.prototype.exect = async function () {
+    let key = JSON.stringify({...this.getQuery(), collection: this.mongooseCollection.collectionName});
+    const cacheValue = await redis_client.get(key);
 
+    if(cacheValue) {
+        const data = JSON.parse(cacheValue);
+        if(Array.isArray(data)){
+            return data.map((item) =>{
+                return new this.model(item);
+            });
+        }
+        return new this.model(data);
+    }
 
+    // Document instance
+    const result = await exec.apply(this, arguments);
+    redis_client.set(key, JSON.stringify(result));
 
-    return exec.apply(this, arguments);
+    return result
 };
 
 
