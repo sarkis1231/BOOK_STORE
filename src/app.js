@@ -79,15 +79,7 @@ mongoose.connect(MONGODB_URI, MONGOOSE_OPTIONS)
 
 
 // redis
-let redis_client = redis.createClient(REDIS_URI);
-
-redis_client.on('ready', function () {
-    console.log(`Redis connection is ready ${REDIS_URI}`);
-});
-
-redis_client.on('error', function (error) {
-    console.log(error);
-});
+require('./redis_client');
 
 process.on('SIGINT', function () {
     mongoose.connection.close(function () {

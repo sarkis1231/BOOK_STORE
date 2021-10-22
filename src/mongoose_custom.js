@@ -1,6 +1,6 @@
 // General Mongoose ORM configs
 
-const {Schema} = require("mongoose");
+const {Schema, Query} = require("mongoose");
 const modelUtil = require("./utility/model");
 const {Fn} = require("./utility/functions");
 
@@ -55,6 +55,18 @@ function CustomSchema(...params) {
     return schema;
 }
 
+const exec = Query.prototype.exec;
+
+/**
+ * @return {Promise}
+ * */
+Query.prototype.exec = function () {
+    let keyString = JSON.stringify({...this.getQuery(), collection: this.mongooseCollection.collectionName});
+
+
+
+    return exec.apply(this, arguments);
+};
 
 
 module.exports = {CustomSchema};
