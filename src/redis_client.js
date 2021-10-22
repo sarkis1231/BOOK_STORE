@@ -5,7 +5,6 @@ const util = require('util');
 let redis_client = redis.createClient(REDIS_URI);
 
 redis_client.get = util.promisify(redis_client.get);
-// redis_client.set = util.promisify(redis_client.set);
 
 redis_client.on('ready', function () {
     console.log(`Redis connection is ready ${REDIS_URI}`);
