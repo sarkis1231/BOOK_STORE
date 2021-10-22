@@ -16,23 +16,43 @@ Fn.isEmpty = function (value) {
 Fn.noop = function () {
 };
 
+/**
+ * @param str {*}
+ * @return Boolean
+ * */
 Fn.isString = function (str) {
     return typeof str === 'string' || str instanceof String;
 };
 
+/**
+ * @param obj {*}
+ * @return Boolean
+ * */
 Fn.isObject = function (obj) {
     let type = typeof obj;
     return type === 'function' || type === 'object' && !!obj;
 };
 
+/**
+ * @param item {*}
+ * @return Boolean
+ * */
 Fn.isUndefined = function (item) {
     return typeof item === 'undefined';
 };
 
+/**
+ * @param item {*}
+ * @return Boolean
+ * */
 Fn.isDefined = function (item) {
     return typeof item !== 'undefined';
 };
 
+/**
+ * @param id {*}
+ * @return Boolean
+ * */
 Fn.isMongooseValidId = function (id) {
     return mongoose.Types.ObjectId.isValid(id)
 };
@@ -41,6 +61,9 @@ Fn.toObjectId = function (id) {
     return new mongoose.Types.ObjectId(id);
 }
 
+/**
+ * @return Boolean
+ * */
 Fn.sameObjectId = function (objId1, objId2) {
     if (!Fn.isMongooseValidId(objId1) || !Fn.isMongooseValidId(objId2)) {
         return false;
@@ -58,6 +81,10 @@ Fn.sanitizeQuery = function (query) {
     return query;
 };
 
+/**
+ * @param value {*}
+ * @return Boolean
+ * */
 Fn.isValidDate = function (value) {
     if (!value.match(/^\d{4}-\d{2}-\d{2}$/)) {
         return false;
@@ -69,10 +96,19 @@ Fn.isValidDate = function (value) {
     return date.toISOString().slice(0, 10) === value;
 };
 
+/**
+ * @param value {*}
+ * @return Boolean
+ * */
 Fn.isNumber = function (value) {
     return typeof value === 'number';
 };
 
+/**
+ * @param array {Array}
+ * @param key {String}
+ * @return Object
+ * */
 Fn.arrayToObj = function (array, key) {
     return array.reduce(function (accumulator, currentValue) {
         let obj = {...accumulator};
@@ -82,14 +118,24 @@ Fn.arrayToObj = function (array, key) {
     }, {});
 };
 
+/**
+ * @param array {*}
+ * @return Boolean
+ * */
 Fn.isArray = function (array) {
     return Array.isArray(array);
 };
 
+/**
+ * @return String
+ * */
 Fn.getRootDirectory = function () {
     return path.dirname(process.mainModule.filename);
 };
 
+/**
+ * @return String
+ * */
 Fn.getUploadsDirectory = function () {
     return path.join(this.getRootDirectory(), 'uploads');
 };

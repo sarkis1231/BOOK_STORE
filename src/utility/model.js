@@ -1,20 +1,33 @@
 const {Model} = require("mongoose");
 let modelUtil = {};
 
-modelUtil.getQueryWithDisable = function (qry) {
-    qry = qry || {};
+/**
+ * @param qry {Object=}
+ * @return Object
+ * */
+modelUtil.getQueryWithDisable = function (qry={}) {
     return {...qry, disabled: {$ne: true}}
 };
 
+/**
+ * @param qry {Object=}
+ * @return Object
+ * */
 modelUtil.ignoreQry = function (qry) {
     return qry || {'updatedAt': 0};
 };
 
-modelUtil.isModel = function (obj) {
-    obj = obj || {}
+/**
+ * @param obj {Object}
+ * @return Boolean
+ * */
+modelUtil.isModel = function (obj = {}) {
     return obj.prototype instanceof Model
 };
 
+/**
+ * @param userModal {Object}
+ * */
 modelUtil.getQueryWithPermission = async function (userModal) {
     if (userModal.isAdmin()) {
         return {};
