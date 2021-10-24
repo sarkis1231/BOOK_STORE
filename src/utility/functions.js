@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 let Fn = {};
-
+/**
+ * @param value{*}
+ * @return Boolean
+ * */
 Fn.isEmpty = function (value) {
     return (
         !!(value === undefined || value === null ||
@@ -71,8 +74,11 @@ Fn.sameObjectId = function (objId1, objId2) {
     return objId1.toString() === objId2.toString();
 };
 
-Fn.sanitizeQuery = function (query) {
-    query = query || {};
+/**
+ * @param query {Object}
+ * @return {Object}
+ * */
+Fn.sanitizeQuery = function (query = {}) {
     for (const queryKey in query) {
         if (Fn.isUndefined(query[queryKey])) {
             delete query[queryKey];
