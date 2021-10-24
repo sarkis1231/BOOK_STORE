@@ -134,6 +134,15 @@ Query.prototype.cache = function (options = {}) {
     return this;
 };
 
+/**
+ * @description cache with default Model name
+ * @return {Query}
+ * */
+Query.prototype.cacheWithModel = function () {
+    this.useCache = true;
+    this.hashKey = this.mongooseCollection.collectionName;
+    return this;
+};
 
 module.exports = {CustomSchema};
 
