@@ -60,6 +60,8 @@ getCtrlFn.getId = function (myModel) {
     return async function (req, res, next) {
         try {
             errorValidation(req);
+
+            // leaned object
             const item = await myModel.getById(req.params.id, false, true);
             if (!Fn.isEmpty(item)) {
                 return res.status(200).json(item);
@@ -83,8 +85,10 @@ getCtrlFn.getIdWithCache = function (myModel) {
     return async function (req, res, next) {
         try {
             errorValidation(req);
+            // leaned object
             const item = await myModel.getById(req.params.id, false, true);
             const modelName = myModel.modelName;
+
 
             
             if (!Fn.isEmpty(item)) {

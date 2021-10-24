@@ -1,4 +1,3 @@
-const modelUtil = require("../utility/model");
 const {Fn} = require("../utility/functions");
 const {LIMITS} = require("../utility/constants");
 const {Schema, model} = require("mongoose");
@@ -6,9 +5,10 @@ const {USER_ROLES, ALL_USER_ROLES} = require("../roles.js");
 const {SCHEMES_NAMES} = require('../utility/constants');
 const {Genres} = require('./Genre');
 const {Permissions} = require('./Permisssions');
+const {CustomSchema} = require("../mongoose_custom");
 
 
-let userSchema = new Schema({
+let userSchema = CustomSchema({
     name: {
         type: String,
         required: true
@@ -35,10 +35,6 @@ let userSchema = new Schema({
         required: true
     },
 }, {timestamps: true});
-
-// TODO for pull add Descriptions
-
-userSchema = modelUtil.addSchemaStaticFunctions(userSchema);
 
 userSchema.methods.isAdmin = function () {
     return this.role === USER_ROLES.Admin;

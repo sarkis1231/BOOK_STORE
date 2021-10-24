@@ -54,8 +54,6 @@ app.use(function (err, req, res, next) {
 
 const port = process.env.PORT || 8080;
 
-
-// mongodb
 mongoose.connection.on('connected', function () {
     console.log('Mongoose default connection open to ' + MONGODB_URI);
 });
@@ -81,15 +79,7 @@ mongoose.connect(MONGODB_URI, MONGOOSE_OPTIONS)
 
 
 // redis
-let redis_client = redis.createClient(REDIS_URI);
-
-redis_client.on('ready', function () {
-    console.log(`Redis connection is ready ${REDIS_URI}`);
-});
-
-redis_client.on('error', function (error) {
-    console.log(error);
-});
+require('./redis_client');
 
 process.on('SIGINT', function () {
     mongoose.connection.close(function () {

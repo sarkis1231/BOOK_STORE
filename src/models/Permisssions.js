@@ -1,8 +1,8 @@
-const modelUtil = require("../utility/model");
 const {SCHEMES_NAMES,LIMITS} = require("../utility/constants");
 const {Schema, model} = require("mongoose");
+const {CustomSchema} = require("../mongoose_custom");
 
-let permissionSchema = new Schema({
+let permissionSchema = new CustomSchema({
     uid: {
         type: Schema.Types.ObjectId,
         ref: SCHEMES_NAMES.Users,
@@ -27,7 +27,6 @@ let permissionSchema = new Schema({
     }
 }, {timestamps: true});
 
-permissionSchema.statics.getById = modelUtil.getById;
 
 const Permissions = model(SCHEMES_NAMES.Permissions, permissionSchema);
 

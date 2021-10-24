@@ -1,9 +1,9 @@
-const modelUtil = require("../utility/model");
 const {Fn} = require("../utility/functions");
 const {Schema, model} = require("mongoose");
 const {SCHEMES_NAMES} = require('../utility/constants');
+const {CustomSchema} = require("../mongoose_custom");
 
-let authorSchema = new Schema({
+let authorSchema = new CustomSchema({
     name: {
         type: String,
         required: true
@@ -18,8 +18,6 @@ let authorSchema = new Schema({
         type: Boolean
     }
 }, {timestamps: true});
-
-authorSchema = modelUtil.addSchemaStaticFunctions(authorSchema);
 
 authorSchema.statics.addBookAuthor = async function (authorId, bookId) {
     let author = await this.getById(authorId);

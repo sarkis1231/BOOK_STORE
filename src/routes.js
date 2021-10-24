@@ -12,7 +12,7 @@ const router = Router();
 
 router.use('/users', users);
 
-// add isAuth as a middleware here in order not to add by hand
+// TODO add isAuth as a middleware here in order not to add by hand
 
 router.use('/books',books);
 

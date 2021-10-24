@@ -1,8 +1,8 @@
-const modelUtil = require("../utility/model");
 const {Schema, model} = require("mongoose");
 const {SCHEMES_NAMES} = require('../utility/constants');
+const {CustomSchema} = require("../mongoose_custom");
 
-let chatBotValidation = new Schema({
+let chatBotValidation = new CustomSchema({
     message: {
         type: String,
         required: true
@@ -16,8 +16,6 @@ let chatBotValidation = new Schema({
         type: Boolean
     }
 }, {timestamps: true});
-
-chatBotValidation = modelUtil.addSchemaStaticFunctions(chatBotValidation);
 
 const ChatBots = model(SCHEMES_NAMES.ChatBot, chatBotValidation);
 
