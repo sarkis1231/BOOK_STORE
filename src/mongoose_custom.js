@@ -9,50 +9,76 @@ const redis_client = require("./redis_client");
 function CustomSchema(...params) {
     const schema = new Schema(...params);
 
+    // TODO make the  parameters into a single Object
+
     /***
      * @param query {Object=}
      * @param ignore {Boolean=}
-     * @param lean{Boolean=}
+     * @param lean {Boolean=} to return js object instead of heavy mongoose Document
+     * @param cache {Boolean=} caching is done with Model name
      * @return Promise
      * */
-    schema.statics.getAll = async function (query, ignore, lean) {
+    schema.statics.getAll = async function (query, ignore, lean, cache) {
         query = modelUtil.getQueryWithDisable(query);
-        if (lean) {
-            return this.find(query, modelUtil.ignoreQry(ignore)).lean();
+        const ignoreQuery = modelUtil.ignoreQry(ignore);
+
+        if (cache) {
+            return lean ?
+                this.find(query, ignoreQuery).cacheWithModel().lean() :
+                this.find(query, ignoreQuery).cacheWithModel();
         }
-        return this.find(query, modelUtil.ignoreQry(ignore));
+
+        return lean ?
+            this.find(query, ignoreQuery).lean() :
+            this.find(query, ignoreQuery);
     };
 
     /***
      * @param query {Object=}
      * @param ignore {Boolean=}
-     * @param lean{Boolean=}
+     * @param lean{Boolean=} to return js object instead of heavy mongoose Document
+     * @param cache {Boolean=} caching is done with Model name
      * @return Promise
      * */
-    schema.statics.getOne = async function (query, ignore, lean) {
+    schema.statics.getOne = async function (query, ignore, lean, cache) {
         query = modelUtil.getQueryWithDisable(query);
-        if (lean) {
-            return this.findOne(query, modelUtil.ignoreQry(ignore)).lean();
+        const ignoreQuery = modelUtil.ignoreQry(ignore);
+
+        if (cache) {
+            return lean ?
+                this.findOne(query, ignoreQuery).cacheWithModel().lean() :
+                this.findOne(query, ignoreQuery).cacheWithModel();
         }
-        return this.findOne(query, modelUtil.ignoreQry(ignore));
+
+        return lean ?
+            this.findOne(query, ignoreQuery).lean() :
+            this.findOne(query, ignoreQuery);
     };
 
     /***
      * @param id {*}
      * @param ignore {Boolean=}
-     * @param lean{Boolean=}
+     * @param lean{Boolean=} to return js object instead of heavy mongoose Document
+     * @param cache {Boolean=} caching is done with Model name
      * @return Promise
      * */
-    schema.statics.getById = async function (id, ignore, lean) {
+    schema.statics.getById = async function (id, ignore, lean, cache) {
         if (Fn.isUndefined(id)) {
             return Promise.reject('id should be defined');
         }
         let query = modelUtil.getQueryWithDisable({});
+        const ignoreQuery = modelUtil.ignoreQry(ignore);
         query._id = id;
-        if (lean) {
-            return this.findOne(query, modelUtil.ignoreQry(ignore)).lean();
+
+        if (cache) {
+            return lean ?
+                this.findOne(query, ignoreQuery).cacheWithModel().lean() :
+                this.findOne(query, ignoreQuery).cacheWithModel();
         }
-        return this.findOne(query, modelUtil.ignoreQry(ignore));
+
+        return lean ?
+            this.findOne(query, ignoreQuery).lean() :
+            this.findOne(query, ignoreQuery);
     };
 
     /***
@@ -125,7 +151,7 @@ Query.prototype.exec = async function () {
 
 /**
  * @description adding cache parameter in Query instance
- * @param options {Object}
+ * @param options {{key:String}}
  * @return {Query}
  * */
 Query.prototype.cache = function (options = {}) {
