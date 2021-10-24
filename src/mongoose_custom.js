@@ -11,48 +11,78 @@ function CustomSchema(...params) {
 
     /***
      * @param query {Object=}
-     * @param ignore {Boolean=}
-     * @param lean{Boolean=}
+     * @param configs {{
+     *     ignore:Boolean,
+     *     lean:Boolean,
+     *     cache:Boolean
+     * }}
      * @return Promise
      * */
-    schema.statics.getAll = async function (query, ignore, lean) {
+    schema.statics.getAll = async function (query, configs = {}) {
         query = modelUtil.getQueryWithDisable(query);
-        if (lean) {
-            return this.find(query, modelUtil.ignoreQry(ignore)).lean();
+        const ignoreQuery = modelUtil.ignoreQry(configs.ignore);
+
+        if (configs.cache) {
+            return configs.lean ?
+                this.find(query, ignoreQuery).cacheWithModel().lean() :
+                this.find(query, ignoreQuery).cacheWithModel();
         }
-        return this.find(query, modelUtil.ignoreQry(ignore));
+
+        return configs.lean ?
+            this.find(query, ignoreQuery).lean() :
+            this.find(query, ignoreQuery);
     };
 
     /***
      * @param query {Object=}
-     * @param ignore {Boolean=}
-     * @param lean{Boolean=}
+     * @param configs {{
+     *     ignore:Boolean,
+     *     lean:Boolean,
+     *     cache:Boolean
+     * }}
      * @return Promise
      * */
-    schema.statics.getOne = async function (query, ignore, lean) {
+    schema.statics.getOne = async function (query, configs = {}) {
         query = modelUtil.getQueryWithDisable(query);
-        if (lean) {
-            return this.findOne(query, modelUtil.ignoreQry(ignore)).lean();
+        const ignoreQuery = modelUtil.ignoreQry(configs.ignore);
+
+        if (configs.cache) {
+            return configs.lean ?
+                this.findOne(query, ignoreQuery).cacheWithModel().lean() :
+                this.findOne(query, ignoreQuery).cacheWithModel();
         }
-        return this.findOne(query, modelUtil.ignoreQry(ignore));
+
+        return configs.lean ?
+            this.findOne(query, ignoreQuery).lean() :
+            this.findOne(query, ignoreQuery);
     };
 
     /***
      * @param id {*}
-     * @param ignore {Boolean=}
-     * @param lean{Boolean=}
+     * @param configs {{
+     *     ignore:Boolean,
+     *     lean:Boolean,
+     *     cache:Boolean
+     * }}
      * @return Promise
      * */
-    schema.statics.getById = async function (id, ignore, lean) {
+    schema.statics.getById = async function (id, configs = {}) {
         if (Fn.isUndefined(id)) {
             return Promise.reject('id should be defined');
         }
         let query = modelUtil.getQueryWithDisable({});
+        const ignoreQuery = modelUtil.ignoreQry(configs.ignore);
         query._id = id;
-        if (lean) {
-            return this.findOne(query, modelUtil.ignoreQry(ignore)).lean();
+
+        if (configs.cache) {
+            return configs.lean ?
+                this.findOne(query, ignoreQuery).cacheWithModel().lean() :
+                this.findOne(query, ignoreQuery).cacheWithModel();
         }
-        return this.findOne(query, modelUtil.ignoreQry(ignore));
+
+        return configs.lean ?
+            this.findOne(query, ignoreQuery).lean() :
+            this.findOne(query, ignoreQuery);
     };
 
     /***
@@ -125,7 +155,7 @@ Query.prototype.exec = async function () {
 
 /**
  * @description adding cache parameter in Query instance
- * @param options {Object}
+ * @param options {{key:String}}
  * @return {Query}
  * */
 Query.prototype.cache = function (options = {}) {
@@ -134,6 +164,15 @@ Query.prototype.cache = function (options = {}) {
     return this;
 };
 
+/**
+ * @description cache with default Model name
+ * @return {Query}
+ * */
+Query.prototype.cacheWithModel = function () {
+    this.useCache = true;
+    this.hashKey = this.mongooseCollection.collectionName;
+    return this;
+};
 
 module.exports = {CustomSchema};
 

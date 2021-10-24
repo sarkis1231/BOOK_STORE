@@ -79,7 +79,7 @@ UserValidation.edit = [
         .bail()
         .withMessage(MESSAGES.VALID_EMAIL)
         .custom(function (value, {req}) {
-            if (value === req.user.email) { //leaving the same email
+            if (value === req.user.email) { //leaving the same email //TODO not working correctly
                 return true;
             }
             return Users.findOne({email: value}).then(function (userDoc) {
