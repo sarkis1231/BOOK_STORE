@@ -9,8 +9,6 @@ const redis_client = require("./redis_client");
 function CustomSchema(...params) {
     const schema = new Schema(...params);
 
-    // TODO make the  parameters into a single Object
-
     /***
      * @param query {Object=}
      * @param configs {{
@@ -20,7 +18,7 @@ function CustomSchema(...params) {
      * }}
      * @return Promise
      * */
-    schema.statics.getAll = async function (query, configs) {
+    schema.statics.getAll = async function (query, configs = {}) {
         query = modelUtil.getQueryWithDisable(query);
         const ignoreQuery = modelUtil.ignoreQry(configs.ignore);
 
@@ -37,48 +35,52 @@ function CustomSchema(...params) {
 
     /***
      * @param query {Object=}
-     * @param ignore {Boolean=}
-     * @param lean{Boolean=} to return js object instead of heavy mongoose Document
-     * @param cache {Boolean=} caching is done with Model name
+     * @param configs {{
+     *     ignore:Boolean,
+     *     lean:Boolean,
+     *     cache:Boolean
+     * }}
      * @return Promise
      * */
-    schema.statics.getOne = async function (query, ignore, lean, cache) {
+    schema.statics.getOne = async function (query, configs = {}) {
         query = modelUtil.getQueryWithDisable(query);
-        const ignoreQuery = modelUtil.ignoreQry(ignore);
+        const ignoreQuery = modelUtil.ignoreQry(configs.ignore);
 
-        if (cache) {
-            return lean ?
+        if (configs.cache) {
+            return configs.lean ?
                 this.findOne(query, ignoreQuery).cacheWithModel().lean() :
                 this.findOne(query, ignoreQuery).cacheWithModel();
         }
 
-        return lean ?
+        return configs.lean ?
             this.findOne(query, ignoreQuery).lean() :
             this.findOne(query, ignoreQuery);
     };
 
     /***
      * @param id {*}
-     * @param ignore {Boolean=}
-     * @param lean{Boolean=} to return js object instead of heavy mongoose Document
-     * @param cache {Boolean=} caching is done with Model name
+     * @param configs {{
+     *     ignore:Boolean,
+     *     lean:Boolean,
+     *     cache:Boolean
+     * }}
      * @return Promise
      * */
-    schema.statics.getById = async function (id, ignore, lean, cache) {
+    schema.statics.getById = async function (id, configs = {}) {
         if (Fn.isUndefined(id)) {
             return Promise.reject('id should be defined');
         }
         let query = modelUtil.getQueryWithDisable({});
-        const ignoreQuery = modelUtil.ignoreQry(ignore);
+        const ignoreQuery = modelUtil.ignoreQry(configs.ignore);
         query._id = id;
 
-        if (cache) {
-            return lean ?
+        if (configs.cache) {
+            return configs.lean ?
                 this.findOne(query, ignoreQuery).cacheWithModel().lean() :
                 this.findOne(query, ignoreQuery).cacheWithModel();
         }
 
-        return lean ?
+        return configs.lean ?
             this.findOne(query, ignoreQuery).lean() :
             this.findOne(query, ignoreQuery);
     };

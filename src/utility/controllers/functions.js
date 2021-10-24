@@ -65,7 +65,10 @@ getCtrlFn.getId = function (myModel) {
             errorValidation(req);
 
             // leaned object
-            const item = await myModel.getById(req.params.id, false, true);
+            const item = await myModel.getById(req.params.id, {
+                ignore: false,
+                lean: true
+            });
             if (!Fn.isEmpty(item)) {
                 return res.status(200).json(item);
             }
