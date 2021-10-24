@@ -50,7 +50,10 @@ async function getGenres(req, res, next) {
             q = {_id: {$in: genreIdList}};
         }
 
-        let items = await Genres.getAll(q, false, true);
+        let items = await Genres.getAll(q, {
+            ignore: false,
+            lean: true
+        });
         if (!Fn.isEmpty(items)) {
             return res.status(200).json(items);
         }

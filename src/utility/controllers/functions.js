@@ -40,7 +40,10 @@ getCtrlFn.getAll = function (myModel) {
         return Fn.noop;
     }
     return async function (req, res, next) {
-        let items = await myModel.getAll({}, false, true);
+        let items = await myModel.getAll({}, {
+            ignore: false,
+            lean: true
+        });
         if (!Fn.isEmpty(items)) {
             return res.status(200).json(items);
         }
@@ -63,59 +66,6 @@ getCtrlFn.getId = function (myModel) {
 
             // leaned object
             const item = await myModel.getById(req.params.id, false, true);
-            if (!Fn.isEmpty(item)) {
-                return res.status(200).json(item);
-            }
-            noResult(res);
-        } catch (err) {
-            errorCatcher(next, err);
-        }
-    }
-};
-
-/**
- * @description get controller function with in memory cached Query
- * @param myModel {Model}
- * */
-getCtrlFn.getIdWithCache = function (myModel) {
-    if (!modelUtil.isModel(myModel)) {
-        console.error("Model not defined");
-        return Fn.noop;
-    }
-    return async function (req, res, next) {
-        try {
-            errorValidation(req);
-            // leaned object
-            const item = await myModel.getById(req.params.id, false, true);
-            const modelName = myModel.modelName;
-
-
-            
-            if (!Fn.isEmpty(item)) {
-                return res.status(200).json(item);
-            }
-            noResult(res);
-        } catch (err) {
-            errorCatcher(next, err);
-        }
-    }
-};
-
-/**
- * @description get controller function with in memory cached Query
- * @param myModel {Model}
- * */
-getCtrlFn.getAllWithCache = function (myModel) {
-    if (!modelUtil.isModel(myModel)) {
-        console.error("Model not defined");
-        return Fn.noop;
-    }
-    return async function (req, res, next) {
-        try {
-            errorValidation(req);
-            const item = await myModel.getById(req.params.id, false, true);
-            const modelName = myModel.modelName;
-
             if (!Fn.isEmpty(item)) {
                 return res.status(200).json(item);
             }

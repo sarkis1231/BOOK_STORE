@@ -13,22 +13,24 @@ function CustomSchema(...params) {
 
     /***
      * @param query {Object=}
-     * @param ignore {Boolean=}
-     * @param lean {Boolean=} to return js object instead of heavy mongoose Document
-     * @param cache {Boolean=} caching is done with Model name
+     * @param configs {{
+     *     ignore:Boolean,
+     *     lean:Boolean,
+     *     cache:Boolean
+     * }}
      * @return Promise
      * */
-    schema.statics.getAll = async function (query, ignore, lean, cache) {
+    schema.statics.getAll = async function (query, configs) {
         query = modelUtil.getQueryWithDisable(query);
-        const ignoreQuery = modelUtil.ignoreQry(ignore);
+        const ignoreQuery = modelUtil.ignoreQry(configs.ignore);
 
-        if (cache) {
-            return lean ?
+        if (configs.cache) {
+            return configs.lean ?
                 this.find(query, ignoreQuery).cacheWithModel().lean() :
                 this.find(query, ignoreQuery).cacheWithModel();
         }
 
-        return lean ?
+        return configs.lean ?
             this.find(query, ignoreQuery).lean() :
             this.find(query, ignoreQuery);
     };
