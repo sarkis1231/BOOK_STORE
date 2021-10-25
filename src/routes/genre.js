@@ -4,13 +4,13 @@ const {paramIdValidation} = require("../validations/general");
 
 const GenresCtrl = require("../controllers/genre");
 
-const {isAuth, isAdmin} = require("../middlewares/authentication");
+const {isAdmin} = require("../middlewares/authentication");
 
 
 const router = Router();
 
 
-router.get('/',GenresCtrl.getGenres);
+router.get('/', GenresCtrl.getGenres);
 
 router.get('/:id', isAdmin(), paramIdValidation, GenresCtrl.getGenre);
 

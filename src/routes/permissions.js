@@ -2,7 +2,7 @@ const {Router} = require('express');
 
 const PermissionCtrl = require("../controllers/permission");
 
-const {isAuth, isAdmin} = require("../middlewares/authentication");
+const {isAdmin} = require("../middlewares/authentication");
 
 
 const router = Router();

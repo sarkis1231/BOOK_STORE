@@ -3,10 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const redis = require("redis");
 
 const helmet = require("helmet");
-const {MONGODB_URI, REDIS_URI, MONGOOSE_OPTIONS} = require("./config/keys");
+const {MONGODB_URI, MONGOOSE_OPTIONS} = require("./config/keys");
 const passportConfig = require("./config/passport");
 
 

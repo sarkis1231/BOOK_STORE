@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const {isAuth, isAdmin} = require("../middlewares/authentication");
+const {isAdmin} = require("../middlewares/authentication");
 const chatBotCtrl = require('../controllers/chatBot');
 const chatBotValidation = require("../validations/chatBot");
 const {paramIdValidation} = require("../validations/general");

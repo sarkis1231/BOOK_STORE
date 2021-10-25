@@ -1,6 +1,6 @@
 const AuthorsCtrl = require("../controllers/authors");
 const {Router} = require('express');
-const {isAuth, isAdmin} = require("../middlewares/authentication");
+const {isAdmin} = require("../middlewares/authentication");
 const {paramIdValidation} = require("../validations/general");
 
 const AuthorValidation = require("../validations/authors");
