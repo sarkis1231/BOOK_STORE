@@ -12,6 +12,7 @@ const MESSAGES = {
     NO_USER_FOUND: "No user is Found",
     EMAIL_IS_REGISTERED: "Email already registered",
     PASSWORD_MUST_MATCH: "Password and confirm password must match",
+    PASSWORD_MUST_BE_X_CHARACTER: "Password must be {{0}} characters",
     WRONG_PASSWORD: "Wrong Password",
     VALUE_IS_CHANGED: "Value is Changed",
     NO_SUCH_DATA_EXISTS: "No such Data Exist",
@@ -41,6 +42,7 @@ const MESSAGES = {
     PASSWORD_IS_CHANGED:'Password is changed',
     NEW_MESSAGE_ADDED:'New Message is added'
 };
+
 
 const messageAlert = {
     success: 'success',

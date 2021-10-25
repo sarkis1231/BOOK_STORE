@@ -8,6 +8,11 @@ const {MESSAGES} = require("../utility/constants");
 
 const UserValidation = {};
 
+const passwordValidation = body("password")
+    .trim()
+    .isLength({min: 5})
+    .withMessage(MESSAGES.PASSWORD_MUST_BE_X_CHARACTER);
+
 UserValidation.login = [
     body("email")
         .notEmpty()
@@ -23,9 +28,7 @@ UserValidation.login = [
             });
         })
     ,
-    body("password")
-        .trim()
-        .isLength({min: 5})
+    passwordValidation
 ];
 
 UserValidation.register = [
@@ -42,9 +45,7 @@ UserValidation.register = [
                 }
             });
         }).normalizeEmail(),
-    body("password")
-        .trim()
-        .isLength({min: 5}),
+    passwordValidation,
     body("confirm_password")
         .custom(function (value, {req}) {
             return value === req.body.password
@@ -156,9 +157,7 @@ UserValidation.changePassword = [
                 }
             });
         }),
-    body("password")
-        .trim()
-        .isLength({min: 5})
+    passwordValidation
 ];
 
 UserValidation.Role = [
