@@ -10,14 +10,14 @@ const {isAuth, isAdmin} = require("../middlewares/authentication");
 const router = Router();
 
 
-router.get('/', isAuth() ,GenresCtrl.getGenres);
+router.get('/',GenresCtrl.getGenres);
 
-router.get('/:id', isAuth(), isAdmin(), paramIdValidation, GenresCtrl.getGenre);
+router.get('/:id', isAdmin(), paramIdValidation, GenresCtrl.getGenre);
 
-router.post('/', isAuth(), isAdmin(), GenreValidation.add, GenresCtrl.addGenre);
+router.post('/', isAdmin(), GenreValidation.add, GenresCtrl.addGenre);
 
-router.put('/:id', isAuth(), isAdmin(), GenreValidation.edit, GenresCtrl.editGenre);
+router.put('/:id', isAdmin(), GenreValidation.edit, GenresCtrl.editGenre);
 
-router.delete('/:id', isAuth(), isAdmin(), paramIdValidation, GenresCtrl.deleteGenre);
+router.delete('/:id', isAdmin(), paramIdValidation, GenresCtrl.deleteGenre);
 
 module.exports = router

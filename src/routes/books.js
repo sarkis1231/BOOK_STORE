@@ -6,7 +6,7 @@ const BooksCtrl = require("../controllers/book");
 
 const upload = require('../utility/files');
 
-const {isAuth, isAdmin} = require("../middlewares/authentication");
+const {isAdmin} = require("../middlewares/authentication");
 
 
 const router = Router();
@@ -17,15 +17,13 @@ let files = upload.fields([
     {name: 'file', maxCount: 1}
 ]);
 
-router.get('/', isAuth(),BooksCtrl.getBooks);
+router.get('/', BooksCtrl.getBooks);
 
-router.get('/filter', isAuth(),BookValidation.filter, BooksCtrl.getBooksWithFilter);
+router.get('/filter', BookValidation.filter, BooksCtrl.getBooksWithFilter);
 
-router.get('/:id', isAuth(), isAdmin(), paramIdValidation, BooksCtrl.getBook);
-
+router.get('/:id', isAdmin(), paramIdValidation, BooksCtrl.getBook);
 
 router.post('/',
-    isAuth(),
     isAdmin(),
     files,
     BookValidation.add,
@@ -33,7 +31,6 @@ router.post('/',
 );
 
 router.put('/:id',
-    isAuth(),
     isAdmin(),
     paramIdValidation,
     files,
@@ -41,6 +38,6 @@ router.put('/:id',
     BooksCtrl.editBook
 );
 
-router.delete('/:id', isAuth(), isAdmin(), paramIdValidation, BooksCtrl.deleteBook);
+router.delete('/:id', isAdmin(), paramIdValidation, BooksCtrl.deleteBook);
 
 module.exports = router

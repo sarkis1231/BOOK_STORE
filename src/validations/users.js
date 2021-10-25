@@ -2,9 +2,8 @@ const {body, param} = require("express-validator");
 const {Users} = require("../models/Users");
 const {ALL_USER_ROLES} = require("../roles");
 const bcrypt = require("bcryptjs");
-const {LIMITS} = require("../utility/constants");
+const {LIMITS,MESSAGES} = require("../utility/constants");
 const {Fn} = require("../utility/functions");
-const {MESSAGES} = require("../utility/constants");
 
 const UserValidation = {};
 

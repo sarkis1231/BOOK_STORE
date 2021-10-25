@@ -6,24 +6,26 @@ const authors = require("./routes/authors");
 const files = require("./routes/file");
 const permissions = require("./routes/permissions");
 const chatBot = require("./routes/chatBot");
+const {isAuth} = require("./middlewares/authentication");
 
 
 const router = Router();
 
 router.use('/users', users);
 
-// TODO add isAuth as a middleware here in order not to add by hand
+/* Authentication needed for following routes */
+router.use(isAuth());
 
-router.use('/books',books);
+router.use('/books', books);
 
-router.use('/authors',authors)
+router.use('/authors', authors)
 
-router.use('/genre',genre);
+router.use('/genre', genre);
 
-router.use('/files',files);
+router.use('/files', files);
 
-router.use('/permissions',permissions);
+router.use('/permissions', permissions);
 
-router.use('/chatBot',chatBot);
+router.use('/chatBot', chatBot);
 
 module.exports = router;

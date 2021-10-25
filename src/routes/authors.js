@@ -8,14 +8,14 @@ const AuthorValidation = require("../validations/authors");
 
 const router = Router();
 
-router.get('/', isAuth(),AuthorsCtrl.getAuthors);
+router.get('/', AuthorsCtrl.getAuthors);
 
-router.get('/:id', isAuth(),paramIdValidation, AuthorsCtrl.getAuthor);
+router.get('/:id', paramIdValidation, AuthorsCtrl.getAuthor);
 
-router.post('/', isAuth(), isAdmin(), AuthorValidation.add, AuthorsCtrl.addAuthor);
+router.post('/', isAdmin(), AuthorValidation.add, AuthorsCtrl.addAuthor);
 
-router.put('/:id', isAuth(), isAdmin(), AuthorValidation.edit, AuthorsCtrl.editAuthor);
+router.put('/:id', isAdmin(), AuthorValidation.edit, AuthorsCtrl.editAuthor);
 
-router.delete('/:id', isAuth(), isAdmin(), paramIdValidation, AuthorsCtrl.deleteAuthor);
+router.delete('/:id', isAdmin(), paramIdValidation, AuthorsCtrl.deleteAuthor);
 
 module.exports = router;
