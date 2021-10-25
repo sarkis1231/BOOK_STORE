@@ -2,7 +2,7 @@ const {body, param} = require("express-validator");
 const {Users} = require("../models/Users");
 const {ALL_USER_ROLES} = require("../roles");
 const bcrypt = require("bcryptjs");
-const {LIMITS,MESSAGES} = require("../utility/constants");
+const {LIMITS,MESSAGES, viewMessage, MESSAGES_X} = require("../utility/constants");
 const {Fn} = require("../utility/functions");
 
 const UserValidation = {};
@@ -10,7 +10,7 @@ const UserValidation = {};
 const passwordValidation = body("password")
     .trim()
     .isLength({min: 5})
-    .withMessage(MESSAGES.PASSWORD_MUST_BE_X_CHARACTER);
+    .withMessage(viewMessage(MESSAGES_X.PASSWORD_MUST_BE_X_CHARACTER, 5));
 
 UserValidation.login = [
     body("email")

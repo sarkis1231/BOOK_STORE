@@ -1,12 +1,26 @@
 const ValidationsFns = require("../utility/validations");
 const {MESSAGES} = require("../utility/constants");
-const {body, param,check} = require("express-validator");
+const {body, param, check} = require("express-validator");
 const {Fn} = require("../utility/functions");
 const {Books} = require("../models/Books");
 const {Genres} = require("../models/Genre");
 const {Authors} = require("../models/Author");
 
 const BookValidation = {};
+
+const authorValidation = body('author')
+    .notEmpty()
+    .withMessage(MESSAGES.REQUIRED_FIELDS)
+    .custom(function (value, {req}) {
+        if (!Fn.isMongooseValidId(value)) {
+            throw new Error(MESSAGES.INVALID_ID);
+        }
+        return Authors.findById(value).then(function (author) {
+            if (!author) {
+                return Promise.reject(MESSAGES.AUTHOR_IS_NOT_FOUND);
+            }
+        });
+    });
 
 BookValidation.add = [
     body('name')
@@ -32,19 +46,7 @@ BookValidation.add = [
                 }
             });
         }),
-    body('author')
-        .notEmpty()
-        .withMessage(MESSAGES.REQUIRED_FIELDS)
-        .custom(function (value, {req}) {
-            if (!Fn.isMongooseValidId(value)) {
-                throw new Error(MESSAGES.INVALID_ID);
-            }
-            return Authors.findById(value).then(function (author) {
-                if (!author) {
-                    return Promise.reject(MESSAGES.AUTHOR_IS_NOT_FOUND);
-                }
-            });
-        }),
+    authorValidation,
     check('files')
         .custom(function (value, {req}) {
             if (!Fn.isEmpty(req.files)) {
@@ -54,7 +56,7 @@ BookValidation.add = [
     body('pageCount')
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
-        .isInt({min:0,max:10000})
+        .isInt({min: 0, max: 10000})
         .withMessage(MESSAGES.NOT_VALID_NUMBER),
     body('publishedDate')
         .optional()
@@ -96,19 +98,7 @@ BookValidation.edit = [
                 }
             });
         }),
-    body('author') // TODO remove duplicates
-        .notEmpty()
-        .withMessage(MESSAGES.REQUIRED_FIELDS)
-        .custom(function (value, {req}) {
-            if (!Fn.isMongooseValidId(value)) {
-                throw new Error(MESSAGES.INVALID_ID);
-            }
-            return Authors.findById(value).then(function (author) {
-                if (!author) {
-                    return Promise.reject(MESSAGES.AUTHOR_IS_NOT_FOUND);
-                }
-            });
-        }),
+    authorValidation,
     check('files')
         .custom(function (value, {req}) {
             if (!Fn.isEmpty(req.files)) {
@@ -118,12 +108,12 @@ BookValidation.edit = [
     body('pageCount')
         .notEmpty()
         .withMessage(MESSAGES.REQUIRED_FIELDS)
-        .isInt({min:0,max:10000})
+        .isInt({min: 0, max: 10000})
         .withMessage(MESSAGES.NO_SUCH_DATA_EXISTS),
     body('publishedDate')
         .optional()
-        .custom(function (value){
-            if(!Fn.isValidDate(value)){
+        .custom(function (value) {
+            if (!Fn.isValidDate(value)) {
                 throw new Error(MESSAGES.NOT_VALID_DATE);
             }
         })
@@ -156,7 +146,7 @@ BookValidation.filter = [
         }),
     param('pageCount')
         .optional()
-        .isInt({min:0,max:10000})
+        .isInt({min: 0, max: 10000})
         .withMessage(MESSAGES.NOT_VALID_NUMBER),
     param('publishedDate')
         .optional()
@@ -164,11 +154,11 @@ BookValidation.filter = [
         .custom(ValidationsFns.isItDate),
     param('limitBy')
         .optional()
-        .isInt({min:0,max:100})
+        .isInt({min: 0, max: 100})
         .withMessage(MESSAGES.NOT_VALID_NUMBER),
     param('index')
         .optional()
-        .isInt({min:0})
+        .isInt({min: 0})
         .withMessage(MESSAGES.NOT_VALID_NUMBER),
 ];
 
