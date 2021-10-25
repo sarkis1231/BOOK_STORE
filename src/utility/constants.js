@@ -1,4 +1,3 @@
-// TODO maybe add i118
 const {Fn} = require("./functions");
 const MESSAGES = {
     SOMETHING_WENT_WRONG: "Something went Wrong",
