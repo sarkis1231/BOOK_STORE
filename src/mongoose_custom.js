@@ -3,7 +3,7 @@
 const {Schema, Query} = require("mongoose");
 const modelUtil = require("./utility/model");
 const {Fn} = require("./utility/functions");
-const redis_client = require("./redis_client");
+const {redis_client} = require("./redis_client");
 
 
 function CustomSchema(...params) {
@@ -123,13 +123,13 @@ Query.prototype.exec = async function () {
         return exec.apply(this, arguments);
     }
 
-    let key = JSON.stringify({...this.getQuery(), collection: this.mongooseCollection.collectionName});
+    let keyQuery = JSON.stringify({...this.getQuery(), collection: this.mongooseCollection.collectionName});
 
     let cacheValue;
     if (this.hashKey) {
-        cacheValue = await redis_client.hget(this.hashKey, key);
+        cacheValue = await redis_client.hget(this.hashKey, keyQuery);
     } else {
-        cacheValue = await redis_client.get(key);
+        cacheValue = await redis_client.get(keyQuery);
     }
 
     if (cacheValue) {
@@ -145,9 +145,9 @@ Query.prototype.exec = async function () {
     // Document instance
     const result = await exec.apply(this, arguments);
     if (this.hashKey) {
-        redis_client.hset(this.hashKey, key, JSON.stringify(result));
+        redis_client.hset(this.hashKey, keyQuery, JSON.stringify(result)).then(function (){});
     } else {
-        redis_client.set(key, JSON.stringify(result));
+        redis_client.set(keyQuery, JSON.stringify(result)).then(function (){});
     }
 
     return result
@@ -156,6 +156,7 @@ Query.prototype.exec = async function () {
 /**
  * @description adding cache parameter in Query instance
  * @param options {{key:String}}
+ * @example key -> QueryUnique -> Data
  * @return {Query}
  * */
 Query.prototype.cache = function (options = {}) {
@@ -167,6 +168,7 @@ Query.prototype.cache = function (options = {}) {
 /**
  * @description cache with default Model name
  * @return {Query}
+ * @example CollectionName -> QueryUnique -> Data
  * */
 Query.prototype.cacheWithModel = function () {
     this.useCache = true;
