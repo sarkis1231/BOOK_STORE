@@ -3,14 +3,16 @@ const {MESSAGES, messageAlert} = require("../constants");
 const {errorValidation, errorThrower, errorCatcher} = require("./errors");
 const {Fn} = require("../functions");
 const {alert, noResult} = require("./messages");
+const {clearRedisKey} = require("../cache");
 
 let getCtrlFn = {};
 
 /**
  * @description get command for model Route wrap up
  * @param myModel {Model}
+ * @param deleteCache {Boolean=}
  * */
-getCtrlFn.Delete = function (myModel) {
+getCtrlFn.Delete = function (myModel, deleteCache=false) {
     if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;
@@ -21,6 +23,9 @@ getCtrlFn.Delete = function (myModel) {
             const p = await myModel.disableById(req.params.id);
             if (!Fn.isEmpty(p)) {
                 errorThrower(MESSAGES.NO_SUCH_DATA_EXISTS, 422);
+            }
+            if(deleteCache) {
+                await clearRedisKey(myModel.collection.collectionName);
             }
             return alert(res, 200, messageAlert.success, MESSAGES.ITEM_DELETED);
 
@@ -54,8 +59,9 @@ getCtrlFn.getAll = function (myModel) {
 /**
  * @description get command for model Route wrap up
  * @param myModel {Model}
+ * @param cache {Boolean}
  * */
-getCtrlFn.getId = function (myModel) {
+getCtrlFn.getId = function (myModel,cache=false) {
     if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;
@@ -67,7 +73,8 @@ getCtrlFn.getId = function (myModel) {
             // leaned object
             const item = await myModel.getById(req.params.id, {
                 ignore: false,
-                lean: true
+                lean: true,
+                cache: cache
             });
             if (!Fn.isEmpty(item)) {
                 return res.status(200).json(item);

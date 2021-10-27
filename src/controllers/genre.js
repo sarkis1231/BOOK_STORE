@@ -3,8 +3,9 @@ const {Fn} = require("../utility/functions");
 const {messageAlert, MESSAGES} = require("../utility/constants");
 const {getCtrlFn} = require("../utility/controllers/functions");
 const {errorCatcher, errorValidation} = require("../utility/controllers/errors");
-const {alert,noResult} = require("../utility/controllers/messages");
+const {alert, noResult} = require("../utility/controllers/messages");
 const {Genres} = require("../models/Genre");
+const {clearRedisKey} = require("../utility/cache");
 
 
 async function addGenre(req, res, next) {
@@ -13,6 +14,7 @@ async function addGenre(req, res, next) {
         errorValidation(req);
         const newGenre = new Genres({name, userId: req.user._id});
         if (await newGenre.save()) {
+            await clearRedisKey(Genres.collection.collectionName);
             return alert(res, 200, messageAlert.success, MESSAGES.GENRE_ADDED);
         }
 
@@ -30,6 +32,7 @@ async function editGenre(req, res, next) {
         book.genre = genre;
 
         if (await book.save()) {
+            await clearRedisKey(Genres.collection.collectionName);
             return alert(res, 200, messageAlert.success, MESSAGES.VALUE_IS_CHANGED);
         }
 
@@ -52,7 +55,8 @@ async function getGenres(req, res, next) {
 
         let items = await Genres.getAll(q, {
             ignore: false,
-            lean: true
+            lean: true,
+            cache: true
         });
         if (!Fn.isEmpty(items)) {
             return res.status(200).json(items);
@@ -63,8 +67,8 @@ async function getGenres(req, res, next) {
     }
 }
 
-let getGenre = getCtrlFn.getId(Genres);
+let getGenre = getCtrlFn.getId(Genres, true);
 
-let deleteGenre = getCtrlFn.Delete(Genres);
+let deleteGenre = getCtrlFn.Delete(Genres, true);
 
 module.exports = {getGenres, getGenre, addGenre, editGenre, deleteGenre};
