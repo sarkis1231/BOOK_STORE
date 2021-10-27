@@ -38,8 +38,9 @@ getCtrlFn.Delete = function (myModel, deleteCache=false) {
 /**
  * @description get command for model Route wrap up
  * @param myModel {Model}
+ * @param cache {Boolean}
  * */
-getCtrlFn.getAll = function (myModel) {
+getCtrlFn.getAll = function (myModel,cache=false) {
     if (!modelUtil.isModel(myModel)) {
         console.error("Model not defined");
         return Fn.noop;

@@ -27,7 +27,9 @@ async function editGenre(req, res, next) {
     const {name, genre} = req.body;
     try {
         errorValidation(req);
-        const book = await Genres.getById(req.params.id);
+        const book = await Genres.getById(req.params.id, {
+            cache: true
+        });
         book.name = name;
         book.genre = genre;
 
