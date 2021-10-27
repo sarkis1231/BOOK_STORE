@@ -1,7 +1,6 @@
 const redis = require("redis");
 const {REDIS_URI} = require("./config/keys");
 const util = require('util');
-const {Fn} = require("./utility/functions");
 
 let redis_client = redis.createClient(REDIS_URI);
 

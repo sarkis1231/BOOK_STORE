@@ -2,11 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
+const router = require('./routes');
 const passport = require("passport");
-const redis = require("redis");
+const cors = require("cors");
 
 const helmet = require("helmet");
-const {MONGODB_URI, REDIS_URI, MONGOOSE_OPTIONS} = require("./config/keys");
+const {MONGODB_URI, MONGOOSE_OPTIONS} = require("./config/keys");
 const passportConfig = require("./config/passport");
 
 
@@ -24,12 +25,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 //CORS
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, AuthorizationComponent,Authorization');
-    next();
-});
+app.use(cors());
 
 
 // Passport middleware
@@ -39,7 +35,6 @@ app.use(passport.initialize({}));
 passportConfig(passport);
 
 // Routes
-const router = require('./routes');
 app.use(router);
 
 

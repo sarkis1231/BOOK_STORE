@@ -2,11 +2,15 @@ const {body, param} = require("express-validator");
 const {Users} = require("../models/Users");
 const {ALL_USER_ROLES} = require("../roles");
 const bcrypt = require("bcryptjs");
-const {LIMITS} = require("../utility/constants");
+const {LIMITS,MESSAGES, viewMessage, MESSAGES_X} = require("../utility/constants");
 const {Fn} = require("../utility/functions");
-const {MESSAGES} = require("../utility/constants");
 
 const UserValidation = {};
+
+const passwordValidation = body("password")
+    .trim()
+    .isLength({min: 5})
+    .withMessage(viewMessage(MESSAGES_X.PASSWORD_MUST_BE_X_CHARACTER, 5));
 
 UserValidation.login = [
     body("email")
@@ -23,9 +27,7 @@ UserValidation.login = [
             });
         })
     ,
-    body("password")
-        .trim()
-        .isLength({min: 5})
+    passwordValidation
 ];
 
 UserValidation.register = [
@@ -42,9 +44,7 @@ UserValidation.register = [
                 }
             });
         }).normalizeEmail(),
-    body("password")
-        .trim()
-        .isLength({min: 5}),
+    passwordValidation,
     body("confirm_password")
         .custom(function (value, {req}) {
             return value === req.body.password
@@ -156,9 +156,7 @@ UserValidation.changePassword = [
                 }
             });
         }),
-    body("password")
-        .trim()
-        .isLength({min: 5})
+    passwordValidation
 ];
 
 UserValidation.Role = [

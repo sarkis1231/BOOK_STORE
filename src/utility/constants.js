@@ -1,4 +1,4 @@
-// TODO maybe add i118
+const {Fn} = require("./functions");
 const MESSAGES = {
     SOMETHING_WENT_WRONG: "Something went Wrong",
     WRONG_AUTH: 'Wrong Auth',
@@ -31,16 +31,40 @@ const MESSAGES = {
     INVALID_ID: "Invalid id",
     NAME_ALREADY_EXIST: "Name Already Exists",
     AUTHOR_IS_NOT_FOUND: "Author is not found",
-    PDF_SIZE_LIMIT: 'You should upload a PDF file up to 10Mb', //TODO should not be hard coded
-    IMAGE_SIZE_LIMIT: 'You should upload image up to 1Mb',
     INVALID_FILES: 'Invalid Files',
-    INVALID_IDS:'Invalid Ids',
-    ID_NOT_MATCH:'Ids do not match',
-    INVALID_NUMBERS:'Invalid numbers',
-    INVALID_LIMIT_PARAMETER:'Invalid Limit Parameter',
-    PASSWORD_IS_CHANGED:'Password is changed',
-    NEW_MESSAGE_ADDED:'New Message is added'
+    INVALID_IDS: 'Invalid Ids',
+    ID_NOT_MATCH: 'Ids do not match',
+    INVALID_NUMBERS: 'Invalid numbers',
+    INVALID_LIMIT_PARAMETER: 'Invalid Limit Parameter',
+    PASSWORD_IS_CHANGED: 'Password is changed',
+    NEW_MESSAGE_ADDED: 'New Message is added'
 };
+
+
+const MESSAGES_X = {
+    PASSWORD_MUST_BE_X_CHARACTER: "Password must be {{0}} characters",
+    PDF_SIZE_LIMIT: 'You should upload a PDF file up to {{0}}',
+    IMAGE_SIZE_LIMIT: 'You should upload image up to {{0}}',
+};
+
+/**
+ * @description instances replace {{0}} {{1}} ... {{n}}
+ * @param str {String}
+ * @param value {*}
+ * @return String
+ * */
+function viewMessage(str, ...value) {
+    if (!Fn.isString(str)) {
+        console.error('Parameter is String');
+        return str
+    }
+    const regex = /{{[0-9]+}}/g;
+    return str.replace(regex, function (m, token) {
+        // '{{Num}}'
+        let index = m.match(/[0-9]+/)[0];
+        return value[index] ? value[index].toString() : m;
+    });
+}
 
 const messageAlert = {
     success: 'success',
@@ -54,8 +78,8 @@ const SCHEMES_NAMES = {
     'Authors': 'Authors',
     'Genres': 'Genres',
     'Users': 'Users',
-    'Permissions':'Permissions',
-    'ChatBot':'ChatBot'
+    'Permissions': 'Permissions',
+    'ChatBot': 'ChatBot'
 };
 
 const LIMITS = {
@@ -64,4 +88,4 @@ const LIMITS = {
     max: 10000 //physical limit :)
 };
 
-module.exports = {MESSAGES, messageAlert, SCHEMES_NAMES,LIMITS};
+module.exports = {MESSAGES, messageAlert, SCHEMES_NAMES, LIMITS, MESSAGES_X, viewMessage};
