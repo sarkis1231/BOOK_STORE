@@ -12,7 +12,6 @@ const Home = () => {
     const {t} = useTranslation();
     const user = useSelector(state => state.auth.user)
     return (
-        <>
             <FlexContainer flexDirection='column' padding='40px 20px' margin='0 0 20px 0'>
                 <StyledHeader>{t("homePage.pageTitle")}</StyledHeader>
                 <StyledHeaderTwo>{t("homePage.aboutUs")} </StyledHeaderTwo>
@@ -36,7 +35,9 @@ const Home = () => {
                         <Button
                             type='button'
                             width='200px'
-                            onClick={() => history.push('/login')}>
+                            onClick={() => history.push('/login')}
+                            id="btn_login"
+                        >
                             {t("login")}
                         </Button>
                     </FlexContainer>
@@ -45,7 +46,6 @@ const Home = () => {
                 <StyledA href="mailto:sakooghly@gmail.com" target="_blank"
                          rel="noreferrer noopener">sakooghly@gmail.com</StyledA>
             </FlexContainer>
-        </>
     );
 }
 ;

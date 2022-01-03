@@ -19,6 +19,7 @@ const Input = forwardRef(({
                               serverError,
                               onFileChange,
                               onInputChange,
+                              id
                           }, ref) => {
 
     const [expandInput, setExpandInput] = useState(false);
@@ -32,6 +33,7 @@ const Input = forwardRef(({
                     expandInput={expandInput}
                     searchDisplay={searchDisplay}
                     mobileDisplay={mobileDisplay}
+                    id={id}
                 >
                     <StyledSearch
                         expandInput={expandInput}
@@ -46,7 +48,12 @@ const Input = forwardRef(({
             )
         case 'file':
             return (
-                <FlexContainer flexDirection='column' margin={margin} width='100%'>
+                <FlexContainer
+                    flexDirection='column'
+                    margin={margin}
+                    width='100%'
+                    id={id}
+                >
                     {label && <StyledLabel>{label}</StyledLabel>}
                     <StyledInputFileLabel>
                         <StyledInputFile value={value} type={type} onChange={onFileChange ? (e) => onFileChange(e) : null} name={name}
@@ -60,7 +67,12 @@ const Input = forwardRef(({
             )
         default:
             return (
-                <FlexContainer flexDirection='column' width='100%' margin={margin}>
+                <FlexContainer
+                    flexDirection='column'
+                    width='100%'
+                    margin={margin}
+                    id={id}
+                >
                     {label && <StyledLabel>{label}</StyledLabel>}
                     <StyledInput ref={ref} type={inputType} onChange={onInputChange ? (e) => onInputChange(e) : null}
                                  opacity='0' defaultValue={value} name={name} placeholder={placeHolder}/>

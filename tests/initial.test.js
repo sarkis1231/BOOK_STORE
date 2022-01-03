@@ -1,14 +1,17 @@
 const puppeteer = require('puppeteer');
+require('dotenv').config();
+
 let browser, page = null;
 
-require('dotenv').config();
+const URL = process.env.CLIENT_URL;
+
 
 beforeEach(async () => {
     browser = await puppeteer.launch({
         headless: true
     });
     page = await browser.newPage();
-    await page.goto(process.env.CLIENT_URL);
+    await page.goto(URL);
 });
 
 afterEach(async () => {
@@ -23,4 +26,10 @@ test('Adds to numbers', () => {
 test('We can launch a browser', async () => {
     const text = await page.$eval('h1', el => el.innerHTML);
     expect(text).toEqual('Welcome to our Book-Library');
+});
+
+test('clicking login goes to register', async () => {
+    await page.click('#btn_login');
+    const current_url = await page.url();
+    expect(current_url).toEqual(`${URL}/login`);
 });
