@@ -12,4 +12,5 @@ for database solution using `monogodb` and using `mongoose` as `ORM` in `node`.
 * Start the Mongo server `sudo mongod` or whatever way you start it
 * start BE going into project directory `yarn start`
 * start client FE side by `cd client` then `yarn start`
+* to run the tests just run `yarn test`
 * Don't Forget to add .env file
