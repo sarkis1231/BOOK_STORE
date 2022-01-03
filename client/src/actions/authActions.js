@@ -26,10 +26,7 @@ export const loginUser = (userData) => (dispatch) => {
     //decode the token
     const decoded = jwt_decode(token);
 
-
-
     dispatch(setCurrentUser(decoded));
-
 };
 
 

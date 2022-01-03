@@ -125,7 +125,10 @@ Query.prototype.exec = async function () {
         return exec.apply(this, arguments);
     }
 
-    let keyQuery = JSON.stringify({...this.getQuery(), collection: this.mongooseCollection.collectionName});
+    let keyQuery = JSON.stringify({
+        ...this.getQuery(),
+        collection: this.mongooseCollection.collectionName
+    });
 
     let cacheValue;
     if (this.hashKey) {
@@ -152,7 +155,7 @@ Query.prototype.exec = async function () {
         redis_client.set(keyQuery, JSON.stringify(result)).then(function (){});
     }
 
-    return result
+    return result;
 };
 
 /**
