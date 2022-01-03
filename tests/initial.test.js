@@ -1,12 +1,24 @@
 const puppeteer = require('puppeteer');
+const {MongoClient} = require('mongodb');
+
+const MONGODB_URI = `mongodb://localhost:${process.env.MONGODB_PORT}`;
+
 require('dotenv').config();
 
-let browser, page = null;
+let browser, page, DB, clientDb = null;
 
 const URL = process.env.CLIENT_URL;
 
-
 beforeEach(async () => {
+    // TODO make this code more promise like for optimization purposes
+    // clientDb = new MongoClient(MONGODB_URI,
+    //     {
+    //         useNewUrlParser: true,
+    //         useUnifiedTopology: true
+    //     }
+    // );
+    // DB = await clientDb.connect();
+
     browser = await puppeteer.launch({
         headless: true
     });
@@ -16,6 +28,7 @@ beforeEach(async () => {
 
 afterEach(async () => {
     await browser.close();
+    // await clientDb.close();
 });
 
 test('Adds to numbers', () => {
