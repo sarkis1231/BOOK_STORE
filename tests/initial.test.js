@@ -20,7 +20,7 @@ afterEach(async () => {
 
 test('Adds to numbers', () => {
     const sum = 1 + 2;
-    expect(sum).toEqual(3)
+    expect(sum).toEqual(3);
 });
 
 test('We can launch a browser', async () => {

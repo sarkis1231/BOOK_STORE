@@ -115,6 +115,8 @@ function CustomSchema(...params) {
 const exec = Query.prototype.exec;
 
 /**
+ * @description overriding Mongoose Query Exec function to keep the old functionality
+ * and add new Functionality the required cache
  * @return {Promise}
  * */
 Query.prototype.exec = async function () {
