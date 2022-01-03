@@ -8,7 +8,7 @@ const Button = ({ type, children, onClick, margin, width,alignSelf, disabled, id
                       type={type} width={width}
                       alignSelf={alignSelf}
                       onClick={onClick ? () => onClick() : null}
-                      id={id ? id : null}
+                      id={id}
         >
         {children}
       </StyledButton>

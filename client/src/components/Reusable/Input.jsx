@@ -33,7 +33,7 @@ const Input = forwardRef(({
                     expandInput={expandInput}
                     searchDisplay={searchDisplay}
                     mobileDisplay={mobileDisplay}
-                    id={id ? id : null}
+                    id={id}
                 >
                     <StyledSearch
                         expandInput={expandInput}
@@ -52,7 +52,7 @@ const Input = forwardRef(({
                     flexDirection='column'
                     margin={margin}
                     width='100%'
-                    id={id ? id : null}
+                    id={id}
                 >
                     {label && <StyledLabel>{label}</StyledLabel>}
                     <StyledInputFileLabel>
@@ -71,7 +71,7 @@ const Input = forwardRef(({
                     flexDirection='column'
                     width='100%'
                     margin={margin}
-                    id={id ? id : null}
+                    id={id}
                 >
                     {label && <StyledLabel>{label}</StyledLabel>}
                     <StyledInput ref={ref} type={inputType} onChange={onInputChange ? (e) => onInputChange(e) : null}
