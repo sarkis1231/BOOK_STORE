@@ -62,6 +62,7 @@ const Login = () => {
                     inputType='text'
                     ref={register}
                     error={errors}
+                    id="email_input"
 
                 />
                 <Input
@@ -72,6 +73,7 @@ const Login = () => {
                     inputType='password'
                     ref={register}
                     error={errors}
+                    id="password_input"
                 />
                 <Button type='submit' margin='0 0 20px 0'>{t('login')}</Button>
                 <Button type='button' onClick={() => history.push('/register')} >{t('register')}</Button>
