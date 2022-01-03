@@ -1,13 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({ type, children, onClick, margin, width,alignSelf, disabled }) => {
+const Button = ({ type, children, onClick, margin, width,alignSelf, disabled, id }) => {
   return (
-    <>
-      <StyledButton margin={margin} disabled={disabled} type={type} width={width} alignSelf={alignSelf} onClick={onClick ? () => onClick() : null}>
+        <StyledButton margin={margin}
+                      disabled={disabled}
+                      type={type} width={width}
+                      alignSelf={alignSelf}
+                      onClick={onClick ? () => onClick() : null}
+                      id={id ? id : null}
+        >
         {children}
       </StyledButton>
-    </>
   );
 };
 

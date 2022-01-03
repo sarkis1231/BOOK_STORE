@@ -36,7 +36,9 @@ const Home = () => {
                         <Button
                             type='button'
                             width='200px'
-                            onClick={() => history.push('/login')}>
+                            onClick={() => history.push('/login')}
+                            id="login"
+                        >
                             {t("login")}
                         </Button>
                     </FlexContainer>
