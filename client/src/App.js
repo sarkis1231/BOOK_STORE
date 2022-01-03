@@ -24,8 +24,6 @@ function App() {
         // Decode token and get user info and exp
         const decoded = jwt_decode(localStorage.token);
 
-        //socket auth
-
         // Set user and isAuthenticated
         store.dispatch(setCurrentUser(decoded));
 

@@ -1,26 +1,45 @@
 const puppeteer = require('puppeteer');
+const {MongoClient} = require('mongodb');
+
+const MONGODB_URI = `mongodb://localhost:${process.env.MONGODB_PORT}`;
+
 require('dotenv').config();
 
-let browser, page = null;
+let browser, page, DB, clientDb = null;
 
 const URL = process.env.CLIENT_URL;
 
-
 beforeEach(async () => {
-    browser = await puppeteer.launch({
-        headless: true
-    });
+    clientDb = new MongoClient(MONGODB_URI,
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        }
+    );
+
+    const promiseRes = await Promise.all([
+        clientDb.connect(),
+        puppeteer.launch({
+            headless: true
+        })
+    ]);
+
+    DB = promiseRes[0];
+
+    browser = promiseRes[1] ;
+
     page = await browser.newPage();
     await page.goto(URL);
 });
 
 afterEach(async () => {
     await browser.close();
+    await clientDb.close();
 });
 
 test('Adds to numbers', () => {
     const sum = 1 + 2;
-    expect(sum).toEqual(3)
+    expect(sum).toEqual(3);
 });
 
 test('We can launch a browser', async () => {
