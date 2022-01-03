@@ -10,25 +10,31 @@ let browser, page, DB, clientDb = null;
 const URL = process.env.CLIENT_URL;
 
 beforeEach(async () => {
-    // TODO make this code more promise like for optimization purposes
-    // clientDb = new MongoClient(MONGODB_URI,
-    //     {
-    //         useNewUrlParser: true,
-    //         useUnifiedTopology: true
-    //     }
-    // );
-    // DB = await clientDb.connect();
+    clientDb = new MongoClient(MONGODB_URI,
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        }
+    );
 
-    browser = await puppeteer.launch({
-        headless: true
-    });
+    const promiseRes = await Promise.all([
+        clientDb.connect(),
+        puppeteer.launch({
+            headless: true
+        })
+    ]);
+
+    DB = promiseRes[0];
+
+    browser = promiseRes[1] ;
+
     page = await browser.newPage();
     await page.goto(URL);
 });
 
 afterEach(async () => {
     await browser.close();
-    // await clientDb.close();
+    await clientDb.close();
 });
 
 test('Adds to numbers', () => {
