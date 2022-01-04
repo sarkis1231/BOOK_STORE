@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 const {MongoClient} = require('mongodb');
+const {authentication} = require("./utils/functions.js");
+const JEST_FN = require("./utils/functions.js");
 
 const MONGODB_URI = `mongodb://localhost:${process.env.MONGODB_PORT}`;
 
@@ -55,33 +57,9 @@ test('clicking login goes to register', async () => {
 
 
 test('clicking login goes to register and register', async () => {
-    await page.goto(`${URL}/login`);
-
-    const username = process.env.USER_1_NAME;
-    const password = process.env.USER_1_PASSWORD;
-
-    // await Promise.all([
-    //     page.type('#email_input input', username),
-    //     page.type('#password_input input', password)
-    // ]);
-
-    await Promise.all([
-        page.waitForSelector('#email_input input'),
-        page.waitForSelector('#password_input input')
-    ]);
-
-    await page.click('#email_input input');
-    await page.type('#email_input input', username);
-
-    await page.click("#password_input input");
-    await page.type("#password_input input", password);
-
-
-    await Promise.all([
-        page.click('#submit_login_btn'), // Clicking the link will indirectly cause a navigation
-        page.waitForNavigation(), // The promise resolves after navigation has finished
-    ]);
-
-    let current_url = await page.url();
+    let current_url = await JEST_FN.authentication(page, `${URL}/login`, {
+        username: process.env.USER_1_NAME,
+        password: process.env.USER_1_PASSWORD
+    });
     expect(current_url).toEqual(`${URL}/books`);
 });
