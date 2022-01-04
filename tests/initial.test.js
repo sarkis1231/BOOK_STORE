@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer');
 const JEST_FN = require("./utils/functions.js");
 const JEST_CONSTANTS = require("./utils/constants.js");
-const {redis_client} = require("../src/redis_client");
 
 let browser, page = null;
 
@@ -17,7 +16,7 @@ beforeEach(async () => {
 
 afterEach(async () => {
     await browser.close();
-    redis_client.quit();
+    JEST_FN.cleanUps();
 });
 
 test('Adds to numbers', () => {

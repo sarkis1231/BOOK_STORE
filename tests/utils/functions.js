@@ -1,9 +1,12 @@
 /**
  * @type {{
- *     authentication:Function
+ *     authentication:Function,
+ *     cleanUps:Function
  * }}
  * */
+const {redis_client} = require("../../src/redis_client");
 let JEST_FN = {};
+
 
 /**
  * @description does the authentication and return the page url
@@ -15,7 +18,7 @@ let JEST_FN = {};
  * }}
  * @return {Promise}
  * */
-JEST_FN.authentication = async function (page, URL ,userInfo) {
+JEST_FN.authentication = async function (page, URL, userInfo) {
 
     // maybe can be done by direct mongo relation and with local storage trick
 
@@ -42,6 +45,11 @@ JEST_FN.authentication = async function (page, URL ,userInfo) {
     ]);
 
     return page.url();
+};
+
+
+JEST_FN.cleanUps = function () {
+    redis_client.quit();
 };
 
 module.exports = JEST_FN;
