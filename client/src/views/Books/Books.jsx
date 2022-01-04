@@ -81,8 +81,8 @@ const Books = () => {
         })
         axios.post('/books', formData).then(() => {
             reset();
-            setReFetch(prev => !prev)
-            setFilePlaceHolder(prev => ({...prev, addBook: 'Choose a Book', addImage: 'Choose an Image'}))
+            setReFetch(prev => !prev);
+            setFilePlaceHolder(prev => ({...prev, addBook: 'Choose a Book', addImage: 'Choose an Image'}));
         }).catch(e => {
             console.log(e)
         });
@@ -90,46 +90,44 @@ const Books = () => {
     }
 
     const onSearchSubmit = (value) => {
-        console.log(value)
         axios.get(`/books/filter`, {
             params: filteredValue(value)
         }).then(res => {
             if (res.data.empty) {
-                setData(() => res.data)
+                setData(() => res.data);
             } else {
                 setData(() => res.data.data);
                 setTotalLength(() => res.data.totalLength);
             }
         })
-        searchReset()
+        searchReset();
     }
 
     const onDelete = () => {
         axios.delete(`/books/${deleteValue.id}`).then(res => {
-            console.log(res);
+
         }).catch(e => {
             console.log(e)
-        })
+        });
         setReFetch(prev => !prev)
         deleteCloseModal();
     }
 
     const onEdit = (value) => {
         axios.put(`/books/${editValue.id}`, booksFormData(value)).then(res => {
-            console.log(res)
-            setReFetch(prev => !prev)
+            setReFetch(prev => !prev);
         }).catch(e => {
             console.log(e)
-        })
+        });
         editCloseModal()
     }
     const handleAddBookFile = (e) => {
         const {files} = e.target
-        setFilePlaceHolder(prev => ({...prev, addBook: formatFileName(files[0].name)}))
+        setFilePlaceHolder(prev => ({...prev, addBook: formatFileName(files[0].name)}));
     }
     const handleAddImageFile = (e) => {
         const {files} = e.target
-        setFilePlaceHolder(prev => ({...prev, addImage: formatFileName(files[0].name)}))
+        setFilePlaceHolder(prev => ({...prev, addImage: formatFileName(files[0].name)}));
     }
 
     return (

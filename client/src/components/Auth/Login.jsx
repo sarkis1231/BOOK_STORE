@@ -75,7 +75,7 @@ const Login = () => {
                     error={errors}
                     id="password_input"
                 />
-                <Button type='submit' margin='0 0 20px 0'>{t('login')}</Button>
+                <Button type='submit' margin='0 0 20px 0' id="submit_login_btn">{t('login')}</Button>
                 <Button type='button' onClick={() => history.push('/register')} >{t('register')}</Button>
             </StyledForm>
             <Alert show={alert.show} severity={alert.severity} setShow={setAlert} message={alert.message}/>
