@@ -49,7 +49,6 @@ test('clicking login goes to register', async () => {
     expect(current_url).toEqual(`${JEST_CONSTANTS.CLIENT_URL}/login`);
 });
 
-
 test('clicking login goes to register and register', async () => {
     let current_url = await JEST_FN.authentication(page, `${JEST_CONSTANTS.CLIENT_URL}/login`, {
         username: JEST_CONSTANTS.USER_1_NAME,
