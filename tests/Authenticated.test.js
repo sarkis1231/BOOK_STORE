@@ -8,7 +8,7 @@ beforeEach(async () => {
 
     browser = await puppeteer.launch({
         headless: true
-    })
+    });
 
     page = await browser.newPage();
 
@@ -20,6 +20,7 @@ beforeEach(async () => {
 
 afterEach(async () => {
     await browser.close();
+    JEST_FN.cleanUps();
 });
 
 test('Am i Logged in', async () => {

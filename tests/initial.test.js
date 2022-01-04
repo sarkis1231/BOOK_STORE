@@ -16,6 +16,7 @@ beforeEach(async () => {
 
 afterEach(async () => {
     await browser.close();
+    JEST_FN.cleanUps();
 });
 
 test('Adds to numbers', () => {
