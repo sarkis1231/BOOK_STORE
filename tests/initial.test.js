@@ -76,18 +76,12 @@ test('clicking login goes to register and register', async () => {
     await page.click("#password_input input");
     await page.type("#password_input input", password);
 
-    res = await Promise.all([
-        page.$eval('#email_input input', el => el.value),
-        page.$eval('#password_input input', el1 => el1.value)
+
+    await Promise.all([
+        page.click('#submit_login_btn'), // Clicking the link will indirectly cause a navigation
+        page.waitForNavigation(), // The promise resolves after navigation has finished
     ]);
 
-    console.log(res);
-
-    // await Promise.all([
-    //     page.click('#submit_login_btn'), // Clicking the link will indirectly cause a navigation
-    //     page.waitForNavigation(), // The promise resolves after navigation has finished
-    // ]);
-    //
-    // current_url = await page.url();
-    // expect(current_url).toEqual(`${URL}/books`);
+    let current_url = await page.url();
+    expect(current_url).toEqual(`${URL}/books`);
 });
