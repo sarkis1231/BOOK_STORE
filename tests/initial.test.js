@@ -26,7 +26,7 @@ beforeEach(async () => {
 
     DB = promiseRes[0];
 
-    browser = promiseRes[1] ;
+    browser = promiseRes[1];
 
     page = await browser.newPage();
     await page.goto(URL);
@@ -51,4 +51,43 @@ test('clicking login goes to register', async () => {
     await page.click('#btn_login');
     const current_url = await page.url();
     expect(current_url).toEqual(`${URL}/login`);
+});
+
+
+test('clicking login goes to register and register', async () => {
+    await page.goto(`${URL}/login`);
+
+    const username = process.env.USER_1_NAME;
+    const password = process.env.USER_1_PASSWORD;
+
+    // await Promise.all([
+    //     page.type('#email_input input', username),
+    //     page.type('#password_input input', password)
+    // ]);
+
+    await Promise.all([
+        page.waitForSelector('#email_input input'),
+        page.waitForSelector('#password_input input')
+    ]);
+
+    await page.click('#email_input input');
+    await page.type('#email_input input', username);
+
+    await page.click("#password_input input");
+    await page.type("#password_input input", password);
+
+    res = await Promise.all([
+        page.$eval('#email_input input', el => el.value),
+        page.$eval('#password_input input', el1 => el1.value)
+    ]);
+
+    console.log(res);
+
+    // await Promise.all([
+    //     page.click('#submit_login_btn'), // Clicking the link will indirectly cause a navigation
+    //     page.waitForNavigation(), // The promise resolves after navigation has finished
+    // ]);
+    //
+    // current_url = await page.url();
+    // expect(current_url).toEqual(`${URL}/books`);
 });
