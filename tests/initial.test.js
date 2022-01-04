@@ -1,42 +1,21 @@
 const puppeteer = require('puppeteer');
-const {MongoClient} = require('mongodb');
-const {authentication} = require("./utils/functions.js");
 const JEST_FN = require("./utils/functions.js");
+const JEST_CONSTANTS = require("./utils/constants.js");
 
-const MONGODB_URI = `mongodb://localhost:${process.env.MONGODB_PORT}`;
-
-require('dotenv').config();
-
-let browser, page, DB, clientDb = null;
-
-const URL = process.env.CLIENT_URL;
+let browser, page = null;
 
 beforeEach(async () => {
-    clientDb = new MongoClient(MONGODB_URI,
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        }
-    );
 
-    const promiseRes = await Promise.all([
-        clientDb.connect(),
-        puppeteer.launch({
-            headless: true
-        })
-    ]);
-
-    DB = promiseRes[0];
-
-    browser = promiseRes[1];
+    browser = await puppeteer.launch({
+        headless: true
+    })
 
     page = await browser.newPage();
-    await page.goto(URL);
+    await page.goto(JEST_CONSTANTS.CLIENT_URL);
 });
 
 afterEach(async () => {
     await browser.close();
-    await clientDb.close();
 });
 
 test('Adds to numbers', () => {
@@ -52,14 +31,13 @@ test('We can launch a browser', async () => {
 test('clicking login goes to register', async () => {
     await page.click('#btn_login');
     const current_url = await page.url();
-    expect(current_url).toEqual(`${URL}/login`);
+    expect(current_url).toEqual(`${JEST_CONSTANTS.CLIENT_URL}/login`);
 });
 
-
 test('clicking login goes to register and register', async () => {
-    let current_url = await JEST_FN.authentication(page, `${URL}/login`, {
-        username: process.env.USER_1_NAME,
-        password: process.env.USER_1_PASSWORD
+    let current_url = await JEST_FN.authentication(page, `${JEST_CONSTANTS.CLIENT_URL}/login`, {
+        username: JEST_CONSTANTS.USER_1_NAME,
+        password: JEST_CONSTANTS.USER_1_PASSWORD
     });
-    expect(current_url).toEqual(`${URL}/books`);
+    expect(current_url).toEqual(`${JEST_CONSTANTS.CLIENT_URL}/books`);
 });

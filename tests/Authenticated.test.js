@@ -1,11 +1,8 @@
 const puppeteer = require('puppeteer');
 const JEST_FN = require("./utils/functions.js");
-
-require('dotenv').config();
+const JEST_CONSTANTS = require("./utils/constants.js");
 
 let browser, page = null;
-
-const URL = process.env.CLIENT_URL;
 
 beforeEach(async () => {
 
@@ -15,9 +12,9 @@ beforeEach(async () => {
 
     page = await browser.newPage();
 
-    await JEST_FN.authentication(page, `${URL}/login`, {
-        username: process.env.USER_1_NAME,
-        password: process.env.USER_1_PASSWORD
+    await JEST_FN.authentication(page, `${JEST_CONSTANTS.CLIENT_URL}/login`, {
+        username: JEST_CONSTANTS.USER_1_NAME,
+        password: JEST_CONSTANTS.USER_1_PASSWORD
     });
 });
 
@@ -27,5 +24,5 @@ afterEach(async () => {
 
 test('Am i Logged in', async () => {
     const current_url = await page.url();
-    expect(current_url).toEqual(`${URL}/books`);
+    expect(current_url).toEqual(`${JEST_CONSTANTS.CLIENT_URL}/books`);
 });
