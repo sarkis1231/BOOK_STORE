@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer');
 const {MongoClient} = require('mongodb');
-const {authentication} = require("./utils/functions.js");
 const JEST_FN = require("./utils/functions.js");
 
 const MONGODB_URI = `mongodb://localhost:${process.env.MONGODB_PORT}`;
