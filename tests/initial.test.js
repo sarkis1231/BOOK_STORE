@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 const {MongoClient} = require('mongodb');
+const {authentication} = require("./utils/functions.js");
+const JEST_FN = require("./utils/functions.js");
 
 const MONGODB_URI = `mongodb://localhost:${process.env.MONGODB_PORT}`;
 
@@ -26,7 +28,7 @@ beforeEach(async () => {
 
     DB = promiseRes[0];
 
-    browser = promiseRes[1] ;
+    browser = promiseRes[1];
 
     page = await browser.newPage();
     await page.goto(URL);
@@ -51,4 +53,13 @@ test('clicking login goes to register', async () => {
     await page.click('#btn_login');
     const current_url = await page.url();
     expect(current_url).toEqual(`${URL}/login`);
+});
+
+
+test('clicking login goes to register and register', async () => {
+    let current_url = await JEST_FN.authentication(page, `${URL}/login`, {
+        username: process.env.USER_1_NAME,
+        password: process.env.USER_1_PASSWORD
+    });
+    expect(current_url).toEqual(`${URL}/books`);
 });
