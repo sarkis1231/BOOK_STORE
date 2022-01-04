@@ -1,6 +1,6 @@
 // GLOBAL SETUP FOR JEST
 
-// this enviroment is crucial here
+// this environment is crucial here
 require('dotenv').config();
 
 const mongoose = require('mongoose');

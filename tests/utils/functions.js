@@ -1,7 +1,8 @@
 /**
  * @type {{
  *     authentication:Function,
- *     cleanUps:Function
+ *     cleanUps:Function,
+ *     getUnique:Function
  * }}
  * */
 const {redis_client} = require("../../src/redis_client");
@@ -20,7 +21,7 @@ let JEST_FN = {};
  * */
 JEST_FN.authentication = async function (page, URL, userInfo) {
 
-    // maybe can be done by direct mongo relation and with local storage trick
+    // maybe can be done by direct but a rather local storage trick
 
     await page.goto(URL);
 
@@ -47,6 +48,13 @@ JEST_FN.authentication = async function (page, URL, userInfo) {
     return page.url();
 };
 
+/**
+ * @description get a unique string
+ * @return String
+ * */
+JEST_FN.getUniqueStr = function () {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+};
 
 JEST_FN.cleanUps = function () {
     redis_client.quit();
