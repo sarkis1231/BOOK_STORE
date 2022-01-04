@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "jest" : {
+    "setupFilesAfterEnv": ["./tests/setup.js"]
+  },
   "scripts": {
     "start": "node src/app.js",
     "server": "nodemon src/app.js",

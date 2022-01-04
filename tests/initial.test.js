@@ -1,28 +1,14 @@
 const puppeteer = require('puppeteer');
-const {MongoClient} = require('mongodb');
 const JEST_FN = require("./utils/functions.js");
 const JEST_CONSTANTS = require("./utils/constants.js");
 
-let browser, page, DB, clientDb = null;
+let browser, page = null;
 
 beforeEach(async () => {
-    clientDb = new MongoClient(JEST_CONSTANTS.MONGODB_URI,
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        }
-    );
 
-    const promiseRes = await Promise.all([
-        clientDb.connect(),
-        puppeteer.launch({
-            headless: true
-        })
-    ]);
-
-    DB = promiseRes[0];
-
-    browser = promiseRes[1];
+    browser = await puppeteer.launch({
+        headless: true
+    })
 
     page = await browser.newPage();
     await page.goto(JEST_CONSTANTS.CLIENT_URL);
@@ -30,7 +16,6 @@ beforeEach(async () => {
 
 afterEach(async () => {
     await browser.close();
-    await clientDb.close();
 });
 
 test('Adds to numbers', () => {

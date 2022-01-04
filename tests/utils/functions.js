@@ -16,6 +16,9 @@ let JEST_FN = {};
  * @return {Promise}
  * */
 JEST_FN.authentication = async function (page, URL ,userInfo) {
+
+    // maybe can be done by direct mongo relation and with local storage trick
+
     await page.goto(URL);
 
     const username = userInfo.username;
