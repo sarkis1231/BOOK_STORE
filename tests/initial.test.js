@@ -30,7 +30,10 @@ test('clicking login goes to register', async () => {
     expect(current_url).toEqual(`${JEST_CONSTANTS.CLIENT_URL}/login`);
 });
 
-test('clicking login goes to register and register', async () => {
+test('Login and Logout functionality', async () => {
     let current_url = await page.login();
-    expect(current_url).toEqual(`${JEST_CONSTANTS.CLIENT_URL}/books`);
+    expect(await page.url()).toEqual(current_url);
+
+    current_url = await page.logout();
+    expect(await page.url()).toEqual(`${current_url}/`);
 });
