@@ -10,14 +10,4 @@ redis_client.hget = util.promisify(redis_client.hget);
 redis_client.hset = util.promisify(redis_client.hset);
 redis_client.del = util.promisify(redis_client.del);
 
-redis_client.on('ready', function () {
-    console.log(`Redis connection is ready ${REDIS_URI}`);
-});
-
-redis_client.on('error', function (error) {
-    console.log(error);
-});
-
-
-
 module.exports = {redis_client};
