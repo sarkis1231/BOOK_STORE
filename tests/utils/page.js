@@ -3,11 +3,13 @@ const JEST_CONSTANTS = require("./constants");
 const userFactory = require("../factories/userFactory");
 const {redis_client} = require("../../src/redis_client");
 const localStorageFactory = require("../factories/localStorageFactory");
+const mongoose = require("mongoose");
 
 /**
  * @description a singleton class
  * */
 class CustomPage {
+
     /**
      * @param page {Page}
      * @param browser {Browser}
@@ -45,7 +47,8 @@ class CustomPage {
 
         const tokenWithPrefix = await localStorageFactory(userInfo);
 
-        await this.page.evaluate((tokenWithPrefix) => {
+        await this.page.evaluateOnNewDocument((tokenWithPrefix) => {
+            localStorage.clear();
             localStorage.setItem('token', tokenWithPrefix);
         }, tokenWithPrefix);
 
@@ -68,12 +71,12 @@ class CustomPage {
         return current_url;
     }
 
-
+    /**
+     * @description closes the page related services
+     * @return Promise
+     * */
     async close() {
-        return Promise.all([
-            this.browser.close(),
-            redis_client.quit(),
-        ]);
+        return this.browser.close()
     }
 
     /**
