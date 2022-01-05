@@ -1,3 +1,4 @@
+// TODO maybe a function or something so that all the configs will be common and non forgotten
 export const lightTheme = {
     body: '#EAF2FF',
     text: '#000',
