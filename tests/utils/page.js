@@ -14,6 +14,9 @@ class CustomPage {
         this.page = page;
     }
 
+    /**
+     * @description build a browser instant and creates a page
+     * */
     static async build() {
         const browser = await puppeteer.launch({
             headless: true
@@ -29,6 +32,9 @@ class CustomPage {
         });
     }
 
+    /**
+     * @description user login logic
+     * */
     async login() {
         const userInfo = await userFactory();
         const tokenWithPrefix = await localStorageFactory(userInfo);
@@ -38,8 +44,12 @@ class CustomPage {
         await this.page.waitForSelector('#log_out_btn');
     }
 
+    /**
+     * @description user logout logic
+     * */
     async logout(){
         localStorage.removeItem('token');
+        await this.page.goto(`${JEST_CONSTANTS.CLIENT_URL}`);
     }
 
     /**
