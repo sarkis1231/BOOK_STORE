@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer");
+const JEST_CONSTANTS = require("./constants");
 
 /**
  * @description a singleton class
@@ -29,7 +30,9 @@ class CustomPage {
     async login() {
         // implement the bearer token authentication here
         // put it into the local storage
-        // then redirect
+
+
+        await this.page.goto(`${JEST_CONSTANTS.CLIENT_URL}/books`);
     }
 
     async logout(){
@@ -42,3 +45,5 @@ class CustomPage {
      * */
     async getContentOf(selector){}
 }
+
+module.exports = CustomPage;
