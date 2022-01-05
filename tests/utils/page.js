@@ -12,7 +12,7 @@ class CustomPage {
      * @param page {Page}
      * @param browser {Browser}
      * */
-    constructor(page) {
+    constructor(page, browser) {
         this.page = page;
         this.browser = browser;
     }
