@@ -7,7 +7,7 @@ const passport = require("passport");
 const cors = require("cors");
 
 const helmet = require("helmet");
-const {MONGODB_URI, MONGOOSE_OPTIONS} = require("./config/keys");
+const {MONGODB_URI, MONGOOSE_OPTIONS, REDIS_URI} = require("./config/keys");
 const passportConfig = require("./config/passport");
 
 
@@ -74,7 +74,15 @@ mongoose.connect(MONGODB_URI, MONGOOSE_OPTIONS)
 
 
 // redis
-require('./redis_client');
+const {redis_client} = require('./redis_client');
+
+redis_client.on('ready', function () {
+    console.log(`Redis connection is ready ${REDIS_URI}`);
+});
+
+redis_client.on('error', function (error) {
+    console.log(error);
+});
 
 process.on('SIGINT', function () {
     mongoose.connection.close(function () {

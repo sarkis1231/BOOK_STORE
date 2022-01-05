@@ -36,7 +36,7 @@ const Home = () => {
                             type='button'
                             width='200px'
                             onClick={() => history.push('/login')}
-                            id="btn_login"
+                            id="login_btn"
                         >
                             {t("login")}
                         </Button>

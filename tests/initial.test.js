@@ -1,22 +1,17 @@
-const puppeteer = require('puppeteer');
-const JEST_FN = require("./utils/functions.js");
 const JEST_CONSTANTS = require("./utils/constants.js");
+const CustomPage = require("./utils/page");
 
-let browser, page = null;
+let page = null;
 
 beforeEach(async () => {
 
-    browser = await puppeteer.launch({
-        headless: true
-    })
+    page = await CustomPage.build();
 
-    page = await browser.newPage();
     await page.goto(JEST_CONSTANTS.CLIENT_URL);
 });
 
 afterEach(async () => {
-    await browser.close();
-    JEST_FN.cleanUps();
+    await page.close();
 });
 
 test('Adds to numbers', () => {
@@ -25,20 +20,17 @@ test('Adds to numbers', () => {
 });
 
 test('We can launch a browser', async () => {
-    const text = await page.$eval('h1', el => el.innerHTML);
+    const text = await page.getContentOf('h1');
     expect(text).toEqual('Welcome to our Book-Library');
 });
 
 test('clicking login goes to register', async () => {
-    await page.click('#btn_login');
+    await page.click('#login_btn');
     const current_url = await page.url();
     expect(current_url).toEqual(`${JEST_CONSTANTS.CLIENT_URL}/login`);
 });
 
 test('clicking login goes to register and register', async () => {
-    let current_url = await JEST_FN.authentication(page, `${JEST_CONSTANTS.CLIENT_URL}/login`, {
-        username: JEST_CONSTANTS.USER_1_NAME,
-        password: JEST_CONSTANTS.USER_1_PASSWORD
-    });
+    let current_url = await page.login();
     expect(current_url).toEqual(`${JEST_CONSTANTS.CLIENT_URL}/books`);
 });
