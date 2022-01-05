@@ -1,21 +1,18 @@
-const puppeteer = require('puppeteer');
 const JEST_FN = require("./utils/functions.js");
 const JEST_CONSTANTS = require("./utils/constants.js");
+const CustomPage = require("./utils/page");
 
-let browser, page = null;
+let page = null;
 
 beforeEach(async () => {
 
-    browser = await puppeteer.launch({
-        headless: true
-    })
+    page = await CustomPage.build();
 
-    page = await browser.newPage();
     await page.goto(JEST_CONSTANTS.CLIENT_URL);
 });
 
 afterEach(async () => {
-    await browser.close();
+    await page.close();
     JEST_FN.cleanUps();
 });
 
@@ -36,9 +33,6 @@ test('clicking login goes to register', async () => {
 });
 
 test('clicking login goes to register and register', async () => {
-    let current_url = await JEST_FN.authentication(page, `${JEST_CONSTANTS.CLIENT_URL}/login`, {
-        username: JEST_CONSTANTS.USER_1_NAME,
-        password: JEST_CONSTANTS.USER_1_PASSWORD
-    });
+    let current_url = await page.login();
     expect(current_url).toEqual(`${JEST_CONSTANTS.CLIENT_URL}/books`);
 });

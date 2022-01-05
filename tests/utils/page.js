@@ -16,6 +16,7 @@ class CustomPage {
 
     /**
      * @description build a browser instant and creates a page
+     * @return {Page}
      * */
     static async build() {
         const browser = await puppeteer.launch({
@@ -34,22 +35,30 @@ class CustomPage {
 
     /**
      * @description user login logic
+     * @return Promise<String>
      * */
     async login() {
         const userInfo = await userFactory();
         const tokenWithPrefix = await localStorageFactory(userInfo);
         localStorage.setItem('token', tokenWithPrefix);
 
-        await this.page.goto(`${JEST_CONSTANTS.CLIENT_URL}/books`);
+        let current_url = `${JEST_CONSTANTS.CLIENT_URL}/books`;
+
+        await this.page.goto(current_url);
         await this.page.waitForSelector('#log_out_btn');
+
+        return current_url;
     }
 
     /**
      * @description user logout logic
+     * @return Promise<String>
      * */
     async logout(){
         localStorage.removeItem('token');
-        await this.page.goto(`${JEST_CONSTANTS.CLIENT_URL}`);
+        let current_url = JEST_CONSTANTS.CLIENT_URL;
+        await this.page.goto(current_url);
+        return current_url;
     }
 
     /**
