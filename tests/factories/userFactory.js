@@ -13,9 +13,9 @@ const {USER_ROLES} = require("../../src/roles");
  * */
 module.exports = async function userFactory() {
     let user = null;
-    user = await Users.findOne({role:'admin'});
+    user = await Users.findOne({role: USER_ROLES.Admin});
 
-    if(!user) {
+    if (!user) {
         const name = JEST_FN.getUniqueStr();
         const email = `${name}@testingMail.com`;
         const user = new Users({

@@ -1,5 +1,7 @@
 const puppeteer = require("puppeteer");
 const JEST_CONSTANTS = require("./constants");
+const userFactory = require("../factories/userFactory");
+const localStorageFactory = require("../factories/localStorageFactory");
 
 /**
  * @description a singleton class
@@ -28,9 +30,11 @@ class CustomPage {
     }
 
     async login() {
-        // implement the bearer token authentication here
-        // put it into the local storage
+        const userInfo = await userFactory();
+        const tokenWithPrefix = await localStorageFactory(userInfo);
 
+        // TODO put it into the local storage
+        
 
         await this.page.goto(`${JEST_CONSTANTS.CLIENT_URL}/books`);
     }
