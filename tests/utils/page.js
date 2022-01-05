@@ -1,6 +1,7 @@
 const puppeteer = require("puppeteer");
 const JEST_CONSTANTS = require("./constants");
 const userFactory = require("../factories/userFactory");
+const {redis_client} = require("../../src/redis_client");
 const localStorageFactory = require("../factories/localStorageFactory");
 
 /**
@@ -9,9 +10,11 @@ const localStorageFactory = require("../factories/localStorageFactory");
 class CustomPage {
     /**
      * @param page {Page}
+     * @param browser {Browser}
      * */
     constructor(page) {
         this.page = page;
+        this.browser = browser;
     }
 
     /**
@@ -24,7 +27,7 @@ class CustomPage {
         });
 
         const page = await browser.newPage();
-        const customPage = new CustomPage(page);
+        const customPage = new CustomPage(page, browser);
 
         return new Proxy(customPage, {
             get: function(target, property) {
@@ -39,8 +42,12 @@ class CustomPage {
      * */
     async login() {
         const userInfo = await userFactory();
+
         const tokenWithPrefix = await localStorageFactory(userInfo);
-        localStorage.setItem('token', tokenWithPrefix);
+
+        await this.page.evaluate((tokenWithPrefix) => {
+            localStorage.setItem('token', tokenWithPrefix);
+        }, tokenWithPrefix);
 
         let current_url = `${JEST_CONSTANTS.CLIENT_URL}/books`;
 
@@ -59,6 +66,14 @@ class CustomPage {
         let current_url = JEST_CONSTANTS.CLIENT_URL;
         await this.page.goto(current_url);
         return current_url;
+    }
+
+
+    async close() {
+        return Promise.all([
+            this.browser.close(),
+            redis_client.quit(),
+        ]);
     }
 
     /**

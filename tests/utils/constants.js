@@ -9,7 +9,7 @@
  *     USER_TEST_DEFAULT_PASSWORD:String
  * }}
  * */
-// TODO this from the node application do it without
+// TODO this from the node application do it without After better key management app
 // bear in mind node have to be started for this for the process to be evaluated.
 JEST_CONSTANTS = {
     MONGODB_URI: `mongodb://localhost:${process.env.MONGODB_PORT}`,

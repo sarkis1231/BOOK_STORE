@@ -1,4 +1,3 @@
-const JEST_FN = require("./utils/functions.js");
 const JEST_CONSTANTS = require("./utils/constants.js");
 const CustomPage = require("./utils/page");
 
@@ -13,7 +12,6 @@ beforeEach(async () => {
 
 afterEach(async () => {
     await page.close();
-    JEST_FN.cleanUps();
 });
 
 test('Adds to numbers', () => {
@@ -22,6 +20,7 @@ test('Adds to numbers', () => {
 });
 
 test('We can launch a browser', async () => {
+    // TODO change me with custom class functionality
     const text = await page.$eval('h1', el => el.innerHTML);
     expect(text).toEqual('Welcome to our Book-Library');
 });
