@@ -84,7 +84,7 @@ class CustomPage {
      * @return Promise<String>
      * */
     async getContentOf(selector){
-        await this.page.$eval(selector, el => el.innerHTML);
+        return await this.page.$eval(selector, el => el.innerHTML);
     }
 }
 

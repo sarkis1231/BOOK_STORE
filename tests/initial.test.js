@@ -20,8 +20,7 @@ test('Adds to numbers', () => {
 });
 
 test('We can launch a browser', async () => {
-    // TODO change me with custom class functionality
-    const text = await page.$eval('h1', el => el.innerHTML);
+    const text = await page.getContentOf('h1');
     expect(text).toEqual('Welcome to our Book-Library');
 });
 
