@@ -13,7 +13,7 @@ const {USER_ROLES} = require("../../src/roles");
  * */
 module.exports = async function userFactory() {
     let user = null;
-    user = await Users.findOne({role: USER_ROLES.Admin});
+    user = await Users.findOne({role: USER_ROLES.Admin}).lean();
 
     if (!user) {
         const name = JEST_FN.getUniqueStr();
