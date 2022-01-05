@@ -65,7 +65,9 @@ class CustomPage {
      * @return Promise<String>
      * */
     async logout(){
-        localStorage.removeItem('token');
+        await this.page.evaluateOnNewDocument(() => {
+            localStorage.clear();
+        });
         let current_url = JEST_CONSTANTS.CLIENT_URL;
         await this.page.goto(current_url);
         return current_url;
