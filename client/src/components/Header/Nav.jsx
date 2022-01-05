@@ -34,7 +34,7 @@ const Nav = () => {
                 {!Object.keys(isAuth).length && <NavLink to='/login'>{t('headerItem.item3')}</NavLink>}
                 {Object.keys(isAuth).length ?
                     <FlexItem width='115px' onClick={() => handleLogOut()}>
-                        <Button>
+                        <Button id="log_out_btn">
                             {t(`logOut`)}
                         </Button>
                     </FlexItem>

@@ -30,7 +30,7 @@ test('We can launch a browser', async () => {
 });
 
 test('clicking login goes to register', async () => {
-    await page.click('#btn_login');
+    await page.click('#login_btn');
     const current_url = await page.url();
     expect(current_url).toEqual(`${JEST_CONSTANTS.CLIENT_URL}/login`);
 });

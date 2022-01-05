@@ -32,22 +32,23 @@ class CustomPage {
     async login() {
         const userInfo = await userFactory();
         const tokenWithPrefix = await localStorageFactory(userInfo);
-
-        // TODO put it into the local storage
-        
+        localStorage.setItem('token', tokenWithPrefix);
 
         await this.page.goto(`${JEST_CONSTANTS.CLIENT_URL}/books`);
+        await this.page.waitForSelector('#log_out_btn');
     }
 
     async logout(){
-        // delete the token
+        localStorage.removeItem('token');
     }
 
     /**
      * @param selector {String}
-     * @return String
+     * @return Promise<String>
      * */
-    async getContentOf(selector){}
+    async getContentOf(selector){
+        await this.page.$eval(selector, el => el.innerHTML);
+    }
 }
 
 module.exports = CustomPage;
