@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 export const GENRE_INPUTS = [
     {
-        id: 0,
+        id: 'add_genre',
         name: 'name',
         inputType: 'text',
         label: 'genre.genre',

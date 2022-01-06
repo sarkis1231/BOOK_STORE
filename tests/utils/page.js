@@ -96,6 +96,16 @@ class CustomPage {
      * */
     async waitGetElementProp(selector, prop) {
         await this.page.waitForSelector(selector);
+        return this.getElementProp(selector, prop);
+    }
+
+
+    /**
+     * @param selector {String}
+     * @param prop {String}
+     * @return Promise
+     * */
+    async getElementProp(selector, prop) {
         return this.page.$eval(selector, (el, prop) => el[prop], prop);
     }
 
@@ -105,8 +115,12 @@ class CustomPage {
      * */
     async clickSubmitBtn(selector) {
         return this.page.evaluate(
-            (selector) =>
-                document.querySelector(selector).click()
+            (selector) => {
+                let ele = document.querySelector(selector);
+                if (ele) {
+                    ele.click()
+                }
+            }
             , selector);
     }
 }

@@ -16,11 +16,11 @@ import {useTranslation} from "react-i18next";
 
 const Genre = () => {
     const {t} = useTranslation()
-    const [reFetch, setReFetch] = useState(false)
-    const genre = useFetch('/genre', reFetch)
+    const [reFetch, setReFetch] = useState(false);
+    const genre = useFetch('/genre', reFetch);
     const {errors, handleSubmit, register, reset} = useForm({
         resolver: yupResolver(GenreSchema)
-    })
+    });
     const {
         errors: editErrors,
         handleSubmit: editHandleSubmit,
@@ -28,7 +28,7 @@ const Genre = () => {
         reset: editReset
     } = useForm({
         resolver: yupResolver(GenreSchema)
-    })
+    });
 
     const {toggleModal, openModal, closeModal, value} = useModal()
     const {
@@ -36,44 +36,44 @@ const Genre = () => {
         openModal: editOpenModal,
         closeModal: editCLoseModal,
         value: editValue
-    } = useModal()
+    } = useModal();
 
     const onSubmit = (value) => {
         axios.post('/genre', value).then(res => {
             console.log(res)
             reset();
-            setReFetch(prev => !prev)
+            setReFetch(prev => !prev);
         }).catch(e => {
-            console.log(e)
+            console.log(e);
         })
     }
     const openDeleteModal = (item) => {
-        openModal(item)
-    }
+        openModal(item);
+    };
     const openEditModal = (item) => {
-        editOpenModal(item)
-    }
+        editOpenModal(item);
+    };
 
     const handleDelete = () => {
         axios.delete(`/genre/${value._id}`).then(res => {
-            console.log(res)
+            console.log(res);
         }).catch(e => {
-            console.log(e)
+            console.log(e);
         })
-        setReFetch(prev => !prev)
-        closeModal()
+        setReFetch(prev => !prev);
+        closeModal();
     }
     const handleEdit = (value) => {
 
         axios.put(`/genre/${editValue._id}`, {...value, genre: editValue._id}).then(res => {
             console.log(res)
             setReFetch(prev => !prev);
-            editReset()
-            editCLoseModal()
+            editReset();
+            editCLoseModal();
         }).catch(e => {
-            console.log(e)
-        })
-    }
+            console.log(e);
+        });
+    };
 
     return (
         <>
@@ -84,6 +84,7 @@ const Genre = () => {
                 errors={errors}
                 handleSubmit={handleSubmit}
                 onSubmit={onSubmit}
+                id="add_genre"
             />
             <Table
                 header={GENRE_HEADERS}
@@ -96,7 +97,7 @@ const Genre = () => {
                 <DeleteModalContent value={value?.name} closeModal={closeModal} handleDelete={handleDelete}/>
             </Modal>
             <Modal modalTitle='Edit Genre' handleCloseModal={editCLoseModal} toggleModal={editToggleModal}>
-                <form onSubmit={editHandleSubmit(handleEdit)}>
+                <form onSubmit={editHandleSubmit(handleEdit)} id="genre_add_form">
                     <Input
                         name='name'
                         label='Genre'
@@ -104,8 +105,9 @@ const Genre = () => {
                         error={editErrors}
                         margin='0 0 20px'
                         ref={editRegister}
+                        id="genre_add_input"
                     />
-                    <Button type='submit'>Edit Genre</Button>
+                    <Button type='submit' id="add_genre_btn">Edit Genre</Button>
                 </form>
             </Modal>
         </>
