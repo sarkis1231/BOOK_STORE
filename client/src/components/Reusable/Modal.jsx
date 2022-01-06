@@ -5,13 +5,12 @@ import {ReactComponent as CloseIcon} from '../../assets/svg/close.svg';
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import {Overlay} from "../../styled/shared.styled";
 
-const Modal = ({toggleModal, handleCloseModal, modalTitle, children, maxWidth}) => {
+const Modal = ({toggleModal, handleCloseModal, modalTitle, children, maxWidth, id}) => {
     const ref = useRef(null);
     useOnClickOutside(ref, () => handleCloseModal() ? handleCloseModal() : null);
     return (
-        <>
             <StyledOverlay toggleModal={toggleModal}>
-                <StyledModalContainer maxWidth={maxWidth} ref={ref} toggleModal={toggleModal}>
+                <StyledModalContainer maxWidth={maxWidth} ref={ref} toggleModal={toggleModal} id={id}>
                     <ModalTitle>{modalTitle}</ModalTitle>
                     <CloseIcon className='close-icon' onClick={() => handleCloseModal()}/>
                     <StyledModalContent>
@@ -19,7 +18,6 @@ const Modal = ({toggleModal, handleCloseModal, modalTitle, children, maxWidth}) 
                     </StyledModalContent>
                 </StyledModalContainer>
             </StyledOverlay>
-        </>
     );
 };
 

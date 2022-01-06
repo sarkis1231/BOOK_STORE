@@ -32,7 +32,7 @@ class CustomPage {
         const customPage = new CustomPage(page, browser);
 
         return new Proxy(customPage, {
-            get: function(target, property) {
+            get: function (target, property) {
                 return customPage[property] || browser[property] || page[property];
             }
         });
@@ -64,7 +64,7 @@ class CustomPage {
      * @description user logout logic
      * @return Promise<String>
      * */
-    async logout(){
+    async logout() {
         await this.page.evaluateOnNewDocument(() => {
             localStorage.clear();
         });
@@ -85,8 +85,29 @@ class CustomPage {
      * @param selector {String}
      * @return Promise<String>
      * */
-    async getContentOf(selector){
+    async getContentOf(selector) {
         return await this.page.$eval(selector, el => el.innerHTML);
+    }
+
+    /**
+     * @param selector {String}
+     * @param prop {String}
+     * @return Promise
+     * */
+    async waitGetElementProp(selector, prop) {
+        await this.page.waitForSelector(selector);
+        return this.page.$eval(selector, (el, prop) => el[prop], prop);
+    }
+
+    /**
+     * @param selector {String}
+     * @return Promise
+     * */
+    async clickSubmitBtn(selector) {
+        return this.page.evaluate(
+            (selector) =>
+                document.querySelector(selector).click()
+            , selector);
     }
 }
 

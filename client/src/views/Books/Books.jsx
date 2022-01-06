@@ -133,7 +133,11 @@ const Books = () => {
     return (
         <>
             <AuthorizationElem allowedRoles={ADMIN_ROLE}>
-                <Button width='200px' margin='10px' onClick={() => openModal(undefined)}>{t('books.addBook')}</Button>
+                <Button width='200px'
+                        margin='10px'
+                        onClick={() => openModal(undefined)}
+                        id="add_book_btn"
+                >{t('books.addBook')}</Button>
             </AuthorizationElem>
             <StyledFilterFormContainer>
                 <FilterForm onSearchSubmit={onSearchSubmit} searchHandleSubmit={searchHandleSubmit}
@@ -148,7 +152,7 @@ const Books = () => {
                 )) : "No result found"}
             </FlexContainer>
             <PaginationBar changePage={changePage} pageNumber={pagination} next={goToNextPage} prev={goToPrevPage}/>
-            <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Add Book'>
+            <Modal toggleModal={toggleModal} handleCloseModal={closeModal} modalTitle='Add Book' id="book_form_modal">
                 <BooksFrom addImageFile={filePlaceHolder.addImage} addBookFilePlaceHolder={filePlaceHolder.addBook}
                            handleAddImageFile={handleAddImageFile}
                            handleAddBookFile={handleAddBookFile}
