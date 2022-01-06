@@ -71,11 +71,12 @@ const Input = forwardRef(({
                     flexDirection='column'
                     width='100%'
                     margin={margin}
-                    id={id}
                 >
                     {label && <StyledLabel>{label}</StyledLabel>}
                     <StyledInput ref={ref} type={inputType} onChange={onInputChange ? (e) => onInputChange(e) : null}
-                                 opacity='0' defaultValue={value} name={name} placeholder={placeHolder}/>
+                                 opacity='0' defaultValue={value} name={name} placeholder={placeHolder}
+                                 id={id}
+                    />
                     <StyledSpan errors={error || serverError} id={id ? `${id}_error` : null}>
                         {(error && error[name] && error[name].message) || (serverError && serverError[name])}
                     </StyledSpan>
