@@ -1,5 +1,5 @@
-const JEST_CONSTANTS = require("./utils/constants.js");
 const CustomPage = require("./utils/page");
+const JEST_FN = require("./utils/functions");
 
 let page = null;
 
@@ -10,6 +10,10 @@ beforeEach(async () => {
 
 afterEach(async () => {
     await page.close();
+});
+
+afterAll(async ()=>{
+    await JEST_FN.cleanUp();
 });
 
 test('', async () => {
