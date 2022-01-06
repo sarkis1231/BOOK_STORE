@@ -32,14 +32,14 @@ describe('After Login able go to Genre check the input functionality', () => {
     });
 
 
-    // test('add Book Form check validation submit a valid genre', async () => {
-    //     // TODO File the input
-    //
-    //
-    //
-    //     await page.clickSubmitBtn('#add_genre_btn');
-    //
-    //     const content = await page.getContentOf("#add_genre_input_error");
-    //     expect(!!content).toBeTruthy();
-    // });
+    test('add Book Form check validation submit a valid genre', async () => {
+        await page.type('#add_genre_input', JEST_FN.getUniqueStr());
+
+        await page.clickSubmitBtn('#add_genre_btn');
+        const content = await page.getContentOf("#add_genre_input_error");
+        expect(!!content).toBeFalsy();
+        // reset after submit
+        expect(!!await page.getElementProp('#add_genre_input', 'value')).toBeFalsy();
+
+    });
 });
