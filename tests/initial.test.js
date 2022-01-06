@@ -15,7 +15,7 @@ afterEach(async () => {
     await page.close();
 });
 
-afterAll(async ()=>{
+afterAll(async () => {
     await JEST_FN.cleanUp();
 });
 
