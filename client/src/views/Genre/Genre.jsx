@@ -96,7 +96,7 @@ const Genre = () => {
                 <DeleteModalContent value={value?.name} closeModal={closeModal} handleDelete={handleDelete}/>
             </Modal>
             <Modal modalTitle='Edit Genre' handleCloseModal={editCLoseModal} toggleModal={editToggleModal}>
-                <form onSubmit={editHandleSubmit(handleEdit)}>
+                <form onSubmit={editHandleSubmit(handleEdit)} id="genre_add_form">
                     <Input
                         name='name'
                         label='Genre'
@@ -104,8 +104,9 @@ const Genre = () => {
                         error={editErrors}
                         margin='0 0 20px'
                         ref={editRegister}
+                        id="genre_add_input"
                     />
-                    <Button type='submit'>Edit Genre</Button>
+                    <Button type='submit' id="add_genre_btn">Edit Genre</Button>
                 </form>
             </Modal>
         </>
