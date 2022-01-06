@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 const {redis_client} = require("../../src/redis_client");
 
@@ -21,13 +20,13 @@ JEST_FN.getUniqueStr = function () {
 
 /**
  * @description cleanUp function for services
+ * @return Promise
  * */
 JEST_FN.cleanUp = async function () {
-    await Promise.all([
-        mongoose.disconnect(),
+    return Promise.all([
+        mongoose.connection.close(),
         redis_client.quit()
     ]);
-    await mongoose.connection.close();
 };
 
 module.exports = JEST_FN;
