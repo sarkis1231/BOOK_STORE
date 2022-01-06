@@ -60,7 +60,7 @@ const Input = forwardRef(({
                                          ref={ref}/>
                         <StyledInputFileSpan>{placeHolder}...</StyledInputFileSpan>
                     </StyledInputFileLabel>
-                    <StyledSpan errors={error || serverError}>
+                    <StyledSpan errors={error || serverError} id={id ? `${id}_error` : null}>
                         {error && error[name] && error[name].message}
                     </StyledSpan>
                 </FlexContainer>
@@ -76,7 +76,7 @@ const Input = forwardRef(({
                     {label && <StyledLabel>{label}</StyledLabel>}
                     <StyledInput ref={ref} type={inputType} onChange={onInputChange ? (e) => onInputChange(e) : null}
                                  opacity='0' defaultValue={value} name={name} placeholder={placeHolder}/>
-                    <StyledSpan errors={error || serverError}>
+                    <StyledSpan errors={error || serverError} id={id ? `${id}_error` : null}>
                         {(error && error[name] && error[name].message) || (serverError && serverError[name])}
                     </StyledSpan>
                 </FlexContainer>
