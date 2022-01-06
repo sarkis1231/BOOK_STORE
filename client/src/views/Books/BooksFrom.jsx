@@ -18,7 +18,7 @@ const BooksFrom = ({
                    }) => {
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} id="book_form">
             <Input ref={register} label='Book name' placeHolder='Book Name' error={errors} name='name'
                    value={values ? values['bookName'] : null}/>
             <Input ref={register} label='Book page count' placeHolder='count' margin='20px 0' error={errors}

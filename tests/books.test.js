@@ -16,6 +16,8 @@ afterAll(async () => {
     await JEST_FN.cleanUp();
 });
 
-test('', async () => {
-
+test('After Login able to see add Book Form', async () => {
+    await page.click('#add_book_btn');
+    const formId = await page.waitGetElementProp('#book_form_modal form', 'id');
+    expect(formId).toEqual('book_form');
 });
