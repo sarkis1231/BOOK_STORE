@@ -16,8 +16,22 @@ afterAll(async () => {
     await JEST_FN.cleanUp();
 });
 
-test('After Login able to see add Book Form', async () => {
-    await page.click('#add_book_btn');
-    const formId = await page.waitGetElementProp('#book_form_modal form', 'id');
-    expect(formId).toEqual('book_form');
+
+describe('ADD book functionality is present and model is opened', () => {
+    beforeEach(async () => {
+        await page.click('#add_book_btn');
+        await page.waitForSelector('#book_form_modal form',{visible:true});
+    });
+
+    test('After Login able to see add Book Form', async () => {
+        const formId = await page.waitGetElementProp('#book_form_modal form', 'id');
+        expect(formId).toEqual('book_form');
+    });
+
+    test('After Login able to see add Book Form check validation', async () => {
+        await page.clickSubmitBtn('#add_book_submit_btn')
+
+        const content = await page.getContentOf("#name_error");
+        expect(!!content).toBeTruthy();
+    });
 });

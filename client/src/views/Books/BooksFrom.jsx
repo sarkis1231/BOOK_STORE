@@ -20,7 +20,9 @@ const BooksFrom = ({
     return (
         <form onSubmit={handleSubmit(onSubmit)} id="book_form">
             <Input ref={register} label='Book name' placeHolder='Book Name' error={errors} name='name'
-                   value={values ? values['bookName'] : null}/>
+                   value={values ? values['bookName'] : null}
+                   id="name"
+            />
             <Input ref={register} label='Book page count' placeHolder='count' margin='20px 0' error={errors}
                    name='pageCount'
                    value={values ? values['pageCount'] : null}
@@ -54,7 +56,7 @@ const BooksFrom = ({
             <Input onFileChange={handleAddImageFile} name='image' ref={register} type='file' label='Choose an Image'
                    placeHolder={addImageFile}
                    error={errors} margin='20px 0 0'/>
-            <Button type='submit' margin='20px 0'>{buttonName}</Button>
+            <Button type='submit' margin='20px 0' id="add_book_submit_btn">{buttonName}</Button>
         </form>
     );
 };

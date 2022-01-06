@@ -98,6 +98,17 @@ class CustomPage {
         await this.page.waitForSelector(selector);
         return this.page.$eval(selector, (el, prop) => el[prop], prop);
     }
+
+    /**
+     * @param selector {String}
+     * @return Promise
+     * */
+    async clickSubmitBtn(selector) {
+        return this.page.evaluate(
+            (selector) =>
+                document.querySelector(selector).click()
+            , selector);
+    }
 }
 
 module.exports = CustomPage;
