@@ -29,7 +29,7 @@ describe('After Login able to see  ADD book functionality is present and model i
     });
 
     test('add Book Form check validation', async () => {
-        await page.clickSubmitBtn('#add_book_submit_btn')
+        await page.clickSubmitBtn('#add_book_submit_btn');
 
         const content = await page.getContentOf("#name_error");
         expect(!!content).toBeTruthy();

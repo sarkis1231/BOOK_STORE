@@ -21,21 +21,25 @@ afterAll(async () => {
 describe('After Login able go to Genre check the input functionality', () => {
     beforeEach(async () => {
         await page.goto(`${JEST_CONSTANTS.CLIENT_URL}/genre`);
-        await page.waitForSelector('#genre_add_form', {visible: true});
+        await page.waitForSelector('#add_genre_btn', {visible: true});
     });
 
     test('add Book Form check validation', async () => {
-        await page.clickSubmitBtn('#add_genre_btn')
+        await page.clickSubmitBtn('#add_genre_btn');
 
-        const content = await page.getContentOf("#genre_add_input");
+        const content = await page.getContentOf("#add_genre_input_error");
         expect(!!content).toBeTruthy();
     });
 
 
-    test('add Book Form check validation submit a valid genre', async () => {
-        await page.clickSubmitBtn('#add_book_submit_btn')
-
-        const content = await page.getContentOf("#name_error");
-        expect(!!content).toBeTruthy();
-    });
+    // test('add Book Form check validation submit a valid genre', async () => {
+    //     // TODO File the input
+    //
+    //
+    //
+    //     await page.clickSubmitBtn('#add_genre_btn');
+    //
+    //     const content = await page.getContentOf("#add_genre_input_error");
+    //     expect(!!content).toBeTruthy();
+    // });
 });

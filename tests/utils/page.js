@@ -105,8 +105,12 @@ class CustomPage {
      * */
     async clickSubmitBtn(selector) {
         return this.page.evaluate(
-            (selector) =>
-                document.querySelector(selector).click()
+            (selector) => {
+                let ele = document.querySelector(selector);
+                if (ele) {
+                    ele.click()
+                }
+            }
             , selector);
     }
 }
