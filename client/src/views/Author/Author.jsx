@@ -84,6 +84,7 @@ const Author = () => {
                 btnName={t("author.addAuthor")}
                 handleSubmit={handleSubmit}
                 onSubmit={onSubmit}
+                id="add_author"
             />
             <Table
                 body={authors}
