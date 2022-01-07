@@ -50,4 +50,13 @@ describe('Non authenticated Books Permission', () => {
 
         expect(result).toEqual('Unauthorized');
     });
+
+    test('User cannot get a create new books', async () => {
+        const result = await page.evaluate((url) => {
+            return fetch(`${url}/books`, {
+                method: 'POST',
+                body:{}
+            }).then(res => res.statusText);
+        }, JEST_CONSTANTS.BE_BASE_URL);
+    });
 });

@@ -63,11 +63,11 @@ describe('Non authenticated Genre Permission', () => {
 
     });
 
-    test('User cannot get a fetch genre', async () => {
+    test('User cannot get a creete a new genre', async () => {
         const result = await page.evaluate((url) => {
             return fetch(`${url}/genre`, {
                 method: 'POST',
-
+                body:{}
             }).then(res => res.statusText);
         }, JEST_CONSTANTS.BE_BASE_URL);
 
