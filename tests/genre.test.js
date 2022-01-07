@@ -47,5 +47,18 @@ describe('After Login able go to Genre check the input functionality', () => {
 
 
 describe('Non authenticated Genre Permission', () => {
+    beforeEach(async () => {
+        await page.goto(`${JEST_CONSTANTS.CLIENT_URL}/genre`);
+    });
 
+    test('User cannot get a new blog posts', async () => {
+
+        const result = await page.evaluate((url) => {
+             return fetch(`${url}/genre`, {
+                method: 'GET'
+            }).then(res => res.statusText);
+        }, JEST_CONSTANTS.BE_BASE_URL);
+
+        expect(result).toEqual('Unauthorized');
+    });
 });
