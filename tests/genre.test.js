@@ -6,7 +6,6 @@ let page = null;
 
 beforeEach(async () => {
     page = await CustomPage.build();
-    await page.login();
 });
 
 afterEach(async () => {
@@ -20,6 +19,7 @@ afterAll(async () => {
 
 describe('After Login able go to Genre check the input functionality', () => {
     beforeEach(async () => {
+        await page.login();
         await page.goto(`${JEST_CONSTANTS.CLIENT_URL}/genre`);
         await page.waitForSelector('#add_genre_btn', {visible: true});
     });
@@ -37,9 +37,15 @@ describe('After Login able go to Genre check the input functionality', () => {
 
         await page.clickSubmitBtn('#add_genre_btn');
         const content = await page.getContentOf("#add_genre_input_error");
+
+        // no error
         expect(!!content).toBeFalsy();
         // reset after submit
         expect(!!await page.getElementProp('#add_genre_input', 'value')).toBeFalsy();
-
     });
+});
+
+
+describe('Non authenticated Genre Permission', () => {
+
 });

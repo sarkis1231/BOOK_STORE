@@ -5,7 +5,7 @@ let page = null;
 
 beforeEach(async () => {
     page = await CustomPage.build();
-    await page.login();
+
 });
 
 afterEach(async () => {
@@ -17,8 +17,9 @@ afterAll(async () => {
 });
 
 
-describe('After Login able to see  ADD book functionality is present and model is opened', () => {
+describe('Authenticated After Login able to see  ADD book functionality is present and model is opened', () => {
     beforeEach(async () => {
+        await page.login();
         await page.click('#add_book_btn');
         await page.waitForSelector('#book_form_modal form', {visible: true});
     });
@@ -34,4 +35,9 @@ describe('After Login able to see  ADD book functionality is present and model i
         const content = await page.getContentOf("#name_error");
         expect(!!content).toBeTruthy();
     });
+});
+
+
+describe('Non authenticated Books Permission', () => {
+
 });
