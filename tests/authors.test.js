@@ -19,6 +19,8 @@ afterAll(async () => {
 describe('Authenticated After Login able to see  ADD book functionality is present and model is opened', () => {
     beforeEach(async () => {
         await page.login();
+        await page.goto(`${JEST_CONSTANTS.CLIENT_URL}/author`);
+        await page.waitForSelector('#add_author_btn', {visible: true});
     });
 
     test('add Author Form check validation', async () => {

@@ -118,7 +118,7 @@ class CustomPage {
             (selector) => {
                 let ele = document.querySelector(selector);
                 if (ele) {
-                    ele.click()
+                    ele.click();
                 }
             }
             , selector);
