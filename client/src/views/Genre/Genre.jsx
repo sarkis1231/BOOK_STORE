@@ -107,7 +107,7 @@ const Genre = () => {
                         ref={editRegister}
                         id="genre_add_input"
                     />
-                    <Button type='submit' id="add_genre_btn">Edit Genre</Button>
+                    <Button type='submit'>Edit Genre</Button>
                 </form>
             </Modal>
         </>

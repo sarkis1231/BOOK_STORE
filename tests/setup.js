@@ -1,6 +1,6 @@
 // GLOBAL SETUP FOR JEST
 
-// jest.setTimeout(10000); if needed
+// jest.setTimeout(30000); // if needed
 
 // this environment is crucial here
 require('dotenv').config();

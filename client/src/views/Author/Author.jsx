@@ -21,7 +21,7 @@ const Author = () => {
     const authors = useFetch('/authors', reFetch)
     const {register, errors, handleSubmit, reset} = useForm({
         resolver: yupResolver(AuthorSchema)
-    })
+    });
     const {
         errors: editErrors,
         handleSubmit: editHandleSubmit,
@@ -29,19 +29,18 @@ const Author = () => {
         reset: editReset
     } = useForm({
         resolver: yupResolver(EditAuthorSchema)
-    })
-    const {toggleModal, openModal, closeModal, value} = useModal()
+    });
+    const {toggleModal, openModal, closeModal, value} = useModal();
     const {
         toggleModal: editToggleModal,
         openModal: editOpenModal,
         closeModal: editCLoseModal,
         value: editValue
-    } = useModal()
+    } = useModal();
 
     const onSubmit = (value) => {
         axios.post('/authors', {...value}).then(res => {
-            console.log(res)
-            reset()
+            reset();
             setReFetch(prev => !prev);
         }).catch(e => {
             console.log(e)
@@ -56,24 +55,22 @@ const Author = () => {
     }
 
     const handleDelete = () => {
-        axios.delete(`/authors/${value._id}`).then(res => {
-            console.log(res)
-        }).catch(e => {
+        axios.delete(`/authors/${value._id}`).then(res => {}).catch(e => {
             console.log(e)
         })
         setReFetch(prev => !prev)
         closeModal()
-    }
+    };
+
     const handleEdit = (value) => {
         axios.put(`/authors/${editValue._id}`, {...value}).then(res => {
-            console.log(res)
             setReFetch(prev => !prev);
-            editReset()
-            editCLoseModal()
+            editReset();
+            editCLoseModal();
         }).catch(e => {
             console.log(e)
-        })
-    }
+        });
+    };
 
     return (
         <>
@@ -84,6 +81,7 @@ const Author = () => {
                 btnName={t("author.addAuthor")}
                 handleSubmit={handleSubmit}
                 onSubmit={onSubmit}
+                id="add_author"
             />
             <Table
                 body={authors}
