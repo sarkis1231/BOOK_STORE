@@ -123,6 +123,34 @@ class CustomPage {
             }
             , selector);
     }
+
+    /**
+     * @description Get Ajax request
+     * @param url {String}
+     * @return Promise
+     * */
+    async getRequest(url) {
+        return this.page.evaluate(_path => {
+            return fetch(_path, {
+                method: 'GET',
+            }).then(res => res.json());
+        }, url);
+    }
+
+    /**
+     * @description Get Ajax request
+     * @param url {String}
+     * @param data {*}
+     * @return Promise
+     * */
+    async postRequest(url, data) {
+        return this.page.evaluate(_path => {
+            return fetch(_path, {
+                method: 'POST',
+                data: data
+            }).then(res => res.json());
+        }, url);
+    }
 }
 
 module.exports = CustomPage;
