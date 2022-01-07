@@ -51,11 +51,23 @@ describe('Non authenticated Genre Permission', () => {
         await page.goto(`${JEST_CONSTANTS.CLIENT_URL}/genre`);
     });
 
-    test('User cannot get a new blog posts', async () => {
+    test('User cannot get a fetch genre', async () => {
 
         const result = await page.evaluate((url) => {
              return fetch(`${url}/genre`, {
                 method: 'GET'
+            }).then(res => res.statusText);
+        }, JEST_CONSTANTS.BE_BASE_URL);
+
+        expect(result).toEqual('Unauthorized');
+
+    });
+
+    test('User cannot get a fetch genre', async () => {
+        const result = await page.evaluate((url) => {
+            return fetch(`${url}/genre`, {
+                method: 'POST',
+
             }).then(res => res.statusText);
         }, JEST_CONSTANTS.BE_BASE_URL);
 

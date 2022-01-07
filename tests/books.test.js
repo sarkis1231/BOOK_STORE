@@ -1,5 +1,6 @@
 const CustomPage = require("./utils/page");
 const JEST_FN = require("./utils/functions");
+const JEST_CONSTANTS = require("./utils/constants");
 
 let page = null;
 
@@ -39,5 +40,14 @@ describe('Authenticated After Login able to see  ADD book functionality is prese
 
 
 describe('Non authenticated Books Permission', () => {
+    test('User cannot get a fetch new books', async () => {
 
+        const result = await page.evaluate((url) => {
+            return fetch(`${url}/books`, {
+                method: 'GET'
+            }).then(res => res.statusText);
+        }, JEST_CONSTANTS.BE_BASE_URL);
+
+        expect(result).toEqual('Unauthorized');
+    });
 });
