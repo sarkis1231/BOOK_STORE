@@ -74,6 +74,15 @@ class CustomPage {
     }
 
     /**
+     * @description page custom Go to Function
+     * @param action {String}
+     * @return Promise
+     * */
+    async redirectTo(action) {
+        return this.page.goto(`${JEST_CONSTANTS.CLIENT_URL}${action}`);
+    }
+
+    /**
      * @description closes the page related services
      * @return Promise
      * */
@@ -98,7 +107,6 @@ class CustomPage {
         await this.page.waitForSelector(selector);
         return this.getElementProp(selector, prop);
     }
-
 
     /**
      * @param selector {String}
