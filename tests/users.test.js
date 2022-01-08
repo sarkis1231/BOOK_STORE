@@ -19,7 +19,7 @@ afterAll(async () => {
 
 describe('Non authenticated users Permission', () => {
     beforeEach(async () => {
-        await page.goto(`${JEST_CONSTANTS.CLIENT_URL}/users`);
+        await page.redirectTo(`users`);
     });
 
     test('User cannot get a fetch users', async () => {

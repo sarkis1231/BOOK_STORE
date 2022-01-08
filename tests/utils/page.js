@@ -54,7 +54,7 @@ class CustomPage {
 
         let current_url = `${JEST_CONSTANTS.CLIENT_URL}/books`;
 
-        await this.page.goto(current_url);
+        await this.redirectTo('books');
         await this.page.waitForSelector('#log_out_btn');
 
         return current_url;
@@ -71,6 +71,15 @@ class CustomPage {
         let current_url = JEST_CONSTANTS.CLIENT_URL;
         await this.page.goto(current_url);
         return current_url;
+    }
+
+    /**
+     * @description page custom Go to Function
+     * @param action {String}
+     * @return Promise
+     * */
+    async redirectTo(action) {
+        return this.page.goto(`${JEST_CONSTANTS.CLIENT_URL}/${action}`);
     }
 
     /**
@@ -99,7 +108,6 @@ class CustomPage {
         return this.getElementProp(selector, prop);
     }
 
-
     /**
      * @param selector {String}
      * @param prop {String}
@@ -122,6 +130,34 @@ class CustomPage {
                 }
             }
             , selector);
+    }
+
+    /**
+     * @description Get Ajax request
+     * @param url {String}
+     * @return Promise
+     * */
+    async getRequest(url) {
+        return this.page.evaluate(_path => {
+            return fetch(_path, {
+                method: 'GET',
+            }).then(res => res.json());
+        }, url);
+    }
+
+    /**
+     * @description Get Ajax request
+     * @param url {String}
+     * @param data {*}
+     * @return Promise
+     * */
+    async postRequest(url, data) {
+        return this.page.evaluate(_path => {
+            return fetch(_path, {
+                method: 'POST',
+                data: data
+            }).then(res => res.json());
+        }, url);
     }
 }
 
