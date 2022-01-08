@@ -20,7 +20,7 @@ afterAll(async () => {
 describe('After Login able go to Genre check the input functionality', () => {
     beforeEach(async () => {
         await page.login();
-        await page.goto(`${JEST_CONSTANTS.CLIENT_URL}/genre`);
+        await page.redirectTo(`genre`);
         await page.waitForSelector('#add_genre_btn', {visible: true});
     });
 
@@ -48,7 +48,7 @@ describe('After Login able go to Genre check the input functionality', () => {
 
 describe('Non authenticated Genre Permission', () => {
     beforeEach(async () => {
-        await page.goto(`${JEST_CONSTANTS.CLIENT_URL}/genre`);
+        await page.redirectTo(`genre`);
     });
 
     test('User cannot get a fetch genre', async () => {

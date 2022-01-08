@@ -54,7 +54,7 @@ class CustomPage {
 
         let current_url = `${JEST_CONSTANTS.CLIENT_URL}/books`;
 
-        await this.page.goto(current_url);
+        await this.redirectTo('books');
         await this.page.waitForSelector('#log_out_btn');
 
         return current_url;
@@ -79,7 +79,7 @@ class CustomPage {
      * @return Promise
      * */
     async redirectTo(action) {
-        return this.page.goto(`${JEST_CONSTANTS.CLIENT_URL}${action}`);
+        return this.page.goto(`${JEST_CONSTANTS.CLIENT_URL}/${action}`);
     }
 
     /**

@@ -19,7 +19,7 @@ afterAll(async () => {
 describe('Authenticated After Login able to see  ADD book functionality is present and model is opened', () => {
     beforeEach(async () => {
         await page.login();
-        await page.goto(`${JEST_CONSTANTS.CLIENT_URL}/author`);
+        await page.redirectTo(`author`);
         await page.waitForSelector('#add_author_btn', {visible: true});
     });
 
@@ -33,7 +33,7 @@ describe('Authenticated After Login able to see  ADD book functionality is prese
 
 describe('Non authenticated users Permission', () => {
     beforeEach(async () => {
-        await page.goto(`${JEST_CONSTANTS.CLIENT_URL}/users`);
+        await page.redirectTo(`users`);
     });
 
     test('User cannot get a fetch authors', async () => {
