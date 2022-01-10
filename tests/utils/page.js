@@ -1,9 +1,7 @@
 const puppeteer = require("puppeteer");
 const JEST_CONSTANTS = require("./constants");
 const userFactory = require("../factories/userFactory");
-const {redis_client} = require("../../src/redis_client");
 const localStorageFactory = require("../factories/localStorageFactory");
-const mongoose = require("mongoose");
 
 /**
  * @description a singleton class
