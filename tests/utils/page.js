@@ -23,7 +23,8 @@ class CustomPage {
      * */
     static async build() {
         const browser = await puppeteer.launch({
-            headless: true
+            headless: true,
+            args: ['--no-sandbox']
         });
 
         const page = await browser.newPage();
