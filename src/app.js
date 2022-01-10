@@ -47,8 +47,12 @@ app.use(function (err, req, res, next) {
 });
 
 if (['PROD', 'CI'].includes(process.env.NODE_ENV)) {
+    // all images and static files imported in the react application
     app.use(express.static('client/build'));
+
     const path = require('path');
+    // this will enable react to be served on the same port
+
     app.get('*', function (req, res) {
         res.sendFile(path.resolve(('client', 'build', 'index.html')));
     });
