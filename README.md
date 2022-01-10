@@ -4,6 +4,7 @@ for database solution using `monogodb` and using `mongoose` as `ORM` in `node`.
 
 * A layer of `redis` caching is added to increase the overall performance of the application.
 * An Integration Testing pipeline with `Jest`
+* A continuous integration process with github-actions
 
 
 
