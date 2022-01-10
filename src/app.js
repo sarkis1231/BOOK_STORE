@@ -46,6 +46,13 @@ app.use(function (err, req, res, next) {
     res.status(status).json({message, data});
 });
 
+if (['PROD', 'CI'].includes(process.env.NODE_ENV)) {
+    app.use(express.static('client/build'));
+    const path = require('path');
+    app.get('*', function (req, res) {
+        res.sendFile(path.resolve(('client', 'build', 'index.html')));
+    });
+}
 
 const port = process.env.PORT || 8080;
 
