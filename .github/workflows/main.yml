@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup Node
         uses: actions/setup-node@v2
-        with:
+        with: # setup mongodb and redis # setup environmental variables
           node-version: '12'
       - run: yarn
-      - run: yarn test
+#      - run: yarn test
