@@ -36,5 +36,18 @@ jobs:
         uses: supercharge/mongodb-github-action@1.7.0
         with:
           mongodb-version: '4.2'
+      - name: Setup enviroment varialbes
+        run: |
+          cat «EOF > .env
+          MONGODB_PORT={{  secrets.MONGODB_PORT }}
+          DB_NAME={{  secrets.DB_NAME }}
+          REDIS_PORT={{  secrets.REDIS_PORT }}
+          DB_RD_NAME={{  secrets.DB_RD_NAME }}
+          PORT={{  secrets.PORT }}
+          CLIENT_URL={{  secrets.CLIENT_URL }}
+          SECRET_KEY={{  secrets.SECRET_KEY }}
+          USER_TEST_DEFAULT_NAME={{  secrets.USER_TEST_DEFAULT_NAME }}
+          USER_TEST_DEFAULT_PASSWORD={{  secrets.USER_TEST_DEFAULT_PASSWORD }}
+          EOF
       - run: yarn
 #      - run: yarn test
