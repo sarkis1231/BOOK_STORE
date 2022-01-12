@@ -51,6 +51,6 @@ jobs:
           EOF
         shell: bash
       - name: Install necessary packages
-      - run: yarn
+        run: yarn
 #      - name: Run e2e tests on the BE and FE site
 #      - run: yarn test
