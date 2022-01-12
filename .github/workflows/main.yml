@@ -50,5 +50,7 @@ jobs:
           USER_TEST_DEFAULT_PASSWORD={{ secrets.USER_TEST_DEFAULT_PASSWORD }}
           EOF
         shell: bash
+      - name: Install necessary packages
       - run: yarn
+#      - name: Run e2e tests on the BE and FE site
 #      - run: yarn test
