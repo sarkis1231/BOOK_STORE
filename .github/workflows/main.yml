@@ -34,7 +34,7 @@ jobs:
           node-version: '12'
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.7.0
-          with:
-            mongodb-version: '4.2'
+        with:
+          mongodb-version: '4.2'
       - run: yarn
 #      - run: yarn test
