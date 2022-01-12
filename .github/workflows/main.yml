@@ -38,7 +38,7 @@ jobs:
           mongodb-version: '4.2'
       - name: Setup enviroment varialbes
         run: |
-          cat «EOF > .env
+          cat <<EOF > .env
           MONGODB_PORT={{ secrets.MONGODB_PORT }}
           DB_NAME={{ secrets.DB_NAME }}
           REDIS_PORT={{ secrets.REDIS_PORT }}
