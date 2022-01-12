@@ -52,5 +52,7 @@ jobs:
         shell: bash
       - name: Install necessary packages
         run: yarn
+#      - name: Build the node and React application
+#        run: yarn build
 #      - name: Run e2e tests on the BE and FE site
 #      - run: yarn test
