@@ -15,16 +15,16 @@ router.use('/users', users);
 
 /* Authentication needed for following routes */
 // TODO way to fix this
-router.use('/books', isAuth(), books);
+router.use('/books', [isAuth(), books]);
 
-router.use('/authors', isAuth(), authors)
+router.use('/authors', [isAuth(), authors])
 
-router.use('/genre', isAuth(), genre);
+router.use('/genre', [isAuth(), genre]);
 
-router.use('/files', isAuth(), files);
+router.use('/files', [isAuth(), files]);
 
-router.use('/permissions', isAuth(), permissions);
+router.use('/permissions', [isAuth(), permissions]);
 
-router.use('/chatBot', isAuth(), chatBot);
+router.use('/chatBot', [isAuth(), chatBot]);
 
 module.exports = router;
