@@ -50,6 +50,13 @@ jobs:
           USER_TEST_DEFAULT_PASSWORD={{ secrets.USER_TEST_DEFAULT_PASSWORD }}
           EOF
         shell: bash
+      - name: Setup enviroment varialbes in react
+        run: |
+            cat <<EOF > client/.env
+            REACT_APP_BASE_URL={{ secrets.CLIENT_URL }}/api
+            SKIP_PREFLIGHT_CHECK=true
+            EOF
+        shell: bash
       - name: Install necessary packages
         run: yarn
       - name: Build the node and React application
