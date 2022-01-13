@@ -78,6 +78,7 @@ mongoose.connect(MONGODB_URI, MONGOOSE_OPTIONS)
     .then(function () {
         app.listen(port, () => {
             console.log(`HTTP server started on port ${port}`);
+            console.log(`Environment is ${process.env.NODE_ENV}`);
         });
     }).catch(function (err) {
     console.log(err);

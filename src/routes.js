@@ -14,18 +14,17 @@ const router = Router();
 router.use('/users', users);
 
 /* Authentication needed for following routes */
-router.use(isAuth());
+// TODO way to fix this
+router.use('/books', isAuth(), books);
 
-router.use('/books', books);
+router.use('/authors', isAuth(), authors)
 
-router.use('/authors', authors)
+router.use('/genre', isAuth(), genre);
 
-router.use('/genre', genre);
+router.use('/files', isAuth(), files);
 
-router.use('/files', files);
+router.use('/permissions', isAuth(), permissions);
 
-router.use('/permissions', permissions);
-
-router.use('/chatBot', chatBot);
+router.use('/chatBot', isAuth(), chatBot);
 
 module.exports = router;
