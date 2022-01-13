@@ -6,6 +6,7 @@
 require('dotenv').config();
 
 const mongoose = require('mongoose');
+console.log('Testing Work Flow');
 
 const {MONGODB_URI, MONGOOSE_OPTIONS} = require("../src/config/keys");
 
