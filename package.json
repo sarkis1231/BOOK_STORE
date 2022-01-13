@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "jest" : {
-    "setupFilesAfterEnv": ["./tests/setup.js"]
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./tests/setup.js"
+    ]
   },
   "scripts": {
     "start": "node src/app.js",
     "server": "nodemon src/app.js",
-    "build": "NPM_CONFIG_PRODUCTION=false yarn --prefix client && yarn build --prefix client",
+    "build": "yarn --cwd client && yarn --cwd client build",
     "test": "jest",
     "clean": "kill -9 $(lsof -t -i:8080)"
   },
