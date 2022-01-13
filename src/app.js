@@ -35,7 +35,7 @@ app.use(passport.initialize({}));
 passportConfig(passport);
 
 // Routes
-app.use(router);
+app.use('/api', router);
 
 
 if (['PROD', 'CI'].includes(process.env.NODE_ENV)) {
@@ -84,6 +84,7 @@ mongoose.connect(MONGODB_URI, MONGOOSE_OPTIONS)
         app.listen(port, () => {
             console.log(`HTTP server started on port ${port}`);
             console.log(`Environment is ${process.env.NODE_ENV}`);
+            console.log(`Node version ${process.version}`);
         });
     }).catch(function (err) {
     console.log(err);
