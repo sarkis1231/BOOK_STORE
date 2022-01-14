@@ -55,9 +55,9 @@ jobs:
         run: yarn
       - name: Build the node and React application
         run: yarn build
-      - name: Start up the node server
-        run: |
-            yarn start
-            sleep 3
+#      - name: Start up the node server
+#        run: |
+#            yarn start
+#            sleep 3
 #      - name: Run e2e tests on the BE and FE site
 #        run: yarn test
