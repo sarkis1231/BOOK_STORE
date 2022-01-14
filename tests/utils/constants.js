@@ -14,7 +14,7 @@
 JEST_CONSTANTS = {
     MONGODB_URI: `mongodb://localhost:${process.env.MONGODB_PORT}`,
     CLIENT_URL: process.env.NODE_ENV === 'CI' ? `http://localhost:${process.env.PORT}` : process.env.CLIENT_URL ,
-    BE_BASE_URL: `http://localhost:${process.env.PORT}`,
+    BE_BASE_URL: `http://localhost:${process.env.PORT}/api`,
     SECRET_KEY: process.env.SECRET_KEY,
     USER_TEST_DEFAULT_NAME: process.env.USER_TEST_DEFAULT_NAME,
     USER_TEST_DEFAULT_PASSWORD: process.env.USER_TEST_DEFAULT_PASSWORD,

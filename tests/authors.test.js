@@ -43,6 +43,6 @@ describe('Non authenticated users Permission', () => {
             }).then(res => res.statusText);
         }, JEST_CONSTANTS.BE_BASE_URL);
 
-        expect(result).toEqual('Unauthorized');
+        expect(result).toEqual(JEST_CONSTANTS.UNAUTHORISED);
     });
 });

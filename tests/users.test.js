@@ -25,12 +25,12 @@ describe('Non authenticated users Permission', () => {
     test('User cannot get a fetch users', async () => {
 
         const result = await page.evaluate((url) => {
-            return fetch(`${url}/users`, {
+            return fetch(`${url}/users/all`, {
                 method: 'GET'
             }).then(res => res.statusText);
         }, JEST_CONSTANTS.BE_BASE_URL);
 
-        expect(result).toEqual('Unauthorized');
+        expect(result).toEqual(JEST_CONSTANTS.UNAUTHORISED);
 
     });
 });
