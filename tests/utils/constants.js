@@ -13,7 +13,7 @@
 // bear in mind node have to be started for this for the process to be evaluated.
 JEST_CONSTANTS = {
     MONGODB_URI: `mongodb://localhost:${process.env.MONGODB_PORT}`,
-    CLIENT_URL: process.env.CLIENT_URL, // TODO delete after the proxy
+    CLIENT_URL: process.env.NODE_ENV === 'CI' ? `http://localhost:${process.env.PORT}` : process.env.CLIENT_URL ,
     BE_BASE_URL: `http://localhost:${process.env.PORT}`,
     SECRET_KEY: process.env.SECRET_KEY,
     USER_TEST_DEFAULT_NAME: process.env.USER_TEST_DEFAULT_NAME,

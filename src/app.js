@@ -46,11 +46,12 @@ if (process.env.NODE_ENV === 'CI') {
     const path = require('path');
     // this will enable react to be served on the same port
 
-    app.get('*', function (req, res, next) {
+    app.get('/*', function (req, res, next) {
+        // TODO check the right way
         if (req.url !== '/') {
             return res.redirect('/');
         }
-        res.sendFile(path.resolve(('client', 'build', 'index.html')));
+        res.sendFile(path.join(__dirname, 'client' ,'build', 'index.html'));
     });
 }
 
