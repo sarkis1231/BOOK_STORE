@@ -12,18 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-      # Service containers to run with `container-job`
-    services:
-        # Label used to access the service container
-        redis:
-          # Docker Hub image
-          image: redis
-          # Set health checks to wait until redis has started
-          options: >-
-            --health-cmd "redis-cli ping"
-            --health-interval 10s
-            --health-timeout 5s
-            --health-retries 5
 
     steps:
       - name: Checkout
@@ -36,6 +24,10 @@ jobs:
         uses: supercharge/mongodb-github-action@1.7.0
         with:
           mongodb-version: '4.2'
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.4.0
+        with:
+          redis-version: 5
       - name: Setup enviroment varialbes
         run: |
           cat <<EOF > .env
