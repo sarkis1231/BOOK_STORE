@@ -57,6 +57,10 @@ jobs:
             SKIP_PREFLIGHT_CHECK=true
             EOF
         shell: bash
+      - name: Verify that redis is up
+        run: redis-cli ping
+#      - name: Verify that mongo is up
+#        run: mongo
       - name: Install necessary packages
         run: yarn
       - name: Build the node and React application
@@ -65,5 +69,5 @@ jobs:
         run: |
             yarn start
             sleep 3
-      - name: Run e2e tests on the BE and FE site
-        run: yarn test
+#      - name: Run e2e tests on the BE and FE site
+#        run: yarn test
