@@ -49,6 +49,7 @@ jobs:
             SKIP_PREFLIGHT_CHECK=true
             EOF
         shell: bash
+      - run: cat .env
 #      - name: Verify that mongo is up
 #        run: mongo
       - name: Install necessary packages
