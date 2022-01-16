@@ -10,6 +10,7 @@ const helmet = require("helmet");
 const {MONGODB_URI, MONGOOSE_OPTIONS, REDIS_URI} = require("./config/keys");
 const passportConfig = require("./config/passport");
 const {Fn} = require("./utility/functions");
+const {NODE_ENVS} = require("./utility/constants");
 
 const app = express();
 
@@ -38,7 +39,7 @@ passportConfig(passport);
 app.use('/api', router);
 
 
-if (process.env.NODE_ENV === 'CI') {
+if (process.env.NODE_ENV === NODE_ENVS.CI) {
     const path = require('path');
 
     // all images and static files imported in the react application
@@ -92,7 +93,7 @@ mongoose.connection.on('disconnected', function () {
 mongoose.connect(MONGODB_URI, MONGOOSE_OPTIONS)
     .then(function () {
         app.listen(port, () => {
-            if (process.env.NODE_ENV === 'CI') {
+            if (process.env.NODE_ENV === NODE_ENVS.CI) {
                 console.log('Server and Mongodb are ready');
             } else {
                 Fn.LOG(`HTTP server started on port ${port}`);
@@ -109,7 +110,7 @@ mongoose.connect(MONGODB_URI, MONGOOSE_OPTIONS)
 const {redis_client} = require('./redis_client');
 
 redis_client.on('ready', function () {
-    if (process.env.NODE_ENV === 'CI') {
+    if (process.env.NODE_ENV === NODE_ENVS.CI) {
         console.log('Redis is Ready');
     } else {
         Fn.LOG(`Redis connection is ready ${REDIS_URI}`);
