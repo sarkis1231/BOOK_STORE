@@ -14,18 +14,18 @@ const {NODE_ENVS} = require("./utility/constants");
 
 const app = express();
 
-//security xss
+// security xss
 app.use(helmet());
 
-//request parser
+// request parser
 app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-//parser body
+// parser body
 app.use(bodyParser.json());
 
-//CORS
+// CORS
 app.use(cors());
 
 

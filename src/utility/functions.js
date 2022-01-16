@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const path = require('path');
-const {NODE_ENVS} = require("./constants");
 
 let Fn = {};
 /**
@@ -152,7 +151,7 @@ Fn.getUploadsDirectory = function () {
  * @param msg {String}
  * */
 Fn.LOG = function (msg) {
-    if(process.env.NODE_ENV !== NODE_ENVS.CI) {
+    if(process.env.NODE_ENV !== 'CI') { // TODO check me with no variable why?
         console.log(msg);
     }
 };
