@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config(); // TODO try with normal CI External Variables
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
@@ -10,7 +10,6 @@ const helmet = require("helmet");
 const {MONGODB_URI, MONGOOSE_OPTIONS, REDIS_URI} = require("./config/keys");
 const passportConfig = require("./config/passport");
 const {Fn} = require("./utility/functions");
-
 
 const app = express();
 
@@ -40,18 +39,27 @@ app.use('/api', router);
 
 
 if (process.env.NODE_ENV === 'CI') {
-    // all images and static files imported in the react application
-    app.use(express.static('client/build'));
-
     const path = require('path');
-    // this will enable react to be served on the same port
 
-    app.get('/*', function (req, res, next) {
-        // TODO check the right way
-        if (req.url !== '/') {
-            return res.redirect('/');
+    // all images and static files imported in the react application
+    app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+    app.get('*', function ({url}, res) {
+        let filePath = '';
+        let obj = {
+            'js': true,
+            'css': true,
+            'png': true,
+            'jpg': true,
+            'svg':true
+        };
+
+        if (obj[url.substr(url.lastIndexOf('.') + 1)]) {
+            filePath = path.join(__dirname, '..' ,'client' , 'build', url);
+        } else {
+            filePath = path.join(__dirname, '..' ,'client' ,'build', 'index.html');
         }
-        res.sendFile(path.join(__dirname, 'client' ,'build', 'index.html'));
+        return res.sendFile(filePath);
     });
 }
 
