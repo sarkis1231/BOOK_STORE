@@ -147,7 +147,7 @@ Fn.getUploadsDirectory = function () {
 };
 
 /**
- * @description view Log only in dev enviroment
+ * @description view Log only in dev environment
  * @param msg {String}
  * */
 Fn.LOG = function (msg) {

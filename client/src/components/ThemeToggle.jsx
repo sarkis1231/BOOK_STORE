@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import {ReactComponent as MoonIcon} from "../assets/svg/moon.svg";
 
+// TODO toggle the icon as well
 const ThemeToggle = ({toggleTheme}) => {
     return (
         <StyledIconContainer onClick={toggleTheme}>
