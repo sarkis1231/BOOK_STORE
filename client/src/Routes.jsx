@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from "react-router-dom";
+import {Redirect, Switch} from "react-router-dom";
 import PublicRoute from "./HOC/Auth/PublicRoute";
 import Home from "./views/Home";
 import HeaderFooterLayout from "./HOC/HeaderFooterLayout";
@@ -13,6 +13,7 @@ import {ADMIN_ROLE, ALL_ROLES} from "./constant";
 import Author from "./views/Author/Author";
 import Permissions from "./views/Permissions/Permissions";
 import Messages from "./views/Messages/Messages";
+import ErrorPage from "./components/ErrorPage";
 
 
 
@@ -28,15 +29,17 @@ const HL_Messages= HeaderFooterLayout(Messages)
 const Routes = () => {
     return (
         <Switch>
-            <PublicRoute exact path='/' component={HL_HOME} />
-            <PrivateRoute exact path='/books' component={HL_BOOKS} allowedRoles={ALL_ROLES} />
-            <PrivateRoute exact path='/genre' component={HL_ADDGenre} allowedRoles={ADMIN_ROLE} />
-            <PrivateRoute exact path='/users' component={HL_USERS} allowedRoles={ADMIN_ROLE} />
-            <PrivateRoute exact path='/author' component={HL_AUTHOR} allowedRoles={ADMIN_ROLE} />
-            <PrivateRoute exact path='/permissions' component={HL_Permissions} allowedRoles={ADMIN_ROLE} />
-            <PrivateRoute exact path='/messages' component={HL_Messages} allowedRoles={ADMIN_ROLE} />
-            <PublicRoute exact path='/login' component={Login} />
-            <PublicRoute exact path='/register' component={Register} />
+            <PublicRoute exact path='/' component={HL_HOME}/>
+            <PrivateRoute exact path='/books' component={HL_BOOKS} allowedRoles={ALL_ROLES}/>
+            <PrivateRoute exact path='/genre' component={HL_ADDGenre} allowedRoles={ADMIN_ROLE}/>
+            <PrivateRoute exact path='/users' component={HL_USERS} allowedRoles={ADMIN_ROLE}/>
+            <PrivateRoute exact path='/author' component={HL_AUTHOR} allowedRoles={ADMIN_ROLE}/>
+            <PrivateRoute exact path='/permissions' component={HL_Permissions} allowedRoles={ADMIN_ROLE}/>
+            <PrivateRoute exact path='/messages' component={HL_Messages} allowedRoles={ADMIN_ROLE}/>
+            <PublicRoute exact path='/login' component={Login}/>
+            <PublicRoute exact path='/register' component={Register}/>
+            <PublicRoute exact path="/404" component={ErrorPage}/>
+            <Redirect to="/404"/>
         </Switch>
     );
 };
