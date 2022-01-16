@@ -40,6 +40,8 @@ app.use('/api', router);
 
 
 if (process.env.NODE_ENV === NODE_ENVS.CI) {
+    // IN PROD static files should be served from a nginx
+    // React navigation will take care the rest
     const path = require('path');
 
     // all images and static files imported in the react application
