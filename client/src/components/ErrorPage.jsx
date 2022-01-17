@@ -16,7 +16,7 @@ const ErrorPageNumber = styled.div`
 const ErrorPageText = styled.div`
   text-align: center;
   font-size: 18px;
-  color: white;
+  color: ${({theme}) => theme.text};
   margin: 0 0 10px 0;
 `;
 

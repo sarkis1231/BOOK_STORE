@@ -5,7 +5,7 @@ import {ThemeDispatch} from "../context/ThemeContext/Context";
 import Footer from "./Footer/Footer";
 
 const Layout = ({children}) => {
-    const toggleTheme = useContext(ThemeDispatch)
+    const toggleTheme = useContext(ThemeDispatch);
 
     return (
         <>

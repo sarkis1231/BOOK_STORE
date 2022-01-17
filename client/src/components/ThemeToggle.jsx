@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components'
+import {ThemeContext} from "../context/ThemeContext/Context";
 import {ReactComponent as MoonIcon} from "../assets/svg/moon.svg";
+import {ReactComponent as SunIcon} from "../assets/svg/sun.svg";
 
-// TODO toggle the icon as well
+
 const ThemeToggle = ({toggleTheme}) => {
+    const theme = useContext(ThemeContext);
+
     return (
         <StyledIconContainer onClick={toggleTheme}>
-            <MoonIcon/>
+            {theme === 'light'? <SunIcon/> :<MoonIcon/>}
         </StyledIconContainer>
     );
 };
@@ -14,11 +18,8 @@ const ThemeToggle = ({toggleTheme}) => {
 const StyledIconContainer = styled.div`
   cursor: pointer;
   svg {
-      width: 15px;
-      height: 15px;
-    path {
-        fill: ${({theme}) => theme.text};
-    }
+      width: 20px;
+      height: 20px;
   }
 `
 
