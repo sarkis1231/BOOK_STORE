@@ -24,7 +24,7 @@ module.exports = async function userFactory() {
             password: JEST_CONSTANTS.USER_TEST_DEFAULT_PASSWORD,
             role: USER_ROLES.Admin
         });
-        await user.save();
+        await user.createPremiumPermission();
     }
 
     return {

@@ -40,6 +40,7 @@ jobs:
           SECRET_KEY=${{ secrets.SECRET_KEY }}
           USER_TEST_DEFAULT_NAME=${{ secrets.USER_TEST_DEFAULT_NAME }}
           USER_TEST_DEFAULT_PASSWORD=${{ secrets.USER_TEST_DEFAULT_PASSWORD }}
+          NODE_ENV=${{ secrets.NODE_ENV }}
           EOF
         shell: bash
       - name: Setup enviroment varialbes in react
@@ -49,8 +50,6 @@ jobs:
             SKIP_PREFLIGHT_CHECK=true
             EOF
         shell: bash
-#      - name: Verify that mongo is up
-#        run: mongo
       - name: Install necessary packages
         run: yarn
       - name: Build the node and React application
