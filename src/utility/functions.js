@@ -146,5 +146,15 @@ Fn.getUploadsDirectory = function () {
     return path.join(this.getRootDirectory(), 'uploads');
 };
 
+/**
+ * @description view Log only in dev environment
+ * @param msg {String}
+ * */
+Fn.LOG = function (msg) {
+    if(process.env.NODE_ENV !== 'CI') { // TODO check me with no variable why?
+        console.log(msg);
+    }
+};
+
 
 module.exports = {Fn};

@@ -39,6 +39,10 @@ userSchema.methods.isAdmin = function () {
     return this.role === USER_ROLES.Admin;
 };
 
+/**
+ * @description create default Permission and save the users
+ * @return Promise
+ * */
 userSchema.methods.createDefaultPermission = async function () {
     const firstGenre = await Genres.getOne({});
     const permission = new Permissions();
@@ -46,6 +50,18 @@ userSchema.methods.createDefaultPermission = async function () {
         id: firstGenre._id,
         limit: LIMITS.min
     }];
+    permission.uid = this._id;
+    this.permission = permission._id;
+    return Promise.all([this.save(), permission.save()]);
+};
+
+/**
+ * @description create premium Permission and save the users
+ * @return Promise
+ * */
+userSchema.methods.createPremiumPermission = async function () {
+    const permission = new Permissions();
+    permission.genre = [];
     permission.uid = this._id;
     this.permission = permission._id;
     return Promise.all([this.save(), permission.save()]);

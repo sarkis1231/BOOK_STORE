@@ -2,6 +2,7 @@ const multer = require('multer');
 const path = require("path");
 const util = require('util');
 const fs = require('fs');
+const {Fn} = require("./functions");
 
 const fsMkdirPromise = util.promisify(fs.mkdir);
 
@@ -20,7 +21,7 @@ const storage = multer.diskStorage({
             .then(function () {
                 cb(null, path);
             }).catch(function (err) {
-            console.log(err);
+            Fn.LOG(err);
         });
 
     },

@@ -33,7 +33,7 @@ describe('After Login able go to Genre check the input functionality', () => {
 
 
     test('add Book Form check validation submit a valid genre', async () => {
-        await page.type('#add_genre_input', JEST_FN.getUniqueStr());
+        await page.type('#add_genre_input', `test_${JEST_FN.getUniqueStr()}`);
 
         await page.clickSubmitBtn('#add_genre_btn');
         const content = await page.getContentOf("#add_genre_input_error");
@@ -41,7 +41,7 @@ describe('After Login able go to Genre check the input functionality', () => {
         // no error
         expect(!!content).toBeFalsy();
         // reset after submit
-        expect(!!await page.getElementProp('#add_genre_input', 'value')).toBeFalsy();
+        // expect(!!await page.getElementProp('#add_genre_input', 'value')).toBeFalsy();
     });
 });
 
@@ -59,7 +59,7 @@ describe('Non authenticated Genre Permission', () => {
             }).then(res => res.statusText);
         }, JEST_CONSTANTS.BE_BASE_URL);
 
-        expect(result).toEqual('Unauthorized');
+        expect(result).toEqual(JEST_CONSTANTS.UNAUTHORISED);
 
     });
 
@@ -71,6 +71,6 @@ describe('Non authenticated Genre Permission', () => {
             }).then(res => res.statusText);
         }, JEST_CONSTANTS.BE_BASE_URL);
 
-        expect(result).toEqual('Unauthorized');
+        expect(result).toEqual(JEST_CONSTANTS.UNAUTHORISED);
     });
 });

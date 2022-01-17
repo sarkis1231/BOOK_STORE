@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config(); // TODO try with normal CI External Variables
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
@@ -9,22 +9,23 @@ const cors = require("cors");
 const helmet = require("helmet");
 const {MONGODB_URI, MONGOOSE_OPTIONS, REDIS_URI} = require("./config/keys");
 const passportConfig = require("./config/passport");
-
+const {Fn} = require("./utility/functions");
+const {NODE_ENVS} = require("./utility/constants");
 
 const app = express();
 
-//security xss
+// security xss
 app.use(helmet());
 
-//request parser
+// request parser
 app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-//parser body
+// parser body
 app.use(bodyParser.json());
 
-//CORS
+// CORS
 app.use(cors());
 
 
@@ -35,7 +36,35 @@ app.use(passport.initialize({}));
 passportConfig(passport);
 
 // Routes
-app.use(router);
+app.use('/api', router);
+
+
+if (process.env.NODE_ENV === NODE_ENVS.CI) {
+    // IN PROD static files should be served from a nginx
+    // React navigation will take care the rest
+    const path = require('path');
+
+    // all images and static files imported in the react application
+    app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+    app.get('*', function ({url}, res) {
+        let filePath = '';
+        let obj = {
+            'js': true,
+            'css': true,
+            'png': true,
+            'jpg': true,
+            'svg':true
+        };
+
+        if (obj[url.substr(url.lastIndexOf('.') + 1)]) {
+            filePath = path.join(__dirname, '..' ,'client' , 'build', url);
+        } else {
+            filePath = path.join(__dirname, '..' ,'client' ,'build', 'index.html');
+        }
+        return res.sendFile(filePath);
+    });
+}
 
 
 // errors
@@ -46,38 +75,33 @@ app.use(function (err, req, res, next) {
     res.status(status).json({message, data});
 });
 
-if (['PROD', 'CI'].includes(process.env.NODE_ENV)) {
-    // all images and static files imported in the react application
-    app.use(express.static('client/build'));
-
-    const path = require('path');
-    // this will enable react to be served on the same port
-
-    app.get('*', function (req, res) {
-        res.sendFile(path.resolve(('client', 'build', 'index.html')));
-    });
-}
 
 const port = process.env.PORT || 8080;
 
 mongoose.connection.on('connected', function () {
-    console.log('Mongoose default connection open to ' + MONGODB_URI);
+    Fn.LOG('Mongoose default connection open to ' + MONGODB_URI);
 });
 
 // If the connection throws an error
 mongoose.connection.on('error', function (err) {
-    console.log('Mongoose default connection error: ' + err);
+    Fn.LOG('Mongoose default connection error: ' + err);
 });
 
 // When the connection is disconnected
 mongoose.connection.on('disconnected', function () {
-    console.log('Mongoose default connection disconnected');
+    Fn.LOG('Mongoose default connection disconnected');
 });
 
 mongoose.connect(MONGODB_URI, MONGOOSE_OPTIONS)
     .then(function () {
         app.listen(port, () => {
-            console.log(`HTTP server started on port ${port}`);
+            if (process.env.NODE_ENV === NODE_ENVS.CI) {
+                console.log('Server and Mongodb are ready');
+            } else {
+                Fn.LOG(`HTTP server started on port ${port}`);
+                Fn.LOG(`Environment is ${process.env.NODE_ENV}`);
+                Fn.LOG(`Node version ${process.version}`);
+            }
         });
     }).catch(function (err) {
     console.log(err);
@@ -88,16 +112,20 @@ mongoose.connect(MONGODB_URI, MONGOOSE_OPTIONS)
 const {redis_client} = require('./redis_client');
 
 redis_client.on('ready', function () {
-    console.log(`Redis connection is ready ${REDIS_URI}`);
+    if (process.env.NODE_ENV === NODE_ENVS.CI) {
+        console.log('Redis is Ready');
+    } else {
+        Fn.LOG(`Redis connection is ready ${REDIS_URI}`);
+    }
 });
 
 redis_client.on('error', function (error) {
-    console.log(error);
+    Fn.LOG(error);
 });
 
 process.on('SIGINT', function () {
     mongoose.connection.close(function () {
-        console.log('Mongoose default connection disconnected through app termination');
+        Fn.LOG('Mongoose default connection disconnected through app termination');
         process.exit(0);
     });
 });

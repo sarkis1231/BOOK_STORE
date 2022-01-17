@@ -45,6 +45,8 @@ const Home = () => {
                 <StyledHeaderTwo>{t("homePage.contactUs")}</StyledHeaderTwo>
                 <StyledA href="mailto:sakooghly@gmail.com" target="_blank"
                          rel="noreferrer noopener">sakooghly@gmail.com</StyledA>
+                <StyledA href="mailto:mgotm13@gmail.com" target="_blank"
+                         rel="noreferrer noopener">mgotm@gmail.com</StyledA>
             </FlexContainer>
     );
 }

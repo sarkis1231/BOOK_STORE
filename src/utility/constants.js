@@ -88,4 +88,10 @@ const LIMITS = {
     max: 10000 //physical limit :)
 };
 
-module.exports = {MESSAGES, messageAlert, SCHEMES_NAMES, LIMITS, MESSAGES_X, viewMessage};
+const NODE_ENVS = {
+    'CI': 'CI',
+    'DEV': 'DEV',
+    'PROD': 'PROD'
+};
+
+module.exports = {MESSAGES, messageAlert, SCHEMES_NAMES, LIMITS, NODE_ENVS, MESSAGES_X, viewMessage};

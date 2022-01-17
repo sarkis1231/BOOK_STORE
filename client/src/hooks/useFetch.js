@@ -10,7 +10,7 @@ export default function useFetch(url, reFetch){
         }).catch(e => {
             console.log(e)
         })
-    },[url, reFetch])
+    },[url, reFetch]);
 
     return data;
 }

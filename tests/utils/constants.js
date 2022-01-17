@@ -4,8 +4,6 @@
  *     CLIENT_URL:String,
  *     BE_BASE_URL:String,
  *     SECRET_KEY:String,
- *     USER_1_NAME:String,
- *     USER_1_PASSWORD:String,
  *     USER_1_PASSWORD:String,
  *     USER_TEST_DEFAULT_NAME:String,
  *     USER_TEST_DEFAULT_PASSWORD:String
@@ -15,10 +13,8 @@
 // bear in mind node have to be started for this for the process to be evaluated.
 JEST_CONSTANTS = {
     MONGODB_URI: `mongodb://localhost:${process.env.MONGODB_PORT}`,
-    USER_1_NAME: process.env.USER_1_NAME,
-    USER_1_PASSWORD: process.env.USER_1_PASSWORD,
-    CLIENT_URL: process.env.CLIENT_URL,
-    BE_BASE_URL: `http://localhost:${process.env.PORT}`,
+    CLIENT_URL: process.env.NODE_ENV === 'CI' ? `http://localhost:${process.env.PORT}` : process.env.CLIENT_URL ,
+    BE_BASE_URL: `http://localhost:${process.env.PORT}/api`,
     SECRET_KEY: process.env.SECRET_KEY,
     USER_TEST_DEFAULT_NAME: process.env.USER_TEST_DEFAULT_NAME,
     USER_TEST_DEFAULT_PASSWORD: process.env.USER_TEST_DEFAULT_PASSWORD,

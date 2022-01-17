@@ -1,0 +1,61 @@
+
+name: Node CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with: # setup mongodb and redis # setup environmental variables
+          node-version: '12'
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: '4.2'
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.4.0
+        with:
+          redis-version: 5
+      - name: Setup enviroment varialbes
+        run: |
+          cat <<EOF > .env
+          MONGODB_PORT=${{ secrets.MONGODB_PORT }}
+          DB_NAME=${{ secrets.DB_NAME }}
+          REDIS_PORT=${{ secrets.REDIS_PORT }}
+          DB_RD_NAME=${{ secrets.DB_RD_NAME }}
+          PORT=${{ secrets.PORT }}
+          CLIENT_URL=${{ secrets.CLIENT_URL }}
+          SECRET_KEY=${{ secrets.SECRET_KEY }}
+          USER_TEST_DEFAULT_NAME=${{ secrets.USER_TEST_DEFAULT_NAME }}
+          USER_TEST_DEFAULT_PASSWORD=${{ secrets.USER_TEST_DEFAULT_PASSWORD }}
+          NODE_ENV=${{ secrets.NODE_ENV }}
+          EOF
+        shell: bash
+      - name: Setup enviroment varialbes in react
+        run: |
+            cat <<EOF > client/.env
+            REACT_APP_BASE_URL=${{ secrets.CLIENT_URL }}/api
+            SKIP_PREFLIGHT_CHECK=true
+            EOF
+        shell: bash
+      - name: Install necessary packages
+        run: yarn
+      - name: Build the node and React application
+        run: yarn build
+      - name: Start up the node server
+        run: |
+            nohup yarn start & sleep 3
+      - name: Run e2e tests on the BE and FE site
+        run: yarn test_ci

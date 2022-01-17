@@ -18,13 +18,14 @@ module.exports = async function userFactory() {
     if (!user) {
         const name = JEST_FN.getUniqueStr();
         const email = `${name}@testingMail.com`;
-        const user = new Users({
+        user = new Users({
             name: name,
             email: email,
             password: JEST_CONSTANTS.USER_TEST_DEFAULT_PASSWORD,
             role: USER_ROLES.Admin
         });
-        await user.save();
+
+        await user.createPremiumPermission();
     }
 
     return {

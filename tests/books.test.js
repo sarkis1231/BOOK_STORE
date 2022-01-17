@@ -48,7 +48,7 @@ describe('Non authenticated Books Permission', () => {
             }).then(res => res.statusText);
         }, JEST_CONSTANTS.BE_BASE_URL);
 
-        expect(result).toEqual('Unauthorized');
+        expect(result).toEqual(JEST_CONSTANTS.UNAUTHORISED);
     });
 
     test('User cannot get a create new books', async () => {

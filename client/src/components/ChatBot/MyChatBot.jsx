@@ -9,7 +9,6 @@ const MyChatBot = () => {
     const handleEnd = (renderedSteps, steps, values) => {
         if (values.find(value => value === 'bye')) {
             setTimeout(() => {
-                console.log(values[2])
                 setOpened(() => false)
                 setKey(() => Math.round(Math.random() * 1000000000))
             }, 1500);
@@ -17,7 +16,6 @@ const MyChatBot = () => {
     }
 
     return (
-        <>
             <ChatBot
                 key={key}
                 floating
@@ -26,7 +24,6 @@ const MyChatBot = () => {
                 opened={opened}
                 toggleFloating={() => setOpened(prev => !prev)}
             />
-        </>
     );
 }
 

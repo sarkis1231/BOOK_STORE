@@ -82,7 +82,6 @@ const Register = () => {
                 <Button type='button' onClick={() => history.push('/login')}>{t('login')}</Button>
             </StyledForm>
             <Alert show={alert.show} message={alert.message} setShow={setAlert} severity={alert.severity}/>
-            {console.log(alert.message)}
         </StyledFlexContainer>
     );
 };
