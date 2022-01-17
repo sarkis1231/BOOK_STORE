@@ -13,7 +13,7 @@ import {ADMIN_ROLE, ALL_ROLES} from "./constant";
 import Author from "./views/Author/Author";
 import Permissions from "./views/Permissions/Permissions";
 import Messages from "./views/Messages/Messages";
-import ErrorPage from "./components/ErrorPage";
+import ErrorPage from "./views/ErrorPage";
 
 
 

@@ -13,6 +13,7 @@
     "server": "nodemon src/app.js",
     "build": "yarn --cwd client && yarn --cwd client build",
     "test": "jest",
+    "test_ci": "NODE_ENV=CI jest --ci",
     "clean": "kill -9 $(lsof -t -i:8080)"
   },
   "repository": {

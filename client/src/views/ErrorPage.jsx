@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import {useTranslation} from "react-i18next";
-import Button from "./Reusable/Button";
+import Button from "../components/Reusable/Button";
 import {FlexContainer} from "../styled/layout.styled";
 import {useHistory} from "react-router-dom";
 
