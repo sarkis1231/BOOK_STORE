@@ -19,11 +19,11 @@ import ErrorPage from "./components/ErrorPage";
 
 const HL_HOME = HeaderFooterLayout(Home);
 const HL_BOOKS = HeaderFooterLayout(Books);
-const HL_ADDGenre = HeaderFooterLayout(Genre)
-const HL_USERS = HeaderFooterLayout(Users)
-const HL_AUTHOR = HeaderFooterLayout(Author)
-const HL_Permissions = HeaderFooterLayout(Permissions)
-const HL_Messages= HeaderFooterLayout(Messages)
+const HL_ADDGenre = HeaderFooterLayout(Genre);
+const HL_USERS = HeaderFooterLayout(Users);
+const HL_AUTHOR = HeaderFooterLayout(Author);
+const HL_Permissions = HeaderFooterLayout(Permissions);
+const HL_Messages= HeaderFooterLayout(Messages);
 
 
 const Routes = () => {

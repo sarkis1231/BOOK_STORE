@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({ type, children, onClick, margin, width,alignSelf, disabled, id }) => {
+// TODO maybe add href property to do the click
+const Button = ({ type, children, onClick, margin, width, alignSelf, disabled, id }) => {
   return (
         <StyledButton margin={margin}
                       disabled={disabled}
